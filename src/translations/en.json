@@ -443,6 +443,7 @@
   "ManageListingsPage.title": "Manage your teacher profile",
   "ManageListingsPage.youHaveListings": "You have {count} {count, plural, one {listing} other {listings}}",
   "MapPriceMarker.unsupportedPrice": "({currency})",
+  "MenteeSignupPage.signupLinkText": "Mentee Sign Up",
   "Modal.close": "CLOSE",
   "Modal.closeModal": "Close modal",
   "ModalMissingInformation.checkInbox": "Please check your inbox and verify your email address {email}",
