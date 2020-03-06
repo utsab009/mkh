@@ -53,6 +53,10 @@
   @apply --EditListingDescriptionForm_formMargins;
 }
 
+.mentorLanguage {
+  @apply --EditListingDescriptionForm_formMargins;
+}
+
 .submitButton {
   margin-top: auto;
   margin-bottom: 24px;

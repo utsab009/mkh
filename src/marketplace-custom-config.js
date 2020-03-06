@@ -17,6 +17,14 @@ export const certificate = [
   { key: '500h', label: 'Registered yoga teacher 500h' },
 ];
 
+export const mentorLanguages = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
+  { key: 'english', label: 'English' },
+  { key: 'portuguese', label: 'Portuguese' },
+  { key: 'japanese', label: 'Japanese' },
+  { key: 'chinese', label: 'Chinese' },
+];
+
 // Price filter configuration
 // Note: unlike most prices this is not handled in subunits
 export const priceFilterConfig = {

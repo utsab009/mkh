@@ -128,7 +128,7 @@ const routeConfiguration = () => {
       path: '/l/:slug/:id/:type/:tab',
       name: 'EditListingPage',
       auth: true,
-      component: props => <EditListingPage {...props} allowOnlyOneListing />,
+      component: props => <EditListingPage {...props} allowOnlyOneListing={false} />,
       loadData: EditListingPage.loadData,
     },
     {
