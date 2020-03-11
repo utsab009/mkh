@@ -8,6 +8,7 @@ import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
 import { Form, Button, FieldTextInput } from '../../components';
 import CustomCertificateSelectFieldMaybe from './CustomCertificateSelectFieldMaybe';
+import CustomMentorLanguageSelectFieldMaybe from './CustomMentorLanguageSelectFieldMaybe';
 
 import css from './EditListingDescriptionForm.css';
 
@@ -19,6 +20,7 @@ const EditListingDescriptionFormComponent = props => (
     render={formRenderProps => {
       const {
         certificate,
+        mentorLanguages,
         className,
         disabled,
         ready,
@@ -31,7 +33,6 @@ const EditListingDescriptionFormComponent = props => (
         updateInProgress,
         fetchErrors,
       } = formRenderProps;
-
       const titleMessage = intl.formatMessage({ id: 'EditListingDescriptionForm.title' });
       const titlePlaceholderMessage = intl.formatMessage({
         id: 'EditListingDescriptionForm.titlePlaceholder',
@@ -99,7 +100,7 @@ const EditListingDescriptionFormComponent = props => (
             autoFocus
           />
 
-          <FieldTextInput
+          {/*<FieldTextInput
             id="description"
             name="description"
             className={css.description}
@@ -107,12 +108,19 @@ const EditListingDescriptionFormComponent = props => (
             label={descriptionMessage}
             placeholder={descriptionPlaceholderMessage}
             validate={composeValidators(required(descriptionRequiredMessage))}
-          />
+          />*/}
 
-          <CustomCertificateSelectFieldMaybe
+          {/*<CustomCertificateSelectFieldMaybe
             id="certificate"
             name="certificate"
             certificate={certificate}
+            intl={intl}
+          />*/}
+
+          <CustomMentorLanguageSelectFieldMaybe
+            id="mentorLanguage"
+            name="mentorLanguage"
+            mentorLanguages={mentorLanguages}
             intl={intl}
           />
 

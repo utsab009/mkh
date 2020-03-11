@@ -133,6 +133,7 @@ class TopbarComponent extends Component {
       mobileRootClassName,
       mobileClassName,
       isAuthenticated,
+      isMentor,
       authScopes,
       authInProgress,
       currentUser,
@@ -166,6 +167,7 @@ class TopbarComponent extends Component {
     const mobileMenu = (
       <TopbarMobileMenu
         isAuthenticated={isAuthenticated}
+        isMentor={isMentor}
         currentUserHasListings={currentUserHasListings}
         currentUserListing={currentUserListing}
         currentUserListingFetched={currentUserListingFetched}
@@ -235,6 +237,7 @@ class TopbarComponent extends Component {
             initialSearchFormValues={initialSearchFormValues}
             intl={intl}
             isAuthenticated={isAuthenticated}
+            isMentor={isMentor}
             notificationCount={notificationCount}
             onLogout={this.handleLogout}
             onSearchSubmit={this.handleSubmit}
@@ -306,6 +309,7 @@ TopbarComponent.propTypes = {
   mobileRootClassName: string,
   mobileClassName: string,
   isAuthenticated: bool.isRequired,
+  isMentor: bool.isRequired,
   authScopes: array,
   authInProgress: bool.isRequired,
   currentUser: propTypes.currentUser,
