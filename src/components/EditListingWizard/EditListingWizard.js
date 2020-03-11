@@ -42,7 +42,7 @@ export const TABS = [
   DESCRIPTION,
   FEATURES,
   //POLICY,
-  LOCATION,
+  // LOCATION,
   PRICING,
   ...availabilityMaybe,
   PHOTOS,
@@ -129,7 +129,7 @@ const tabCompleted = (tab, listing) => {
 
   switch (tab) {
     case DESCRIPTION:
-      return !!(description && title);
+      return !!(publicData && title);
     case FEATURES:
       return !!(publicData && publicData.yogaStyles);
     case POLICY:

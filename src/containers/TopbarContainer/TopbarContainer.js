@@ -21,6 +21,7 @@ export const TopbarContainerComponent = props => {
     currentUserHasOrders,
     history,
     isAuthenticated,
+    isMentor,
     authScopes,
     hasGenericError,
     location,
@@ -45,6 +46,7 @@ export const TopbarContainerComponent = props => {
       currentUserHasOrders={currentUserHasOrders}
       history={history}
       isAuthenticated={isAuthenticated}
+      isMentor={isMentor}
       authScopes={authScopes}
       location={location}
       notificationCount={notificationCount}
@@ -99,6 +101,8 @@ TopbarContainerComponent.propTypes = {
 const mapStateToProps = state => {
   // Topbar needs isAuthenticated
   const { isAuthenticated, logoutError, authScopes } = state.Auth;
+  console.log("state.Auth",state);
+  const isMentor = state.user.currentUser && state.user.currentUser.attributes.profile.protectedData && state.user.currentUser.attributes.profile.protectedData.userType == "mentor" ? true : false;
   // Topbar needs user info.
   const {
     currentUser,
@@ -120,6 +124,7 @@ const mapStateToProps = state => {
     currentUserHasOrders,
     notificationCount,
     isAuthenticated,
+    isMentor,
     authScopes,
     sendVerificationEmailInProgress,
     sendVerificationEmailError,

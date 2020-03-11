@@ -19,6 +19,7 @@ import {
 import { TopbarSearchForm } from '../../forms';
 
 import css from './TopbarDesktop.css';
+import { is } from 'date-fns/locale';
 
 const TopbarDesktop = props => {
   const {
@@ -32,10 +33,12 @@ const TopbarDesktop = props => {
     notificationCount,
     intl,
     isAuthenticated,
+    isMentor,
     onLogout,
     onSearchSubmit,
     initialSearchFormValues,
   } = props;
+  console.log("props",isMentor);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -135,6 +138,14 @@ const TopbarDesktop = props => {
     </NamedLink>
   );
 
+  const menteeSignupLink = isAuthenticatedOrJustHydrated ? null : (
+    <NamedLink name="MenteeSignupPage" className={css.signupLink}>
+      <span className={css.signup}>
+        <FormattedMessage id="TopbarDesktop.menteeSignup" />
+      </span>
+    </NamedLink>
+  );
+
   const loginLink = isAuthenticatedOrJustHydrated ? null : (
     <NamedLink name="LoginPage" className={css.loginLink}>
       <span className={css.login}>
@@ -176,10 +187,11 @@ const TopbarDesktop = props => {
       </NamedLink>
       {search}
       {listingLink}
-      {createListingLink}
+      {signupLink}
+      {isMentor ? createListingLink : null}
       {inboxLink}
       {profileMenu}
-      {signupLink}
+      {menteeSignupLink}
       {loginLink}
     </nav>
   );
