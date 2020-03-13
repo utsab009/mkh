@@ -67,6 +67,7 @@ const EditListingFeaturesPanel = props => {
           const updatedValues = {
             publicData: { sectors,subsectors },
           };
+          console.log("updated values",updatedValues);
           onSubmit(updatedValues);
         }}
         onChange={onChange}

@@ -26,7 +26,6 @@ export class EditListingFeaturesFormComponent extends Component {
   }
 
   componentDidMount() {
-    console.log("inside componentdidmount",this.props);
     if(this.props.initialValues && this.props.initialValues.sectors)
     {
       this.handleChange(this.props.initialValues.sectors);
@@ -34,11 +33,9 @@ export class EditListingFeaturesFormComponent extends Component {
   }
   
   handleChange = values => {
-    console.log("inside handlechange",values);
     const subSectors = values.split(' ').join('');
     // const subSectors = config.custom.Civilandstructuralengineering;
     // this.setState({subSectors : subSectors})
-    console.log("subsector",config.custom.Civilandstructuralengineering);
     // console.log("subsector using scope",$[subSectors]);
     switch(values){
       case "Accountancy and financial management":
