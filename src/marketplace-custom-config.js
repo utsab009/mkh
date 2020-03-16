@@ -21,6 +21,7 @@ export const sectors = [
   { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Accountancy and financial management', label: 'Accountancy and financial management' },
   { key: 'Civil and structural engineering', label: 'Civil and structural engineering' },
+  { key: 'Public Service', label: 'Public Service' },
   // { key: 'Construction and building services', label: 'Construction and building services' },
   // { key: 'Consumer goods and FMCG', label: 'Consumer goods and FMCG' },
   // { key: 'Engineering', label: 'Engineering' },
@@ -68,6 +69,17 @@ export const Civilandstructuralengineering = [
   { key: 'Transportation planner', label: 'Transportation planner' },
 ];
 
+export const PublicServices = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
+  { key: 'Academic librarian', label: 'Academic librarian' },
+  { key: 'Advice worker', label: 'Advice worker' },
+  { key: 'Aid worker/humanitarian worker', label: 'Aid worker/humanitarian worker' },
+  { key: 'Amenity horticulturist', label: 'Amenity horticulturist' },
+  { key: 'Archivist', label: 'Archivist' },
+  { key: 'Armed forces officer', label: 'Armed forces officer' },
+  { key: 'Arts administrator', label: 'Arts administrator' },
+];
+
 export const publicRoles = [
   { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Operational Level', label: 'Operational Level' },
@@ -90,7 +102,9 @@ export const nonPublicRoles = [
   { key: 'Grade 6 & 7/Assistance Principle Officer', label: 'Grade 6 & 7/Assistance Principle Officer' },
   { key: 'Grade 5/ Principle Office', label: 'Grade 5/ Principle Office' },
   { key: 'SEO/Vets Senior Executive Officer Veterinary Band C', label: 'SEO/Vets Senior Executive Officer Veterinary Band C' },
-  { key: 'VO/Veterinary Officer', label: 'VO/Veterinary Officer' },
+  { key: 'Grade 2/ Assistant Secretary', label: 'Grade 2/ Assistant Secretary' },
+  { key: 'Permanent Secretary/ Secretary', label: 'Permanent Secretary/ Secretary' },
+  { key: 'General', label: 'General' },
 ]
 
 export const mentorLanguages = [
@@ -99,6 +113,14 @@ export const mentorLanguages = [
   { key: 'portuguese', label: 'Portuguese' },
   { key: 'japanese', label: 'Japanese' },
   { key: 'chinese', label: 'Chinese' },
+];
+
+export const mentorShifts = [
+  { key: 'none', listingLabel: 'None', hideFromFilters: true, hideFromListingInfo: true },
+  { key: 'anytime', listingLabel: 'I am available to mentor at any point of time' },
+  { key: 'workingHours', listingLabel: 'I am available to mentor during working hours (9am to 6pm)' },
+  { key: 'outsideWorkingHours', listingLabel: 'I am available to mentor outside of working hours (6pm to 10pm)' },
+  { key: 'weekends', listingLabel: 'I am available to mentor over the weekend (friday evening, saturday or sunday)' },
 ];
 
 // Price filter configuration

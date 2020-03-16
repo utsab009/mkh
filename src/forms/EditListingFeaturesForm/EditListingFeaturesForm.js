@@ -20,6 +20,7 @@ export class EditListingFeaturesFormComponent extends Component {
     this.state = {
       validation_error: false,
       subSectors: [],
+      jobRoles:[],
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -33,7 +34,16 @@ export class EditListingFeaturesFormComponent extends Component {
   }
   
   handleChange = values => {
-    const subSectors = values.split(' ').join('');
+    // const subSectors = values.split(' ').join('');
+
+    if(values == "Public Service")
+    {
+      this.setState({jobRoles: config.custom.publicRoles});
+    }
+    else
+    {
+      this.setState({jobRoles: config.custom.nonPublicRoles});
+    }
     // const subSectors = config.custom.Civilandstructuralengineering;
     // this.setState({subSectors : subSectors})
     // console.log("subsector using scope",$[subSectors]);
@@ -42,6 +52,8 @@ export class EditListingFeaturesFormComponent extends Component {
         return (this.setState({subSectors : config.custom.Accountancyandfinancialmanagement}));
       case "Civil and structural engineering":
         return (this.setState({subSectors : config.custom.Civilandstructuralengineering}));
+      case "Public Service":
+        return (this.setState({subSectors : config.custom.PublicServices}));  
       case Default :
         return (this.setState({subSectors : config.custom.Accountancyandfinancialmanagement}));  
     }
@@ -77,6 +89,7 @@ export class EditListingFeaturesFormComponent extends Component {
             handleSubmit,
             pristine,
             saveActionMsg,
+            intl,
             updated,
             updateInProgress,
             fetchErrors,
@@ -102,6 +115,18 @@ export class EditListingFeaturesFormComponent extends Component {
 
           const sectors = config.custom.sectors
 
+          const sectorLabel = intl.formatMessage({
+            id: 'EditListingFeaturesForm.sectorLabel',
+          });
+
+          const subSectorLabel = intl.formatMessage({
+            id: 'EditListingFeaturesForm.subSectorLabel',
+          });
+
+          const jobRoleLabel = intl.formatMessage({
+            id: 'EditListingFeaturesForm.jobRoleLabel',
+          });
+
           return (
             <Form className={classes} onSubmit={handleSubmit}>
               {errorMessage}
@@ -114,7 +139,7 @@ export class EditListingFeaturesFormComponent extends Component {
                 options={config.custom.yogaStyles}
               />*/}
 
-              <FieldSelect className={css.features} onChange={this.handleChange} name={'sectors'} id={2} label={'Select Sector'}>
+              <FieldSelect className={css.features} onChange={this.handleChange} name={'sectors'} id={2} label={sectorLabel}>
                 {sectors.map(m => (
                   <option key={m.key} value={m.key}>
                     {m.label}
@@ -123,8 +148,19 @@ export class EditListingFeaturesFormComponent extends Component {
               </FieldSelect>
 
               {this.state.subSectors.length > 0 ? 
-                (<FieldSelect className={css.features} onChange={this.handleChange} name={'subsectors'} id={2} label={'Select Sub Sector'}>
+                (<FieldSelect className={css.features} name={'subsectors'} id={2} label={subSectorLabel}>
                 {this.state.subSectors.map(m => (
+                  <option key={m.key} value={m.key}>
+                    {m.label}
+                  </option>
+                ))}
+              </FieldSelect>)
+              : null
+              }
+
+              {this.state.jobRoles.length > 0 ? 
+                (<FieldSelect className={css.features} name={'jobroles'} id={2} label={jobRoleLabel}>
+                {this.state.jobRoles.map(m => (
                   <option key={m.key} value={m.key}>
                     {m.label}
                   </option>

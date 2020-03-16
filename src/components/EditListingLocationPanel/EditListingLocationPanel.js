@@ -31,9 +31,11 @@ class EditListingLocationPanel extends Component {
       publicData && publicData.location && publicData.location.address && geolocation;
     const location = publicData && publicData.location ? publicData.location : {};
     const { address, building } = location;
+    const onlineAddress = publicData && publicData.onlineAddress ? publicData.onlineAddress : null;
 
     return {
       building,
+      onlineAddress,
       location: locationFieldsPresent
         ? {
             search: address,
@@ -85,19 +87,21 @@ class EditListingLocationPanel extends Component {
           className={css.form}
           initialValues={this.state.initialValues}
           onSubmit={values => {
-            const { building = '', location } = values;
+            const { building = '', location, onlineAddress = '' } = values;
             const {
               selectedPlace: { address, origin },
             } = location;
             const updateValues = {
               geolocation: origin,
               publicData: {
+                onlineAddress, 
                 location: { address, building },
               },
             };
             this.setState({
               initialValues: {
                 building,
+                onlineAddress,
                 location: { search: address, selectedPlace: { address, origin } },
               },
             });

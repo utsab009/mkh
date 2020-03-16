@@ -42,7 +42,7 @@ export const TABS = [
   DESCRIPTION,
   FEATURES,
   //POLICY,
-  // LOCATION,
+  LOCATION,
   PRICING,
   ...availabilityMaybe,
   PHOTOS,
