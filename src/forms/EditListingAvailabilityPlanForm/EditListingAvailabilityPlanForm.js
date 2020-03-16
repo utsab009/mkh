@@ -15,6 +15,8 @@ import {
   FieldTimeZoneSelect,
 } from '../../components';
 
+import config from '../../config';
+
 import css from './EditListingAvailabilityPlanForm.css';
 
 const printHourStrings = h => (h > 9 ? `${h}:00` : `0${h}:00`);
@@ -271,6 +273,12 @@ const EditListingAvailabilityPlanFormComponent = props => {
 
         const submitDisabled = submitInProgress || hasUnfinishedEntries;
 
+        const mentorShifts = config.custom.mentorShifts
+
+        const mentorShiftLabel = intl.formatMessage({
+          id: 'EditListingAvailabilityPlanForm.mentorShiftLabel',
+        });
+
         return (
           <Form id={formId} className={classes} onSubmit={handleSubmit}>
             <h2 className={css.heading}>
@@ -284,6 +292,15 @@ const EditListingAvailabilityPlanFormComponent = props => {
             </h3>
             <div className={css.timezonePicker}>
               <FieldTimeZoneSelect id="timezone" name="timezone" />
+            </div>
+            <div className={css.timezonePicker}>
+              <FieldSelect className={css.features} name={'mentorShift'} id={2} label={mentorShiftLabel}>
+                {mentorShifts.map(m => (
+                  <option key={m.key} value={m.key}>
+                    {m.listingLabel}
+                  </option>
+                ))}
+              </FieldSelect>
             </div>
             <h3 className={css.subheading}>
               <FormattedMessage id="EditListingAvailabilityPlanForm.hoursOfOperationTitle" />

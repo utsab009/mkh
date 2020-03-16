@@ -42,7 +42,7 @@ export const TABS = [
   DESCRIPTION,
   FEATURES,
   //POLICY,
-  // LOCATION,
+  LOCATION,
   PRICING,
   ...availabilityMaybe,
   PHOTOS,
@@ -131,7 +131,7 @@ const tabCompleted = (tab, listing) => {
     case DESCRIPTION:
       return !!(publicData && title);
     case FEATURES:
-      return !!(publicData && publicData.yogaStyles);
+      return !!(publicData && publicData.sectors && publicData.subsectors);
     case POLICY:
       return !!(publicData && typeof publicData.rules !== 'undefined');
     case LOCATION:

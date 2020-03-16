@@ -219,15 +219,22 @@ const EditListingAvailabilityPanel = props => {
     ],
   };
   const availabilityPlan = currentListing.attributes.availabilityPlan || defaultAvailabilityPlan;
-  const initialValues = valuesFromLastSubmit
+  const mentorShift = currentListing.attributes.publicData.mentorShift || null;
+  let initialValues = valuesFromLastSubmit
     ? valuesFromLastSubmit
     : createInitialValues(availabilityPlan);
+  
+  initialValues.mentorShift = mentorShift;  
 
   const handleSubmit = values => {
     setValuesFromLastSubmit(values);
+    
 
+    let updatedValues = createAvailabilityPlan(values);
+    updatedValues.publicData = {"mentorShift":values.mentorShift};
     // Final Form can wait for Promises to return.
-    return onSubmit(createAvailabilityPlan(values))
+    // return onSubmit(createAvailabilityPlan(values))
+    return onSubmit(updatedValues)
       .then(() => {
         setIsEditPlanModalOpen(false);
       })

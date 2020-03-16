@@ -101,7 +101,6 @@ TopbarContainerComponent.propTypes = {
 const mapStateToProps = state => {
   // Topbar needs isAuthenticated
   const { isAuthenticated, logoutError, authScopes } = state.Auth;
-  console.log("state.Auth",state);
   const isMentor = state.user.currentUser && state.user.currentUser.attributes.profile.protectedData && state.user.currentUser.attributes.profile.protectedData.userType == "mentor" ? true : false;
   // Topbar needs user info.
   const {
