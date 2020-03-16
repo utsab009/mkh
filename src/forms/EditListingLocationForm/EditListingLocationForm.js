@@ -54,6 +54,17 @@ export const EditListingLocationFormComponent = props => (
         { id: 'EditListingLocationForm.building' },
         { optionalText: optionalText }
       );
+
+      const onlineAddressLabel = intl.formatMessage(
+        { id: 'EditListingLocationForm.onlineAddress' },
+        { optionalText: optionalText }
+      );
+
+      const onlineAddressPlaceholder = intl.formatMessage(
+        { id: 'EditListingLocationForm.onlineAddressPlaceholder' },
+        { optionalText: optionalText }
+      );
+
       const buildingPlaceholderMessage = intl.formatMessage({
         id: 'EditListingLocationForm.buildingPlaceholder',
       });
@@ -106,6 +117,15 @@ export const EditListingLocationFormComponent = props => (
             id="building"
             label={buildingMessage}
             placeholder={buildingPlaceholderMessage}
+          />
+
+          <FieldTextInput
+            className={css.building}
+            type="text"
+            name="onlineAddress"
+            id="onlineAddress"
+            label={onlineAddressLabel}
+            placeholder={onlineAddressPlaceholder}
           />
 
           <Button
