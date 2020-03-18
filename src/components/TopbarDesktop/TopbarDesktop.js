@@ -101,6 +101,12 @@ const TopbarDesktop = props => {
             </div>
           </OwnListingLink>
         </MenuItem>
+        <MenuItem key="ManageListingsPage">
+          <NamedLink className={classNames(css.yourListingsLink, currentPageClass('ManageListingsPage'))} name="ManageListingsPage">
+            <span className={css.menuItemBorder} />
+            <FormattedMessage id="TopbarDesktop.listingLink" />
+          </NamedLink>
+        </MenuItem>
         <MenuItem key="ProfileSettingsPage">
           <NamedLink
             className={classNames(css.profileSettingsLink, currentPageClass('ProfileSettingsPage'))}
@@ -167,7 +173,8 @@ const TopbarDesktop = props => {
     ) : null;
 
   const createListingLink =
-    isAuthenticatedOrJustHydrated && !(currentUserListingFetched && !currentUserListing) ? null : (
+    // isAuthenticatedOrJustHydrated && !(currentUserListingFetched && !currentUserListing) ? null : // to generate new listing link
+    (
       <NamedLink className={css.createListingLink} name="NewListingPage">
         <span className={css.createListing}>
           <FormattedMessage id="TopbarDesktop.createListing" />
@@ -185,7 +192,7 @@ const TopbarDesktop = props => {
         />
       </NamedLink>
       {search}
-      {listingLink}
+      {/*listingLink*/}
       {signupLink}
       {isMentor ? createListingLink : null}
       {inboxLink}

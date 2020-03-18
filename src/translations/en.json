@@ -1006,6 +1006,7 @@
   "TopbarDesktop.signup": "Become a Mentor",
   "TopbarDesktop.menteeSignup": "Sign up",
   "TopbarDesktop.viewListing": "Teacher profile",
+  "TopbarDesktop.listingLink": "Show Listings",
   "TopbarMobileMenu.accountSettingsLink": "Account settings",
   "TopbarMobileMenu.greeting": "Hello {displayName}",
   "TopbarMobileMenu.inboxLink": "Inbox",

@@ -9,6 +9,7 @@ import {
   InboxPage,
   LandingPage,
   ListingPage,
+  ManageListingsPage,
   NotFoundPage,
   PasswordChangePage,
   PasswordRecoveryPage,
@@ -337,6 +338,14 @@ const routeConfiguration = () => {
       authPage: 'LoginPage',
       component: props => <EmailVerificationPage {...props} />,
       loadData: EmailVerificationPage.loadData,
+    },
+    {
+      path: '/listings',
+      name: 'ManageListingsPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <ManageListingsPage {...props} />,
+      loadData: ManageListingsPage.loadData,
     },
   ];
 };
