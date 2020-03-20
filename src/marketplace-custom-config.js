@@ -115,6 +115,11 @@ export const mentorLanguages = [
   { key: 'chinese', label: 'Chinese' },
 ];
 
+export const profileTypes = [
+  { key: 'interview', label: 'Interview' },
+  { key: 'jobrole', label: 'JobRole' },
+];
+
 export const mentorShifts = [
   { key: 'none', listingLabel: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'anytime', listingLabel: 'I am available to mentor at any point of time' },

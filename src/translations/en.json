@@ -190,6 +190,7 @@
   "EditListingAvailabilityPlanForm.mentorShiftLabel": "Select Shift",
   "EditListingDescriptionForm.certificateLabel": "Teaching certificate",
   "EditListingDescriptionForm.mentorLanguageLabel": "Language you can mentor in",
+  "EditListingDescriptionForm.profileTypesLabel": "Profile Type",
   "EditListingDescriptionForm.createListingDraftError": "Failed to create a draft. Please try again.",
   "EditListingDescriptionForm.description": "Describe yourself and your yoga sessions",
   "EditListingDescriptionForm.descriptionPlaceholder": "What kind of a teacher are you? What is included in your sessions?",

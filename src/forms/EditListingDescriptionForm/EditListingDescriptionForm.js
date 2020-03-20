@@ -3,12 +3,14 @@ import { arrayOf, bool, func, shape, string } from 'prop-types';
 import { compose } from 'redux';
 import { Form as FinalForm } from 'react-final-form';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
+import arrayMutators from 'final-form-arrays';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
-import { Form, Button, FieldTextInput } from '../../components';
+import { Form, Button, FieldTextInput, FieldCheckboxGroup } from '../../components';
 import CustomCertificateSelectFieldMaybe from './CustomCertificateSelectFieldMaybe';
 import CustomMentorLanguageSelectFieldMaybe from './CustomMentorLanguageSelectFieldMaybe';
+import CustomProfileTypeSelectFieldMaybe from './CustomProfileTypeSelectFieldMaybe';
 
 import css from './EditListingDescriptionForm.css';
 
@@ -17,10 +19,12 @@ const TITLE_MAX_LENGTH = 60;
 const EditListingDescriptionFormComponent = props => (
   <FinalForm
     {...props}
+    mutators={{ ...arrayMutators }}
     render={formRenderProps => {
       const {
         certificate,
         mentorLanguages,
+        profileTypes,
         className,
         disabled,
         ready,
@@ -116,6 +120,13 @@ const EditListingDescriptionFormComponent = props => (
             certificate={certificate}
             intl={intl}
           />*/}
+
+          {<FieldCheckboxGroup
+            className={css.profileTypes}
+            id="profileType"
+            name="profileType"
+            options={profileTypes}
+          />}
 
           <CustomMentorLanguageSelectFieldMaybe
             id="mentorLanguage"
