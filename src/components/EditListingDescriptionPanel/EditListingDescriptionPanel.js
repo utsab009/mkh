@@ -53,7 +53,6 @@ const EditListingDescriptionPanel = props => {
         initialValues={{ title, description, certificate: publicData.certificate, mentorLanguage: publicData.mentorLanguage, profileType: publicData.profileType }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          console.log("values",values);
           const { title, description, certificate, mentorLanguage, profileType = []} = values;
           const updateValues = {
             title: title.trim(),

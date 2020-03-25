@@ -108,3 +108,7 @@
     width: 260px;
   }
 }
+
+.inlineButtons {
+  display: inline-flex;
+}
