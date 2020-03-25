@@ -41,6 +41,8 @@ class MainPanel extends Component {
       secondaryFilters,
     } = this.props;
 
+    console.log("props in mainpanel",this.props);
+
     const isSearchFiltersPanelOpen = !!secondaryFilters && this.state.isSearchFiltersPanelOpen;
 
     const filters = merge(primaryFilters, secondaryFilters);

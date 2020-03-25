@@ -41,6 +41,8 @@ export class SearchPageComponent extends Component {
     this.state = {
       isSearchMapOpenOnMobile: props.tab === 'map',
       isMobileModalOpen: false,
+      subSectorsConfig: [],
+      jobroleConfig: [],
     };
 
     this.searchMapListingsInProgress = false;
@@ -49,6 +51,7 @@ export class SearchPageComponent extends Component {
     this.onMapMoveEnd = debounce(this.onMapMoveEnd.bind(this), SEARCH_WITH_MAP_DEBOUNCE);
     this.onOpenMobileModal = this.onOpenMobileModal.bind(this);
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
+    console.log("props in searchpage",props);
   }
 
   filters() {
@@ -57,17 +60,80 @@ export class SearchPageComponent extends Component {
       yogaStylesConfig,
       priceFilterConfig,
       keywordFilterConfig,
+      mentorLanguageConfig,
+      mentorShiftConfig,
+      sectorsConfig,
     } = this.props;
 
+    // const { ...searchInURL } = parse(this.props.location.search, {
+    //   latlng: ['origin'],
+    //   latlngBounds: ['bounds'],
+    // });
+    // let jobroleConfig = [];
+    // let subsectorsConfig = [];
+    // console.log("searchinURL",searchInURL,config.custom.mentorShifts);
+    // if(typeof(searchInURL.pub_sectors) !== undefined)
+    // {
+    //   if(searchInURL.pub_sectors == "Public Service")
+    //   {
+    //     jobroleConfig = config.custom.publicRoles;
+    //   }
+    //   else
+    //   {
+    //     jobroleConfig = config.custom.nonPublicRoles;
+    //   }
+    //   console.log("this.state",this.state);
+    //   // const subSectors = config.custom.Civilandstructuralengineering;
+    //   // this.setState({subSectors : subSectors})
+    //   // console.log("subsector using scope",$[subSectors]);
+    //   // switch(searchInURL.pub_sectors){
+    //   //   case "Accountancy and financial management":
+    //   //     return (this.setState({subSectorsConfig : config.custom.Accountancyandfinancialmanagement}));
+    //   //   case "Civil and structural engineering":
+    //   //     return (this.setState({subSectorsConfig : config.custom.Civilandstructuralengineering}));
+    //   //   case "Public Service":
+    //   //     return (this.setState({subSectorsConfig : config.custom.PublicServices}));  
+    //   //   case "Default" :
+    //   //     return (this.setState({subSectorsConfig : config.custom.Accountancyandfinancialmanagement}));  
+    //   // }
+
+    //   switch(searchInURL.pub_sectors){
+    //     case "Accountancy and financial management":
+    //       return (subsectorsConfig = config.custom.Accountancyandfinancialmanagement);
+    //     case "Civil and structural engineering":
+    //       return (subsectorsConfig =  config.custom.Civilandstructuralengineering);
+    //     case "Public Service":
+    //       return (subsectorsConfig =  config.custom.PublicServices);  
+    //     case "Default" :
+    //       return (subsectorsConfig = config.custom.Accountancyandfinancialmanagement);  
+    //   }
+    // }
     // Note: "certificate" and "yogaStyles" filters are not actually filtering anything by default.
     // Currently, if you want to use them, we need to manually configure them to be available
     // for search queries. Read more from extended data document:
     // https://www.sharetribe.com/docs/references/extended-data/#data-schema
-
+    // let subsectorsConfig = this.state.subSectorsConfig;
+    // console.log("subsectorsConfig",subsectorsConfig);
     return {
       certificateFilter: {
         paramName: 'pub_certificate',
         options: certificateConfig.filter(c => !c.hideFromFilters),
+      },
+      mentorLanguageFilter: {
+        paramName: 'pub_mentorLanguage',
+        options: mentorLanguageConfig.filter(c => !c.hideFromFilters),
+      },
+      sectorsFilter: {
+        paramName: 'pub_sectors',
+        options: sectorsConfig.filter(c => !c.hideFromFilters),
+      },
+      // subsectorsFilter: {
+      //   paramName: 'pub_subsectors',
+      //   options: subsectorsConfig.filter(c => !c.hideFromFilters),
+      // },
+      mentorShiftFilter: {
+        paramName: 'pub_mentorShift',
+        options: mentorShiftConfig.filter(c => !c.hideFromFilters),
       },
       yogaStylesFilter: {
         paramName: 'pub_yogaStyles',
@@ -160,6 +226,8 @@ export class SearchPageComponent extends Component {
 
     const filters = this.filters();
 
+    console.log("filters in",filters);
+
     // urlQueryParams doesn't contain page specific url params
     // like mapSearch, page or origin (origin depends on config.sortSearchByDistance)
     const urlQueryParams = pickSearchParamsOnly(searchInURL, filters);
@@ -193,6 +261,7 @@ export class SearchPageComponent extends Component {
     // N.B. openMobileMap button is sticky.
     // For some reason, stickyness doesn't work on Safari, if the element is <button>
     /* eslint-disable jsx-a11y/no-static-element-interactions */
+    console.log("validQueryParams",validQueryParams);
     return (
       <Page
         scrollingDisabled={scrollingDisabled}
@@ -222,7 +291,11 @@ export class SearchPageComponent extends Component {
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             primaryFilters={{
               yogaStylesFilter: filters.yogaStylesFilter,
+              mentorShiftFilter: filters.mentorShiftFilter,
               certificateFilter: filters.certificateFilter,
+              mentorLanguageFilter: filters.mentorLanguageFilter,
+              sectorsFilter: filters.sectorsFilter,
+              // subsectorsFilter: filters.subsectorsFilter,
               priceFilter: filters.priceFilter,
               keywordFilter: filters.keywordFilter,
             }}
@@ -269,6 +342,9 @@ SearchPageComponent.defaultProps = {
   searchParams: {},
   tab: 'listings',
   certificateConfig: config.custom.certificate,
+  sectorsConfig: config.custom.sectors,
+  mentorLanguageConfig: config.custom.mentorLanguages,
+  mentorShiftConfig: config.custom.mentorShifts,
   yogaStylesConfig: config.custom.yogaStyles,
   priceFilterConfig: config.custom.priceFilterConfig,
   keywordFilterConfig: config.custom.keywordFilterConfig,
@@ -288,6 +364,9 @@ SearchPageComponent.propTypes = {
   searchParams: object,
   tab: oneOf(['filters', 'listings', 'map']).isRequired,
   certificateConfig: array,
+  sectorsConfig : array,
+  mentorLanguageConfig: array,
+  mentorShiftConfig: array,
   yogaStylesConfig: array,
   priceFilterConfig: shape({
     min: number.isRequired,

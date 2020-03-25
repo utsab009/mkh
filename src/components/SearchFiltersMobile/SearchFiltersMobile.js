@@ -159,6 +159,9 @@ class SearchFiltersMobileComponent extends Component {
       onManageDisableScrolling,
       selectedFiltersCount,
       certificateFilter,
+      sectorsFilter,
+      mentorLanguageFilter,
+      mentorShiftFilter,
       yogaStylesFilter,
       priceFilter,
       keywordFilter,
@@ -186,9 +189,10 @@ class SearchFiltersMobileComponent extends Component {
     const certificateLabel = intl.formatMessage({
       id: 'SearchFiltersMobile.certificateLabel',
     });
+
     const initialcertificate = certificateFilter
-      ? this.initialValue(certificateFilter.paramName)
-      : null;
+    ? this.initialValue(certificateFilter.paramName)
+    : null;
 
     const certificateFilterElement = certificateFilter ? (
       <SelectSingleFilter
@@ -199,6 +203,64 @@ class SearchFiltersMobileComponent extends Component {
         options={certificateFilter.options}
         initialValue={initialcertificate}
         intl={intl}
+      />
+    ) : null;
+
+    const mentorLanguageLabel = intl.formatMessage({
+      id: 'SearchFiltersMobile.mentorLanguageLabel',
+    });
+
+    const sectorsLabel = intl.formatMessage({
+      id: 'SearchFiltersMobile.sectorsLabel',
+    });
+
+    const initialmentorLanguage = mentorLanguageFilter
+      ? this.initialValue(mentorLanguageFilter.paramName)
+      : null;
+
+    const initialsectors = sectorsFilter
+      ? this.initialValue(sectorsFilter.paramName)
+      : null;
+      
+    const sectorsFilterElement = sectorsFilter ? (
+      <SelectSingleFilter
+        urlParam={sectorsFilter.paramName}
+        label={sectorsLabel}
+        onSelect={this.handleSelectSingle}
+        liveEdit
+        options={sectorsFilter.options}
+        initialValue={initialsectors}
+        intl={intl}
+      />
+    ) : null;  
+
+    const mentorLanguageFilterElement = mentorLanguageFilter ? (
+      <SelectSingleFilter
+        urlParam={mentorLanguageFilter.paramName}
+        label={mentorLanguageLabel}
+        onSelect={this.handleSelectSingle}
+        liveEdit
+        options={mentorLanguageFilter.options}
+        initialValue={initialmentorLanguage}
+        intl={intl}
+      />
+    ) : null;
+
+
+    const mentorShiftLabel = intl.formatMessage({ id: 'SearchFiltersMobile.mentorShiftLabel' });
+
+    const initialmentorShift = this.initialValues(mentorShiftFilter.paramName);
+
+    const mentorShiftFilterElement = mentorShiftFilter ? (
+      <SelectMultipleFilter
+        id="SearchFiltersMobile.mentorShiftFilter"
+        name="mentorShift"
+        urlParam={mentorShiftFilter.paramName}
+        label={mentorShiftLabel}
+        onSubmit={this.handleSelectMultiple}
+        liveEdit
+        options={mentorShiftFilter.options}
+        initialValues={initialmentorShift}
       />
     ) : null;
 
@@ -282,9 +344,12 @@ class SearchFiltersMobileComponent extends Component {
           </div>
           {this.state.isFiltersOpenOnMobile ? (
             <div className={css.filtersWrapper}>
-              {keywordFilterElement}
-              {yogaStylesFilterElement}
-              {certificateFilterElement}
+              {/*keywordFilterElement*/}
+              {/*yogaStylesFilterElement*/}
+              {mentorShiftFilterElement}
+              {/*certificateFilterElement*/}
+              {/*sectorsFilterElement*/}
+              {mentorLanguageFilterElement}
               {priceFilterElement}
             </div>
           ) : null}

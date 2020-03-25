@@ -52,6 +52,10 @@ const SearchFiltersComponent = props => {
     resultsCount,
     searchInProgress,
     certificateFilter,
+    sectorsFilter,
+    // subsectorsFilter,
+    mentorLanguageFilter,
+    mentorShiftFilter,
     yogaStylesFilter,
     priceFilter,
     keywordFilter,
@@ -61,12 +65,29 @@ const SearchFiltersComponent = props => {
     history,
     intl,
   } = props;
+  console.log("props in searchfilters",props)
 
   const hasNoResult = listingsAreLoaded && resultsCount === 0;
   const classes = classNames(rootClassName || css.root, { [css.longInfo]: hasNoResult }, className);
 
   const certificateLabel = intl.formatMessage({
     id: 'SearchFilters.certificateLabel',
+  });
+
+  const mentorLanguageLabel = intl.formatMessage({
+    id: 'SearchFilters.mentorLanguageLabel',
+  });
+
+  const sectorsLabel = intl.formatMessage({
+    id: 'SearchFilters.sectorsLabel',
+  });
+
+  const subsectorsLabel = intl.formatMessage({
+    id: 'SearchFilters.subsectorsLabel',
+  });
+
+  const mentorShiftLabel = intl.formatMessage({
+    id: 'SearchFilters.mentorShiftLabel',
   });
 
   const yogaStylesLabel = intl.formatMessage({
@@ -81,9 +102,25 @@ const SearchFiltersComponent = props => {
     ? initialValues(urlQueryParams, yogaStylesFilter.paramName)
     : null;
 
+  const initialmentorShift = mentorShiftFilter
+    ? initialValues(urlQueryParams, mentorShiftFilter.paramName)
+    : null;  
+
   const initialcertificate = certificateFilter
     ? initialValue(urlQueryParams, certificateFilter.paramName)
     : null;
+
+  const initialmentorLanguage = mentorLanguageFilter
+    ? initialValue(urlQueryParams, mentorLanguageFilter.paramName)
+    : null;  
+
+  const initialsectors = sectorsFilter
+    ? initialValue(urlQueryParams, sectorsFilter.paramName)
+    : null; 
+    
+  // const initialsubsectors = subsectorsFilter
+  //   ? initialValue(urlQueryParams, subsectorsFilter.paramName)
+  //   : null;   
 
   const initialPriceRange = priceFilter
     ? initialPriceRangeValue(urlQueryParams, priceFilter.paramName)
@@ -138,6 +175,56 @@ const SearchFiltersComponent = props => {
       showAsPopup
       options={certificateFilter.options}
       initialValue={initialcertificate}
+      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+    />
+  ) : null;
+
+  const mentorLanguageFilterElement = mentorLanguageFilter ? (
+    <SelectSingleFilter
+      urlParam={mentorLanguageFilter.paramName}
+      label={mentorLanguageLabel}
+      onSelect={handleSelectOption}
+      showAsPopup
+      options={mentorLanguageFilter.options}
+      initialValue={initialmentorLanguage}
+      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+    />
+  ) : null;
+
+  const sectorsFilterElement = sectorsFilter ? (
+    <SelectSingleFilter
+      urlParam={sectorsFilter.paramName}
+      label={sectorsLabel}
+      onSelect={handleSelectOption}
+      showAsPopup
+      options={sectorsFilter.options}
+      initialValue={initialsectors}
+      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+    />
+  ) : null;
+
+  // const subsectorsFilterElement = subsectorsFilter ? (
+  //   <SelectSingleFilter
+  //     urlParam={subsectorsFilter.paramName}
+  //     label={subsectorsLabel}
+  //     onSelect={handleSelectOption}
+  //     showAsPopup
+  //     options={subsectorsFilter.options}
+  //     initialValue={initialsubsectors}
+  //     contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+  //   />
+  // ) : null;
+
+  const mentorShiftFilterElement = mentorShiftFilter ? (
+    <SelectMultipleFilter
+      id={'SearchFilters.mentorShiftFilter'}
+      name="mentorShift"
+      urlParam={mentorShiftFilter.paramName}
+      label={mentorShiftLabel}
+      onSubmit={handleSelectOptions}
+      showAsPopup
+      options={mentorShiftFilter.options}
+      initialValues={initialmentorShift}
       contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
     />
   ) : null;
@@ -202,10 +289,13 @@ const SearchFiltersComponent = props => {
   return (
     <div className={classes}>
       <div className={css.filters}>
-        {yogaStylesFilterElement}
-        {certificateFilterElement}
+        {/*yogaStylesFilterElement*/}
+        {/*certificateFilterElement*/}
+        {/*sectorsFilterElement*/}
+        {mentorLanguageFilterElement}
+        {mentorShiftFilterElement}
         {priceFilterElement}
-        {keywordFilterElement}
+        {/*keywordFilterElement*/}
         {toggleSearchFiltersPanelButton}
       </div>
 
@@ -238,6 +328,7 @@ SearchFiltersComponent.defaultProps = {
   resultsCount: null,
   searchingInProgress: false,
   certificateFilter: null,
+  mentorLanguageFilter: null,
   yogaStylesFilter: null,
   priceFilter: null,
   isSearchFiltersPanelOpen: false,
@@ -254,6 +345,7 @@ SearchFiltersComponent.propTypes = {
   searchingInProgress: bool,
   onManageDisableScrolling: func.isRequired,
   certificateFilter: propTypes.filterConfig,
+  mentorLanguageFilter: propTypes.filterConfig,
   yogaStylesFilter: propTypes.filterConfig,
   priceFilter: propTypes.filterConfig,
   isSearchFiltersPanelOpen: bool,
