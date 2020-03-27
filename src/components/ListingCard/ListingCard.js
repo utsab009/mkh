@@ -58,22 +58,39 @@ export class ListingCardComponent extends Component {
     };
 
     this.addToFav = this.addToFav.bind(this);
+    this.removeFromFav = this.removeFromFav.bind(this);
   }
 
   addToFav = id => {
-    console.log("addtofav:",this.props);
     let {profile} = this.props.currentUser.attributes;
-    let favourites = profile.protectedData.favourites && Array.isArray(JSON.parse(profile.protectedData.favourites)) ? JSON.parse(profile.protectedData.favourites) : [];
-    favourites.push({id : id, listing : this.props.listing, renderSizes : this.props.renderSizes});
-    console.log("favourites after push",favourites);
-    profile.protectedData.favourites = JSON.stringify(favourites);
+    let newFavourites = profile.protectedData.favourites && Array.isArray(JSON.parse(profile.protectedData.favourites)) ? JSON.parse(profile.protectedData.favourites) : [];
+    newFavourites.push({id : id, listing : this.props.listing, renderSizes : this.props.renderSizes});
+    // profile.protectedData = {favourites : JSON.stringify(favourites)};
+    profile.protectedData.favourites = JSON.stringify(newFavourites);
     const profileToSaved = {
       firstName: profile.firstName.trim(),
       lastName: profile.lastName.trim(),
       bio: profile.bio,
       protectedData : profile.protectedData
     }
-    console.log("profile in addtofav",profileToSaved);
+    this.props.onUpdateProfile(profileToSaved);
+  }
+
+  removeFromFav = id => {
+    let {profile} = this.props.currentUser.attributes;
+    let newFavourites = profile.protectedData.favourites && Array.isArray(JSON.parse(profile.protectedData.favourites)) ? JSON.parse(profile.protectedData.favourites) : [];
+    if(newFavourites.length == 0)
+    {
+      return false;
+    }
+    const removedArr = newFavourites.filter(c => c.id !== id);
+    profile.protectedData.favourites = JSON.stringify(removedArr);
+    const profileToSaved = {
+      firstName: profile.firstName.trim(),
+      lastName: profile.lastName.trim(),
+      bio: profile.bio,
+      protectedData : profile.protectedData
+    }
     this.props.onUpdateProfile(profileToSaved);
   }
   render() {
@@ -89,6 +106,7 @@ export class ListingCardComponent extends Component {
       certificateConfig,
       setActiveListing,
     } = this.props;
+    // let favouritesArr = currentUser.attributes.profile.protectedData.favourites && Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites)) ? JSON.parse(currentUser.attributes.profile.protectedData.favourites) : [];
     const classes = classNames(rootClassName || css.root, className);
     const currentListing = ensureListing(listing);
     const id = currentListing.id.uuid;
@@ -112,7 +130,12 @@ export class ListingCardComponent extends Component {
       ? 'ListingCard.perDay'
       : 'ListingCard.perUnit';
 
-      
+    // const isFavourite = false;
+    // if (favouritesArr.length > 0)
+    // {
+    //   isFavourite = favouritesArr.filter(c => c.id !== id ? false : true);
+    // }
+    // console.log("isfavourite :",isFavourite);  
 
     return (
       <div>
@@ -156,7 +179,11 @@ export class ListingCardComponent extends Component {
             </div>
           </div>
         </NamedLink>
+        {/*isFavourite ? (<Button onClick={() => this.addToFav(id)}> add to favourites</Button>)
+          : (<Button onClick={() => this.removeFromFav(id)}> remove from favourites</Button>)        
+                */}
         <Button onClick={() => this.addToFav(id)}> add to favourites</Button>
+        <Button onClick={() => this.removeFromFav(id)}> remove from favourites</Button>
       </div>  
     );
   }
