@@ -142,6 +142,7 @@ export const updateProfile = actionPayload => {
       include: ['profileImage'],
       'fields.image': ['variants.square-small', 'variants.square-small2x'],
     };
+    console.log("call from addtofav",actionPayload);
 
     return sdk.currentUser
       .updateProfile(actionPayload, queryParams)
