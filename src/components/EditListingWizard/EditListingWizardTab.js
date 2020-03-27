@@ -69,6 +69,7 @@ const redirectAfterDraftUpdate = (listingId, params, tab, marketplaceTabs, histo
   // Redirect to next tab
   const nextPathParams = pathParamsToNextTab(currentPathParams, tab, marketplaceTabs);
   const to = createResourceLocatorString('EditListingPage', routes, nextPathParams, {});
+  console.log("to",to);
   history.push(to);
 };
 

@@ -1,10 +1,10 @@
 import React from 'react';
-import { bool, object } from 'prop-types';
+import { bool, func, object } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { injectIntl, intlShape } from '../../util/reactIntl';
-import { isScrollingDisabled } from '../../ducks/UI.duck';
+import { manageDisableScrolling,isScrollingDisabled } from '../../ducks/UI.duck';
 import { propTypes } from '../../util/types';
 import config from '../../config';
 import {
@@ -32,6 +32,7 @@ export const LandingPageComponent = props => {
     scrollingDisabled,
     currentUserListing,
     currentUserListingFetched,
+    onManageDisableScrolling,
   } = props;
 
   // Schema for search engines (helps them to understand what this page is about)
@@ -67,7 +68,7 @@ export const LandingPageComponent = props => {
         </LayoutWrapperTopbar>
         <LayoutWrapperMain>
           <div className={css.heroContainer}>
-            <SectionHero className={css.hero} history={history} location={location} />
+            <SectionHero className={css.hero} history={history} location={location} onManageDisableScrolling={onManageDisableScrolling} />
           </div>
           <ul className={css.sections}>
             <li className={css.section}>
@@ -102,6 +103,7 @@ LandingPageComponent.propTypes = {
   scrollingDisabled: bool.isRequired,
   currentUserListing: propTypes.ownListing,
   currentUserListingFetched: bool,
+  onManageDisableScrolling: func.isRequired,
 
   // from withRouter
   history: object.isRequired,
@@ -121,6 +123,11 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = dispatch => ({
+  onManageDisableScrolling: (componentId, disableScrolling) =>
+    dispatch(manageDisableScrolling(componentId, disableScrolling)),
+});
+
 // Note: it is important that the withRouter HOC is **outside** the
 // connect HOC, otherwise React Router won't rerender any Route
 // components since connect implements a shouldComponentUpdate
@@ -129,7 +136,10 @@ const mapStateToProps = state => {
 // See: https://github.com/ReactTraining/react-router/issues/4671
 const LandingPage = compose(
   withRouter,
-  connect(mapStateToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
   injectIntl
 )(LandingPageComponent);
 

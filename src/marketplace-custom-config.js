@@ -115,12 +115,17 @@ export const mentorLanguages = [
   { key: 'chinese', label: 'Chinese' },
 ];
 
+export const profileTypes = [
+  { key: 'interview', label: 'Interview' },
+  { key: 'jobrole', label: 'JobRole' },
+];
+
 export const mentorShifts = [
   { key: 'none', listingLabel: 'None', hideFromFilters: true, hideFromListingInfo: true },
-  { key: 'anytime', listingLabel: 'I am available to mentor at any point of time' },
-  { key: 'workingHours', listingLabel: 'I am available to mentor during working hours (9am to 6pm)' },
-  { key: 'outsideWorkingHours', listingLabel: 'I am available to mentor outside of working hours (6pm to 10pm)' },
-  { key: 'weekends', listingLabel: 'I am available to mentor over the weekend (friday evening, saturday or sunday)' },
+  { key: 'anytime', listingLabel: 'I am available to mentor at any point of time', label: 'I wish to have a mentor who is available at any point of time' },
+  { key: 'workingHours', listingLabel: 'I am available to mentor during working hours (9am to 6pm)', label: 'I wish to have a mentor who is available during working hours (9am to 6pm)' },
+  { key: 'outsideWorkingHours', listingLabel: 'I am available to mentor outside of working hours (6pm to 10pm)', label: 'I wish to have a mentor who is available outside of working hours (6pm to 10pm)' },
+  { key: 'weekends', listingLabel: 'I am available to mentor over the weekend (friday evening, saturday or sunday)', label: 'I wish to have a mentor who is available over the weekend (friday evening, saturday or sunday)' },
 ];
 
 // Price filter configuration
