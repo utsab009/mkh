@@ -104,7 +104,7 @@ const EditListingDescriptionFormComponent = props => (
             autoFocus
           />
 
-          {/*<FieldTextInput
+          {<FieldTextInput
             id="description"
             name="description"
             className={css.description}
@@ -112,7 +112,7 @@ const EditListingDescriptionFormComponent = props => (
             label={descriptionMessage}
             placeholder={descriptionPlaceholderMessage}
             validate={composeValidators(required(descriptionRequiredMessage))}
-          />*/}
+          />}
 
           {/*<CustomCertificateSelectFieldMaybe
             id="certificate"

@@ -111,4 +111,11 @@
 
 .inlineButtons {
   display: inline-flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 90px 0 0;
+}
+.inlineButtons button {
+  padding: 10px 60px;
+  min-width: 40%;
 }

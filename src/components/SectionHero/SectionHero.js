@@ -20,7 +20,7 @@ export class  SectionHeroComponent extends Component {
       validation_error: false,
       subSectors: [],
       jobRoles:[],
-      isSectorModalOpen: true,
+      isSectorModalOpen: false,
       profileTypeSelected: true
     };
 
