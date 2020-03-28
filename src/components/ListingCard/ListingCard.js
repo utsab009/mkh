@@ -53,8 +53,7 @@ export class ListingCardComponent extends Component {
     super(props);
     this.state = {
       validation_error: false,
-      subSectors: [],
-      jobRoles:[],
+
     };
 
     this.addToFav = this.addToFav.bind(this);
@@ -106,7 +105,8 @@ export class ListingCardComponent extends Component {
       certificateConfig,
       setActiveListing,
     } = this.props;
-    // let favouritesArr = currentUser.attributes.profile.protectedData.favourites && Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites)) ? JSON.parse(currentUser.attributes.profile.protectedData.favourites) : [];
+
+    let favouritesArr = currentUser && currentUser.attributes.profile.protectedData.favourites && Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites)) ? JSON.parse(currentUser.attributes.profile.protectedData.favourites) : [];
     const classes = classNames(rootClassName || css.root, className);
     const currentListing = ensureListing(listing);
     const id = currentListing.id.uuid;
@@ -129,13 +129,24 @@ export class ListingCardComponent extends Component {
       : isDaily
       ? 'ListingCard.perDay'
       : 'ListingCard.perUnit';
-
-    // const isFavourite = false;
-    // if (favouritesArr.length > 0)
-    // {
-    //   isFavourite = favouritesArr.filter(c => c.id !== id ? false : true);
-    // }
-    // console.log("isfavourite :",isFavourite);  
+    console.log("favouritesArr",favouritesArr.filter(c => c.id !== id),"id",id);
+    let isFavourite = false;
+    if (favouritesArr.length > 0)
+    {
+      // isFavourite = favouritesArr.filter(c => c.id !== id).length > 0 ? true : false;
+      isFavourite = favouritesArr.filter(c => {
+        console.log('c.id',c.id,'id',id);
+        if(c.id == id)
+        {
+          return true;
+        }
+        // else
+        // {
+        //   return false;
+        // }
+      })
+    }
+    console.log("isfavourite :",isFavourite);  
 
     return (
       <div>
@@ -179,11 +190,15 @@ export class ListingCardComponent extends Component {
             </div>
           </div>
         </NamedLink>
-        {/*isFavourite ? (<Button onClick={() => this.addToFav(id)}> add to favourites</Button>)
-          : (<Button onClick={() => this.removeFromFav(id)}> remove from favourites</Button>)        
-                */}
-        <Button onClick={() => this.addToFav(id)}> add to favourites</Button>
-        <Button onClick={() => this.removeFromFav(id)}> remove from favourites</Button>
+        {favouritesArr.length > 0 ?
+          <div>
+            {isFavourite.length > 0 ? 
+              (<Button onClick={() => this.removeFromFav(id)}> remove from favourites</Button>)
+              :(<Button onClick={() => this.addToFav(id)}> add to favourites</Button>)        
+            }
+          </div>
+          : null
+          }
       </div>  
     );
   }

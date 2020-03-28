@@ -1023,6 +1023,7 @@
   "TopbarDesktop.menteeSignup": "Sign up",
   "TopbarDesktop.viewListing": "Teacher profile",
   "TopbarDesktop.listingLink": "Show Listings",
+  "TopbarDesktop.favourites": "Favourites",
   "TopbarMobileMenu.accountSettingsLink": "Account settings",
   "TopbarMobileMenu.greeting": "Hello {displayName}",
   "TopbarMobileMenu.inboxLink": "Inbox",

@@ -10,6 +10,7 @@ import {
   LandingPage,
   ListingPage,
   ManageListingsPage,
+  FavouritesPage,
   NotFoundPage,
   PasswordChangePage,
   PasswordRecoveryPage,
@@ -346,6 +347,14 @@ const routeConfiguration = () => {
       authPage: 'LoginPage',
       component: props => <ManageListingsPage {...props} />,
       loadData: ManageListingsPage.loadData,
+    },
+    {
+      path: '/favourites',
+      name: 'FavouritesPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <FavouritesPage {...props} />,
+      // loadData: ManageListingsPage.loadData,
     },
   ];
 };

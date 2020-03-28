@@ -51,7 +51,6 @@ export class SearchPageComponent extends Component {
     this.onMapMoveEnd = debounce(this.onMapMoveEnd.bind(this), SEARCH_WITH_MAP_DEBOUNCE);
     this.onOpenMobileModal = this.onOpenMobileModal.bind(this);
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
-    console.log("props in searchpage",props);
   }
 
   filters() {
@@ -226,8 +225,6 @@ export class SearchPageComponent extends Component {
 
     const filters = this.filters();
 
-    console.log("filters in",filters);
-
     // urlQueryParams doesn't contain page specific url params
     // like mapSearch, page or origin (origin depends on config.sortSearchByDistance)
     const urlQueryParams = pickSearchParamsOnly(searchInURL, filters);
@@ -261,7 +258,6 @@ export class SearchPageComponent extends Component {
     // N.B. openMobileMap button is sticky.
     // For some reason, stickyness doesn't work on Safari, if the element is <button>
     /* eslint-disable jsx-a11y/no-static-element-interactions */
-    console.log("validQueryParams",validQueryParams);
     return (
       <Page
         scrollingDisabled={scrollingDisabled}
