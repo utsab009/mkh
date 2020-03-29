@@ -63,7 +63,7 @@ export class  SectionHeroComponent extends Component {
           routes,
           // { keywords: 'php' },
           {},
-          {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles}
+          {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
         )
       );
       ////////////////////////
@@ -78,7 +78,7 @@ export class  SectionHeroComponent extends Component {
           <h2 className={css.heroSubTitle}>
             <FormattedMessage id="SectionHero.subTitle" />
           </h2>
-          <NamedLink
+          {/*<NamedLink
             name="SearchPage"
             to={{
               search:
@@ -87,15 +87,18 @@ export class  SectionHeroComponent extends Component {
             className={css.heroButton}
           >
             <FormattedMessage id="SectionHero.browseButton" />
-          </NamedLink>
-          <div className={css.inlineButtons}>
-            <Button onClick={() => this.profileTypeSelection('jobrole')} className={css.heroButton}>
-              <FormattedMessage id="SectionHero.interviewProfileType" />
-            </Button>
-            <Button onClick={() => this.profileTypeSelection('jobinterview')} className={css.heroButton}>
-              <FormattedMessage id="SectionHero.jobroleProfileType" />
-            </Button>
-          </div>    
+          </NamedLink>*/}
+          {!this.state.isSectorModalOpen ?
+            <div className={css.inlineButtons}>
+              <Button onClick={() => this.profileTypeSelection('jobrole')} className={css.heroButton}>
+                <FormattedMessage id="SectionHero.interviewProfileType" />
+              </Button>
+              <Button onClick={() => this.profileTypeSelection('interview')} className={css.heroButton}>
+                <FormattedMessage id="SectionHero.jobroleProfileType" />
+              </Button>
+            </div>
+            : null
+          }    
 
           <Modal
             id="MenteeSignupPage.tos"
