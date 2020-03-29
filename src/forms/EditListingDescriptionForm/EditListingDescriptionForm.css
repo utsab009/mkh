@@ -57,6 +57,10 @@
   @apply --EditListingDescriptionForm_formMargins;
 }
 
+.profileTypes {
+  @apply --EditListingDescriptionForm_formMargins;
+}
+
 .submitButton {
   margin-top: auto;
   margin-bottom: 24px;

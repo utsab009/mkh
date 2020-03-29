@@ -60,7 +60,6 @@ export class EditListingFeaturesFormComponent extends Component {
   }
   
   render() {
-    console.log("this.props",this.props);
     // const submit = (onSubmit) => values => {
     //   let startTimeValue = moment(values.startDate.date.toString().replace(values.startDate.date.toString().substring(16, 21),values.startHour));
     //   let endTimeValue = moment(values.endDate.date.toString().replace(values.endDate.date.toString().substring(16, 21),values.endHour));
@@ -160,12 +159,12 @@ export class EditListingFeaturesFormComponent extends Component {
 
               {this.state.jobRoles.length > 0 ? 
                 (<FieldSelect className={css.features} name={'jobroles'} id={2} label={jobRoleLabel}>
-                {this.state.jobRoles.map(m => (
-                  <option key={m.key} value={m.key}>
-                    {m.label}
-                  </option>
-                ))}
-              </FieldSelect>)
+                  {this.state.jobRoles.map(m => (
+                    <option key={m.key} value={m.key}>
+                      {m.label}
+                    </option>
+                  ))}
+                </FieldSelect>)
               : null
               }
 
