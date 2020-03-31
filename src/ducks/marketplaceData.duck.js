@@ -13,7 +13,6 @@ const initialState = {
 
 const merge = (state, sdkResponse) => {
   const apiResponse = sdkResponse.data;
-  console.log("state in merge updatedentities",state);
   return {
     ...state,
     entities: updatedEntities({ ...state.entities }, apiResponse),
@@ -22,7 +21,6 @@ const merge = (state, sdkResponse) => {
 
 export default function marketplaceDataReducer(state = initialState, action = {}) {
   const { type, payload } = action;
-  console.log("payload",payload);
   switch (type) {
     case ADD_MARKETPLACE_ENTITIES:
       return merge(state, payload);
@@ -42,13 +40,11 @@ export default function marketplaceDataReducer(state = initialState, action = {}
  */
 export const getListingsById = (state, listingIds) => {
   const { entities } = state.marketplaceData;
-  console.log("state.marketplacedata.duck",state);
   const resources = listingIds.map(id => ({
     id,
     type: 'listing',
   }));
   const throwIfNotFound = false;
-  console.log("entities in marketplacedata.duck",entities);;
   return denormalisedEntities(entities, resources, throwIfNotFound);
 };
 

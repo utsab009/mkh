@@ -38,7 +38,6 @@ export const combinedResourceObjects = (oldRes, newRes) => {
  * existing entities.
  */
 export const updatedEntities = (oldEntities, apiResponse) => {
-  // console.log("oldentities in updatedentities",oldEntities);
   const { data, included = [] } = apiResponse;
   const objects = (Array.isArray(data) ? data : [data]).concat(included);
 
@@ -55,7 +54,6 @@ export const updatedEntities = (oldEntities, apiResponse) => {
 
     return entities;
   }, oldEntities);
-  console.log("newentities in updatedentities",newEntities);
   return newEntities;
 };
 
@@ -75,9 +73,7 @@ export const updatedEntities = (oldEntities, apiResponse) => {
  * found in the entities
  */
 export const denormalisedEntities = (entities, resources, throwIfNotFound = true) => {
-  console.log("entities in the upper section",entities);
   const denormalised = resources.map(res => {
-    console.log("res in uppersection",res);
     const { id, type } = res;
     const entityFound = entities[type] && id && entities[type][id.uuid];
     if (!entityFound) {
@@ -88,7 +84,6 @@ export const denormalisedEntities = (entities, resources, throwIfNotFound = true
     }
     const entity = entities[type][id.uuid];
     const { relationships, ...entityData } = entity;
-    console.log("relationships",relationships,"entitydata",entityData);
 
     if (relationships) {
       // Recursively join in all the relationship entities
@@ -106,9 +101,7 @@ export const denormalisedEntities = (entities, resources, throwIfNotFound = true
             const refs = hasMultipleRefs ? relRef.data : [relRef.data];
 
             // If a relationship is not found, an Error should be thrown
-            console.log("entities",entities);
             const rels = denormalisedEntities(entities, refs, true);
-            console.log("rels in data.js",rels,"refs",refs);
             ent[relName] = hasMultipleRefs ? rels : rels[0];
           }
           return ent;
