@@ -6,6 +6,24 @@ import { Form as FinalForm } from 'react-final-form';
 import classNames from 'classnames';
 import * as validators from '../../util/validators';
 import { Form, PrimaryButton, FieldTextInput } from '../../components';
+import {
+  getStartHours,
+  getEndHours,
+  isInRange,
+  isSameDate,
+  isDayMomentInsideRange,
+  resetToStartOfDay,
+  timeOfDayFromLocalToTimeZone,
+  timeOfDayFromTimeZoneToLocal,
+  dateIsAfter,
+  findNextBoundary,
+  timestampToDate,
+  localizeAndFormatTime,
+  monthIdStringInTimeZone,
+  getMonthStartInTimeZone,
+  nextMonthFn,
+  prevMonthFn,
+} from '../../util/dates';
 
 import css from './SignupForm.css';
 
@@ -173,6 +191,28 @@ const SignupFormComponent = props => (
               placeholder={passwordPlaceholder}
               validate={passwordValidators}
             />
+            {/*<FieldDateInput
+              className={css.fieldDateInput}
+              name="dateOfBirth"
+              id={'dob'}
+              label={'Date of Birth'}
+              placeholderText={"01.01.1990"}
+              format={v =>
+                v && v.date ? { date: timeOfDayFromTimeZoneToLocal(v.date, timeZone) } : v
+              }
+              parse={v =>
+                v && v.date ? { date: timeOfDayFromLocalToTimeZone(v.date, timeZone) } : v
+              }
+              // isDayBlocked={isDayBlocked}
+              // onChange={this.onBookingStartDateChange}
+              onPrevMonthClick={() => this.onMonthClick(prevMonthFn)}
+              onNextMonthClick={() => this.onMonthClick(nextMonthFn)}
+              navNext={<Next currentMonth={this.state.currentMonth} timeZone={timeZone} />}
+              navPrev={<Prev currentMonth={this.state.currentMonth} timeZone={timeZone} />}
+              useMobileMargins
+              showErrorMessage={false}
+              validate={bookingDateRequired('Required')}
+            />*/}
           </div>
 
           <div className={css.bottomWrapper}>

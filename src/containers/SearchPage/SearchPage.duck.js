@@ -145,6 +145,7 @@ export const searchListings = searchParams => (dispatch, getState, sdk) => {
     .then(response => {
       dispatch(addMarketplaceEntities(response));
       dispatch(searchListingsSuccess(response));
+      console.log("response in search.duck",response);
       return response;
     })
     .catch(e => {
