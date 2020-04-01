@@ -56,3 +56,57 @@
 .fieldDateInput {
   flex-grow: 1;
 }
+
+.weekDay {
+  @apply --marketplaceTabNavHorizontalFontStyles;
+
+  /* Layout */
+  display: flex;
+  flex-direction: row;
+  padding-top: 4px;
+  padding-bottom: 19px;
+  border-top: solid 1px var(--matterColorNegative);
+
+  &:last-child {
+    border-bottom: solid 1px var(--matterColorNegative);
+  }
+}
+
+.fieldWrapper {
+  /* This container uses flexbox layout */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  /* parent aka root is flexbox, this container takes all available space */
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
+  padding-bottom: 6px;
+
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 41px;
+    left: 0;
+    width: 100%;
+    border-bottom: 1px solid var(--matterColorNegative);
+    z-index: 0;
+  }
+}
+
+.formRow {
+  /* This container uses flexbox layout */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  /* parent aka fieldWrapper is flexbox, this container takes all available space */
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
+
+  z-index: 1;
+}

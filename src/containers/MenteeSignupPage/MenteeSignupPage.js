@@ -148,6 +148,7 @@ export class MenteeSignupPageComponent extends Component {
             onSubmit={handleSubmitSignup}
             inProgress={authInProgress}
             onOpenTermsOfService={() => this.setState({ tosModalOpen: true })}
+            signupType={'mentee'}
           />
         /*)*/}
       </div>
