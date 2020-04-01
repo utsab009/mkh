@@ -129,7 +129,7 @@ export class ListingCardComponent extends Component {
       : isDaily
       ? 'ListingCard.perDay'
       : 'ListingCard.perUnit';
-    console.log("favouritesArr",favouritesArr.filter(c => c.id !== id),"id",id);
+    console.log("favouritesArr",favouritesArr);
     let isFavourite = false;
     if (favouritesArr.length > 0)
     {
@@ -190,7 +190,7 @@ export class ListingCardComponent extends Component {
             </div>
           </div>
         </NamedLink>
-        {favouritesArr.length > 0 ?
+        {currentUser !== null ?
           <div>
             {isFavourite.length > 0 ? 
               (<Button onClick={() => this.removeFromFav(id)}> remove from favourites</Button>)
