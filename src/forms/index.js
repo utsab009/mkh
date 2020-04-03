@@ -19,6 +19,7 @@ export { default as PasswordResetForm } from './PasswordResetForm/PasswordResetF
 export { default as PaymentMethodsForm } from './PaymentMethodsForm/PaymentMethodsForm';
 export { default as PriceFilterForm } from './PriceFilterForm/PriceFilterForm';
 export { default as ProfileSettingsForm } from './ProfileSettingsForm/ProfileSettingsForm';
+export { default as WorkExperienceForm } from './ProfileSettingsForm/WorkExperienceForm';
 export { default as ReviewForm } from './ReviewForm/ReviewForm';
 export { default as SendMessageForm } from './SendMessageForm/SendMessageForm';
 export { default as SectorsFilterForm } from './SectorsFilterForm/SectorsFilterForm';

@@ -115,6 +115,7 @@ const getEntryBoundaries = (values, dayOfWeek, intl, findStartHours) => index =>
 
 const DailyPlan = props => {
   const { dayOfWeek, values, intl } = props;
+  console.log("values in dailyplan",values,"dayofweek",dayOfWeek);
   const getEntryStartTimes = getEntryBoundaries(values, dayOfWeek, intl, true);
   const getEntryEndTimes = getEntryBoundaries(values, dayOfWeek, intl, false);
 
@@ -135,6 +136,7 @@ const DailyPlan = props => {
 
       <FieldArray name={dayOfWeek}>
         {({ fields }) => {
+          console.log("fields in fieldarray",fields);
           return (
             <div className={css.timePicker}>
               {fields.map((name, index) => {
@@ -239,6 +241,7 @@ const submit = (onSubmit, weekdays) => values => {
 
 const EditListingAvailabilityPlanFormComponent = props => {
   const { onSubmit, ...restOfprops } = props;
+  console.log("props in ELAPf",props);
   return (
     <FinalForm
       {...restOfprops}
@@ -259,6 +262,7 @@ const EditListingAvailabilityPlanFormComponent = props => {
           fetchErrors,
           values,
         } = fieldRenderProps;
+        console.log("values in ELAPF",values);
 
         const classes = classNames(rootClassName || css.root, className);
         const submitInProgress = inProgress;

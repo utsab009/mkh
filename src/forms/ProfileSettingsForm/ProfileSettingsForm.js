@@ -3,18 +3,23 @@ import { bool, string } from 'prop-types';
 import { compose } from 'redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { Field, Form as FinalForm } from 'react-final-form';
+import arrayMutators from 'final-form-arrays';
+import { FieldArray } from 'react-final-form-arrays';
 import isEqual from 'lodash/isEqual';
 import classNames from 'classnames';
 import { ensureCurrentUser } from '../../util/data';
 import { propTypes } from '../../util/types';
 import * as validators from '../../util/validators';
 import { isUploadImageOverLimitError } from '../../util/errors';
-import { Form, Avatar, Button, ImageFromFile, IconSpinner, FieldTextInput } from '../../components';
+import { Form, Avatar, Button, ImageFromFile, IconSpinner, FieldTextInput, IconClose, InlineTextButton } from '../../components';
 
 import css from './ProfileSettingsForm.css';
+import WorkExperienceForm from './WorkExperienceForm';
 
 const ACCEPT_IMAGES = 'image/*';
 const UPLOAD_CHANGE_DELAY = 2000; // Show spinner so that browser has time to load img srcset
+
+
 
 class ProfileSettingsFormComponent extends Component {
   constructor(props) {
@@ -23,7 +28,10 @@ class ProfileSettingsFormComponent extends Component {
     this.uploadDelayTimeoutId = null;
     this.state = { uploadDelay: false };
     this.submittedValues = {};
+    console.log("props in psf",props);
   }
+
+  
 
   componentDidUpdate(prevProps) {
     // Upload delay is additional time window where Avatar is added to the DOM,
@@ -41,9 +49,13 @@ class ProfileSettingsFormComponent extends Component {
   }
 
   render() {
+
+    
+
     return (
       <FinalForm
         {...this.props}
+        mutators={{ ...arrayMutators }}
         render={fieldRenderProps => {
           const {
             className,
@@ -62,6 +74,8 @@ class ProfileSettingsFormComponent extends Component {
             form,
             values,
           } = fieldRenderProps;
+
+          console.log("values in psf",values);
 
           const user = ensureCurrentUser(currentUser);
 
@@ -175,6 +189,9 @@ class ProfileSettingsFormComponent extends Component {
           const submitDisabled =
             invalid || pristine || pristineSinceLastSubmit || uploadInProgress || submitInProgress;
 
+
+          
+
           return (
             <Form
               className={classes}
@@ -276,6 +293,11 @@ class ProfileSettingsFormComponent extends Component {
                     validate={lastNameRequired}
                   />
                 </div>
+                <div>
+                  <WorkExperienceForm workExp={'workExp'}
+                  intl={intl}  />
+                </div>
+                
               </div>
               <div className={classNames(css.sectionContainer, css.lastSection)}>
                 <h3 className={css.sectionTitle}>

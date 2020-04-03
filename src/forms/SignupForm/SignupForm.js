@@ -7,7 +7,7 @@ import { FieldArray } from 'react-final-form-arrays';
 import arrayMutators from 'final-form-arrays';
 import classNames from 'classnames';
 import * as validators from '../../util/validators';
-import { Form, PrimaryButton, FieldTextInput, IconClose, InlineTextButton, Button } from '../../components';
+import { Form, PrimaryButton, FieldTextInput, IconClose, InlineTextButton, Button, FieldDateInput } from '../../components';
 import {
   getStartHours,
   getEndHours,
@@ -27,20 +27,24 @@ import {
   prevMonthFn,
 } from '../../util/dates';
 
+import NextMonthIcon from '../BookingTimeForm/NextMonthIcon';
+import PreviousMonthIcon from '../BookingTimeForm/PreviousMonthIcon';
+
 import css from './SignupForm.css';
 
 const KEY_CODE_ENTER = 13;
+
 
 export class SignupFormComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { currentTab: 1 };
+    this.state = { currentTab: 1};
     this.onToggleTab = this.onToggleTab.bind(this);
   }
 
+
   onToggleTab(tab,action) {
-    console.log('tab:',tab,"action:",action);
     let currentTab = tab;
     if(action == 'next')
     {
@@ -73,6 +77,8 @@ export class SignupFormComponent extends Component {
             invalid,
             intl,
             onOpenTermsOfService,
+            signupType,
+            timeZone
           } = fieldRenderProps;
 
           // email
@@ -418,9 +424,9 @@ export class SignupFormComponent extends Component {
                   </div>
                   : null
                 }  
-                { this.state.currentTab == 2 ? workExperienceElement : null}
-                { this.state.currentTab == 3 ? eductionalElement : null}
-                { this.state.currentTab == 4 ?
+                { this.state.currentTab == 2 && signupType == 'mentor' ? workExperienceElement : null}
+                { this.state.currentTab == 3 && signupType == 'mentor' ? eductionalElement : null}
+                { this.state.currentTab == 4 && signupType == 'mentor' ?
                   <FieldTextInput
                     className={css.field}
                     type="textarea"
@@ -431,28 +437,15 @@ export class SignupFormComponent extends Component {
                   />
                   : null
                 }
-                {/*<FieldDateInput
-                  className={css.fieldDateInput}
-                  name="dateOfBirth"
-                  id={'dob'}
-                  label={'Date of Birth'}
-                  placeholderText={"01.01.1990"}
-                  format={v =>
-                    v && v.date ? { date: timeOfDayFromTimeZoneToLocal(v.date, timeZone) } : v
-                  }
-                  parse={v =>
-                    v && v.date ? { date: timeOfDayFromLocalToTimeZone(v.date, timeZone) } : v
-                  }
-                  // isDayBlocked={isDayBlocked}
-                  // onChange={this.onBookingStartDateChange}
-                  onPrevMonthClick={() => this.onMonthClick(prevMonthFn)}
-                  onNextMonthClick={() => this.onMonthClick(nextMonthFn)}
-                  navNext={<Next currentMonth={this.state.currentMonth} timeZone={timeZone} />}
-                  navPrev={<Prev currentMonth={this.state.currentMonth} timeZone={timeZone} />}
-                  useMobileMargins
-                  showErrorMessage={false}
-                  validate={bookingDateRequired('Required')}
-                />*/}
+                { signupType === 'mentee' ?
+                  <FieldTextInput
+                    type="date"
+                    id={`dob`}
+                    name={`dob`}
+                    label={'Date of Birth'}
+                  /> 
+                  : null
+                }
               </div>
 
               <div className={css.bottomWrapper}>
@@ -464,9 +457,9 @@ export class SignupFormComponent extends Component {
                     />
                   </span>
                 </p>
-                {this.state.currentTab < 4 ? <Button type="button" onClick={() => this.onToggleTab(this.state.currentTab,'next')} disabled={submitDisabled}>Next</Button> : null}
-                {this.state.currentTab > 1 ? <Button type="button" onClick={() => this.onToggleTab(this.state.currentTab,'previous')} >Previous</Button> : null}
-                {this.state.currentTab == 4 ?
+                {this.state.currentTab < 4 && signupType == 'mentor' ? <Button type="button" onClick={() => this.onToggleTab(this.state.currentTab,'next')} disabled={submitDisabled}>Next</Button> : null}
+                {this.state.currentTab > 1 && signupType == 'mentor' ? <Button type="button" onClick={() => this.onToggleTab(this.state.currentTab,'previous')} >Previous</Button> : null}
+                {this.state.currentTab == 4 || signupType == 'mentee' ?
                   <PrimaryButton type="submit" inProgress={submitInProgress} disabled={submitDisabled}>
                     <FormattedMessage id="SignupForm.signUp" />
                   </PrimaryButton>
@@ -481,7 +474,7 @@ export class SignupFormComponent extends Component {
   }
 }
 
-SignupFormComponent.defaultProps = { inProgress: false };
+SignupFormComponent.defaultProps = { inProgress: false, timeZone: 'Etc/UTC' };
 
 const { bool, func } = PropTypes;
 
