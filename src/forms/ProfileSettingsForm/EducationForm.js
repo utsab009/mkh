@@ -15,9 +15,7 @@ import { Form, Avatar, Button, ImageFromFile, IconSpinner, FieldTextInput, IconC
 
 import css from './ProfileSettingsForm.css';
 
-const WorkExperienceFormComponent = props => {
-  const {workExp} = props;
-  
+const EducationFormComponent = props => { 
   return (
     <div className={classNames(css.weekDay, null)}>
       {/*<div className={css.dayOfWeek}>
@@ -25,59 +23,58 @@ const WorkExperienceFormComponent = props => {
         Work Experience
       </div>*/}
 
-      <FieldArray name={workExp}>
+      <FieldArray id={'education'} name={'education'}>
         {({ fields }) => {
-          // console.log("fields in fieldarray",values);
-          console.log("fields in fieldarray",fields);
+          console.log("fields", fields.length);
           if(fields.length === 0)
           {
             fields.pop();
-            fields.push({company:null,position:null,duration:null,dates:null})
-          //   fields.remove(1);
+            fields.push({course:null,board:null,duration:null,dates:null})
+            // fields.remove(1);
           }
 
           return (
             <div className={css.timePicker}>
-              {fields.map((name, index) => {
+               {fields.map((name, index) => {
                 return (
                   <div className={css.fieldWrapper} key={name}>
                     <div >
                       <div className={css.nameContainer}>
                         <div className={css.field}>
-                          <FieldTextInput
+                            <FieldTextInput
                             type="text"
-                            id={`${name}.company`}
-                            name={`${name}.company`}
-                            label={'I worked for'}
-                          />    
+                            id={`${name}.course`}
+                            name={`${name}.course`}
+                            label={'I gained'}
+                            />    
                         </div>
                         <div className={css.field}>
-                          <FieldTextInput
+                            <FieldTextInput
                             type="text"
-                            id={`${name}.position`}
-                            name={`${name}.position`}
-                            label={'In the Position of'}
-                          />    
+                            id={`${name}.board`}
+                            name={`${name}.board`}
+                            label={'From which institution'}
+                            />    
                         </div>
                       </div>
-                      <div className={css.nameContainer}>  
+                      <div className={css.nameContainer}>
                         <div className={css.field}>
-                          <FieldTextInput
+                            <FieldTextInput
                             type="text"
                             id={`${name}.duration`}
                             name={`${name}.duration`}
-                            label={'Length of Time'}
-                          />    
+                            label={'Over what length of Time'}
+                            />    
                         </div>
                         <div className={css.field}>
-                          <FieldTextInput
+                            <FieldTextInput
                             type="text"
                             id={`${name}.startEndDate`}
                             name={`${name}.startEndDate`}
                             label={'From / to'}
-                          />    
+                            />    
                         </div>
-                      </div>  
+                       </div> 
                       {/*<span className={css.dashBetweenTimes}>-</span>*/}
                     </div>
                     <button
@@ -97,7 +94,7 @@ const WorkExperienceFormComponent = props => {
                 <InlineTextButton
                   type="button"
                   className={css.buttonSetHours}
-                  onClick={() => fields.push({company:null,position:null,duration:null,dates:null})}
+                  onClick={() => fields.push({course:null,board:null,duration:null,dates:null})}
                 >
                   <FormattedMessage id="EditListingAvailabilityPlanForm.setHours" />
                 </InlineTextButton>
@@ -105,7 +102,7 @@ const WorkExperienceFormComponent = props => {
                 <InlineTextButton
                   type="button"
                   className={css.buttonAddNew}
-                  onClick={() => fields.push({company:null,position:null,duration:null,dates:null})}
+                  onClick={() => fields.push({course:null,board:null,duration:null,dates:null})}
                 >
                   <FormattedMessage id="EditListingAvailabilityPlanForm.addAnother" />
                 </InlineTextButton>
@@ -116,8 +113,9 @@ const WorkExperienceFormComponent = props => {
       </FieldArray>
     </div>
   );
+
 };
-  
-  const WorkExperienceForm = WorkExperienceFormComponent;
-  
-  export default WorkExperienceForm;  
+
+
+  const EducationForm = EducationFormComponent;
+  export default EducationForm;  

@@ -187,11 +187,10 @@ export class SignupFormComponent extends Component {
 
           /////////////////////////////////////////////// workExperienceElement starts /////////////////////////////////////////
           const workExperienceElement = (
-              <div className={classNames(css.weekDay, null)}>
-                {/*<div className={css.dayOfWeek}>
-                  <FormattedMessage id={`EditListingAvailabilityPlanForm.dayOfWeek.${dayOfWeek}`} />
-                  Work Experience
-                </div>*/}
+              <div>
+                <h3 className={css.sectionTitle}>
+                  <FormattedMessage id="SignupForm.workExpHeading" />
+                </h3>
           
                 <FieldArray id={'workExp'} name={'workExp'}>
                   {({ fields }) => {
@@ -209,47 +208,61 @@ export class SignupFormComponent extends Component {
                           return (
                             <div className={css.fieldWrapper} key={name}>
                               <div >
-                                <div className={css.field}>
-                                  <FieldTextInput
-                                    type="text"
-                                    id={`${name}.company`}
-                                    name={`${name}.company`}
-                                    label={'I worked for'}
-                                  />    
+                                <div className={css.name}>
+                                  <div className={css.field}>
+                                    <FieldTextInput
+                                      type="text"
+                                      id={`${name}.company`}
+                                      name={`${name}.company`}
+                                      label={'I worked for'}
+                                    />    
+                                  </div>
+                                  <div className={css.field}>
+                                    <FieldTextInput
+                                      type="text"
+                                      id={`${name}.position`}
+                                      name={`${name}.position`}
+                                      label={'In the Position of'}
+                                    />    
+                                  </div>
                                 </div>
-                                <div className={css.field}>
-                                  <FieldTextInput
-                                    type="text"
-                                    id={`${name}.position`}
-                                    name={`${name}.position`}
-                                    label={'In the Position of'}
-                                  />    
-                                </div>
-                                <div className={css.field}>
-                                  <FieldTextInput
-                                    type="text"
-                                    id={`${name}.duration`}
-                                    name={`${name}.duration`}
-                                    label={'Length of Time'}
-                                  />    
-                                </div>
-                                <div className={css.field}>
-                                  <FieldTextInput
-                                    type="text"
-                                    id={`${name}.startEndDate`}
-                                    name={`${name}.startEndDate`}
-                                    label={'From / to'}
-                                  />    
-                                </div>
+                                <div className={css.name}>  
+                                  <div className={css.field}>
+                                    <FieldTextInput
+                                      type="text"
+                                      id={`${name}.duration`}
+                                      name={`${name}.duration`}
+                                      label={'Length of Time'}
+                                    />    
+                                  </div>
+                                  <div className={css.field}>
+                                    <FieldTextInput
+                                      type="text"
+                                      id={`${name}.startEndDate`}
+                                      name={`${name}.startEndDate`}
+                                      label={'From / to'}
+                                    />    
+                                  </div>
+                                </div>  
+                                <button
+                                  type="button"
+                                  className={css.removeButton}
+                                  onClick={() => fields.remove(index)}
+                                  style={{ cursor: 'pointer' }}
+                                >
+                                  Remove
+                                  {/*<IconClose rootClassName={css.closeIcon} />*/}
+                                </button>
                                 {/*<span className={css.dashBetweenTimes}>-</span>*/}
                               </div>
-                              <div
+                              {/*<div
                                 className={css.fieldArrayRemove}
                                 onClick={() => fields.remove(index)}
                                 style={{ cursor: 'pointer' }}
                               >
                                 <IconClose rootClassName={css.closeIcon} />
-                              </div>
+                              </div>*/}
+                              
                             </div>
                           );
                         })}
@@ -280,13 +293,12 @@ export class SignupFormComponent extends Component {
           
           /////////////////////////////////////////////// workExperienceElement ends ////////////////////////////////////
 
-          /////////////////////////////////////////////// eductionalElement starts /////////////////////////////////////////
-          const eductionalElement = (
-            <div className={classNames(css.weekDay, null)}>
-              {/*<div className={css.dayOfWeek}>
-                <FormattedMessage id={`EditListingAvailabilityPlanForm.dayOfWeek.${dayOfWeek}`} />
-                Work Experience
-              </div>*/}
+          /////////////////////////////////////////////// educationalElement starts /////////////////////////////////////////
+          const educationalElement = (
+            <div>
+              <h3 className={css.sectionTitle}>
+                <FormattedMessage id="SignupForm.educationHeading" />
+              </h3>
         
               <FieldArray id={'education'} name={'education'}>
                 {({ fields }) => {
@@ -304,47 +316,60 @@ export class SignupFormComponent extends Component {
                         return (
                           <div className={css.fieldWrapper} key={name}>
                             <div >
-                              <div className={css.field}>
-                                <FieldTextInput
-                                  type="text"
-                                  id={`${name}.course`}
-                                  name={`${name}.course`}
-                                  label={'I gained'}
-                                />    
+                              <div className={css.name}>
+                                <div className={css.field}>
+                                  <FieldTextInput
+                                    type="text"
+                                    id={`${name}.course`}
+                                    name={`${name}.course`}
+                                    label={'I gained'}
+                                  />    
+                                </div>
+                                <div className={css.field}>
+                                  <FieldTextInput
+                                    type="text"
+                                    id={`${name}.board`}
+                                    name={`${name}.board`}
+                                    label={'From which institution'}
+                                  />    
+                                </div>
                               </div>
-                              <div className={css.field}>
-                                <FieldTextInput
-                                  type="text"
-                                  id={`${name}.board`}
-                                  name={`${name}.board`}
-                                  label={'From which institution'}
-                                />    
+                              <div className={css.name}>  
+                                <div className={css.field}>
+                                  <FieldTextInput
+                                    type="text"
+                                    id={`${name}.duration`}
+                                    name={`${name}.duration`}
+                                    label={'Over what length of Time'}
+                                  />    
+                                </div>
+                                <div className={css.field}>
+                                  <FieldTextInput
+                                    type="text"
+                                    id={`${name}.startEndDate`}
+                                    name={`${name}.startEndDate`}
+                                    label={'From / to'}
+                                  />    
+                                </div>
                               </div>
-                              <div className={css.field}>
-                                <FieldTextInput
-                                  type="text"
-                                  id={`${name}.duration`}
-                                  name={`${name}.duration`}
-                                  label={'Over what length of Time'}
-                                />    
-                              </div>
-                              <div className={css.field}>
-                                <FieldTextInput
-                                  type="text"
-                                  id={`${name}.startEndDate`}
-                                  name={`${name}.startEndDate`}
-                                  label={'From / to'}
-                                />    
-                              </div>
+                              <button
+                                type="button"
+                                className={css.removeButton}
+                                onClick={() => fields.remove(index)}
+                                style={{ cursor: 'pointer' }}
+                              >
+                                Remove
+                                {/*<IconClose rootClassName={css.closeIcon} />*/}
+                              </button>
                               {/*<span className={css.dashBetweenTimes}>-</span>*/}
                             </div>
-                            <div
+                            {/*<div
                               className={css.fieldArrayRemove}
                               onClick={() => fields.remove(index)}
                               style={{ cursor: 'pointer' }}
                             >
                               <IconClose rootClassName={css.closeIcon} />
-                            </div>
+                            </div>*/}
                           </div>
                         );
                       })}
@@ -373,7 +398,7 @@ export class SignupFormComponent extends Component {
             </div>
           );
         
-        /////////////////////////////////////////////// eductionalElement ends ////////////////////////////////////
+        /////////////////////////////////////////////// educationalElement ends ////////////////////////////////////
 
           return (
             <Form className={classes} onSubmit={handleSubmit}>
@@ -425,13 +450,13 @@ export class SignupFormComponent extends Component {
                   : null
                 }  
                 { this.state.currentTab == 2 && signupType == 'mentor' ? workExperienceElement : null}
-                { this.state.currentTab == 3 && signupType == 'mentor' ? eductionalElement : null}
+                { this.state.currentTab == 3 && signupType == 'mentor' ? educationalElement : null}
                 { this.state.currentTab == 4 && signupType == 'mentor' ?
                   <FieldTextInput
                     className={css.field}
                     type="textarea"
                     id={formId ? `${formId}.mentorDescription` : 'mentorDescription'}
-                    name="mentorDescription"
+                    name="bio"
                     label="Bring your experience to life by explaining how it would help a mentee and if you like how you approach mentoring:"
                     // validate={required}
                   />
