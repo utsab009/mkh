@@ -39,8 +39,9 @@ export class SignupFormComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { currentTab: 1};
+    this.state = { currentTab: 1, termsAccepted : false};
     this.onToggleTab = this.onToggleTab.bind(this);
+    this.acceptTerms = this.acceptTerms.bind(this);
   }
 
 
@@ -55,6 +56,10 @@ export class SignupFormComponent extends Component {
       currentTab = tab - 1;
     }
     this.setState({ currentTab: currentTab });
+  }
+
+  acceptTerms() {
+    this.setState({ termsAccepted: true });
   }
 
   render() {
@@ -462,7 +467,7 @@ export class SignupFormComponent extends Component {
                   />
                   : null
                 }
-                { signupType === 'mentee' ?
+                { signupType === 'mentee' && this.state.currentTab == 1 ?
                   <FieldTextInput
                     type="date"
                     id={`dob`}
@@ -470,6 +475,27 @@ export class SignupFormComponent extends Component {
                     label={'Date of Birth'}
                   /> 
                   : null
+                }
+                {this.state.currentTab == 2 && signupType == 'mentee' ?
+                  <div>
+                    <h1>Before You Join</h1>
+                    <p>Our mission is to build a trusted community where anyone can belong
+                       anywhere. To ensure this, we're asking you to accept our terms of
+                       service and respect everyone on MKH.
+                    </p>
+                    <h2>MKH Community Commitment</h2>
+                    <p>I agree to treat everyone in the MKH community- regardless of their 
+                       race,religion, national origin,ethnicity,skin colour,disability,sex,
+                       gender identity,sexual orientation or age-- with respect, and without 
+                       judgment or bias. Learn more. 
+                    </p>
+                    <h2>MKH Terms of service</h2>
+                    <p>I also accept MKH's Terms of Tervice,Payments Terms of Service,
+                       Privacy Policy, and Nondiscrimination Policy
+                    </p>
+                    <Button type="button" onClick={() => this.acceptTerms()} disabled={this.state.termsAccepted}>Accept</Button>
+                  </div>
+                  :null
                 }
               </div>
 
@@ -482,9 +508,9 @@ export class SignupFormComponent extends Component {
                     />
                   </span>
                 </p>
-                {this.state.currentTab < 4 && signupType == 'mentor' ? <Button type="button" onClick={() => this.onToggleTab(this.state.currentTab,'next')} disabled={submitDisabled}>Next</Button> : null}
-                {this.state.currentTab > 1 && signupType == 'mentor' ? <Button type="button" onClick={() => this.onToggleTab(this.state.currentTab,'previous')} >Previous</Button> : null}
-                {this.state.currentTab == 4 || signupType == 'mentee' ?
+                {(this.state.currentTab < 4 && signupType == 'mentor') || (this.state.currentTab < 2 && signupType == 'mentee' ) ? <Button type="button" onClick={() => this.onToggleTab(this.state.currentTab,'next')} disabled={submitDisabled}>Next</Button> : null}
+                {(this.state.currentTab > 1 && signupType == 'mentor') || (this.state.currentTab > 1 && signupType == 'mentee') ? <Button type="button" onClick={() => this.onToggleTab(this.state.currentTab,'previous')} >Previous</Button> : null}
+                {(this.state.currentTab == 4 ) || (signupType == 'mentee' && this.state.termsAccepted) ?
                   <PrimaryButton type="submit" inProgress={submitInProgress} disabled={submitDisabled}>
                     <FormattedMessage id="SignupForm.signUp" />
                   </PrimaryButton>
