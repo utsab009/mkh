@@ -70,7 +70,6 @@ export class SearchPageComponent extends Component {
     // });
     // let jobroleConfig = [];
     // let subsectorsConfig = [];
-    // console.log("searchinURL",searchInURL,config.custom.mentorShifts);
     // if(typeof(searchInURL.pub_sectors) !== undefined)
     // {
     //   if(searchInURL.pub_sectors == "Public Service")
@@ -81,10 +80,8 @@ export class SearchPageComponent extends Component {
     //   {
     //     jobroleConfig = config.custom.nonPublicRoles;
     //   }
-    //   console.log("this.state",this.state);
     //   // const subSectors = config.custom.Civilandstructuralengineering;
     //   // this.setState({subSectors : subSectors})
-    //   // console.log("subsector using scope",$[subSectors]);
     //   // switch(searchInURL.pub_sectors){
     //   //   case "Accountancy and financial management":
     //   //     return (this.setState({subSectorsConfig : config.custom.Accountancyandfinancialmanagement}));
@@ -112,7 +109,6 @@ export class SearchPageComponent extends Component {
     // for search queries. Read more from extended data document:
     // https://www.sharetribe.com/docs/references/extended-data/#data-schema
     // let subsectorsConfig = this.state.subSectorsConfig;
-    // console.log("subsectorsConfig",subsectorsConfig);
     return {
       certificateFilter: {
         paramName: 'pub_certificate',

@@ -54,7 +54,6 @@ export const updatedEntities = (oldEntities, apiResponse) => {
 
     return entities;
   }, oldEntities);
-
   return newEntities;
 };
 
@@ -103,7 +102,6 @@ export const denormalisedEntities = (entities, resources, throwIfNotFound = true
 
             // If a relationship is not found, an Error should be thrown
             const rels = denormalisedEntities(entities, refs, true);
-
             ent[relName] = hasMultipleRefs ? rels : rels[0];
           }
           return ent;

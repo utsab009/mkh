@@ -131,6 +131,7 @@ export class AuthenticationPageComponent extends Component {
     ];
 
     const handleSubmitSignup = values => {
+      console.log("values in handle submit signup",values);
       const { fname, lname, ...rest } = values;
       const params = { firstName: fname.trim(), lastName: lname.trim(), userType: "mentor", ...rest };
       submitSignup(params);
@@ -138,7 +139,7 @@ export class AuthenticationPageComponent extends Component {
 
     const formContent = (
       <div className={css.content}>
-        <LinkTabNavHorizontal className={css.tabs} tabs={tabs} />
+        {/*<LinkTabNavHorizontal className={css.tabs} tabs={tabs} />*/}
         {loginOrSignupError}
         {isLogin ? (
           <LoginForm className={css.form} onSubmit={submitLogin} inProgress={authInProgress} />
@@ -148,6 +149,7 @@ export class AuthenticationPageComponent extends Component {
             onSubmit={handleSubmitSignup}
             inProgress={authInProgress}
             onOpenTermsOfService={() => this.setState({ tosModalOpen: true })}
+            signupType={'mentor'}
           />
         )}
       </div>
