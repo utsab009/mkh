@@ -13,6 +13,9 @@ import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
 import { NamedLink, ResponsiveImage, Button } from '../../components';
 import { updateProfile } from '../../containers/ProfileSettingsPage/ProfileSettingsPage.duck';
+import { showUser } from '../../containers/ProfilePage/ProfilePage.duck';
+
+import { types as sdkTypes } from '../../util/sdkLoader';
 
 import css from './ListingCard.css';
 
@@ -55,9 +58,19 @@ export class ListingCardComponent extends Component {
       validation_error: false,
 
     };
+    // console.log("props in listingcard",props);
 
     this.addToFav = this.addToFav.bind(this);
     this.removeFromFav = this.removeFromFav.bind(this);
+  }
+
+  componentDidMount() {
+    console.log("this.props in CDM in listingcard",this.props.listing.author.id);
+    const { UUID} = sdkTypes;
+    var userId = new UUID(this.props.listing.author.id.uuid);
+    console.log("userId in CDM",userId);
+    let showuserresponse = this.props.onShowUser(this.props.listing.author.id);
+    console.log("showuser CDM",showuserresponse);
   }
 
   addToFav = id => {
@@ -99,6 +112,7 @@ export class ListingCardComponent extends Component {
       className,
       rootClassName,
       onUpdateProfile,
+      onShowUser,
       intl,
       listing,
       renderSizes,
@@ -250,6 +264,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   // onImageUpload: data => dispatch(uploadImage(data)),
   onUpdateProfile: data => dispatch(updateProfile(data)),
+  onShowUser: data => dispatch(showUser(data)),
 });
 
 // export default injectIntl(ListingCardComponent);
