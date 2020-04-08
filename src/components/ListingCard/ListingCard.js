@@ -13,6 +13,9 @@ import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
 import { NamedLink, ResponsiveImage, Button } from '../../components';
 import { updateProfile } from '../../containers/ProfileSettingsPage/ProfileSettingsPage.duck';
+import { showUser } from '../../containers/ProfilePage/ProfilePage.duck';
+
+import { types as sdkTypes } from '../../util/sdkLoader';
 
 import css from './ListingCard.css';
 
@@ -53,11 +56,24 @@ export class ListingCardComponent extends Component {
     super(props);
     this.state = {
       validation_error: false,
+      authorData: null,
 
     };
+    // console.log("props in listingcard",props);
 
     this.addToFav = this.addToFav.bind(this);
     this.removeFromFav = this.removeFromFav.bind(this);
+  }
+
+  componentDidMount() {
+    console.log("this.props in CDM in listingcard",this.props.listing.author.id);
+    let authorData ;
+    let showuserresponse = this.props.onShowUser(this.props.listing.author.id);
+    showuserresponse.then(result => {
+      authorData = result.data;
+      this.setState({authorData : authorData});
+     return result;
+    });
   }
 
   addToFav = id => {
@@ -99,13 +115,17 @@ export class ListingCardComponent extends Component {
       className,
       rootClassName,
       onUpdateProfile,
+      onShowUser,
       intl,
       listing,
       renderSizes,
       certificateConfig,
       setActiveListing,
     } = this.props;
-
+    console.log("this.state.authordata",this.state.authorData);
+    let authorData = this.state.authorData !== null && this.state.authorData.data.attributes.profile.publicData ? this.state.authorData.data.attributes.profile.publicData : {error:"no data"}; 
+    let {workExp = null, education = null } = authorData;
+    console.log("workExp:",workExp);
     let favouritesArr = currentUser && currentUser.attributes.profile.protectedData.favourites && Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites)) ? JSON.parse(currentUser.attributes.profile.protectedData.favourites) : [];
     const classes = classNames(rootClassName || css.root, className);
     const currentListing = ensureListing(listing);
@@ -182,6 +202,14 @@ export class ListingCardComponent extends Component {
                   longWordClass: css.longWord,
                 })}
               </div>
+              {workExp !== null ? workExp.map((item, index) => {
+                if(index < 4)
+                return (
+                  <div>{item.company}</div>
+                );
+                })
+                : null
+              }
               <div className={css.certificateInfo}>
                 {certificate && !certificate.hideFromListingInfo ? (
                   <span>{certificate.label}</span>
@@ -250,6 +278,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   // onImageUpload: data => dispatch(uploadImage(data)),
   onUpdateProfile: data => dispatch(updateProfile(data)),
+  onShowUser: data => dispatch(showUser(data)),
 });
 
 // export default injectIntl(ListingCardComponent);
