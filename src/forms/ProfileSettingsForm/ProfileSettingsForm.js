@@ -3,27 +3,40 @@ import { bool, string } from 'prop-types';
 import { compose } from 'redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { Field, Form as FinalForm } from 'react-final-form';
+import arrayMutators from 'final-form-arrays';
+import { FieldArray } from 'react-final-form-arrays';
 import isEqual from 'lodash/isEqual';
 import classNames from 'classnames';
 import { ensureCurrentUser } from '../../util/data';
 import { propTypes } from '../../util/types';
 import * as validators from '../../util/validators';
 import { isUploadImageOverLimitError } from '../../util/errors';
-import { Form, Avatar, Button, ImageFromFile, IconSpinner, FieldTextInput } from '../../components';
+import { Form, Avatar, Button, ImageFromFile, IconSpinner, FieldTextInput, IconClose, InlineTextButton } from '../../components';
 
 import css from './ProfileSettingsForm.css';
+import WorkExperienceForm from './WorkExperienceForm';
+import EducationForm from './EducationForm';
 
 const ACCEPT_IMAGES = 'image/*';
 const UPLOAD_CHANGE_DELAY = 2000; // Show spinner so that browser has time to load img srcset
+
+
 
 class ProfileSettingsFormComponent extends Component {
   constructor(props) {
     super(props);
 
     this.uploadDelayTimeoutId = null;
-    this.state = { uploadDelay: false };
+    this.state = { uploadDelay: false, currentTab : 1 };
+    this.onToggleTab = this.onToggleTab.bind(this);
     this.submittedValues = {};
+    console.log("props in psf",props);
   }
+
+  onToggleTab(tab) {
+    
+    this.setState({ currentTab: tab });
+  }  
 
   componentDidUpdate(prevProps) {
     // Upload delay is additional time window where Avatar is added to the DOM,
@@ -41,9 +54,13 @@ class ProfileSettingsFormComponent extends Component {
   }
 
   render() {
+
+    
+
     return (
       <FinalForm
         {...this.props}
+        mutators={{ ...arrayMutators }}
         render={fieldRenderProps => {
           const {
             className,
@@ -63,8 +80,10 @@ class ProfileSettingsFormComponent extends Component {
             values,
           } = fieldRenderProps;
 
-          const user = ensureCurrentUser(currentUser);
+          console.log("values in psf",values);
 
+          const user = ensureCurrentUser(currentUser);
+          console.log("user in psf",user);
           // First name
           const firstNameLabel = intl.formatMessage({
             id: 'ProfileSettingsForm.firstNameLabel',
@@ -175,6 +194,9 @@ class ProfileSettingsFormComponent extends Component {
           const submitDisabled =
             invalid || pristine || pristineSinceLastSubmit || uploadInProgress || submitInProgress;
 
+
+          
+
           return (
             <Form
               className={classes}
@@ -252,45 +274,112 @@ class ProfileSettingsFormComponent extends Component {
                   <FormattedMessage id="ProfileSettingsForm.fileInfo" />
                 </div>
               </div>
-              <div className={css.sectionContainer}>
-                <h3 className={css.sectionTitle}>
-                  <FormattedMessage id="ProfileSettingsForm.yourName" />
-                </h3>
-                <div className={css.nameContainer}>
-                  <FieldTextInput
-                    className={css.firstName}
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    label={firstNameLabel}
-                    placeholder={firstNamePlaceholder}
-                    validate={firstNameRequired}
-                  />
-                  <FieldTextInput
-                    className={css.lastName}
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    label={lastNameLabel}
-                    placeholder={lastNamePlaceholder}
-                    validate={lastNameRequired}
-                  />
+              {this.state.currentTab == 1 ?
+                <div className={css.sectionContainer}>
+                  <h3 className={css.sectionTitle}>
+                    <FormattedMessage id="ProfileSettingsForm.yourName" />
+                  </h3>
+                  <div className={css.nameContainer}>
+                    <FieldTextInput
+                      className={css.firstName}
+                      type="text"
+                      id="firstName"
+                      name="firstName"
+                      label={firstNameLabel}
+                      placeholder={firstNamePlaceholder}
+                      validate={firstNameRequired}
+                    />
+                    <FieldTextInput
+                      className={css.lastName}
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      label={lastNameLabel}
+                      placeholder={lastNamePlaceholder}
+                      validate={lastNameRequired}
+                    />
+                  </div>
+                  {user.attributes.profile.protectedData && user.attributes.profile.protectedData.userType == 'mentee' ?   
+                    <FieldTextInput
+                      type="date"
+                      id={`dob`}
+                      name={`dob`}
+                      label={'Date of Birth'}
+                    /> 
+                    :null
+                  }
                 </div>
-              </div>
-              <div className={classNames(css.sectionContainer, css.lastSection)}>
-                <h3 className={css.sectionTitle}>
-                  <FormattedMessage id="ProfileSettingsForm.bioHeading" />
-                </h3>
-                <FieldTextInput
-                  type="textarea"
-                  id="bio"
-                  name="bio"
-                  label={bioLabel}
-                  placeholder={bioPlaceholder}
-                />
-                <p className={css.bioInfo}>
-                  <FormattedMessage id="ProfileSettingsForm.bioInfo" />
-                </p>
+                : null
+              }
+              {this.state.currentTab == 1 ?
+                <div className={classNames(css.sectionContainer, css.lastSection)}>
+                  <h3 className={css.sectionTitle}>
+                    <FormattedMessage id="ProfileSettingsForm.bioHeading" />
+                  </h3>
+                  <FieldTextInput
+                    type="textarea"
+                    id="bio"
+                    name="bio"
+                    label={bioLabel}
+                    placeholder={bioPlaceholder}
+                  />
+                  {/*<p className={css.bioInfo}>
+                    <FormattedMessage id="ProfileSettingsForm.bioInfo" />
+              </p>*/}
+                </div>
+                : null
+              }
+              {this.state.currentTab == 2 ? 
+                <div className={classNames(css.sectionContainer, css.lastSection)}>
+                  <h3 className={css.sectionTitle}>
+                    <FormattedMessage id="ProfileSettingsForm.workExpHeading" />
+                  </h3>
+                  <WorkExperienceForm workExp={'workExp'}
+                    intl={intl}  />
+                </div> 
+                : null
+              }
+              {this.state.currentTab == 3 ?  
+                <div className={classNames(css.sectionContainer, css.lastSection)}>    
+                  <h3 className={css.sectionTitle}>
+                    <FormattedMessage id="ProfileSettingsForm.educationHeading" />
+                  </h3>
+                    <EducationForm workExp={'workExp'}
+                    intl={intl}  />
+                </div>
+                : null
+              }
+              <div className={css.nameContainer}>
+                <Button
+                  className={css.submitButton}
+                  type="button"
+                  onClick={() => this.onToggleTab(1)}
+                  // inProgress={submitInProgress}
+                  disabled={this.state.currentTab == 1 ? true : false}
+                  // ready={pristineSinceLastSubmit}
+                >
+                  Profile
+                </Button>
+                <Button
+                  className={css.submitButton}
+                  type="button"
+                  onClick={() => this.onToggleTab(2)}
+                  // inProgress={submitInProgress}
+                  disabled={this.state.currentTab == 2 ? true : false}
+                  // ready={pristineSinceLastSubmit}
+                >
+                 Work Experience
+                </Button>
+                <Button
+                  className={css.submitButton}
+                  type="button"
+                  onClick={() => this.onToggleTab(3)}
+                  // inProgress={submitInProgress}
+                  disabled={this.state.currentTab == 3 ? true : false}
+                  // ready={pristineSinceLastSubmit}
+                >
+                 Education
+                </Button>
               </div>
               {submitError}
               <Button

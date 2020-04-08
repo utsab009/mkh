@@ -101,6 +101,12 @@ const TopbarDesktop = props => {
             </div>
           </OwnListingLink>
         </MenuItem>
+        <MenuItem key="FavouritesPage">
+          <NamedLink className={classNames(css.yourListingsLink, currentPageClass('FavouritesPage'))} name="FavouritesPage">
+            <span className={css.menuItemBorder} />
+            <FormattedMessage id="TopbarDesktop.favourites" />
+          </NamedLink>
+        </MenuItem>
         <MenuItem key="ManageListingsPage">
           <NamedLink className={classNames(css.yourListingsLink, currentPageClass('ManageListingsPage'))} name="ManageListingsPage">
             <span className={css.menuItemBorder} />

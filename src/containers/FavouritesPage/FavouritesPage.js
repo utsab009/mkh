@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
+import { types as sdkTypes } from '../../util/sdkLoader';
 import { propTypes } from '../../util/types';
+import config from '../../config';
 import { parse } from '../../util/urlHelpers';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
 import {
   ManageListingCard,
+  ListingCard,
   Page,
   PaginationLinks,
   UserNav,
@@ -19,20 +22,20 @@ import {
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
-import {
-  closeListing,
-  openListing,
-  getOwnListingsById,
-  queryOwnListings,
-} from './ManageListingsPage.duck';
-import css from './ManageListingsPage.css';
+// import {
+//   closeListing,
+//   openListing,
+//   getOwnListingsById,
+//   queryOwnListings,
+// } from './FavouritesPage.duck';
+import css from './FavouritesPage.css';
 
 // Pagination page size might need to be dynamic on responsive page layouts
 // Current design has max 3 columns 42 is divisible by 2 and 3
 // So, there's enough cards to fill all columns on full pagination pages
 const RESULT_PAGE_SIZE = 42;
 
-export class ManageListingsPageComponent extends Component {
+export class FavouritesPageComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -46,6 +49,7 @@ export class ManageListingsPageComponent extends Component {
 
   render() {
     const {
+      currentUser,  
       closingListing,
       closingListingError,
       listings,
@@ -61,25 +65,28 @@ export class ManageListingsPageComponent extends Component {
       intl,
     } = this.props;
 
+    let favouritesArr = currentUser && currentUser.attributes.profile.protectedData.favourites && Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites)) ? JSON.parse(currentUser.attributes.profile.protectedData.favourites) : [];
+    console.log("favouritesArr",favouritesArr);
+
     const hasPaginationInfo = !!pagination && pagination.totalItems != null;
     const listingsAreLoaded = !queryInProgress && hasPaginationInfo;
 
     const loadingResults = (
       <h2>
-        <FormattedMessage id="ManageListingsPage.loadingOwnListings" />
+        <FormattedMessage id="FavouritesPage.loadingOwnListings" />
       </h2>
     );
 
     const queryError = (
       <h2 className={css.error}>
-        <FormattedMessage id="ManageListingsPage.queryError" />
+        <FormattedMessage id="FavouritesPage.queryError" />
       </h2>
     );
 
     const noResults =
       listingsAreLoaded && pagination.totalItems === 0 ? (
         <h1 className={css.title}>
-          <FormattedMessage id="ManageListingsPage.noResults" />
+          <FormattedMessage id="FavouritesPage.noResults" />
         </h1>
       ) : null;
 
@@ -87,7 +94,7 @@ export class ManageListingsPageComponent extends Component {
       listingsAreLoaded && pagination.totalItems > 0 ? (
         <h1 className={css.title}>
           <FormattedMessage
-            id="ManageListingsPage.youHaveListings"
+            id="FavouritesPage.youHaveListings"
             values={{ count: pagination.totalItems }}
           />
         </h1>
@@ -100,7 +107,7 @@ export class ManageListingsPageComponent extends Component {
       listingsAreLoaded && pagination && pagination.totalPages > 1 ? (
         <PaginationLinks
           className={css.pagination}
-          pageName="ManageListingsPage"
+          pageName="FavouritesPage"
           pageSearchParams={{ page }}
           pagination={pagination}
         />
@@ -110,7 +117,7 @@ export class ManageListingsPageComponent extends Component {
     const closingErrorListingId = !!closingListingError && closingListingError.listingId;
     const openingErrorListingId = !!openingListingError && openingListingError.listingId;
 
-    const title = intl.formatMessage({ id: 'ManageListingsPage.title' });
+    const title = intl.formatMessage({ id: 'FavouritesPage.title' });
 
     const panelWidth = 62.5;
     // Render hints for responsive image
@@ -120,12 +127,14 @@ export class ManageListingsPageComponent extends Component {
       `${panelWidth / 3}vw`,
     ].join(', ');
 
+    const { Money } = sdkTypes;
+
     return (
       <Page title={title} scrollingDisabled={scrollingDisabled}>
         <LayoutSingleColumn>
           <LayoutWrapperTopbar>
-            <TopbarContainer currentPage="ManageListingsPage" />
-            <UserNav selectedPageName="ManageListingsPage" />
+            <TopbarContainer currentPage="FavouritesPage" />
+            <UserNav selectedPageName="FavouritesPage" />
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
             {queryInProgress ? loadingResults : null}
@@ -133,21 +142,30 @@ export class ManageListingsPageComponent extends Component {
             <div className={css.listingPanel}>
               {heading}
               <div className={css.listingCards}>
-                {listings.map(l => (
-                  <ManageListingCard
+                {favouritesArr.map(l => {
+                //   <ManageListingCard
+                //     className={css.listingCard}
+                //     key={l.id}
+                //     listing={l.listing}
+                //     isMenuOpen={!!listingMenuOpen && listingMenuOpen.id.uuid === l.id.uuid}
+                //     actionsInProgressListingId={openingListing || closingListing}
+                //     onToggleMenu={this.onToggleMenu}
+                //     onCloseListing={onCloseListing}
+                //     onOpenListing={onOpenListing}
+                //     hasOpeningError={openingErrorListingId.uuid === l.id.uuid}
+                //     hasClosingError={closingErrorListingId.uuid === l.id.uuid}
+                //     renderSizes={renderSizes}
+                //   />
+                l.listing.attributes.price = new Money(l.listing.attributes.price.amount, l.listing.attributes.price.currency);
+                return(
+                  <ListingCard
                     className={css.listingCard}
-                    key={l.id.uuid}
-                    listing={l}
-                    isMenuOpen={!!listingMenuOpen && listingMenuOpen.id.uuid === l.id.uuid}
-                    actionsInProgressListingId={openingListing || closingListing}
-                    onToggleMenu={this.onToggleMenu}
-                    onCloseListing={onCloseListing}
-                    onOpenListing={onOpenListing}
-                    hasOpeningError={openingErrorListingId.uuid === l.id.uuid}
-                    hasClosingError={closingErrorListingId.uuid === l.id.uuid}
-                    renderSizes={renderSizes}
+                    key={l.id}
+                    listing={l.listing}
+                    renderSizes={l.renderSizes}
+                    // setActiveListing={setActiveListing}
                   />
-                ))}
+                )})}
               </div>
               {paginationLinks}
             </div>
@@ -161,7 +179,7 @@ export class ManageListingsPageComponent extends Component {
   }
 }
 
-ManageListingsPageComponent.defaultProps = {
+FavouritesPageComponent.defaultProps = {
   listings: [],
   pagination: null,
   queryListingsError: null,
@@ -174,7 +192,7 @@ ManageListingsPageComponent.defaultProps = {
 
 const { arrayOf, bool, func, object, shape, string } = PropTypes;
 
-ManageListingsPageComponent.propTypes = {
+FavouritesPageComponent.propTypes = {
   closingListing: shape({ uuid: string.isRequired }),
   closingListingError: shape({
     listingId: propTypes.uuid.isRequired,
@@ -199,58 +217,36 @@ ManageListingsPageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const {
-    currentPageResultIds,
-    pagination,
-    queryInProgress,
-    queryListingsError,
-    queryParams,
-    openingListing,
-    openingListingError,
-    closingListing,
-    closingListingError,
-  } = state.ManageListingsPage;
-  console.log("currentPageResultIds",currentPageResultIds);
-  const listings = getOwnListingsById(state, currentPageResultIds);
-  return {
-    currentPageResultIds,
-    listings,
-    pagination,
-    queryInProgress,
-    queryListingsError,
-    queryParams,
-    scrollingDisabled: isScrollingDisabled(state),
-    openingListing,
-    openingListingError,
-    closingListing,
-    closingListingError,
-  };
+    const { currentUser} = state.user;
+    return {
+      currentUser,
+    };
 };
 
-const mapDispatchToProps = dispatch => ({
-  onCloseListing: listingId => dispatch(closeListing(listingId)),
-  onOpenListing: listingId => dispatch(openListing(listingId)),
-});
+// const mapDispatchToProps = dispatch => ({
+//   onCloseListing: listingId => dispatch(closeListing(listingId)),
+//   onOpenListing: listingId => dispatch(openListing(listingId)),
+// });
 
-const ManageListingsPage = compose(
+const FavouritesPage = compose(
   connect(
     mapStateToProps,
-    mapDispatchToProps
+    // mapDispatchToProps
   ),
   injectIntl
-)(ManageListingsPageComponent);
+)(FavouritesPageComponent);
 
-ManageListingsPage.loadData = (params, search) => {
-  const queryParams = parse(search);
-  const page = queryParams.page || 1;
-  return queryOwnListings({
-    ...queryParams,
-    page,
-    perPage: RESULT_PAGE_SIZE,
-    include: ['images'],
-    'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
-    'limit.images': 1,
-  });
-};
+// FavouritesPage.loadData = (params, search) => {
+//   const queryParams = parse(search);
+//   const page = queryParams.page || 1;
+//   return queryOwnListings({
+//     ...queryParams,
+//     page,
+//     perPage: RESULT_PAGE_SIZE,
+//     include: ['images'],
+//     'fields.image': ['variants.landscape-crop', 'variants.landscape-crop2x'],
+//     'limit.images': 1,
+//   });
+// };
 
-export default ManageListingsPage;
+export default FavouritesPage;

@@ -157,6 +157,7 @@ export const queryUserReviews = userId => (dispatch, getState, sdk) => {
 export const showUser = userId => (dispatch, getState, sdk) => {
   dispatch(showUserRequest(userId));
   return sdk.users
+  // const sdkResp = sdk.users
     .show({
       id: userId,
       include: ['profileImage'],
