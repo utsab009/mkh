@@ -156,24 +156,19 @@ export const queryUserReviews = userId => (dispatch, getState, sdk) => {
 
 export const showUser = userId => (dispatch, getState, sdk) => {
   dispatch(showUserRequest(userId));
-  console.log("userId in showuser",userId)
   return sdk.users
+  // const sdkResp = sdk.users
     .show({
       id: userId,
       include: ['profileImage'],
       'fields.image': ['variants.square-small', 'variants.square-small2x'],
     })
     .then(response => {
-      console.log("response in showuser",response);
       dispatch(addMarketplaceEntities(response));
       dispatch(showUserSuccess());
       return response;
     })
-    .catch(e => {
-      console.log("e in profilepageduck.js",e);
-      dispatch(showUserError(storableError(e)))
-    });
-    
+    .catch(e => dispatch(showUserError(storableError(e))));
 };
 
 export const loadData = userId => (dispatch, getState, sdk) => {

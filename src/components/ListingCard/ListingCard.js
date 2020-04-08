@@ -56,6 +56,7 @@ export class ListingCardComponent extends Component {
     super(props);
     this.state = {
       validation_error: false,
+      authorData: null,
 
     };
     // console.log("props in listingcard",props);
@@ -66,11 +67,13 @@ export class ListingCardComponent extends Component {
 
   componentDidMount() {
     console.log("this.props in CDM in listingcard",this.props.listing.author.id);
-    const { UUID} = sdkTypes;
-    var userId = new UUID(this.props.listing.author.id.uuid);
-    console.log("userId in CDM",userId);
+    let authorData ;
     let showuserresponse = this.props.onShowUser(this.props.listing.author.id);
-    console.log("showuser CDM",showuserresponse);
+    showuserresponse.then(result => {
+      authorData = result.data;
+      this.setState({authorData : authorData});
+     return result;
+    });
   }
 
   addToFav = id => {
@@ -119,7 +122,10 @@ export class ListingCardComponent extends Component {
       certificateConfig,
       setActiveListing,
     } = this.props;
-
+    console.log("this.state.authordata",this.state.authorData);
+    let authorData = this.state.authorData !== null && this.state.authorData.data.attributes.profile.publicData ? this.state.authorData.data.attributes.profile.publicData : {error:"no data"}; 
+    let {workExp = null, education = null } = authorData;
+    console.log("workExp:",workExp);
     let favouritesArr = currentUser && currentUser.attributes.profile.protectedData.favourites && Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites)) ? JSON.parse(currentUser.attributes.profile.protectedData.favourites) : [];
     const classes = classNames(rootClassName || css.root, className);
     const currentListing = ensureListing(listing);
@@ -196,6 +202,14 @@ export class ListingCardComponent extends Component {
                   longWordClass: css.longWord,
                 })}
               </div>
+              {workExp !== null ? workExp.map((item, index) => {
+                if(index < 4)
+                return (
+                  <div>{item.company}</div>
+                );
+                })
+                : null
+              }
               <div className={css.certificateInfo}>
                 {certificate && !certificate.hideFromListingInfo ? (
                   <span>{certificate.label}</span>
