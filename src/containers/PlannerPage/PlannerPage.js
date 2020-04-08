@@ -40,7 +40,7 @@ import { TopbarContainer, NotFoundPage } from '../../containers';
 import config from '../../config';
 
 import { loadData } from '../../containers/InboxPage/InboxPage.duck';
-import css from './InboxPage.css';
+import css from './PlannerPage.css';
 
 const formatDate = (intl, date) => {
   return {
@@ -63,7 +63,7 @@ export const txState = (intl, tx, type) => {
       lastTransitionedAtClassName: css.lastTransitionedAtEmphasized,
       stateClassName: css.stateActionNeeded,
       state: intl.formatMessage({
-        id: 'InboxPage.stateEnquiry',
+        id: 'PlannerPage.stateEnquiry',
       }),
     };
   } else if (txIsRequested(tx)) {
@@ -74,7 +74,7 @@ export const txState = (intl, tx, type) => {
           lastTransitionedAtClassName: css.lastTransitionedAtEmphasized,
           stateClassName: css.stateActionNeeded,
           state: intl.formatMessage({
-            id: 'InboxPage.stateRequested',
+            id: 'PlannerPage.stateRequested',
           }),
         }
       : {
@@ -83,7 +83,7 @@ export const txState = (intl, tx, type) => {
           lastTransitionedAtClassName: css.lastTransitionedAtEmphasized,
           stateClassName: css.stateActionNeeded,
           state: intl.formatMessage({
-            id: 'InboxPage.statePending',
+            id: 'PlannerPage.statePending',
           }),
         };
 
@@ -95,7 +95,7 @@ export const txState = (intl, tx, type) => {
       lastTransitionedAtClassName: css.lastTransitionedAtNotEmphasized,
       stateClassName: isOrder ? css.stateActionNeeded : css.stateNoActionNeeded,
       state: intl.formatMessage({
-        id: 'InboxPage.statePendingPayment',
+        id: 'PlannerPage.statePendingPayment',
       }),
     };
   } else if (txIsPaymentExpired(tx)) {
@@ -105,7 +105,7 @@ export const txState = (intl, tx, type) => {
       lastTransitionedAtClassName: css.lastTransitionedAtNotEmphasized,
       stateClassName: css.stateNoActionNeeded,
       state: intl.formatMessage({
-        id: 'InboxPage.stateExpired',
+        id: 'PlannerPage.stateExpired',
       }),
     };
   } else if (txIsDeclined(tx)) {
@@ -115,7 +115,7 @@ export const txState = (intl, tx, type) => {
       lastTransitionedAtClassName: css.lastTransitionedAtNotEmphasized,
       stateClassName: css.stateNoActionNeeded,
       state: intl.formatMessage({
-        id: 'InboxPage.stateDeclined',
+        id: 'PlannerPage.stateDeclined',
       }),
     };
   } else if (txIsAccepted(tx)) {
@@ -125,7 +125,7 @@ export const txState = (intl, tx, type) => {
       lastTransitionedAtClassName: css.lastTransitionedAtNotEmphasized,
       stateClassName: css.stateSucces,
       state: intl.formatMessage({
-        id: 'InboxPage.stateAccepted',
+        id: 'PlannerPage.stateAccepted',
       }),
     };
   } else if (txIsCanceled(tx)) {
@@ -135,7 +135,7 @@ export const txState = (intl, tx, type) => {
       lastTransitionedAtClassName: css.lastTransitionedAtNotEmphasized,
       stateClassName: css.stateNoActionNeeded,
       state: intl.formatMessage({
-        id: 'InboxPage.stateCanceled',
+        id: 'PlannerPage.stateCanceled',
       }),
     };
   } else if (txHasBeenDelivered(tx)) {
@@ -145,7 +145,7 @@ export const txState = (intl, tx, type) => {
       lastTransitionedAtClassName: css.lastTransitionedAtNotEmphasized,
       stateClassName: css.stateNoActionNeeded,
       state: intl.formatMessage({
-        id: 'InboxPage.stateDelivered',
+        id: 'PlannerPage.stateDelivered',
       }),
     };
   } else {
@@ -167,7 +167,7 @@ const BookingInfoMaybe = props => {
     ? listingAttributes.availabilityPlan.timezone
     : 'Etc/UTC';
 
-  // If you want to show the booking price after the booking time on InboxPage you can
+  // If you want to show the booking price after the booking time on PlannerPage you can
   // add the price after the BookingTimeInfo component. You can get the price by uncommenting
   // sthe following lines:
 
@@ -282,7 +282,157 @@ InboxItem.propTypes = {
   intl: intlShape.isRequired,
 };
 
-export const InboxPageComponent = props => {
+// export const PlannerPageComponent = props => {
+export class PlannerCalendarComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    selectedDate: null,
+    monthStart: moment()
+        .startOf('month')
+        .format('YYYY-MM-DD'),
+    monthEnd: moment()
+        .endOf('month')
+        .format('YYYY-MM-DD'),
+    events: [],
+    links: [],
+    provider_id: props.provider_id,
+    };
+  }
+
+  componentDidMount() {
+    if (window) {
+      Axios.get(
+        'https://pxs5uogx8e.execute-api.eu-west-3.amazonaws.com/dev/booking?provider_id=' +
+        this.state.provider_id +
+        '&start_date=' +
+        this.state.monthStart +
+        '&end_date=' +
+        this.state.monthEnd
+      )
+      .then(response => {
+        if (response.data !== null) {
+            const events = [];
+            for (var i = 0; i < response.data.data.length; i++) {
+            const eventObj = {
+              id: response.data.data[i].transaction_id,
+              title: response.data.data[i].listing_name,
+              allDay: false,
+              start: response.data.data[i].start_time,
+              end: response.data.data[i].end_time,
+            };
+            events.push(eventObj);
+          }
+
+          this.setState({ events: events });
+        }
+      })
+      .catch();
+
+      this.onSelectSlot(moment().format('DD MM YYYY'));
+    }
+  }
+
+  onSelectSlot = (date, event = false) => {
+    let startOfDate = '';
+    let endOfDate = '';
+    let selectedDate = '';
+    if (event == false) {
+    startOfDate = moment(date.start)
+        .startOf('day')
+        .utc()
+        .format('YYYY-MM-DD HH:mm');
+    endOfDate = moment(date.start)
+        .startOf('day')
+        .add(1, 'day')
+        .subtract(1, 'minute')
+        .utc()
+        .format('YYYY-MM-DD HH:mm');
+    selectedDate = date.start;
+    } else {
+    startOfDate = moment(date)
+        .startOf('day')
+        .utc()
+        .format('YYYY-MM-DD HH:mm');
+    endOfDate = moment(date)
+        .startOf('day')
+        .add(1, 'day')
+        .subtract(1, 'minute')
+        .utc()
+        .format('YYYY-MM-DD HH:mm');
+    selectedDate = date;
+    }
+
+    Axios.get(
+    'https://pxs5uogx8e.execute-api.eu-west-3.amazonaws.com/dev/booking?provider_id=' +
+        this.state.provider_id +
+        '&start_date=' +
+        startOfDate +
+        '&end_date=' +
+        endOfDate
+    )
+    .then(response => {
+        if (response.data !== null) {
+        const links = response.data.data;
+
+        this.setState({ links: links });
+        }
+        this.setState({ selectedDate: moment(selectedDate).format('MMM DD YYYY') });
+    })
+    .then(() => {
+        if (this.state.links.length > 0) {
+        this.props.history.push('#eventdiv');
+        }
+    })
+    .catch();
+  };
+
+  onNavigate = (date, view) => {
+    let start, end;
+    if (view === 'month') {
+    start = moment(date)
+        .startOf('month')
+        .format('YYYY-MM-DD');
+    end = moment(date)
+        .endOf('month')
+        .format('YYYY-MM-DD');
+    }
+
+    Axios.get(
+    'https://pxs5uogx8e.execute-api.eu-west-3.amazonaws.com/dev/booking?provider_id=' +
+        this.state.provider_id +
+        '&start_date=' +
+        start +
+        '&end_date=' +
+        end
+    )
+    .then(response => {
+      if (response.data !== null) {
+        const events = [];
+        for (var i = 0; i < response.data.data.length; i++) {
+          const eventObj = {
+          id: response.data.data[i].transaction_id,
+          title: response.data.data[i].listing_name,
+          allDay: false,
+          start: response.data.data[i].start_time,
+          end: response.data.data[i].end_time,
+          };
+          events.push(eventObj);
+        }
+        this.setState({ events: events });
+      }
+    })
+    .catch();
+
+    return true;
+  };
+
+  onSelectEvent = (event, e) => {
+        this.onSelectSlot(event.start, true);
+        // this.props.history.push('/sale/' + event.id + '/details');
+  };
+
+    render() {    
   const {
     unitType,
     currentUser,
@@ -306,8 +456,8 @@ export const InboxPageComponent = props => {
 
   const isOrders = tab === 'orders';
 
-  const ordersTitle = intl.formatMessage({ id: 'InboxPage.ordersTitle' });
-  const salesTitle = intl.formatMessage({ id: 'InboxPage.salesTitle' });
+  const ordersTitle = intl.formatMessage({ id: 'PlannerPage.ordersTitle' });
+  const salesTitle = intl.formatMessage({ id: 'PlannerPage.salesTitle' });
   const title = isOrders ? ordersTitle : salesTitle;
 
   const toTxItem = tx => {
@@ -324,14 +474,14 @@ export const InboxPageComponent = props => {
 
   const error = fetchOrdersOrSalesError ? (
     <p className={css.error}>
-      <FormattedMessage id="InboxPage.fetchFailed" />
+      <FormattedMessage id="PlannerPage.fetchFailed" />
     </p>
   ) : null;
 
   const noResults =
     !fetchInProgress && transactions.length === 0 && !fetchOrdersOrSalesError ? (
       <li key="noResults" className={css.noResults}>
-        <FormattedMessage id={isOrders ? 'InboxPage.noOrdersFound' : 'InboxPage.noSalesFound'} />
+        <FormattedMessage id={isOrders ? 'PlannerPage.noOrdersFound' : 'PlannerPage.noSalesFound'} />
       </li>
     ) : null;
 
@@ -346,7 +496,7 @@ export const InboxPageComponent = props => {
     hasTransactions && pagination && pagination.totalPages > 1 ? (
       <PaginationLinks
         className={css.pagination}
-        pageName="InboxPage"
+        pageName="PlannerPage"
         pagePathParams={params}
         pagination={pagination}
       />
@@ -359,25 +509,25 @@ export const InboxPageComponent = props => {
     {
       text: (
         <span>
-          <FormattedMessage id="InboxPage.ordersTabTitle" />
+          <FormattedMessage id="PlannerPage.ordersTabTitle" />
         </span>
       ),
       selected: isOrders,
       linkProps: {
-        name: 'InboxPage',
+        name: 'PlannerPage',
         params: { tab: 'orders' },
       },
     },
     {
       text: (
         <span>
-          <FormattedMessage id="InboxPage.salesTabTitle" />
+          <FormattedMessage id="PlannerPage.salesTabTitle" />
           {providerNotificationBadge}
         </span>
       ),
       selected: !isOrders,
       linkProps: {
-        name: 'InboxPage',
+        name: 'PlannerPage',
         params: { tab: 'sales' },
       },
     },
@@ -392,12 +542,12 @@ export const InboxPageComponent = props => {
             className={css.topbar}
             mobileRootClassName={css.mobileTopbar}
             desktopClassName={css.desktopTopbar}
-            currentPage="InboxPage"
+            currentPage="PlannerPage"
           />
         </LayoutWrapperTopbar>
         <LayoutWrapperSideNav className={css.navigation}>
           <h1 className={css.title}>
-            <FormattedMessage id="InboxPage.title" />
+            <FormattedMessage id="PlannerPage.title" />
           </h1>
           {currentUserListing ? nav : <div className={css.navPlaceholder} />}
         </LayoutWrapperSideNav>
@@ -423,7 +573,7 @@ export const InboxPageComponent = props => {
   );
 };
 
-InboxPageComponent.defaultProps = {
+PlannerPageComponent.defaultProps = {
   unitType: config.bookingUnitType,
   currentUser: null,
   currentUserListing: null,
@@ -434,7 +584,7 @@ InboxPageComponent.defaultProps = {
   sendVerificationEmailError: null,
 };
 
-InboxPageComponent.propTypes = {
+PlannerPageComponent.propTypes = {
   params: shape({
     tab: string.isRequired,
   }).isRequired,
@@ -454,7 +604,7 @@ InboxPageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { fetchInProgress, fetchOrdersOrSalesError, pagination, transactionRefs } = state.InboxPage;
+  const { fetchInProgress, fetchOrdersOrSalesError, pagination, transactionRefs } = state.PlannerPage;
   const {
     currentUser,
     currentUserListing,
@@ -472,11 +622,11 @@ const mapStateToProps = state => {
   };
 };
 
-const InboxPage = compose(
+const PlannerPage = compose(
   connect(mapStateToProps),
   injectIntl
-)(InboxPageComponent);
+)(PlannerPageComponent);
 
-InboxPage.loadData = loadData;
+PlannerPage.loadData = loadData;
 
-export default InboxPage;
+export default PlannerPage;
