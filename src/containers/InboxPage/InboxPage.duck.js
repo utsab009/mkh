@@ -74,8 +74,8 @@ const fetchOrdersOrSalesError = e => ({
 const INBOX_PAGE_SIZE = 10;
 
 export const loadData = (params, search) => (dispatch, getState, sdk) => {
-  const { tab } = params;
-
+  const { tab = 'sales' } = params;
+  console.log("tab:",tab,"params:",params);
   const onlyFilterValues = {
     orders: 'order',
     sales: 'sale',
@@ -117,6 +117,7 @@ export const loadData = (params, search) => (dispatch, getState, sdk) => {
   return sdk.transactions
     .query(apiQueryParams)
     .then(response => {
+      console.log("response in inboxpage.duck",response);
       dispatch(addMarketplaceEntities(response));
       dispatch(fetchOrdersOrSalesSuccess(response));
       return response;

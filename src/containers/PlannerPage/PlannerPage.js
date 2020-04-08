@@ -39,7 +39,7 @@ import {
 import { TopbarContainer, NotFoundPage } from '../../containers';
 import config from '../../config';
 
-import { loadData } from './InboxPage.duck';
+import { loadData } from '../../containers/InboxPage/InboxPage.duck';
 import css from './InboxPage.css';
 
 const formatDate = (intl, date) => {
