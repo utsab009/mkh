@@ -10,6 +10,7 @@ export { default as ListingPage } from './ListingPage/ListingPage';
 export { default as ManageListingsPage } from './ManageListingsPage/ManageListingsPage';
 export { default as FavouritesPage } from './FavouritesPage/FavouritesPage';
 export { default as NotFoundPage } from './NotFoundPage/NotFoundPage';
+export { default as PlannerPage } from './PlannerPage/PlannerPage';
 export { default as PasswordChangePage } from './PasswordChangePage/PasswordChangePage';
 export { default as PasswordRecoveryPage } from './PasswordRecoveryPage/PasswordRecoveryPage';
 export { default as PasswordResetPage } from './PasswordResetPage/PasswordResetPage';
