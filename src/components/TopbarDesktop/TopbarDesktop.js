@@ -113,6 +113,15 @@ const TopbarDesktop = props => {
             <FormattedMessage id="TopbarDesktop.listingLink" />
           </NamedLink>
         </MenuItem>
+        <MenuItem key="PlannerPage">
+          <NamedLink
+            className={classNames(css.profileSettingsLink, currentPageClass('PlannerPage'))}
+            name="PlannerPage"
+          >
+            <span className={css.menuItemBorder} />
+            <FormattedMessage id="TopbarDesktop.plannerLink" />
+          </NamedLink>
+        </MenuItem>
         <MenuItem key="ProfileSettingsPage">
           <NamedLink
             className={classNames(css.profileSettingsLink, currentPageClass('ProfileSettingsPage'))}
