@@ -235,8 +235,9 @@ export class SearchPageComponent extends Component {
 
     const isWindowDefined = typeof window !== 'undefined';
     const isMobileLayout = isWindowDefined && window.innerWidth < MODAL_BREAKPOINT;
-    const shouldShowSearchMap =
-      !isMobileLayout || (isMobileLayout && this.state.isSearchMapOpenOnMobile);
+    // const shouldShowSearchMap =
+    //   !isMobileLayout || (isMobileLayout && this.state.isSearchMapOpenOnMobile);
+    const shouldShowSearchMap = false;
 
     const onMapIconClick = () => {
       this.useLocationSearchBounds = true;
@@ -301,7 +302,7 @@ export class SearchPageComponent extends Component {
             showAsModalMaxWidth={MODAL_BREAKPOINT}
             onManageDisableScrolling={onManageDisableScrolling}
           >
-            <div className={css.mapWrapper}>
+            {<div className={css.mapWrapper}>
               {shouldShowSearchMap ? (
                 <SearchMap
                   reusableContainerClassName={css.map}
@@ -318,7 +319,7 @@ export class SearchPageComponent extends Component {
                   messages={intl.messages}
                 />
               ) : null}
-            </div>
+                </div>}
           </ModalInMobile>
         </div>
       </Page>
