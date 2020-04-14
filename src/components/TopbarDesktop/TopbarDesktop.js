@@ -39,6 +39,7 @@ const TopbarDesktop = props => {
     initialSearchFormValues,
   } = props;
   const [mounted, setMounted] = useState(false);
+  // console.log("currentUser",currentUser,isMentor);
 
   useEffect(() => {
     setMounted(true);
@@ -84,69 +85,98 @@ const TopbarDesktop = props => {
       <MenuLabel className={css.profileMenuLabel} isOpenClassName={css.profileMenuIsOpen}>
         <Avatar className={css.avatar} user={currentUser} disableProfileLink />
       </MenuLabel>
-      <MenuContent className={css.profileMenuContent}>
-        <MenuItem key="EditListingPage">
-          <OwnListingLink
-            listing={currentUserListing}
-            listingFetched={currentUserListingFetched}
-            className={css.yourListingsLink}
-          >
-            <div>
+      {isMentor ?
+        <MenuContent className={css.profileMenuContent}>
+          {/*<MenuItem key="EditListingPage">
+            <OwnListingLink
+              listing={currentUserListing}
+              listingFetched={currentUserListingFetched}
+              className={css.yourListingsLink}
+            >
+              <div>
+                <span className={css.menuItemBorder} />
+                {currentUserListing ? (
+                  <FormattedMessage id="TopbarDesktop.editYourListingLink" />
+                ) : (
+                  <FormattedMessage id="TopbarDesktop.addYourListingLink" />
+                )}
+              </div>
+            </OwnListingLink>
+                </MenuItem>*/}
+          <MenuItem key="ManageListingsPage">
+            <NamedLink className={classNames(css.yourListingsLink, currentPageClass('ManageListingsPage'))} name="ManageListingsPage">
               <span className={css.menuItemBorder} />
-              {currentUserListing ? (
-                <FormattedMessage id="TopbarDesktop.editYourListingLink" />
-              ) : (
-                <FormattedMessage id="TopbarDesktop.addYourListingLink" />
-              )}
-            </div>
-          </OwnListingLink>
-        </MenuItem>
-        <MenuItem key="FavouritesPage">
-          <NamedLink className={classNames(css.yourListingsLink, currentPageClass('FavouritesPage'))} name="FavouritesPage">
-            <span className={css.menuItemBorder} />
-            <FormattedMessage id="TopbarDesktop.favourites" />
-          </NamedLink>
-        </MenuItem>
-        <MenuItem key="ManageListingsPage">
-          <NamedLink className={classNames(css.yourListingsLink, currentPageClass('ManageListingsPage'))} name="ManageListingsPage">
-            <span className={css.menuItemBorder} />
-            <FormattedMessage id="TopbarDesktop.listingLink" />
-          </NamedLink>
-        </MenuItem>
-        <MenuItem key="PlannerPage">
-          <NamedLink
-            className={classNames(css.profileSettingsLink, currentPageClass('PlannerPage'))}
-            name="PlannerPage"
-          >
-            <span className={css.menuItemBorder} />
-            <FormattedMessage id="TopbarDesktop.plannerLink" />
-          </NamedLink>
-        </MenuItem>
-        <MenuItem key="ProfileSettingsPage">
-          <NamedLink
-            className={classNames(css.profileSettingsLink, currentPageClass('ProfileSettingsPage'))}
-            name="ProfileSettingsPage"
-          >
-            <span className={css.menuItemBorder} />
-            <FormattedMessage id="TopbarDesktop.profileSettingsLink" />
-          </NamedLink>
-        </MenuItem>
-        <MenuItem key="AccountSettingsPage">
-          <NamedLink
-            className={classNames(css.yourListingsLink, currentPageClass('AccountSettingsPage'))}
-            name="AccountSettingsPage"
-          >
-            <span className={css.menuItemBorder} />
-            <FormattedMessage id="TopbarDesktop.accountSettingsLink" />
-          </NamedLink>
-        </MenuItem>
-        <MenuItem key="logout">
-          <InlineTextButton rootClassName={css.logoutButton} onClick={onLogout}>
-            <span className={css.menuItemBorder} />
-            <FormattedMessage id="TopbarDesktop.logout" />
-          </InlineTextButton>
-        </MenuItem>
-      </MenuContent>
+              <FormattedMessage id="TopbarDesktop.listingLink" />
+            </NamedLink>
+          </MenuItem>
+          <MenuItem key="PlannerPage">
+            <NamedLink
+              className={classNames(css.profileSettingsLink, currentPageClass('PlannerPage'))}
+              name="PlannerPage"
+            >
+              <span className={css.menuItemBorder} />
+              <FormattedMessage id="TopbarDesktop.plannerLink" />
+            </NamedLink>
+          </MenuItem>
+          <MenuItem key="ProfileSettingsPage">
+            <NamedLink
+              className={classNames(css.profileSettingsLink, currentPageClass('ProfileSettingsPage'))}
+              name="ProfileSettingsPage"
+            >
+              <span className={css.menuItemBorder} />
+              <FormattedMessage id="TopbarDesktop.profileSettingsLink" />
+            </NamedLink>
+          </MenuItem>
+          <MenuItem key="AccountSettingsPage">
+            <NamedLink
+              className={classNames(css.yourListingsLink, currentPageClass('AccountSettingsPage'))}
+              name="AccountSettingsPage"
+            >
+              <span className={css.menuItemBorder} />
+              <FormattedMessage id="TopbarDesktop.accountSettingsLink" />
+            </NamedLink>
+          </MenuItem>
+          <MenuItem key="logout">
+            <InlineTextButton rootClassName={css.logoutButton} onClick={onLogout}>
+              <span className={css.menuItemBorder} />
+              <FormattedMessage id="TopbarDesktop.logout" />
+            </InlineTextButton>
+          </MenuItem>
+        </MenuContent>
+        :
+        <MenuContent className={css.profileMenuContent}>
+          <MenuItem key="FavouritesPage">
+            <NamedLink className={classNames(css.yourListingsLink, currentPageClass('FavouritesPage'))} name="FavouritesPage">
+              <span className={css.menuItemBorder} />
+              <FormattedMessage id="TopbarDesktop.favourites" />
+            </NamedLink>
+          </MenuItem>
+          <MenuItem key="ProfileSettingsPage">
+            <NamedLink
+              className={classNames(css.profileSettingsLink, currentPageClass('ProfileSettingsPage'))}
+              name="ProfileSettingsPage"
+            >
+              <span className={css.menuItemBorder} />
+              <FormattedMessage id="TopbarDesktop.profileSettingsLink" />
+            </NamedLink>
+          </MenuItem>
+          <MenuItem key="AccountSettingsPage">
+            <NamedLink
+              className={classNames(css.yourListingsLink, currentPageClass('AccountSettingsPage'))}
+              name="AccountSettingsPage"
+            >
+              <span className={css.menuItemBorder} />
+              <FormattedMessage id="TopbarDesktop.accountSettingsLink" />
+            </NamedLink>
+          </MenuItem>
+          <MenuItem key="logout">
+            <InlineTextButton rootClassName={css.logoutButton} onClick={onLogout}>
+              <span className={css.menuItemBorder} />
+              <FormattedMessage id="TopbarDesktop.logout" />
+            </InlineTextButton>
+          </MenuItem>
+        </MenuContent>
+      }
     </Menu>
   ) : null;
 
