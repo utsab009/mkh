@@ -10,7 +10,14 @@
     text-decoration: none;
   }
 }
-
+.updateRow{
+  width: 100%;
+  margin: 0 0 20px;
+  background: #fff;
+  display: inline-flex;
+  border: 1px solid #f4f4f4;
+}
+.updateRow 
 .threeToTwoWrapper {
   /* Layout */
   display: block;
@@ -29,32 +36,45 @@
   padding-bottom: 66.6667%; /* 3:2 Aspect Ratio */
   background: var(--matterColorNegative); /* Loading BG color */
 }
-
+.aspectWrapperMod{
+  background: none;
+  padding-bottom: 0;
+}
+.aspectWrapperMod div{
+  position: relative !important;
+}
 .rootForImage {
   /* Layout - image will take space defined by aspect ratio wrapper */
-  position: absolute;
+  /* position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   width: 100%;
-  border-radius: var(--borderRadius);
+  border-radius: var(--borderRadius); */
+  width: 200px;
+  height: 200px;
 }
-
+.modImageSec{
+  width: 200px;
+  height: 200px;
+  background: #efefef;
+}
 .info {
   /* Layout */
   display: flex;
   flex-direction: row;
-  padding: 16px 0 2px 0;
+  padding: 16px 0 2px 30px;
+  justify-content: start;
+  flex-basis: 90%;
 }
 
 .price {
-  /* Layout */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex-shrink: 0;
-  margin-right: 18px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 18px;
+    flex-basis: 50%;
+
 }
 
 .priceValue {

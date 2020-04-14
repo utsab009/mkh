@@ -49,6 +49,7 @@ class ListingImage extends Component {
     return <ResponsiveImage {...this.props} />;
   }
 }
+
 const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRendering: 3000 });
 
 export class ListingCardComponent extends Component {
@@ -169,23 +170,26 @@ export class ListingCardComponent extends Component {
     console.log("isfavourite :",isFavourite);  
 
     return (
-      <div>
+      <div className={css.updateRow}>
         <NamedLink className={classes} name="ListingPage" params={{ id, slug }}>
-          <div
+          {/* <div
             className={css.threeToTwoWrapper}
             onMouseEnter={() => setActiveListing(currentListing.id)}
             onMouseLeave={() => setActiveListing(null)}
           >
-            <div className={css.aspectWrapper}>
+            <div className={`${css.aspectWrapper} ${css.aspectWrapperMod}`}>
               <LazyImage
-                rootClassName={css.rootForImage}
+                rootClassName={`${css.rootForImage} ${css.modifyImg}`}
                 alt={title}
                 image={firstImage}
                 variants={['landscape-crop', 'landscape-crop2x']}
                 sizes={renderSizes}
               />
             </div>
-          </div>
+          </div> */}
+           <div className={css.modImageSec}>
+             <img image={firstImage} />
+           </div>
           <div className={css.info}>
             <div className={css.price}>
               <div className={css.priceValue} title={priceTitle}>

@@ -294,7 +294,7 @@ export class SearchPageComponent extends Component {
               keywordFilter: filters.keywordFilter,
             }}
           />
-          <ModalInMobile
+          {/* <ModalInMobile
             className={css.mapPanel}
             id="SearchPage.map"
             isModalOpenOnMobile={this.state.isSearchMapOpenOnMobile}
@@ -320,7 +320,7 @@ export class SearchPageComponent extends Component {
                 />
               ) : null}
                 </div>}
-          </ModalInMobile>
+          </ModalInMobile> */}
         </div>
       </Page>
     );
