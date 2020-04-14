@@ -293,7 +293,7 @@ const SearchFiltersComponent = props => {
         {/*certificateFilterElement*/}
         {/*sectorsFilterElement*/}
         {mentorLanguageFilterElement}
-        {mentorShiftFilterElement}
+        {/*mentorShiftFilterElement*/}
         {priceFilterElement}
         {/*keywordFilterElement*/}
         {toggleSearchFiltersPanelButton}

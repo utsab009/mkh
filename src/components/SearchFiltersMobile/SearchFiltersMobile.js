@@ -346,7 +346,7 @@ class SearchFiltersMobileComponent extends Component {
             <div className={css.filtersWrapper}>
               {/*keywordFilterElement*/}
               {/*yogaStylesFilterElement*/}
-              {mentorShiftFilterElement}
+              {/*mentorShiftFilterElement*/}
               {/*certificateFilterElement*/}
               {/*sectorsFilterElement*/}
               {mentorLanguageFilterElement}
