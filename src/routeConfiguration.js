@@ -7,6 +7,7 @@ import {
   EditListingPage,
   EmailVerificationPage,
   InboxPage,
+  PlannerPage,
   LandingPage,
   ListingPage,
   ManageListingsPage,
@@ -208,6 +209,14 @@ const routeConfiguration = () => {
       auth: true,
       authPage: 'LoginPage',
       component: props => <NamedRedirect name="OrderDetailsPage" params={{ ...props.params }} />,
+    },
+    {
+      path: '/planner',
+      name: 'PlannerPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <PlannerPage {...props} />,
+      loadData: PlannerPage.loadData,
     },
     {
       path: '/order/:id/details',

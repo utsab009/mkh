@@ -112,6 +112,12 @@ const TopbarMobileMenu = props => {
           <FormattedMessage id="TopbarMobileMenu.profileSettingsLink" />
         </NamedLink>
         <NamedLink
+          className={classNames(css.navigationLink, currentPageClass('PlannerPage'))}
+          name="PlannerPage"
+        >
+          <FormattedMessage id="TopbarMobileMenu.plannerLink" />
+        </NamedLink>
+        <NamedLink
           className={classNames(css.navigationLink, currentPageClass('AccountSettingsPage'))}
           name="AccountSettingsPage"
         >
