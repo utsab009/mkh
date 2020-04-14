@@ -29,6 +29,7 @@ const TopbarMobileMenu = props => {
     currentUser,
     notificationCount,
     onLogout,
+    isMentor,
   } = props;
 
   const user = ensureCurrentUser(currentUser);
@@ -100,23 +101,41 @@ const TopbarMobileMenu = props => {
           <FormattedMessage id="TopbarMobileMenu.inboxLink" />
           {notificationCountBadge}
         </NamedLink>
-        <OwnListingLink
+        {/*<OwnListingLink
           listing={currentUserListing}
           listingFetched={currentUserListingFetched}
           className={css.navigationLink}
-        />
+        />*/}
         <NamedLink
           className={classNames(css.navigationLink, currentPageClass('ProfileSettingsPage'))}
           name="ProfileSettingsPage"
         >
           <FormattedMessage id="TopbarMobileMenu.profileSettingsLink" />
         </NamedLink>
-        <NamedLink
-          className={classNames(css.navigationLink, currentPageClass('PlannerPage'))}
-          name="PlannerPage"
-        >
-          <FormattedMessage id="TopbarMobileMenu.plannerLink" />
-        </NamedLink>
+        {!isMentor ?
+          <NamedLink
+            className={classNames(css.navigationLink, currentPageClass('FavouritesPage'))}
+            name="FavouritesPage"
+          >
+            <FormattedMessage id="TopbarMobileMenu.favourites" />
+          </NamedLink>
+          : null
+        }
+        {isMentor ?
+          <NamedLink className={classNames(css.navigationLink, currentPageClass('ManageListingsPage'))} name="ManageListingsPage">
+            <FormattedMessage id="TopbarDesktop.listingLink" />
+          </NamedLink>
+          : null
+        }
+        {isMentor ?
+          <NamedLink
+            className={classNames(css.navigationLink, currentPageClass('PlannerPage'))}
+            name="PlannerPage"
+          >
+            <FormattedMessage id="TopbarMobileMenu.plannerLink" />
+          </NamedLink>
+          :null
+        }
         <NamedLink
           className={classNames(css.navigationLink, currentPageClass('AccountSettingsPage'))}
           name="AccountSettingsPage"
