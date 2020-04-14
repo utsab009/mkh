@@ -1043,6 +1043,7 @@
   "TopbarMobileMenu.unauthorizedGreeting": "Hello there,{lineBreak}would you like to {signupOrLogin}?",
   "TopbarMobileMenu.yourListingsLink": "Your teacher profile",
   "TopbarMobileMenu.plannerLink": "Planner",
+  "TopbarMobileMenu.favourites": "Favourites",
   "TopbarSearchForm.placeholder": "Search teachers…",
   "TopbarSearchForm.searchHelp": "Tip: You can also search teachers by zip code, for example \"10012\" or city district \"Manhattan\".",
   "TransactionPage.deletedListing": "deleted teacher profile",
