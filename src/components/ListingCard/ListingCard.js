@@ -18,6 +18,8 @@ import { showUser } from '../../containers/ProfilePage/ProfilePage.duck';
 import { types as sdkTypes } from '../../util/sdkLoader';
 
 import css from './ListingCard.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCoffee,faHeart,faHeartBroken,faHeartbeat } from '@fortawesome/free-solid-svg-icons'
 
 const MIN_LENGTH_FOR_LONG_WORDS = 10;
 
@@ -218,11 +220,13 @@ export class ListingCardComponent extends Component {
             </div>
           </div>
         </NamedLink>
+        Hello World
+        <FontAwesomeIcon icon={faHeart} color="white" />
         {currentUser !== null ?
           <div>
             {isFavourite.length > 0 ? 
-              (<Button onClick={() => this.removeFromFav(id)}> remove from favourites</Button>)
-              :(<Button onClick={() => this.addToFav(id)}> add to favourites</Button>)        
+              (<Button onClick={() => this.removeFromFav(id)}><FontAwesomeIcon icon={faHeart} color="white" /></Button>)
+              :(<Button onClick={() => this.addToFav(id)}> <FontAwesomeIcon icon={faHeart} color="red" /></Button>)        
             }
           </div>
           : null
