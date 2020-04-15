@@ -113,7 +113,16 @@ export const mentorLanguages = [
   { key: 'portuguese', label: 'Portuguese' },
   { key: 'japanese', label: 'Japanese' },
   { key: 'chinese', label: 'Chinese' },
+  { key: 'hindi', label: 'Hindi' },
+  { key: 'spanish', label: 'Spanish' },
+  { key: 'arabic', label: 'Arabic' },
+  { key: 'malay', label: 'Malay' },
+  { key: 'russian', label: 'Russian' },
+  { key: 'bengali', label: 'Bengali' },
+  { key: 'french', label: 'French' },
+  { key: 'German', label: 'German' },
 ];
+
 
 export const profileTypes = [
   { key: 'interview', label: 'Interview' },
