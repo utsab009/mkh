@@ -262,7 +262,6 @@ const EditListingAvailabilityPlanFormComponent = props => {
           fetchErrors,
           values,
         } = fieldRenderProps;
-        console.log("values in ELAPF",values);
 
         const classes = classNames(rootClassName || css.root, className);
         const submitInProgress = inProgress;
@@ -297,7 +296,7 @@ const EditListingAvailabilityPlanFormComponent = props => {
             <div className={css.timezonePicker}>
               <FieldTimeZoneSelect id="timezone" name="timezone" />
             </div>
-            <div className={css.timezonePicker}>
+            {/*<div className={css.timezonePicker}>
               <FieldSelect className={css.features} name={'mentorShift'} id={2} label={mentorShiftLabel}>
                 {mentorShifts.map(m => (
                   <option key={m.key} value={m.key}>
@@ -305,7 +304,7 @@ const EditListingAvailabilityPlanFormComponent = props => {
                   </option>
                 ))}
               </FieldSelect>
-            </div>
+                </div>*/}
             <h3 className={css.subheading}>
               <FormattedMessage id="EditListingAvailabilityPlanForm.hoursOfOperationTitle" />
             </h3>
