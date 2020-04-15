@@ -215,7 +215,7 @@ class SearchFiltersMobileComponent extends Component {
     });
 
     const initialmentorLanguage = mentorLanguageFilter
-      ? this.initialValue(mentorLanguageFilter.paramName)
+      ? this.initialValues(mentorLanguageFilter.paramName)
       : null;
 
     const initialsectors = sectorsFilter
@@ -234,15 +234,28 @@ class SearchFiltersMobileComponent extends Component {
       />
     ) : null;  
 
+    // const mentorLanguageFilterElement = mentorLanguageFilter ? (
+    //   <SelectSingleFilter
+    //     urlParam={mentorLanguageFilter.paramName}
+    //     label={mentorLanguageLabel}
+    //     onSelect={this.handleSelectSingle}
+    //     liveEdit
+    //     options={mentorLanguageFilter.options}
+    //     initialValue={initialmentorLanguage}
+    //     intl={intl}
+    //   />
+    // ) : null;
+
     const mentorLanguageFilterElement = mentorLanguageFilter ? (
-      <SelectSingleFilter
+      <SelectMultipleFilter
+        id={'SearchFilters.mentorLanguageFilter'}
+        name="mentorLanguage"
         urlParam={mentorLanguageFilter.paramName}
         label={mentorLanguageLabel}
-        onSelect={this.handleSelectSingle}
+        onSubmit={this.handleSelectMultiple}
         liveEdit
         options={mentorLanguageFilter.options}
-        initialValue={initialmentorLanguage}
-        intl={intl}
+        initialValues={initialmentorLanguage}
       />
     ) : null;
 
@@ -346,7 +359,7 @@ class SearchFiltersMobileComponent extends Component {
             <div className={css.filtersWrapper}>
               {/*keywordFilterElement*/}
               {/*yogaStylesFilterElement*/}
-              {mentorShiftFilterElement}
+              {/*mentorShiftFilterElement*/}
               {/*certificateFilterElement*/}
               {/*sectorsFilterElement*/}
               {mentorLanguageFilterElement}

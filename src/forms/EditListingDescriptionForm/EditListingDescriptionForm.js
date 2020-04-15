@@ -128,12 +128,20 @@ const EditListingDescriptionFormComponent = props => (
             options={profileTypes}
           />}
 
-          <CustomMentorLanguageSelectFieldMaybe
+          {<FieldCheckboxGroup
+            label={"Language"}
+            className={css.profileTypes}
+            id="mentorLanguage"
+            name="mentorLanguage"
+            options={mentorLanguages}
+          />}
+
+          {/*<CustomMentorLanguageSelectFieldMaybe
             id="mentorLanguage"
             name="mentorLanguage"
             mentorLanguages={mentorLanguages}
             intl={intl}
-          />
+          />*/}
 
           <Button
             className={css.submitButton}

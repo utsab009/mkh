@@ -111,7 +111,7 @@ const SearchFiltersComponent = props => {
     : null;
 
   const initialmentorLanguage = mentorLanguageFilter
-    ? initialValue(urlQueryParams, mentorLanguageFilter.paramName)
+    ? initialValues(urlQueryParams, mentorLanguageFilter.paramName)
     : null;  
 
   const initialsectors = sectorsFilter
@@ -179,14 +179,28 @@ const SearchFiltersComponent = props => {
     />
   ) : null;
 
+  // const mentorLanguageFilterElement = mentorLanguageFilter ? (
+  //   <SelectSingleFilter
+  //     urlParam={mentorLanguageFilter.paramName}
+  //     label={mentorLanguageLabel}
+  //     onSelect={handleSelectOption}
+  //     showAsPopup
+  //     options={mentorLanguageFilter.options}
+  //     initialValue={initialmentorLanguage}
+  //     contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+  //   />
+  // ) : null;
+  console.log("initialmentorlanguage",initialmentorLanguage,"initialmentorshift",initialmentorShift);  
   const mentorLanguageFilterElement = mentorLanguageFilter ? (
-    <SelectSingleFilter
+    <SelectMultipleFilter
+      id={'SearchFilters.mentorLanguageFilter'}
+      name="mentorLanguage"
       urlParam={mentorLanguageFilter.paramName}
       label={mentorLanguageLabel}
-      onSelect={handleSelectOption}
+      onSubmit={handleSelectOptions}
       showAsPopup
       options={mentorLanguageFilter.options}
-      initialValue={initialmentorLanguage}
+      initialValues={initialmentorLanguage}
       contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
     />
   ) : null;
@@ -293,7 +307,7 @@ const SearchFiltersComponent = props => {
         {/*certificateFilterElement*/}
         {/*sectorsFilterElement*/}
         {mentorLanguageFilterElement}
-        {mentorShiftFilterElement}
+        {/*mentorShiftFilterElement*/}
         {priceFilterElement}
         {/*keywordFilterElement*/}
         {toggleSearchFiltersPanelButton}
