@@ -90,10 +90,10 @@ export class  SectionHeroComponent extends Component {
           </NamedLink>*/}
           {!this.state.isSectorModalOpen ?
             <div className={css.inlineButtons}>
-              <Button onClick={() => this.profileTypeSelection('jobrole')} className={css.heroButton}>
+              <Button onClick={() => this.profileTypeSelection('jobrole')} className={`${css.heroButton} ${css.modBtn}`}>
                 <FormattedMessage id="SectionHero.interviewProfileType" />
               </Button>
-              <Button onClick={() => this.profileTypeSelection('interview')} className={css.heroButton}>
+              <Button onClick={() => this.profileTypeSelection('interview')} className={`${css.heroButton} ${css.modBtn}`}>
                 <FormattedMessage id="SectionHero.jobroleProfileType" />
               </Button>
             </div>
