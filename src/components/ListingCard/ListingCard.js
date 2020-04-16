@@ -15,8 +15,8 @@ import { NamedLink, ResponsiveImage, Button } from '../../components';
 import { updateProfile } from '../../containers/ProfileSettingsPage/ProfileSettingsPage.duck';
 import { showUser } from '../../containers/ProfilePage/ProfilePage.duck';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee,faHeart as solidHeart,faHeartBroken,faHeartbeat, faStar as solidStar } from '@fortawesome/free-solid-svg-icons'
-import { faHeart} from '@fortawesome/free-regular-svg-icons'
+import { faCoffee,faHeart as solidHeart,faHeartBroken,faHeartbeat, faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
+import { faHeart} from '@fortawesome/free-regular-svg-icons';
 import { types as sdkTypes } from '../../util/sdkLoader';
 
 import css from './ListingCard.css';

@@ -242,20 +242,18 @@
 
 .sectionAvatar {
   /* Position (over the listing image)*/
-  margin-left: 24px;
-  margin-top: -72px;
+  margin-left: 0;
 
   /* Rendering context to the same lavel as listing image */
   position: relative;
 
   /* Flex would give too much width by default. */
-  width: 60px;
+  width: 152px;
 
   @media (--viewportMedium) {
-    position: absolute;
-    top: -112px;
+    top: 0;
     margin-left: 0;
-    margin-top: 0;
+
   }
 }
 
@@ -585,4 +583,93 @@
   /* use break-word if available */
   word-break: break-word;
   hyphens: auto;
+}
+.modAv{
+  border-radius: 0;
+}
+.inlineavhed{
+  display: flex;
+}
+.inlineavhed .sectionHeading{
+  margin: 8px 0 0 15px;
+}
+
+.inlineavhed .title{
+  line-height: 32px;
+  font-family: 'Alex Brush', cursive;
+}
+
+.rating{
+  color: #4a4a4a;
+  font-size: 16px;
+  margin: 20px 0 0 15px;
+}
+.rating svg {
+  color: #0095b3;
+  font-size: 13px;
+  vertical-align: text-top;
+  margin: 3px 0 0;
+}
+.rating span {
+  color: #c4c0c0;
+}
+.avtardec{
+  font-size: 16px;
+  line-height: 24px;
+}
+.casec{
+  margin: 0 0 20px;
+}
+.casec h2{
+  margin-bottom: 8px;
+}
+.casec ul{
+  margin: 0;
+}
+.casec ul li{
+  font-size: 16px;
+  position: relative;
+  margin: 0 0 5px;
+  padding: 0 0 0 30px;
+
+  &::before{
+    width: 8px;
+    height: 8px;
+    background: #0095b3;
+    content: '';
+    position: absolute;
+    border-radius: 50px;
+    top: 8px;
+    left: 11px;
+  }
+}
+.sociallink {
+  background: #0095b3;
+  color: #fff;
+  padding: 7px 21px;
+  display: inline-block;
+  margin: 26px 0;
+  font-size: 16px;
+}
+
+
+
+
+@media (max-width: 767px) {
+  .mainContent{
+    padding: 0 24px;
+  }
+  .inlineavhed{
+    margin: 40px 0 30px;
+}
+.sectionAvatar{
+  width: auto;
+}
+.sectionHeading .heading{
+  margin-bottom: 0;
+  padding: 0 0;
+}
+.rating{
+  margin: 10px 0 0 15px;
+}
 }
