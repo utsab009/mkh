@@ -14,7 +14,9 @@ import config from '../../config';
 import { NamedLink, ResponsiveImage, Button } from '../../components';
 import { updateProfile } from '../../containers/ProfileSettingsPage/ProfileSettingsPage.duck';
 import { showUser } from '../../containers/ProfilePage/ProfilePage.duck';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee,faHeart as solidHeart,faHeartBroken,faHeartbeat, faStar as solidStar } from '@fortawesome/free-solid-svg-icons'
+import { faHeart} from '@fortawesome/free-regular-svg-icons'
 import { types as sdkTypes } from '../../util/sdkLoader';
 
 import css from './ListingCard.css';
@@ -49,6 +51,7 @@ class ListingImage extends Component {
     return <ResponsiveImage {...this.props} />;
   }
 }
+
 const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRendering: 3000 });
 
 export class ListingCardComponent extends Component {
@@ -169,64 +172,98 @@ export class ListingCardComponent extends Component {
     console.log("isfavourite :",isFavourite);  
 
     return (
-      <div>
+      <div className={css.updateRow}>
         <NamedLink className={classes} name="ListingPage" params={{ id, slug }}>
-          <div
+          {/* <div
             className={css.threeToTwoWrapper}
             onMouseEnter={() => setActiveListing(currentListing.id)}
             onMouseLeave={() => setActiveListing(null)}
           >
-            <div className={css.aspectWrapper}>
+            <div className={`${css.aspectWrapper} ${css.aspectWrapperMod}`}>
               <LazyImage
-                rootClassName={css.rootForImage}
+                rootClassName={`${css.rootForImage} ${css.modifyImg}`}
                 alt={title}
                 image={firstImage}
                 variants={['landscape-crop', 'landscape-crop2x']}
                 sizes={renderSizes}
               />
             </div>
-          </div>
+          </div> */}
+           <div className={css.modImageSec}>
+             <img src="" />
+           </div>
           <div className={css.info}>
-            <div className={css.price}>
+            {/* <div className={css.price}>
               <div className={css.priceValue} title={priceTitle}>
                 {formattedPrice}
               </div>
               <div className={css.perUnit}>
                 <FormattedMessage id={unitTranslationKey} />
               </div>
-            </div>
+            </div> */}
             <div className={css.mainInfo}>
               <div className={css.title}>
                 {richText(title, {
                   longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
                   longWordClass: css.longWord,
                 })}
-              </div>
-              {workExp !== null ? workExp.map((item, index) => {
+                {workExp !== null ? workExp.map((item, index) => {
                 if(index < 4)
                 return (
-                  <div>{item.company}</div>
+                  <span className={css.crr}>{item.company}</span>
                 );
                 })
                 : null
               }
-              <div className={css.certificateInfo}>
+              </div>
+              
+              {/* <div className={css.certificateInfo}>
                 {certificate && !certificate.hideFromListingInfo ? (
                   <span>{certificate.label}</span>
                 ) : null}
+              </div> */}
+
+              <div className={css.rating}>
+              <FontAwesomeIcon icon={solidStar} /> 4.60 <span>(79)</span>
               </div>
             </div>
+
+             <div className={css.price}>
+                  <div className={css.title}>
+                    Sample Career Roles:
+                    <span className={css.crr}>Head Of IT</span>
+                  </div>
+
+                  <a href="" className={css.socialLink}>
+                    Linked-in Link
+                  </a>
+
+
+
+            </div>
+
+            <div className={`${css.price} ${css.nameSig}`}>
+                  <div className={`${css.title} ${css.nameav}`}>
+                    Barin M Malvor
+                  </div>
+              <div className={css.priceValue} title={priceTitle}>
+                {formattedPrice}<FormattedMessage id={unitTranslationKey} />
+              </div>
+
+            </div>
           </div>
-        </NamedLink>
-        {currentUser !== null ?
-          <div>
+
+           {currentUser !== null ?
+          <div className={css.favSec}>
             {isFavourite.length > 0 ? 
-              (<Button onClick={() => this.removeFromFav(id)}> remove from favourites</Button>)
-              :(<Button onClick={() => this.addToFav(id)}> add to favourites</Button>)        
+              (<Button onClick={() => this.removeFromFav(id)} className={css.favBtn}><FontAwesomeIcon icon={solidHeart} /></Button>)
+              :(<Button onClick={() => this.addToFav(id)} className={css.favBtn}><FontAwesomeIcon icon={faHeart} /> </Button>)        
             }
           </div>
           : null
           }
+        </NamedLink>
+       
       </div>  
     );
   }

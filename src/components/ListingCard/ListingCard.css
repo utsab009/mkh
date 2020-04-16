@@ -1,5 +1,5 @@
 @import '../../marketplace.css';
-
+@import url('https://fonts.googleapis.com/css?family=Alex+Brush|Allura|Marck+Script&display=swap');
 .root {
   /* Layout */
   display: flex;
@@ -9,6 +9,13 @@
   &:hover {
     text-decoration: none;
   }
+}
+.updateRow{
+  width: 100%;
+  margin: 0 0 20px;
+  background: #fff;
+  border: 1px solid #f4f4f4;
+  position: relative;
 }
 
 .threeToTwoWrapper {
@@ -29,48 +36,63 @@
   padding-bottom: 66.6667%; /* 3:2 Aspect Ratio */
   background: var(--matterColorNegative); /* Loading BG color */
 }
-
+.aspectWrapperMod{
+  background: none;
+  padding-bottom: 0;
+}
+.aspectWrapperMod div{
+  position: relative !important;
+}
 .rootForImage {
   /* Layout - image will take space defined by aspect ratio wrapper */
-  position: absolute;
+  /* position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   width: 100%;
-  border-radius: var(--borderRadius);
+  border-radius: var(--borderRadius); */
+  width: 200px;
+  height: 200px;
 }
-
+.modImageSec{
+  width: 200px;
+  height: 200px;
+  background: #efefef;
+}
 .info {
   /* Layout */
   display: flex;
   flex-direction: row;
-  padding: 16px 0 2px 0;
+  padding: 16px 0 2px 30px;
+  justify-content: start;
+  flex-basis: 90%;
 }
 
 .price {
-  /* Layout */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex-shrink: 0;
-  margin-right: 18px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 18px;
+    flex-basis: 50%;
+    justify-content: space-between;
 }
 
 .priceValue {
   /* Font */
-  @apply --marketplaceH3FontStyles;
+  /* @apply --marketplaceH3FontStyles; */
 
   /* Remove default margins from font */
   margin-top: 0;
-  margin-bottom: 0;
-
+  margin-bottom: 14px;
+  font-size: 16px;
+  color: #4a4a4a;
   @media (--viewportMedium) {
     margin-top: 0;
-    margin-bottom: 0;
   }
 }
-
+.priceValue span {
+  margin: 0 0 0 8px;
+}
 .perUnit {
   /* Font */
   @apply --marketplaceTinyFontStyles;
@@ -89,6 +111,8 @@
 .mainInfo {
   display: flex;
   flex-direction: column;
+  flex-basis: 50%;
+  justify-content: space-between;
 }
 
 .title {
@@ -127,4 +151,92 @@
   /* use break-word if available */
   word-break: break-word;
   hyphens: auto;
+}
+.crr{
+  color: #0095b3;
+  display: block;
+  font-size: 16px;
+}
+.nameSig{
+  flex-basis: 40%;
+  margin-right: 0;
+  justify-content: space-between;
+}
+.nameav{
+  font-family: 'Alex Brush', cursive;
+  font-size: 30px;
+}
+.socialLink{
+  font-size: 16px;
+  margin-bottom: 14px;
+}
+.rating{
+  color: #4a4a4a;
+  margin-bottom: 14px;
+  font-size: 16px;
+}
+.rating svg{
+  color: #0095b3;
+  font-size: 13px;
+  vertical-align: text-top;
+  margin: 3px 0 0;
+}
+.rating span{
+  color: #c4c0c0;
+}
+.favBtn{
+  padding: 11px;
+  background-color: transparent;
+  color: #CD2553;
+  min-height: auto !important;
+
+  &:hover,
+  &:focus{
+      background-color: transparent;
+      box-shadow: none;
+  }
+}
+
+
+
+
+
+
+
+@media (max-width: 1199px) {
+  .nameav{
+    font-size: 25px;
+  }
+}
+@media (max-width: 991px) {
+  .title{
+    font-size: 16px;
+  }
+  .nameav{
+    font-size: 18px !important;
+  }
+  .crr{
+    font-size: 14px;
+  }
+  
+}
+@media (max-width: 767px) {
+.modImageSec{
+  width: 100%;
+  height: 250px;
+}
+.favSec{
+  position: absolute;
+  right: 6px;
+}
+.info {
+  padding: 16px 0 2px 15px;
+}
+}
+
+@media (max-width: 575px) {
+  .info {
+    flex-direction: column;
+  }
+
 }
