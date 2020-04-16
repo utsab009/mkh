@@ -9,12 +9,12 @@ const SectionAvatar = props => {
     <div className={css.sectionAvatar}>
       <AvatarLarge
         user={user}
-        className={css.avatarDesktop}
+        className={`${css.avatarDesktop} ${css.modAv}`}
         initialsClassName={css.initialsDesktop}
         disableProfileLink
       />
 
-      <AvatarMedium user={user} className={css.avatarMobile} disableProfileLink />
+      <AvatarMedium user={user} className={`${css.avatarMobile} ${css.modAv}`} disableProfileLink />
     </div>
   );
 };
