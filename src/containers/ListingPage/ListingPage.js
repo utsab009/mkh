@@ -321,6 +321,7 @@ export class ListingPageComponent extends Component {
 
     const currentAuthor = authorAvailable ? currentListing.author : null;
     const ensuredAuthor = ensureUser(currentAuthor);
+    console.log("ensureAuthor",ensuredAuthor);
 
     // When user is banned or deleted the listing is also deleted.
     // Because listing can be never showed with banned or deleted user we don't have to provide
@@ -421,13 +422,13 @@ export class ListingPageComponent extends Component {
                     showContactUser={showContactUser}
                     onContactUser={this.onContactUser}
                   />
-                  <SectionDescriptionMaybe description={description} />
-                  <SectionFeaturesMaybe options={sectorsConfig} publicData={publicData} />
-                  <SectionMapMaybe
+                  {/*<SectionDescriptionMaybe description={description} />
+                  <SectionFeaturesMaybe options={sectorsConfig} publicData={publicData} />*/}
+                  {/*<SectionMapMaybe
                     geolocation={geolocation}
                     publicData={publicData}
                     listingId={currentListing.id}
-                  />
+                  />*/}
                   <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
                 </div>
                 <BookingPanel
