@@ -119,3 +119,11 @@
   padding: 10px 60px;
   min-width: 40%;
 }
+.modBtn{
+  background-color: transparent;
+  border: 2px solid #fff;
+
+  &:hover{
+    border-color: #006a80;
+  }
+}
