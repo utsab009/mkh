@@ -168,7 +168,10 @@ export const showUser = userId => (dispatch, getState, sdk) => {
       dispatch(showUserSuccess());
       return response;
     })
-    .catch(e => dispatch(showUserError(storableError(e))));
+    .catch(e => {
+      dispatch(showUserError(storableError(e)))
+      return e
+    });
 };
 
 export const loadData = userId => (dispatch, getState, sdk) => {

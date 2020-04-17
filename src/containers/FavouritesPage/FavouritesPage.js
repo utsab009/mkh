@@ -127,7 +127,7 @@ export class FavouritesPageComponent extends Component {
       `${panelWidth / 3}vw`,
     ].join(', ');
 
-    const { Money } = sdkTypes;
+    const { Money, UUID } = sdkTypes;
 
     return (
       <Page title={title} scrollingDisabled={scrollingDisabled}>
@@ -157,6 +157,7 @@ export class FavouritesPageComponent extends Component {
                 //     renderSizes={renderSizes}
                 //   />
                 l.listing.attributes.price = new Money(l.listing.attributes.price.amount, l.listing.attributes.price.currency);
+                l.listing.author.id = new UUID(l.listing.author.id.uuid);
                 return(
                   <ListingCard
                     className={css.listingCard}
