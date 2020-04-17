@@ -46,7 +46,7 @@ export class ProfileSettingsPageComponent extends Component {
     } = this.props;
 
     const handleSubmit = values => {
-      const { firstName, lastName, bio: rawBio, ...rest } = values;
+      const { firstName, lastName, bio: rawBio, profileImage, ...rest } = values;
       // Ensure that the optional bio is a string
       const bio = rawBio || '';
 
