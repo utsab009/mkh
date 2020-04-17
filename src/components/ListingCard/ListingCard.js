@@ -125,10 +125,8 @@ export class ListingCardComponent extends Component {
       certificateConfig,
       setActiveListing,
     } = this.props;
-    console.log("this.state.authordata",this.state.authorData);
     let authorData = this.state.authorData !== null && this.state.authorData.data.attributes.profile.publicData ? this.state.authorData.data.attributes.profile.publicData : {error:"no data"}; 
     let {workExp = null, education = null } = authorData;
-    console.log("workExp:",workExp);
     let favouritesArr = currentUser && currentUser.attributes.profile.protectedData.favourites && Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites)) ? JSON.parse(currentUser.attributes.profile.protectedData.favourites) : [];
     const classes = classNames(rootClassName || css.root, className);
     const currentListing = ensureListing(listing);
@@ -152,13 +150,11 @@ export class ListingCardComponent extends Component {
       : isDaily
       ? 'ListingCard.perDay'
       : 'ListingCard.perUnit';
-    console.log("favouritesArr",favouritesArr);
     let isFavourite = false;
     if (favouritesArr.length > 0)
     {
       // isFavourite = favouritesArr.filter(c => c.id !== id).length > 0 ? true : false;
       isFavourite = favouritesArr.filter(c => {
-        console.log('c.id',c.id,'id',id);
         if(c.id == id)
         {
           return true;
@@ -169,7 +165,6 @@ export class ListingCardComponent extends Component {
         // }
       })
     }
-    console.log("isfavourite :",isFavourite);  
 
     return (
       <div className={css.updateRow}>
