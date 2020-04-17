@@ -53,7 +53,8 @@ import SectionFeaturesMaybe from './SectionFeaturesMaybe';
 import SectionReviews from './SectionReviews';
 import SectionMapMaybe from './SectionMapMaybe';
 import css from './ListingPage.css';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee,faHeart as solidHeart,faHeartBroken,faHeartbeat, faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
 
 const { UUID } = sdkTypes;
@@ -410,8 +411,12 @@ export class ListingPageComponent extends Component {
                 onManageDisableScrolling={onManageDisableScrolling}
               />
               <div className={css.contentContainer}>
-                <SectionAvatar user={currentAuthor} params={params} />
+               
                 <div className={css.mainContent}>
+                  <div className={css.inlineavhed}>
+                  <SectionAvatar user={currentAuthor} params={params} />
+
+                  <div className={css.hedRating}>
                   <SectionHeading
                     priceTitle={priceTitle}
                     formattedPrice={formattedPrice}
@@ -422,6 +427,24 @@ export class ListingPageComponent extends Component {
                     showContactUser={showContactUser}
                     onContactUser={this.onContactUser}
                   />
+
+                  <div className={css.rating}>
+                     <FontAwesomeIcon icon={solidStar} /> 4.60 <span>(79)</span>
+                  </div>
+                  </div>
+                  </div>
+
+                  <p className={css.avtardec}>
+                  Hello my name is Leisha. I have worked in IT for 25 years and previous to that I was a Lab Technician. As head of the IT Department in Pfizer I am respons
+ible for an annual spend of $30 million dollars 
+and a team of forty. I recently established the wor
+ld-wide IT Helpdesk. This was created over an 18-
+month period at a cost of 1 million and currently 1
+2 staff operate it. Since then I have mentored a 
+host of people to begin or continue successful care
+ers in area of IT with 12 getting promoted.  
+                  </p>
+              
                   {/*<SectionDescriptionMaybe description={description} />
                   <SectionFeaturesMaybe options={sectorsConfig} publicData={publicData} />*/}
                   {/*<SectionMapMaybe
@@ -429,7 +452,38 @@ export class ListingPageComponent extends Component {
                     publicData={publicData}
                     listingId={currentListing.id}
                   />*/}
+
+                    <div className={css.casec}>
+                      <h2>Career: </h2>
+                      <ul>
+                        <li>Head of IT in Pfizer for 25 years </li>
+                        <li>Lab technician in Pfizer for 5 years</li>
+                      </ul>
+                    </div>
+
+
+                    <div className={css.casec}>
+                      <h2>Accreditation:</h2>
+                      <ul>
+                        <li>Masters in Occupational Psychology from Goldsmiths College and a first-class honours 
+International degree from University College Dublinand Université de Lille3.  </li>
+                        <li>Associate Fellow of the Psychological Society of Ireland and a member of their Division of 
+Work and Organisational Psychology and Coaching groups </li>
+                        <li>Fellow of the Chartered Institute of Personnel Development since 2000 </li>
+                      </ul>
+                    </div>
+
+                    <a href="" className={css.sociallink}>Linked-in Link</a>
+
+
+
+
+
+
                   <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
+
+
+                  
                 </div>
                 <BookingPanel
                   className={css.bookingPanel}
