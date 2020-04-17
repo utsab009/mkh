@@ -42,10 +42,10 @@
     margin: 48px auto 0 auto;
   }
 
-  @media (--viewportLarge) {
+  /* @media (--viewportLarge) {
     margin: 80px auto 0 auto;
     max-width: 62.5vw;
-  }
+  } */
 }
 
 .title {
@@ -75,8 +75,8 @@
 }
 
 .listingCard {
-  margin-bottom: 36px;
   flex-basis: 100%;
+  flex-direction: row;
 
   @media (--viewportMedium) {
     /**
@@ -91,8 +91,8 @@
      *
      * flex-basis: calc((100%/columnCount) - (guttersBetweenColumns / columnCount))
      */
-    flex-basis: calc(50% - 12px);
-    margin-right: 24px;
+    /* flex-basis: calc(50% - 12px);
+    margin-right: 24px; */
   }
 
   @media (--viewportXLarge) {
@@ -110,8 +110,8 @@
      *
      * flex-basis: calc((100%/columnCount) - (guttersBetweenColumns / columnCount))
      */
-    flex-basis: calc(33.33% - 16px);
-    margin-right: 24px;
+    /* flex-basis: calc(33.33% - 16px);
+    margin-right: 24px; */
   }
 }
 
@@ -140,4 +140,10 @@
   @media (--viewportLarge) {
     margin: auto 36px 0 36px;
   }
+}
+
+@media (max-width: 767px) {
+  .listingCard{
+    flex-direction: column;
+}
 }
