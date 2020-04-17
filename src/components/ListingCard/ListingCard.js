@@ -7,7 +7,6 @@ import classNames from 'classnames';
 import { lazyLoadWithDimensions } from '../../util/contextHelpers';
 import { LINE_ITEM_DAY, LINE_ITEM_NIGHT, propTypes } from '../../util/types';
 import { formatMoney } from '../../util/currency';
-import { ensureListing } from '../../util/data';
 import { richText } from '../../util/richText';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
@@ -18,8 +17,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee,faHeart as solidHeart,faHeartBroken,faHeartbeat, faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import { faHeart} from '@fortawesome/free-regular-svg-icons';
 import { types as sdkTypes } from '../../util/sdkLoader';
+import SectionAvatar from '../../containers/ListingPage/SectionAvatar';
 
 import css from './ListingCard.css';
+import {
+  ensureListing,
+  ensureOwnListing,
+  ensureUser,
+  userDisplayNameAsString,
+} from '../../util/data';
 
 const MIN_LENGTH_FOR_LONG_WORDS = 10;
 
@@ -69,14 +75,7 @@ export class ListingCardComponent extends Component {
   }
 
   componentDidMount() {
-    console.log("this.props in CDM in listingcard",this.props.listing.author.id);
-    let authorData ;
-    let showuserresponse = this.props.onShowUser(this.props.listing.author.id);
-    showuserresponse.then(result => {
-      authorData = result.data;
-      this.setState({authorData : authorData});
-     return result;
-    });
+    this.props.onShowUser(this.props.listing.author.id);
   }
 
   addToFav = id => {
@@ -125,11 +124,17 @@ export class ListingCardComponent extends Component {
       certificateConfig,
       setActiveListing,
     } = this.props;
-    let authorData = this.state.authorData !== null && this.state.authorData.data.attributes.profile.publicData ? this.state.authorData.data.attributes.profile.publicData : {error:"no data"}; 
-    let {workExp = null, education = null } = authorData;
     let favouritesArr = currentUser && currentUser.attributes.profile.protectedData.favourites && Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites)) ? JSON.parse(currentUser.attributes.profile.protectedData.favourites) : [];
     const classes = classNames(rootClassName || css.root, className);
     const currentListing = ensureListing(listing);
+    const authorAvailable = currentListing && currentListing.author;
+    const currentAuthor = authorAvailable ? currentListing.author : null;
+    const ensuredAuthor = ensureUser(currentAuthor);
+    // console.log("ensuredAuthor",ensuredAuthor);
+    // let authorData = this.state.authorData !== null && this.state.authorData.data.attributes.profile.publicData ? this.state.authorData.data.attributes.profile.publicData : {error:"no data"}; 
+    let authorData = ensuredAuthor !== null && ensuredAuthor.attributes.profile.publicData ? ensuredAuthor.attributes.profile.publicData : {error:"no data"}; 
+    let {workExp = null, education = null } = authorData;
+    // console.log("authorData",authorData);
     const id = currentListing.id.uuid;
     const { title = '', price, publicData } = currentListing.attributes;
     const slug = createSlug(title);
@@ -165,7 +170,7 @@ export class ListingCardComponent extends Component {
         // }
       })
     }
-
+    console.log("firstImage",firstImage);
     return (
       <div className={css.updateRow}>
         <NamedLink className={classes} name="ListingPage" params={{ id, slug }}>
@@ -184,8 +189,10 @@ export class ListingCardComponent extends Component {
               />
             </div>
           </div> */}
-           <div className={css.modImageSec}>
-             <img src="" />
+           {/*<div className={css.modImageSec}>*/}
+           <div>
+             {/*<img src="" />*/}
+             <SectionAvatar user={currentAuthor} />
            </div>
           <div className={css.info}>
             {/* <div className={css.price}>
@@ -198,18 +205,21 @@ export class ListingCardComponent extends Component {
             </div> */}
             <div className={css.mainInfo}>
               <div className={css.title}>
-                {richText(title, {
+                {richText('Organisations Worked in:', {
                   longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
                   longWordClass: css.longWord,
                 })}
-                {workExp !== null ? workExp.map((item, index) => {
-                if(index < 4)
-                return (
-                  <span className={css.crr}>{item.company}</span>
-                );
-                })
-                : null
-              }
+                {
+                  workExp !== null ? workExp.map((item, index) => {
+                    if(index < 4)
+                    {
+                      return (
+                        <span className={css.crr}>{item.company}</span>
+                      );
+                    }
+                  })
+                  : null
+                }
               </div>
               
               {/* <div className={css.certificateInfo}>
@@ -225,8 +235,18 @@ export class ListingCardComponent extends Component {
 
              <div className={css.price}>
                   <div className={css.title}>
-                    Sample Career Roles:
-                    <span className={css.crr}>Head Of IT</span>
+                    Career Roles:
+                    {
+                      workExp !== null ? workExp.map((item, index) => {
+                        if(index < 4)
+                        {
+                          return (
+                            <span className={css.crr}>{item.position}</span>
+                          );
+                        }
+                      })
+                      : null
+                    }
                   </div>
 
                   <a href="" className={css.socialLink}>
@@ -239,7 +259,7 @@ export class ListingCardComponent extends Component {
 
             <div className={`${css.price} ${css.nameSig}`}>
                   <div className={`${css.title} ${css.nameav}`}>
-                    Barin M Malvor
+                     {title}
                   </div>
               <div className={css.priceValue} title={priceTitle}>
                 {formattedPrice}<FormattedMessage id={unitTranslationKey} />

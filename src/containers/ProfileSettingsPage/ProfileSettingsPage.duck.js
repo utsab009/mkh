@@ -142,11 +142,12 @@ export const updateProfile = actionPayload => {
       include: ['profileImage'],
       'fields.image': ['variants.square-small', 'variants.square-small2x'],
     };
-    console.log("call from addtofav",actionPayload);
+    console.log("call from updateprofile",actionPayload);
 
     return sdk.currentUser
       .updateProfile(actionPayload, queryParams)
       .then(response => {
+        console.log("response in updateprofile",response);
         dispatch(updateProfileSuccess(response));
 
         const entities = denormalisedResponseEntities(response);
@@ -158,6 +159,9 @@ export const updateProfile = actionPayload => {
         // Update current user in state.user.currentUser through user.duck.js
         dispatch(currentUserShowSuccess(currentUser));
       })
-      .catch(e => dispatch(updateProfileError(storableError(e))));
+      .catch(e => {
+        console.log("e in updateprofile",e);
+        dispatch(updateProfileError(storableError(e)))
+      });
   };
 };
