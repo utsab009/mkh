@@ -128,3 +128,8 @@
     top: calc(-1 * var(--LandingPage_sectionMarginTopLarge));
   }
 }
+@media (max-width: 767px) {
+  .hero {
+    justify-content: center;
+  }
+}

@@ -127,3 +127,43 @@
     border-color: #006a80;
   }
 }
+
+@media (max-width: 1199px) {
+.inlineButtons button {
+  padding: 10px ;
+}
+}
+@media (max-width: 991px) {
+  .inlineButtons {
+    margin: 10px 0 0;
+}
+  .inlineButtons button{
+    font-size: 15px;
+    min-height: auto;
+  }
+  .heroMainTitle{
+    font-size: 52px;
+    line-height: 48px;
+}
+.heroContainer{
+  min-height: 430px;
+}
+}
+@media (max-width: 767px) {
+  .inlineButtons button {
+    margin: 0 5px 0;
+  }
+}
+@media (max-width: 575px) {
+.heroMainTitle{
+  font-size: 40px;
+  line-height: 40px;
+}
+
+.inlineButtons button{
+  margin: 0 0 15px;
+}
+.inlineButtons{
+  flex-direction: column;
+}
+}

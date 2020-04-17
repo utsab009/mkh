@@ -119,6 +119,7 @@
 
   margin-top: 0;
   margin-bottom: 9px;
+  text-align: center ;
 }
 
 .bookingHelp {
@@ -242,4 +243,14 @@
   width: 100%;
   padding: 15px 24px 15px 24px;
   text-align: center;
+}
+.modpc{
+  align-items: center;
+  margin: 0;
+  justify-content: center;
+}
+@media (max-width: 1024px) {
+  .bookButton{
+    min-height: auto;
+  }
 }

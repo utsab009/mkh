@@ -106,3 +106,7 @@
 .secondaryButton .checkmark {
   stroke: var(--matterColorAnti);
 }
+
+.updatebtn{
+  min-height: 45px;
+}
