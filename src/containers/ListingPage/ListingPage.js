@@ -474,19 +474,14 @@ Work and Organisational Psychology and Coaching groups </li>
                     </div>
 
                     <a href="" className={css.sociallink}>Linked-in Link</a>
-
-
-
-
-
-
                   <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
 
-
-                  
                 </div>
+
+                <div className={css.rightSecbooking}>
+                <a href="#" className={css.qtbtn}>Question through us buttons</a>
                 <BookingPanel
-                  className={css.bookingPanel}
+                  className={`${css.bookingPanel} ${css.modbp}`}
                   listing={currentListing}
                   isOwnListing={isOwnListing}
                   unitType={unitType}
@@ -497,6 +492,7 @@ Work and Organisational Psychology and Coaching groups </li>
                   monthlyTimeSlots={monthlyTimeSlots}
                   onFetchTimeSlots={onFetchTimeSlots}
                 />
+                </div>
               </div>
             </div>
             <Modal
@@ -506,6 +502,7 @@ Work and Organisational Psychology and Coaching groups </li>
               onClose={() => this.setState({ enquiryModalOpen: false })}
               onManageDisableScrolling={onManageDisableScrolling}
             >
+              
               <EnquiryForm
                 className={css.enquiryForm}
                 submitButtonWrapperClassName={css.enquirySubmitButtonWrapper}
