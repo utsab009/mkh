@@ -19,10 +19,22 @@ import {
 import { TopbarContainer, NotFoundPage } from '../../containers';
 import config from '../../config';
 import moment from 'moment';
+// import 'moment/locale/en-gb';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import css from './PlannerPage.css';
 import { loadData } from '../../containers/InboxPage/InboxPage.duck';
+// moment.locale("es-es", {
+// 	week: {
+// 		dow: 1 //Monday is the first day of the week.
+// 	}
+// });
+moment.updateLocale('en', {
+  week: {
+    dow: 1,
+  },
+})
+
 const localizer = momentLocalizer(moment); // or globalizeLocalizer
 
 export class PlannerPageComponent extends Component {
