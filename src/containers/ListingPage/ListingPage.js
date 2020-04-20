@@ -197,6 +197,11 @@ export class ListingPageComponent extends Component {
       sectorsConfig,
     } = this.props;
 
+    let ratingSum = 0;
+    reviews.map(r => {
+      ratingSum += Number(r.attributes.rating);
+    });
+    let averageRating = ratingSum / reviews.length;
     const listingId = new UUID(rawParams.id);
     const isPendingApprovalVariant = rawParams.variant === LISTING_PAGE_PENDING_APPROVAL_VARIANT;
     const isDraftVariant = rawParams.variant === LISTING_PAGE_DRAFT_VARIANT;
@@ -322,7 +327,9 @@ export class ListingPageComponent extends Component {
 
     const currentAuthor = authorAvailable ? currentListing.author : null;
     const ensuredAuthor = ensureUser(currentAuthor);
-    console.log("ensureAuthor",ensuredAuthor);
+    let authorData = ensuredAuthor !== null && ensuredAuthor.attributes.profile.publicData ? ensuredAuthor.attributes.profile.publicData : {error:"no data"}; 
+    let {workExp = null, education = null } = authorData;
+    let authorBio =  ensuredAuthor !== null && ensuredAuthor.attributes.profile.bio ? ensuredAuthor.attributes.profile.bio : null;
 
     // When user is banned or deleted the listing is also deleted.
     // Because listing can be never showed with banned or deleted user we don't have to provide
@@ -429,20 +436,21 @@ export class ListingPageComponent extends Component {
                   />
 
                   <div className={css.rating}>
-                     <FontAwesomeIcon icon={solidStar} /> 4.60 <span>(79)</span>
+                     <FontAwesomeIcon icon={solidStar} /> {isNaN(averageRating) ? 0 : averageRating} <span>({reviews.length})</span>
                   </div>
                   </div>
                   </div>
 
                   <p className={css.avtardec}>
-                  Hello my name is Leisha. I have worked in IT for 25 years and previous to that I was a Lab Technician. As head of the IT Department in Pfizer I am respons
+                    {authorBio}
+                  {/*Hello my name is Leisha. I have worked in IT for 25 years and previous to that I was a Lab Technician. As head of the IT Department in Pfizer I am respons
 ible for an annual spend of $30 million dollars 
 and a team of forty. I recently established the wor
 ld-wide IT Helpdesk. This was created over an 18-
 month period at a cost of 1 million and currently 1
 2 staff operate it. Since then I have mentored a 
 host of people to begin or continue successful care
-ers in area of IT with 12 getting promoted.  
+                  ers in area of IT with 12 getting promoted.  */}
                   </p>
               
                   {/*<SectionDescriptionMaybe description={description} />
@@ -456,8 +464,19 @@ ers in area of IT with 12 getting promoted.
                     <div className={css.casec}>
                       <h2>Career: </h2>
                       <ul>
-                        <li>Head of IT in Pfizer for 25 years </li>
-                        <li>Lab technician in Pfizer for 5 years</li>
+                        {
+                          workExp !== null ? workExp.map((item, index) => {
+                            if(index < 4)
+                            {
+                              return (
+                                <li>{item.position} in {item.company} for {item.duration} </li>
+                              );
+                            }
+                          })
+                          : null
+                        }
+                        {/*<li>Head of IT in Pfizer for 25 years </li>
+                        <li>Lab technician in Pfizer for 5 years</li>*/}
                       </ul>
                     </div>
 
@@ -465,11 +484,22 @@ ers in area of IT with 12 getting promoted.
                     <div className={css.casec}>
                       <h2>Accreditation:</h2>
                       <ul>
-                        <li>Masters in Occupational Psychology from Goldsmiths College and a first-class honours 
+                      {
+                        education !== null ? education.map((item, index) => {
+                          if(index < 4)
+                          {
+                            return (
+                              <li>{item.course} from {item.board} during {item.startEndDate} </li>
+                            );
+                          }
+                        })
+                        : null
+                      }
+                        {/*<li>Masters in Occupational Psychology from Goldsmiths College and a first-class honours 
 International degree from University College Dublinand Université de Lille3.  </li>
                         <li>Associate Fellow of the Psychological Society of Ireland and a member of their Division of 
 Work and Organisational Psychology and Coaching groups </li>
-                        <li>Fellow of the Chartered Institute of Personnel Development since 2000 </li>
+                      <li>Fellow of the Chartered Institute of Personnel Development since 2000 </li>*/}
                       </ul>
                     </div>
 
@@ -479,7 +509,7 @@ Work and Organisational Psychology and Coaching groups </li>
                 </div>
 
                 <div className={css.rightSecbooking}>
-                <a href="#" className={css.qtbtn}>Question through us buttons</a>
+                <button type="button" onClick={this.onContactUser} className={css.qtbtn}>Question through us buttons</button>
                 <BookingPanel
                   className={`${css.bookingPanel} ${css.modbp}`}
                   listing={currentListing}

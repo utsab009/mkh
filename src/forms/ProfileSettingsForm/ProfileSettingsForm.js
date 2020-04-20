@@ -202,6 +202,7 @@ class ProfileSettingsFormComponent extends Component {
               className={classes}
               onSubmit={e => {
                 this.submittedValues = values;
+                console.log("values",values);
                 handleSubmit(e);
               }}
             >
