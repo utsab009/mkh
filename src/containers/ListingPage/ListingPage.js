@@ -419,7 +419,7 @@ export class ListingPageComponent extends Component {
               />
               <div className={css.contentContainer}>
                
-                <div className={css.mainContent}>
+                <div className={`${css.mainContent} ${css.modCon}`}>
                   <div className={css.inlineavhed}>
                   <SectionAvatar user={currentAuthor} params={params} />
 
