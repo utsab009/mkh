@@ -99,3 +99,10 @@
   width: 100%;
   height: 100%;
 }
+
+@media (max-width: 767px) {
+  .avatarImage {
+    height: 250px;
+    object-fit: cover;
+  }
+}
