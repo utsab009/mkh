@@ -263,6 +263,7 @@ TopbarDesktop.defaultProps = {
   initialSearchFormValues: {},
   currentUserListing: null,
   currentUserListingFetched: false,
+
 };
 
 TopbarDesktop.propTypes = {

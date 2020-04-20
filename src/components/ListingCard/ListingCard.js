@@ -268,7 +268,9 @@ export class ListingCardComponent extends Component {
             </div>
           </div>
 
-           {currentUser !== null ?
+        
+          </NamedLink>
+          {currentUser !== null ?
           <div className={css.favSec}>
             {isFavourite.length > 0 ? 
               (<Button onClick={() => this.removeFromFav(id)} className={css.favBtn}><FontAwesomeIcon icon={solidHeart} /></Button>)
@@ -277,7 +279,7 @@ export class ListingCardComponent extends Component {
           </div>
           : null
           }
-        </NamedLink>
+        
        
       </div>  
     );
