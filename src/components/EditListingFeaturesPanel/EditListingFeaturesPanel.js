@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from '../../util/reactIntl';
@@ -6,11 +6,37 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureListing } from '../../util/data';
 import { EditListingFeaturesForm } from '../../forms';
-import { ListingLink } from '../../components';
+import {  
+  Form,
+  PrimaryButton,
+  InlineTextButton,
+  ListingLink,
+  Modal, 
+  FieldTextInput
+} from '../../components';
+import { Form as FinalForm } from 'react-final-form';
+import arrayMutators from 'final-form-arrays';
 
 import css from './EditListingFeaturesPanel.css';
 
 const FEATURES_NAME = 'yogaStyles';
+
+const submit = () => values => {
+  // const sortedValues = weekdays.reduce(
+  //   (submitValues, day) => {
+  //     return submitValues[day]
+  //       ? {
+  //           ...submitValues,
+  //           [day]: submitValues[day].sort(sortEntries()),
+  //         }
+  //       : submitValues;
+  //   },
+  //   { ...values }
+  // );
+
+  // onSubmit(sortedValues);
+  console.log("values in submit",values);
+};
 
 const EditListingFeaturesPanel = props => {
   const {
@@ -22,10 +48,13 @@ const EditListingFeaturesPanel = props => {
     onSubmit,
     onChange,
     submitButtonText,
+    onManageDisableScrolling,
     panelUpdated,
     updateInProgress,
     errors,
   } = props;
+
+  const [isSendMsgModalOpen, setIsSendMsgModalOpen] = useState(false);
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureListing(listing);
@@ -56,6 +85,7 @@ const EditListingFeaturesPanel = props => {
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
+      
       <EditListingFeaturesForm
         className={css.form}
         name={FEATURES_NAME}
@@ -77,6 +107,105 @@ const EditListingFeaturesPanel = props => {
         updateInProgress={updateInProgress}
         fetchErrors={errors}
       />
+      <InlineTextButton
+        className={css.editPlanButton}
+        onClick={() => setIsSendMsgModalOpen(true)}
+      >
+      open Modal
+      </InlineTextButton>
+      <Modal
+        id="EditAvailabilityPlan"
+        isOpen={isSendMsgModalOpen}
+        onClose={() => setIsSendMsgModalOpen(false)}
+        onManageDisableScrolling={onManageDisableScrolling}
+        // containerClassName={css.modalContainer}
+      >
+        <FinalForm
+          // {...restOfprops}
+          onSubmit={submit()}
+          mutators={{
+            ...arrayMutators,
+          }}
+          render={fieldRenderProps => {
+            const {
+              // rootClassName,
+              // className,
+              // formId,
+              // handleSubmit,
+              // inProgress,
+              // intl,
+              // listingTitle,
+              // weekdays,
+              // fetchErrors,
+              handleSubmit,
+              values,
+            } = fieldRenderProps;
+
+            const classes = classNames(rootClassName || css.root, className);
+            // const submitInProgress = inProgress;
+
+            // const concatDayEntriesReducer = (entries, day) =>
+            //   values[day] ? entries.concat(values[day]) : entries;
+            // const hasUnfinishedEntries = !!weekdays
+            //   .reduce(concatDayEntriesReducer, [])
+            //   .find(e => !e.startTime || !e.endTime);
+
+            // const { updateListingError } = fetchErrors || {};
+
+            // const submitDisabled = submitInProgress || hasUnfinishedEntries;
+
+            // const mentorShifts = config.custom.mentorShifts
+
+            // const mentorShiftLabel = intl.formatMessage({
+            //   id: 'EditListingAvailabilityPlanForm.mentorShiftLabel',
+            // });
+
+            return (
+              <Form id={"sendmsg"} className={classes} onSubmit={handleSubmit}>
+                {/*<h2 className={css.heading}>
+                  <FormattedMessage
+                    id="EditListingAvailabilityPlanForm.title"
+                    values={{ listingTitle }}
+                  />
+                </h2>
+            */} 
+                <div>
+                  <FieldTextInput
+                    id="emailId"
+                    name="emailId"
+                    type="text"
+                    label={"Email ID"}
+                    placeholder={"Enter your email ID"}
+                    // validate={composeValidators(required(descriptionRequiredMessage))}
+                  />
+                </div>
+                <div>
+                  <FieldTextInput
+                    id="msg"
+                    name="msg"
+                    type="textarea"
+                    label={"Message"}
+                    placeholder={"Enter your message here"}
+                    // validate={composeValidators(required(descriptionRequiredMessage))}
+                  />
+                </div>
+                  
+
+                <div className={css.submitButton}>
+                  {/*updateListingError ? (
+                    <p className={css.error}>
+                      <FormattedMessage id="EditListingAvailabilityPlanForm.updateFailed" />
+                    </p>
+                  ) : null*/}
+                  <PrimaryButton type="submit" inProgress={false} disabled={false}>
+                    <FormattedMessage id="EditListingAvailabilityPlanForm.saveSchedule" />
+                  </PrimaryButton>
+                </div>
+              </Form>
+            );
+          }}
+        />
+      </Modal>
     </div>
   );
 };

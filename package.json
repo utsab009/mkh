@@ -15,6 +15,7 @@
     "array-includes": "^3.0.3",
     "array.prototype.find": "^2.0.4",
     "autosize": "^4.0.0",
+    "axios": "^0.19.0",
     "basic-auth": "^2.0.1",
     "body-parser": "^1.18.3",
     "classnames": "^2.2.6",
