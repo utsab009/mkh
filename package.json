@@ -33,6 +33,7 @@
     "mapbox-gl-multitouch": "^1.0.3",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.26",
+    "nodemailer": "^6.4.6",
     "object.entries": "^1.0.4",
     "object.values": "^1.0.4",
     "path-to-regexp": "^3.0.0",
