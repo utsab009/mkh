@@ -16,6 +16,7 @@
   background: #fff;
   border: 1px solid #f4f4f4;
   position: relative;
+  display: inline-flex;
 }
 
 .threeToTwoWrapper {
