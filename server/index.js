@@ -37,6 +37,7 @@ const renderer = require('./renderer');
 const dataLoader = require('./dataLoader');
 const fs = require('fs');
 const log = require('./log');
+const email = require('./mail');
 const { sitemapStructure } = require('./sitemap');
 const csp = require('./csp');
 
@@ -135,6 +136,7 @@ if (!dev) {
 
 // Server-side routes that do not render the application
 app.use('/api', apiRouter);
+app.use('/extra', email);
 
 const noCacheHeaders = {
   'Cache-control': 'no-cache, no-store, must-revalidate',
