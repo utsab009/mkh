@@ -165,7 +165,8 @@ class ProfileSettingsFormComponent extends Component {
             profileImage.imageId || fileUploadInProgress ? (
               <div className={css.avatarContainer}>
                 {imageFromFile}
-                {avatarComponent}
+
+                  <div className={css.profilepav}>{avatarComponent}</div>
                 <div className={css.changeAvatar}>
                   <FormattedMessage id="ProfileSettingsForm.changeAvatar" />
                 </div>
@@ -362,7 +363,7 @@ class ProfileSettingsFormComponent extends Component {
                   Profile
                 </Button>
                 <Button
-                  className={css.submitButton}
+                  className={`${css.submitButton} ${css.mdBttn}`}
                   type="button"
                   onClick={() => this.onToggleTab(2)}
                   // inProgress={submitInProgress}

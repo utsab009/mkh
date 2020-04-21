@@ -14,10 +14,10 @@
 }
 
 .title {
-  margin-bottom: 19px;
+  margin-bottom: 10px;
 
   @media (--viewportLarge) {
-    margin-bottom: 38px;
+    margin-bottom: 10px;
     padding: 1px 0 7px 0;
   }
 }
@@ -44,3 +44,30 @@
     height: auto;
   }
 }
+
+.btnModSl {
+  text-align: left;
+  margin: 0 0 30px;
+  font-size: 16px;
+}
+.updatePnl{
+  padding: 88px 0 !important;
+  border: 0 !important;
+}
+.formg{
+  margin-bottom: 15px;
+}
+.submitButtonFG{
+  margin-top: 20px;
+}
+
+
+@media (max-width: 767px) {
+  .updateModalcol{
+    margin-top: 108px;
+  }
+  .updatePnl{
+    padding: 48px 0 !important;
+  }
+}
+

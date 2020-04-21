@@ -14,6 +14,7 @@ import { Button, FieldCheckboxGroup, Form, FieldSelect, InlineTextButton } from 
 import css from './EditListingFeaturesForm.css';
 import { Default } from '../../components/BookingPanel/BookingPanel.example';
 
+
 export class EditListingFeaturesFormComponent extends Component {
   constructor(props) {
     super(props);
@@ -169,6 +170,7 @@ export class EditListingFeaturesFormComponent extends Component {
               : null
               }
 
+            
               <Button
                 className={css.submitButton}
                 type="submit"
@@ -178,12 +180,9 @@ export class EditListingFeaturesFormComponent extends Component {
               >
                 {saveActionMsg}
               </Button>
-              <InlineTextButton
-                // className={css.editPlanButton}
-                onClick={() => setIsSendMsgModalOpen(true)}
-              >
-              open Modal2
-              </InlineTextButton>
+              
+              
+              
             </Form>
           );
         }}

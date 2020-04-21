@@ -33,3 +33,9 @@
     margin-top: 100px;
   }
 }
+
+@media (max-width: 1024px) {
+  .submitButton{
+    margin-top: 30px;
+  }
+}

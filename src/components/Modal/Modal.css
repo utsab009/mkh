@@ -76,3 +76,8 @@
     color: var(--matterColorLight);
   }
 }
+@media (max-width: 767px) {
+  .updateModalcolclose{
+    position: absolute;
+  }
+}
