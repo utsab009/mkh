@@ -42,3 +42,11 @@
     margin: 37px 0 0 auto;
   }
 }
+@media (max-width: 575px) {
+.headingContainer{
+  flex-direction: column;
+}
+.profileLink{
+  margin: 19px 0 0 0;
+}
+}

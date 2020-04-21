@@ -83,8 +83,16 @@ const EditListingFeaturesPanel = props => {
   const initialValues = { sectors, subsectors, jobroles };
 
   return (
+    
     <div className={classes}>
+     
       <h1 className={css.title}>{panelTitle}</h1>
+      <InlineTextButton
+                    className={css.btnModSl}
+                    onClick={() => setIsSendMsgModalOpen(true)}
+                  >
+                  open Modal2
+              </InlineTextButton>
       
       <EditListingFeaturesForm
         className={css.form}
@@ -108,18 +116,13 @@ const EditListingFeaturesPanel = props => {
         updateInProgress={updateInProgress}
         fetchErrors={errors}
       />
-      {/*<InlineTextButton
-        className={css.editPlanButton}
-        onClick={() => setIsSendMsgModalOpen(true)}
-      >
-      open Modal
-      </InlineTextButton>*/}
-      <Modal
+       <Modal
         id="EditAvailabilityPlan"
         isOpen={isSendMsgModalOpen}
         onClose={() => setIsSendMsgModalOpen(false)}
         onManageDisableScrolling={onManageDisableScrolling}
         // containerClassName={css.modalContainer}
+        className={css.updateModalcol}
       >
         <FinalForm
           // {...restOfprops}
@@ -162,7 +165,7 @@ const EditListingFeaturesPanel = props => {
             // });
 
             return (
-              <Form id={"sendmsg"} className={classes} onSubmit={handleSubmit}>
+              <Form id={"sendmsg"} className={`${classes} ${css.updatePnl}`} onSubmit={handleSubmit}>
                 {/*<h2 className={css.heading}>
                   <FormattedMessage
                     id="EditListingAvailabilityPlanForm.title"
@@ -170,7 +173,7 @@ const EditListingFeaturesPanel = props => {
                   />
                 </h2>
             */} 
-                <div>
+                <div className={css.formg}>
                   <FieldTextInput
                     id="emailId"
                     name="emailId"
@@ -180,7 +183,7 @@ const EditListingFeaturesPanel = props => {
                     // validate={composeValidators(required(descriptionRequiredMessage))}
                   />
                 </div>
-                <div>
+                <div className={css.formg}>
                   <FieldTextInput
                     id="msg"
                     name="msg"
@@ -192,7 +195,7 @@ const EditListingFeaturesPanel = props => {
                 </div>
                   
 
-                <div className={css.submitButton}>
+                <div className={css.submitButtonFG}>
                   {/*updateListingError ? (
                     <p className={css.error}>
                       <FormattedMessage id="EditListingAvailabilityPlanForm.updateFailed" />
@@ -207,35 +210,13 @@ const EditListingFeaturesPanel = props => {
           }}
         />
       </Modal>
-      <h1 className={css.title}>{panelTitle}</h1>
-      
-      <EditListingFeaturesForm
-        className={css.form}
-        name={FEATURES_NAME}
-        initialValues={initialValues}
-        onSubmit={values => {
-          // const { yogaStyles = [] } = values;
-          const { sectors = '', subsectors = '', jobroles = '' } = values;
-
-          const updatedValues = {
-            publicData: { sectors, subsectors, jobroles},
-          };
-          onSubmit(updatedValues);
-        }}
-        onChange={onChange}
-        saveActionMsg={submitButtonText}
-        disabled={disabled}
-        ready={ready}
-        updated={panelUpdated}
-        updateInProgress={updateInProgress}
-        fetchErrors={errors}
-      />
-      <InlineTextButton
+      {/*<InlineTextButton
         className={css.editPlanButton}
         onClick={() => setIsSendMsgModalOpen(true)}
       >
       open Modal
-      </InlineTextButton>
+      </InlineTextButton>*/}
+      
       
     </div>
   );
