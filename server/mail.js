@@ -4,24 +4,24 @@ const router = express.Router();
 
 router.get('/email_send', function(req, res) {
   let data = req.query;
-  if (!Object.prototype.hasOwnProperty.call(data, 'email')) {
-    return res.status(403).send({
-      status: false,
-      message: 'Email required',
-    });
-  }
+  // if (!Object.prototype.hasOwnProperty.call(data, 'email')) {
+  //   return res.status(403).send({
+  //     status: false,
+  //     message: 'Email required',
+  //   });
+  // }
   if (!Object.prototype.hasOwnProperty.call(data, 'message')) {
     return res.status(403).send({
       status: false,
       message: 'Massage required',
     });
   }
-  if (!Object.prototype.hasOwnProperty.call(data, 'sub')) {
-    return res.status(403).send({
-      status: false,
-      message: 'Subject required',
-    });
-  }
+  // if (!Object.prototype.hasOwnProperty.call(data, 'sub')) {
+  //   return res.status(403).send({
+  //     status: false,
+  //     message: 'Subject required',
+  //   });
+  // }
 
   var transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -35,8 +35,8 @@ router.get('/email_send', function(req, res) {
 
   var mailOptions = {
     from: 'abhishek.bitcanny@gmail.com',
-    to: data.email,
-    subject: data.sub,
+    to: 'utsab@bitcanny.com',
+    subject: 'Sector Requirement',
     text: data.message,
   };
 
