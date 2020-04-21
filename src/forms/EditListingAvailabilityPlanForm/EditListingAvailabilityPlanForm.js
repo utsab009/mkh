@@ -136,7 +136,6 @@ const DailyPlan = props => {
 
       <FieldArray name={dayOfWeek}>
         {({ fields }) => {
-          console.log("fields in fieldarray",fields);
           return (
             <div className={css.timePicker}>
               {fields.map((name, index) => {
@@ -241,7 +240,6 @@ const submit = (onSubmit, weekdays) => values => {
 
 const EditListingAvailabilityPlanFormComponent = props => {
   const { onSubmit, ...restOfprops } = props;
-  console.log("props in ELAPf",props);
   return (
     <FinalForm
       {...restOfprops}
