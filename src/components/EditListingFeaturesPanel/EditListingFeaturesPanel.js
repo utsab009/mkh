@@ -99,6 +99,7 @@ const EditListingFeaturesPanel = props => {
           };
           onSubmit(updatedValues);
         }}
+        setIsSendMsgModalOpen={setIsSendMsgModalOpen}
         onChange={onChange}
         saveActionMsg={submitButtonText}
         disabled={disabled}
@@ -107,12 +108,12 @@ const EditListingFeaturesPanel = props => {
         updateInProgress={updateInProgress}
         fetchErrors={errors}
       />
-      <InlineTextButton
+      {/*<InlineTextButton
         className={css.editPlanButton}
         onClick={() => setIsSendMsgModalOpen(true)}
       >
       open Modal
-      </InlineTextButton>
+      </InlineTextButton>*/}
       <Modal
         id="EditAvailabilityPlan"
         isOpen={isSendMsgModalOpen}
