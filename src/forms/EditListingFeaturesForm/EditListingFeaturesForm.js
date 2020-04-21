@@ -9,7 +9,7 @@ import { FormattedMessage } from '../../util/reactIntl';
 
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import { Button, FieldCheckboxGroup, Form, FieldSelect } from '../../components';
+import { Button, FieldCheckboxGroup, Form, FieldSelect, InlineTextButton } from '../../components';
 
 import css from './EditListingFeaturesForm.css';
 import { Default } from '../../components/BookingPanel/BookingPanel.example';
@@ -92,6 +92,7 @@ export class EditListingFeaturesFormComponent extends Component {
             updated,
             updateInProgress,
             fetchErrors,
+            setIsSendMsgModalOpen,
           } = formRenderProps;
 
           const classes = classNames(rootClassName || css.root, className);
@@ -177,6 +178,12 @@ export class EditListingFeaturesFormComponent extends Component {
               >
                 {saveActionMsg}
               </Button>
+              <InlineTextButton
+                // className={css.editPlanButton}
+                onClick={() => setIsSendMsgModalOpen(true)}
+              >
+              open Modal2
+              </InlineTextButton>
             </Form>
           );
         }}
