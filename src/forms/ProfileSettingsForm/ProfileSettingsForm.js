@@ -301,6 +301,26 @@ class ProfileSettingsFormComponent extends Component {
                       validate={lastNameRequired}
                     />
                   </div>
+                  <FieldTextInput
+                    // className={css.firstName}
+                    type="text"
+                    id={'linkedin'}
+                    name="linkedinLink"
+                    autoComplete="linkedin"
+                    label={"linked in Link"}
+                    placeholder={"linked Link"}
+                    // validate={firstNameRequired}
+                  />
+                  <FieldTextInput
+                    // className={css.lastName}
+                    type="text"
+                    id={'youtubelink'}
+                    name="youtubeLink"
+                    autoComplete="youtube link"
+                    label={"youtube link"}
+                    placeholder={"youtubelink"}
+                    // validate={lastNameRequired}
+                  />
                   {user.attributes.profile.protectedData && user.attributes.profile.protectedData.userType == 'mentee' ?   
                     <FieldTextInput
                       type="date"

@@ -53,6 +53,7 @@ class Portal extends React.Component {
     // DOM node, or uses 'autoFocus' in a descendant, add
     // state to Modal and only render the children when Modal
     // is inserted in the DOM tree.
+    console.log("this.el",this.props.portalRoot);
     this.props.portalRoot.appendChild(this.el);
   }
 
@@ -191,6 +192,8 @@ const EditListingAvailabilityPanel = props => {
     updateInProgress,
     errors,
   } = props;
+
+  
   // Hooks
   const [isEditPlanModalOpen, setIsEditPlanModalOpen] = useState(false);
   const [isEditExceptionsModalOpen, setIsEditExceptionsModalOpen] = useState(false);

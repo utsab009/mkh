@@ -79,7 +79,17 @@ export class ProfileSettingsPageComponent extends Component {
         className={css.form}
         currentUser={currentUser}
         // initialValues={{ firstName, lastName, bio, profileImage: user.profileImage, workExp: protectedData && protectedData.workExp, education: protectedData && protectedData.education, dob: protectedData && protectedData.dob }}
-        initialValues={{ firstName, lastName, bio, profileImage: user.profileImage, workExp: publicData && publicData.workExp, education: publicData && publicData.education, dob: publicData && publicData.dob }}
+        initialValues={{ 
+          firstName,
+          lastName,
+          bio, 
+          profileImage: user.profileImage, 
+          workExp: publicData && publicData.workExp, 
+          education: publicData && publicData.education, 
+          dob: publicData && publicData.dob,
+          linkedinLink: publicData && publicData.linkedinLink,
+          youtubeLink: publicData && publicData.youtubeLink,
+         }}
         profileImage={profileImage}
         onImageUpload={e => onImageUploadHandler(e, onImageUpload)}
         uploadInProgress={uploadInProgress}

@@ -37,7 +37,7 @@ export class  SectionHeroComponent extends Component {
 // const SectionHero = props => {
   render () {
     const { rootClassName, className, onManageDisableScrolling } = this.props;
-
+    console.log("onManageDisableScrolling",onManageDisableScrolling);
     // const [isSectorModalOpen, setisSectorModalOpen] = useState(true);
     // const [profileTypeSelected, setProfileTypeSelected] = useState(null);
 
@@ -63,7 +63,8 @@ export class  SectionHeroComponent extends Component {
           routes,
           // { keywords: 'php' },
           {},
-          {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+          // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+          {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles}
         )
       );
       ////////////////////////

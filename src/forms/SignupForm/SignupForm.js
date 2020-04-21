@@ -441,6 +441,28 @@ export class SignupFormComponent extends Component {
                         validate={lastNameRequired}
                       />
                     </div>
+                    <div className={css.name}>
+                      <FieldTextInput
+                        className={css.firstNameRoot}
+                        type="text"
+                        id={formId ? `${formId}.linkedin` : 'linkedin'}
+                        name="linkedinLink"
+                        autoComplete="linkedin"
+                        label={"linked Link"}
+                        placeholder={"linked Link"}
+                        // validate={firstNameRequired}
+                      />
+                      <FieldTextInput
+                        className={css.lastNameRoot}
+                        type="text"
+                        id={formId ? `${formId}.youtubelink` : 'youtubelink'}
+                        name="youtubeLink"
+                        autoComplete="youtube link"
+                        label={"youtube link"}
+                        placeholder={"youtubelink"}
+                        // validate={lastNameRequired}
+                      />
+                    </div>
                     <FieldTextInput
                       className={css.password}
                       type="password"

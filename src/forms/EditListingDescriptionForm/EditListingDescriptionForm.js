@@ -121,12 +121,12 @@ const EditListingDescriptionFormComponent = props => (
             intl={intl}
           />*/}
 
-          {<FieldCheckboxGroup
+          {/*<FieldCheckboxGroup
             className={css.profileTypes}
             id="profileType"
             name="profileType"
             options={profileTypes}
-          />}
+          />*/}
 
           {<FieldCheckboxGroup
             label={"Language"}

@@ -328,7 +328,7 @@ export class ListingPageComponent extends Component {
     const currentAuthor = authorAvailable ? currentListing.author : null;
     const ensuredAuthor = ensureUser(currentAuthor);
     let authorData = ensuredAuthor !== null && ensuredAuthor.attributes.profile.publicData ? ensuredAuthor.attributes.profile.publicData : {error:"no data"}; 
-    let {workExp = null, education = null } = authorData;
+    let {workExp = null, education = null, linkedinLink = null, youtubeLink = null } = authorData;
     let authorBio =  ensuredAuthor !== null && ensuredAuthor.attributes.profile.bio ? ensuredAuthor.attributes.profile.bio : null;
 
     // When user is banned or deleted the listing is also deleted.
@@ -503,7 +503,8 @@ Work and Organisational Psychology and Coaching groups </li>
                       </ul>
                     </div>
 
-                    <a href="" className={css.sociallink}>Linked-in Link</a>
+                    <span><a href={linkedinLink} className={css.sociallink}>Linked-in Link</a></span>
+                    <span><a href={youtubeLink} className={css.sociallink}>Youtube Link</a></span>
                   <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
 
                 </div>
