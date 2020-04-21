@@ -4,12 +4,12 @@ const router = express.Router();
 
 router.get('/email_send', function(req, res) {
   let data = req.query;
-  // if (!Object.prototype.hasOwnProperty.call(data, 'email')) {
-  //   return res.status(403).send({
-  //     status: false,
-  //     message: 'Email required',
-  //   });
-  // }
+  if (!Object.prototype.hasOwnProperty.call(data, 'email')) {
+    return res.status(403).send({
+      status: false,
+      message: 'Email required',
+    });
+  }
   if (!Object.prototype.hasOwnProperty.call(data, 'message')) {
     return res.status(403).send({
       status: false,
@@ -38,6 +38,7 @@ router.get('/email_send', function(req, res) {
     to: 'utsab@bitcanny.com',
     subject: 'Sector Requirement',
     text: data.message,
+    html: `<p> Sender's email ID : ` +data.email+`</p><p>`+data.message+`</p>`
   };
 
   transporter.sendMail(mailOptions, function(error, info) {

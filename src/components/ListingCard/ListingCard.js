@@ -133,7 +133,7 @@ export class ListingCardComponent extends Component {
     // console.log("ensuredAuthor",ensuredAuthor);
     // let authorData = this.state.authorData !== null && this.state.authorData.data.attributes.profile.publicData ? this.state.authorData.data.attributes.profile.publicData : {error:"no data"}; 
     let authorData = ensuredAuthor !== null && ensuredAuthor.attributes.profile.publicData ? ensuredAuthor.attributes.profile.publicData : {error:"no data"}; 
-    let {workExp = null, education = null } = authorData;
+    let {workExp = null, education = null, linkedinLink = null, youtubeLink = null } = authorData;
     // console.log("authorData",authorData);
     const id = currentListing.id.uuid;
     const { title = '', price, publicData } = currentListing.attributes;
@@ -170,7 +170,6 @@ export class ListingCardComponent extends Component {
         // }
       })
     }
-    console.log("firstImage",firstImage);
     return (
       <div className={css.updateRow}>
         <NamedLink className={classes} name="ListingPage" params={{ id, slug }}>
@@ -249,8 +248,10 @@ export class ListingCardComponent extends Component {
                     }
                   </div>
 
-                  <a href="" className={css.socialLink}>
+                  <a href={linkedinLink} className={css.socialLink}>
                     Linked-in Link
+                     { /*linkedinLink*/
+                    }
                   </a>
 
 

@@ -446,7 +446,7 @@ export class SignupFormComponent extends Component {
                         className={css.firstNameRoot}
                         type="text"
                         id={formId ? `${formId}.linkedin` : 'linkedin'}
-                        name="linkedin"
+                        name="linkedinLink"
                         autoComplete="linkedin"
                         label={"linked Link"}
                         placeholder={"linked Link"}
@@ -456,7 +456,7 @@ export class SignupFormComponent extends Component {
                         className={css.lastNameRoot}
                         type="text"
                         id={formId ? `${formId}.youtubelink` : 'youtubelink'}
-                        name="youtubelink"
+                        name="youtubeLink"
                         autoComplete="youtube link"
                         label={"youtube link"}
                         placeholder={"youtubelink"}

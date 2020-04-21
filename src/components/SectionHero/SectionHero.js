@@ -37,7 +37,7 @@ export class  SectionHeroComponent extends Component {
 // const SectionHero = props => {
   render () {
     const { rootClassName, className, onManageDisableScrolling } = this.props;
-
+    console.log("onManageDisableScrolling",onManageDisableScrolling);
     // const [isSectorModalOpen, setisSectorModalOpen] = useState(true);
     // const [profileTypeSelected, setProfileTypeSelected] = useState(null);
 
