@@ -84,6 +84,36 @@ const EditListingFeaturesPanel = props => {
 
   return (
     <div className={classes}>
+      <h1 className={css.title}>{panelTitle}</h1>
+      
+      <EditListingFeaturesForm
+        className={css.form}
+        name={FEATURES_NAME}
+        initialValues={initialValues}
+        onSubmit={values => {
+          // const { yogaStyles = [] } = values;
+          const { sectors = '', subsectors = '', jobroles = '' } = values;
+
+          const updatedValues = {
+            publicData: { sectors, subsectors, jobroles},
+          };
+          onSubmit(updatedValues);
+        }}
+        setIsSendMsgModalOpen={setIsSendMsgModalOpen}
+        onChange={onChange}
+        saveActionMsg={submitButtonText}
+        disabled={disabled}
+        ready={ready}
+        updated={panelUpdated}
+        updateInProgress={updateInProgress}
+        fetchErrors={errors}
+      />
+      {/*<InlineTextButton
+        className={css.editPlanButton}
+        onClick={() => setIsSendMsgModalOpen(true)}
+      >
+      open Modal
+      </InlineTextButton>*/}
       <Modal
         id="EditAvailabilityPlan"
         isOpen={isSendMsgModalOpen}
