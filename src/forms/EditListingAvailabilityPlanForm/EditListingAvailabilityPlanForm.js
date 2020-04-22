@@ -285,7 +285,7 @@ const EditListingAvailabilityPlanFormComponent = props => {
             <h2 className={css.heading}>
               <FormattedMessage
                 id="EditListingAvailabilityPlanForm.title"
-                values={{ listingTitle }}
+                // values={{ listingTitle }}
               />
             </h2>
             <h3 className={css.subheading}>
