@@ -31,19 +31,27 @@ const EditListingDescriptionPanel = props => {
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
+    // <FormattedMessage
+    //   id="EditListingDescriptionPanel.title"
+    //   values={{
+    //     listingTitle: (
+    //       <ListingLink listing={listing}>
+    //         <FormattedMessage id="EditListingDescriptionPanel.listingTitle" />
+    //       </ListingLink>
+    //     ),
+    //   }}
+    // />
     <FormattedMessage
       id="EditListingDescriptionPanel.title"
-      values={{
-        listingTitle: (
-          <ListingLink listing={listing}>
-            <FormattedMessage id="EditListingDescriptionPanel.listingTitle" />
-          </ListingLink>
-        ),
-      }}
+      values={{ listingTitle: <ListingLink listing={listing} /> }}
     />
   ) : (
     <FormattedMessage id="EditListingDescriptionPanel.createListingTitle" />
-  );
+  ); // Default Code
+
+  // const panelTitle = (
+  //   <FormattedMessage id="EditListingDescriptionPanel.createListingTitle" />
+  // );
 
   return (
     <div className={classes}>

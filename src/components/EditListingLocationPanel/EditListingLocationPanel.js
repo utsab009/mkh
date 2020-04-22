@@ -65,21 +65,24 @@ class EditListingLocationPanel extends Component {
 
     const isPublished =
       currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
-    const panelTitle = isPublished ? (
-      <FormattedMessage
-        id="EditListingLocationPanel.title"
-        values={{
-          listingTitle: (
-            <ListingLink listing={listing}>
-              <FormattedMessage id="EditListingLocationPanel.listingTitle" />
-            </ListingLink>
-          ),
-        }}
-      />
-    ) : (
+    // const panelTitle = isPublished ? (
+    //   <FormattedMessage
+    //     id="EditListingLocationPanel.title"
+    //     values={{
+    //       listingTitle: (
+    //         <ListingLink listing={listing}>
+    //           <FormattedMessage id="EditListingLocationPanel.listingTitle" />
+    //         </ListingLink>
+    //       ),
+    //     }}
+    //   />
+    // ) : (
+    //   <FormattedMessage id="EditListingLocationPanel.createListingTitle" />
+    // );
+
+    const panelTitle = (
       <FormattedMessage id="EditListingLocationPanel.createListingTitle" />
     );
-
     return (
       <div className={classes}>
         <h1 className={css.title}>{panelTitle}</h1>

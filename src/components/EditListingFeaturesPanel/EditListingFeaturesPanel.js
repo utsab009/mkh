@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { FormattedMessage } from '../../util/reactIntl';
+import routeConfiguration from '../../routeConfiguration';
+import { createResourceLocatorString } from '../../util/routes';
 
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureListing } from '../../util/data';
@@ -86,35 +88,34 @@ const submit = (history) => values => {
       values.emailId
   )
     .then(response => {
-      // if (response.data !== null) {
-        // const events = [];
-        // for (var i = 0; i < response.data.data.length; i++) {
-        //   const eventObj = {
-        //     id: response.data.data[i].transaction_id,
-        //     title: response.data.data[i].listing_name,
-        //     allDay: false,
-        //     start: response.data.data[i].start_time,
-        //     end: response.data.data[i].end_time,
-        //   };
-        //   events.push(eventObj);
-        // }
 
-        // this.setState({ events: events });
-
-      // }
       console.log("response in submit",response);
+      history.push(
+        createResourceLocatorString(
+          'LandingPage',
+          routes,
+          // { keywords: 'php' },
+          {},
+          // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+          {}
+        )
+      );
     })
-    .catch(e =>console.log('e in submit',e) );
-    // this.props.history.push(
-    //   createResourceLocatorString(
-    //     'LandingPage',
-    //     routes,
-    //     // { keywords: 'php' },
-    //     {},
-    //     // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
-    //     {}
-    //   )
-    // );
+    .catch(e => {console.log('e in submit',e) 
+      history.push(
+        createResourceLocatorString(
+          'LandingPage',
+          routes,
+          // { keywords: 'php' },
+          {},
+          // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+          {}
+        )
+      );
+    }
+    );
+    const routes = routeConfiguration();
+    
 
 };
 
@@ -147,20 +148,27 @@ const EditListingFeaturesPanel = props => {
   const { publicData } = currentListing.attributes;
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
-  const panelTitle = isPublished ? (
-    <FormattedMessage
-      id="EditListingFeaturesPanel.title"
-      values={{
-        listingTitle: (
-          <ListingLink listing={listing}>
-            <FormattedMessage id="EditListingFeaturesPanel.listingTitle" />
-          </ListingLink>
-        ),
-      }}
-    />
-  ) : (
-    <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
-  );
+  // const panelTitle = isPublished ? (
+  //   // <FormattedMessage
+  //   //   id="EditListingFeaturesPanel.title"
+  //   //   values={{
+  //   //     listingTitle: (
+  //   //       <ListingLink listing={listing}>
+  //   //         <FormattedMessage id="EditListingFeaturesPanel.listingTitle" />
+  //   //       </ListingLink>
+  //   //     ),
+  //   //   }}
+  //   // />
+  //   <FormattedMessage
+  //     id="EditListingFeaturesPanel.title"
+  //   />
+  // ) : (
+  //   <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
+  // ); //Default code
+
+  const panelTitle = (
+      <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
+    );
 
   // const yogaStyles = publicData && publicData.yogaStyles;
   const sectors = publicData && publicData.sectors;
@@ -177,7 +185,7 @@ const EditListingFeaturesPanel = props => {
         className={css.btnModSl}
         onClick={() => setIsSendMsgModalOpen(true)}
       >
-      open Modal2
+      My sector is not listed, I want to write a message to the admin.
       </InlineTextButton>
       
       <EditListingFeaturesForm

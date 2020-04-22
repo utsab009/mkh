@@ -74,7 +74,8 @@ export class PlannerPageComponent extends Component {
 
   onSelectSlot = (date, event = false) => {
     const dailyEvents = this.state.events.filter(item => {
-      if(moment(item.start).isAfter(date.start) && moment(item.start).isBefore(moment(date.start).add(1, 'days').format('YYYY-MM-DD HH:mm:ss')))
+      if(moment(item.start).format('YYYY-MM-DD') === moment(date.start).format('YYYY-MM-DD'))
+      // if(moment(item.start).isAfter(date.start) && moment(item.start).isBefore(moment(date.start).add(1, 'days').format('YYYY-MM-DD HH:mm:ss')))
       {
         return item;
       }
