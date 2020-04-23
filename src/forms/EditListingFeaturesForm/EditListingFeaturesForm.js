@@ -158,7 +158,7 @@ export class EditListingFeaturesFormComponent extends Component {
               </FieldSelect>)
               : null
               }
-
+              
               {this.state.jobRoles.length > 0 ? 
                 (<FieldSelect className={css.features} name={'jobroles'} id={2} label={jobRoleLabel}>
                   {this.state.jobRoles.map(m => (
@@ -169,6 +169,8 @@ export class EditListingFeaturesFormComponent extends Component {
                 </FieldSelect>)
               : null
               }
+
+              <div className={css.ffsec}><p>Ok, so you have noticed you cannot sign-up for morethen  one  Job  Role  to  mentor  and  yet  you  could mentor for the role at many levels and even many different Job Roles.  We promise the next version of Try A Mentor will not have this limitation but for now, to overcome this,you simply create as many personal Mentor Profiles as you need so that all of what you are capable of is captured and offered to mentees.</p></div>
 
             
               <Button
