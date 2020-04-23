@@ -82,7 +82,8 @@ const submit = (history) => values => {
   console.log("msg in submit",msg);
 
   Axios.get(
-    'http://localhost:3001/extra/email_send?message=' +
+    // 'http://localhost:3001/extra/email_send?message=' +
+    'https://mentorkh.herokuapp.com/extra/email_send?message=' +
     values.msg +
       '&email=' +
       values.emailId
