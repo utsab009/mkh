@@ -40,3 +40,8 @@
     margin-top: 100px;
   }
 }
+
+.ffsec p {
+  font-size: 14px;
+  line-height: 20px;
+}

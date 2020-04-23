@@ -14,10 +14,60 @@
 }
 
 .title {
-  margin-bottom: 19px;
+  margin-bottom: 10px;
 
   @media (--viewportLarge) {
-    margin-bottom: 38px;
+    margin-bottom: 10px;
     padding: 1px 0 7px 0;
   }
 }
+
+.modalContainer {
+  @apply --marketplaceModalBaseStyles;
+  min-height: 100vh;
+  height: 100%;
+
+  padding-left: 0;
+  padding-right: 0;
+
+  background-color: var(--matterColorBright);
+}
+
+@media (--viewportMedium) {
+  .root {
+    padding: 11px 24px 0 24px;
+  }
+
+  .modalContainer {
+    flex-basis: 576px;
+    min-height: auto;
+    height: auto;
+  }
+}
+
+.btnModSl {
+  text-align: left;
+  margin: 0 0 30px;
+  font-size: 16px;
+}
+.updatePnl{
+  padding: 88px 0 !important;
+  border: 0 !important;
+}
+.formg{
+  margin-bottom: 15px;
+}
+.submitButtonFG{
+  margin-top: 20px;
+}
+
+
+@media (max-width: 767px) {
+  .updateModalcol{
+    margin-top: 108px;
+  }
+  .updatePnl{
+    padding: 48px 0 !important;
+  }
+}
+

@@ -33,18 +33,22 @@ const EditListingPricingPanel = props => {
   const { price } = currentListing.attributes;
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
-  const panelTitle = isPublished ? (
-    <FormattedMessage
-      id="EditListingPricingPanel.title"
-      values={{
-        listingTitle: (
-          <ListingLink listing={listing}>
-            <FormattedMessage id="EditListingPricingPanel.listingTitle" />
-          </ListingLink>
-        ),
-      }}
-    />
-  ) : (
+  // const panelTitle = isPublished ? (
+  //   <FormattedMessage
+  //     id="EditListingPricingPanel.title"
+  //     values={{
+  //       listingTitle: (
+  //         <ListingLink listing={listing}>
+  //           <FormattedMessage id="EditListingPricingPanel.listingTitle" />
+  //         </ListingLink>
+  //       ),
+  //     }}
+  //   />
+  // ) : (
+  //   <FormattedMessage id="EditListingPricingPanel.createListingTitle" />
+  // );
+
+  const panelTitle = (
     <FormattedMessage id="EditListingPricingPanel.createListingTitle" />
   );
 

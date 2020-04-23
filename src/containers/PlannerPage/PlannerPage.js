@@ -19,10 +19,22 @@ import {
 import { TopbarContainer, NotFoundPage } from '../../containers';
 import config from '../../config';
 import moment from 'moment';
+// import 'moment/locale/en-gb';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import css from './PlannerPage.css';
 import { loadData } from '../../containers/InboxPage/InboxPage.duck';
+// moment.locale("es-es", {
+// 	week: {
+// 		dow: 1 //Monday is the first day of the week.
+// 	}
+// });
+moment.updateLocale('en', {
+  week: {
+    dow: 1,
+  },
+})
+
 const localizer = momentLocalizer(moment); // or globalizeLocalizer
 
 export class PlannerPageComponent extends Component {
@@ -62,7 +74,8 @@ export class PlannerPageComponent extends Component {
 
   onSelectSlot = (date, event = false) => {
     const dailyEvents = this.state.events.filter(item => {
-      if(moment(item.start).isAfter(date.start) && moment(item.start).isBefore(moment(date.start).add(1, 'days').format('YYYY-MM-DD HH:mm:ss')))
+      if(moment(item.start).format('YYYY-MM-DD') === moment(date.start).format('YYYY-MM-DD'))
+      // if(moment(item.start).isAfter(date.start) && moment(item.start).isBefore(moment(date.start).add(1, 'days').format('YYYY-MM-DD HH:mm:ss')))
       {
         return item;
       }

@@ -76,7 +76,7 @@
 
     &::after {
       left: 0;
-      bottom: 17px;
+      bottom: 40px;
     }
   }
 }
@@ -98,7 +98,7 @@
   @media (--viewportMedium) {
     &::after {
       left: 0;
-      bottom: 17px;
+      bottom: 40px;
     }
   }
 }

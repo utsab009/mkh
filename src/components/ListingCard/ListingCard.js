@@ -7,17 +7,25 @@ import classNames from 'classnames';
 import { lazyLoadWithDimensions } from '../../util/contextHelpers';
 import { LINE_ITEM_DAY, LINE_ITEM_NIGHT, propTypes } from '../../util/types';
 import { formatMoney } from '../../util/currency';
-import { ensureListing } from '../../util/data';
 import { richText } from '../../util/richText';
 import { createSlug } from '../../util/urlHelpers';
 import config from '../../config';
 import { NamedLink, ResponsiveImage, Button } from '../../components';
 import { updateProfile } from '../../containers/ProfileSettingsPage/ProfileSettingsPage.duck';
 import { showUser } from '../../containers/ProfilePage/ProfilePage.duck';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoffee,faHeart as solidHeart,faHeartBroken,faHeartbeat, faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
+import { faHeart} from '@fortawesome/free-regular-svg-icons';
 import { types as sdkTypes } from '../../util/sdkLoader';
+import SectionAvatar from '../../containers/ListingPage/SectionAvatar';
 
 import css from './ListingCard.css';
+import {
+  ensureListing,
+  ensureOwnListing,
+  ensureUser,
+  userDisplayNameAsString,
+} from '../../util/data';
 
 const MIN_LENGTH_FOR_LONG_WORDS = 10;
 
@@ -49,6 +57,7 @@ class ListingImage extends Component {
     return <ResponsiveImage {...this.props} />;
   }
 }
+
 const LazyImage = lazyLoadWithDimensions(ListingImage, { loadAfterInitialRendering: 3000 });
 
 export class ListingCardComponent extends Component {
@@ -66,14 +75,7 @@ export class ListingCardComponent extends Component {
   }
 
   componentDidMount() {
-    console.log("this.props in CDM in listingcard",this.props.listing.author.id);
-    let authorData ;
-    let showuserresponse = this.props.onShowUser(this.props.listing.author.id);
-    showuserresponse.then(result => {
-      authorData = result.data;
-      this.setState({authorData : authorData});
-     return result;
-    });
+    this.props.onShowUser(this.props.listing.author.id);
   }
 
   addToFav = id => {
@@ -122,13 +124,17 @@ export class ListingCardComponent extends Component {
       certificateConfig,
       setActiveListing,
     } = this.props;
-    console.log("this.state.authordata",this.state.authorData);
-    let authorData = this.state.authorData !== null && this.state.authorData.data.attributes.profile.publicData ? this.state.authorData.data.attributes.profile.publicData : {error:"no data"}; 
-    let {workExp = null, education = null } = authorData;
-    console.log("workExp:",workExp);
     let favouritesArr = currentUser && currentUser.attributes.profile.protectedData.favourites && Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites)) ? JSON.parse(currentUser.attributes.profile.protectedData.favourites) : [];
     const classes = classNames(rootClassName || css.root, className);
     const currentListing = ensureListing(listing);
+    const authorAvailable = currentListing && currentListing.author;
+    const currentAuthor = authorAvailable ? currentListing.author : null;
+    const ensuredAuthor = ensureUser(currentAuthor);
+    // console.log("ensuredAuthor",ensuredAuthor);
+    // let authorData = this.state.authorData !== null && this.state.authorData.data.attributes.profile.publicData ? this.state.authorData.data.attributes.profile.publicData : {error:"no data"}; 
+    let authorData = ensuredAuthor !== null && ensuredAuthor.attributes.profile.publicData ? ensuredAuthor.attributes.profile.publicData : {error:"no data"}; 
+    let {workExp = null, education = null, linkedinLink = null, youtubeLink = null } = authorData;
+    // console.log("authorData",authorData);
     const id = currentListing.id.uuid;
     const { title = '', price, publicData } = currentListing.attributes;
     const slug = createSlug(title);
@@ -149,13 +155,11 @@ export class ListingCardComponent extends Component {
       : isDaily
       ? 'ListingCard.perDay'
       : 'ListingCard.perUnit';
-    console.log("favouritesArr",favouritesArr);
     let isFavourite = false;
     if (favouritesArr.length > 0)
     {
       // isFavourite = favouritesArr.filter(c => c.id !== id).length > 0 ? true : false;
       isFavourite = favouritesArr.filter(c => {
-        console.log('c.id',c.id,'id',id);
         if(c.id == id)
         {
           return true;
@@ -166,67 +170,118 @@ export class ListingCardComponent extends Component {
         // }
       })
     }
-    console.log("isfavourite :",isFavourite);  
-
     return (
-      <div>
+      <div className={css.updateRow}>
         <NamedLink className={classes} name="ListingPage" params={{ id, slug }}>
-          <div
+          {/* <div
             className={css.threeToTwoWrapper}
             onMouseEnter={() => setActiveListing(currentListing.id)}
             onMouseLeave={() => setActiveListing(null)}
           >
-            <div className={css.aspectWrapper}>
+            <div className={`${css.aspectWrapper} ${css.aspectWrapperMod}`}>
               <LazyImage
-                rootClassName={css.rootForImage}
+                rootClassName={`${css.rootForImage} ${css.modifyImg}`}
                 alt={title}
                 image={firstImage}
                 variants={['landscape-crop', 'landscape-crop2x']}
                 sizes={renderSizes}
               />
             </div>
-          </div>
+          </div> */}
+           {/*<div className={css.modImageSec}>*/}
+           <div>
+             {/*<img src="" />*/}
+             <SectionAvatar user={currentAuthor} />
+           </div>
           <div className={css.info}>
-            <div className={css.price}>
+            {/* <div className={css.price}>
               <div className={css.priceValue} title={priceTitle}>
                 {formattedPrice}
               </div>
               <div className={css.perUnit}>
                 <FormattedMessage id={unitTranslationKey} />
               </div>
-            </div>
+            </div> */}
             <div className={css.mainInfo}>
               <div className={css.title}>
-                {richText(title, {
+                {richText('Organisations Worked in:', {
                   longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
                   longWordClass: css.longWord,
                 })}
+                {
+                  workExp !== null ? workExp.map((item, index) => {
+                    if(index < 4)
+                    {
+                      return (
+                        <span className={css.crr}>{item.company}</span>
+                      );
+                    }
+                  })
+                  : null
+                }
               </div>
-              {workExp !== null ? workExp.map((item, index) => {
-                if(index < 4)
-                return (
-                  <div>{item.company}</div>
-                );
-                })
-                : null
-              }
-              <div className={css.certificateInfo}>
+              
+              {/* <div className={css.certificateInfo}>
                 {certificate && !certificate.hideFromListingInfo ? (
                   <span>{certificate.label}</span>
                 ) : null}
+              </div> */}
+
+              <div className={css.rating}>
+              <FontAwesomeIcon icon={solidStar} /> 4.60 <span>(79)</span>
               </div>
             </div>
+
+             <div className={css.price}>
+                  <div className={css.title}>
+                    Career Roles:
+                    {
+                      workExp !== null ? workExp.map((item, index) => {
+                        if(index < 4)
+                        {
+                          return (
+                            <span className={css.crr}>{item.position}</span>
+                          );
+                        }
+                      })
+                      : null
+                    }
+                  </div>
+
+                  <a href={linkedinLink} className={css.socialLink}>
+                    Linked-in Link
+                     { /*linkedinLink*/
+                    }
+                  </a>
+
+
+
+            </div>
+
+            <div className={`${css.price} ${css.nameSig}`}>
+                  <div className={`${css.title} ${css.nameav}`}>
+                     {title}
+                  </div>
+              <div className={css.priceValue} title={priceTitle}>
+                {formattedPrice}<FormattedMessage id={unitTranslationKey} />
+              </div>
+
+            </div>
           </div>
-        </NamedLink>
-        {currentUser !== null ?
-          <div>
+
+        
+          </NamedLink>
+          {currentUser !== null ?
+          <div className={css.favSec}>
             {isFavourite.length > 0 ? 
-              (<Button onClick={() => this.removeFromFav(id)}> remove from favourites</Button>)
-              :(<Button onClick={() => this.addToFav(id)}> add to favourites</Button>)        
+              (<Button onClick={() => this.removeFromFav(id)} className={css.favBtn}><FontAwesomeIcon icon={solidHeart} /></Button>)
+              :(<Button onClick={() => this.addToFav(id)} className={css.favBtn}><FontAwesomeIcon icon={faHeart} /> </Button>)        
             }
           </div>
           : null
           }
+        
+       
       </div>  
     );
   }

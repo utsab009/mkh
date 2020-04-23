@@ -111,7 +111,7 @@ const BookingPanel = props => {
           <h1 className={css.title}>{title}</h1>
         </div>
         <div className={css.bookingHeading}>
-          <div className={css.desktopPriceContainer}>
+          <div className={`${css.desktopPriceContainer} ${css.modpc}`}>
             <div className={css.desktopPriceValue} title={priceTitle}>
               {formattedPrice}
             </div>

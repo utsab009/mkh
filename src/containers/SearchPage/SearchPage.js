@@ -17,6 +17,7 @@ import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck
 import { SearchMap, ModalInMobile, Page } from '../../components';
 import { TopbarContainer } from '../../containers';
 
+
 import { searchListings, searchMapListings, setActiveListing } from './SearchPage.duck';
 import {
   pickSearchParamsOnly,
@@ -294,7 +295,7 @@ export class SearchPageComponent extends Component {
               keywordFilter: filters.keywordFilter,
             }}
           />
-          <ModalInMobile
+          {/* <ModalInMobile
             className={css.mapPanel}
             id="SearchPage.map"
             isModalOpenOnMobile={this.state.isSearchMapOpenOnMobile}
@@ -320,7 +321,7 @@ export class SearchPageComponent extends Component {
                 />
               ) : null}
                 </div>}
-          </ModalInMobile>
+          </ModalInMobile> */}
         </div>
       </Page>
     );

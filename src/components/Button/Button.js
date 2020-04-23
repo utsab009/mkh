@@ -84,7 +84,7 @@ Button.propTypes = {
 export default Button;
 
 export const PrimaryButton = props => {
-  const classes = classNames(props.rootClassName || css.primaryButtonRoot, css.primaryButton);
+  const classes = classNames(props.rootClassName || css.primaryButtonRoot, css.primaryButton, css.updatebtn );
   return <Button {...props} rootClassName={classes} />;
 };
 PrimaryButton.displayName = 'PrimaryButton';

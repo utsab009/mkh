@@ -91,25 +91,31 @@ export const EditListingLocationFormComponent = props => (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessage}
           {errorMessageShowListing}
-          <LocationAutocompleteInputField
-            className={css.locationAddress}
-            inputClassName={css.locationAutocompleteInput}
-            iconClassName={css.locationAutocompleteInputIcon}
-            predictionsClassName={css.predictionsRoot}
-            validClassName={css.validLocation}
-            autoFocus
-            name="location"
-            label={titleRequiredMessage}
-            placeholder={addressPlaceholderMessage}
-            useDefaultPredictions={false}
-            format={identity}
-            valueFromForm={values.location}
-            validate={composeValidators(
-              autocompleteSearchRequired(addressRequiredMessage),
-              autocompletePlaceSelected(addressNotRecognizedMessage)
-            )}
-          />
 
+          <div className={css.secloc}>
+            <LocationAutocompleteInputField
+              className={css.locationAddress}
+              inputClassName={css.locationAutocompleteInput}
+              iconClassName={css.locationAutocompleteInputIcon}
+              predictionsClassName={css.predictionsRoot}
+              validClassName={css.validLocation}
+              autoFocus
+              name="location"
+              label={titleRequiredMessage}
+              placeholder={addressPlaceholderMessage}
+              useDefaultPredictions={false}
+              format={identity}
+              valueFromForm={values.location}
+              validate={composeValidators(
+                autocompleteSearchRequired(addressRequiredMessage),
+                autocompletePlaceSelected(addressNotRecognizedMessage)
+              )}
+            />
+
+            <p>Not shared with Menteen</p>
+          </div>
+
+          <div className={css.secloc}>
           <FieldTextInput
             className={css.building}
             type="text"
@@ -118,7 +124,10 @@ export const EditListingLocationFormComponent = props => (
             label={buildingMessage}
             placeholder={buildingPlaceholderMessage}
           />
-
+          
+          <p>Not shared with Menteen</p>
+          </div>  
+          <div className={css.secloc}>
           <FieldTextInput
             className={css.building}
             type="text"
@@ -127,6 +136,9 @@ export const EditListingLocationFormComponent = props => (
             label={onlineAddressLabel}
             placeholder={onlineAddressPlaceholder}
           />
+
+          <p>Will be shared with Menteen</p>
+          </div>
 
           <Button
             className={css.submitButton}

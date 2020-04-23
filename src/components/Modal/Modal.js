@@ -78,7 +78,7 @@ export class ModalComponent extends Component {
     const closeBtn = isOpen ? (
       <Button
         onClick={this.handleClose}
-        rootClassName={closeButtonClasses}
+        rootClassName={`${closeButtonClasses} ${css.updateModalcolclose}`}
         title={closeModalMessage}
       >
         <span className={css.closeText}>

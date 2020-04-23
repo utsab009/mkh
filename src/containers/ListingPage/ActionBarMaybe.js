@@ -44,7 +44,7 @@ export const ActionBarMaybe = props => {
         </p>
         <NamedLink className={css.editListingLink} name="EditListingPage" params={editParams}>
           <EditIcon className={css.editIcon} />
-          <FormattedMessage id={message} />
+          {<FormattedMessage id={message} />}
         </NamedLink>
       </div>
     );

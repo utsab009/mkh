@@ -165,7 +165,8 @@ class ProfileSettingsFormComponent extends Component {
             profileImage.imageId || fileUploadInProgress ? (
               <div className={css.avatarContainer}>
                 {imageFromFile}
-                {avatarComponent}
+
+                  <div className={css.profilepav}>{avatarComponent}</div>
                 <div className={css.changeAvatar}>
                   <FormattedMessage id="ProfileSettingsForm.changeAvatar" />
                 </div>
@@ -202,6 +203,7 @@ class ProfileSettingsFormComponent extends Component {
               className={classes}
               onSubmit={e => {
                 this.submittedValues = values;
+                console.log("values",values);
                 handleSubmit(e);
               }}
             >
@@ -299,6 +301,26 @@ class ProfileSettingsFormComponent extends Component {
                       validate={lastNameRequired}
                     />
                   </div>
+                  <FieldTextInput
+                    // className={css.firstName}
+                    type="text"
+                    id={'linkedin'}
+                    name="linkedinLink"
+                    autoComplete="linkedin"
+                    label={"linked in Link"}
+                    placeholder={"linked Link"}
+                    // validate={firstNameRequired}
+                  />
+                  <FieldTextInput
+                    // className={css.lastName}
+                    type="text"
+                    id={'youtubelink'}
+                    name="youtubeLink"
+                    autoComplete="youtube link"
+                    label={"youtube link"}
+                    placeholder={"youtubelink"}
+                    // validate={lastNameRequired}
+                  />
                   {user.attributes.profile.protectedData && user.attributes.profile.protectedData.userType == 'mentee' ?   
                     <FieldTextInput
                       type="date"
@@ -361,7 +383,7 @@ class ProfileSettingsFormComponent extends Component {
                   Profile
                 </Button>
                 <Button
-                  className={css.submitButton}
+                  className={`${css.submitButton} ${css.mdBttn}`}
                   type="button"
                   onClick={() => this.onToggleTab(2)}
                   // inProgress={submitInProgress}

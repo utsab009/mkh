@@ -246,7 +246,7 @@ export const ManageListingCardComponent = props => {
               )}
             >
               <NamedLink
-                className={css.finishListingDraftLink}
+                className={`${css.finishListingDraftLink} ${css.olbMod}`}
                 name="EditListingPage"
                 params={{ id, slug, type: LISTING_PAGE_PARAM_TYPE_DRAFT, tab: 'photos' }}
               >
