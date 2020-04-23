@@ -371,38 +371,41 @@ class ProfileSettingsFormComponent extends Component {
                 </div>
                 : null
               }
-              <div className={css.nameContainer}>
-                <Button
-                  className={css.submitButton}
-                  type="button"
-                  onClick={() => this.onToggleTab(1)}
-                  // inProgress={submitInProgress}
-                  disabled={this.state.currentTab == 1 ? true : false}
-                  // ready={pristineSinceLastSubmit}
-                >
-                  Profile
-                </Button>
-                <Button
-                  className={`${css.submitButton} ${css.mdBttn}`}
-                  type="button"
-                  onClick={() => this.onToggleTab(2)}
-                  // inProgress={submitInProgress}
-                  disabled={this.state.currentTab == 2 ? true : false}
-                  // ready={pristineSinceLastSubmit}
-                >
-                 Work Experience
-                </Button>
-                <Button
-                  className={css.submitButton}
-                  type="button"
-                  onClick={() => this.onToggleTab(3)}
-                  // inProgress={submitInProgress}
-                  disabled={this.state.currentTab == 3 ? true : false}
-                  // ready={pristineSinceLastSubmit}
-                >
-                 Education
-                </Button>
-              </div>
+              {user.attributes.profile.protectedData && user.attributes.profile.protectedData.userType == 'mentor' ?
+                <div className={css.nameContainer}>
+                  <Button
+                    className={css.submitButton}
+                    type="button"
+                    onClick={() => this.onToggleTab(1)}
+                    // inProgress={submitInProgress}
+                    disabled={this.state.currentTab == 1 ? true : false}
+                    // ready={pristineSinceLastSubmit}
+                  >
+                    Profile
+                  </Button>
+                  <Button
+                    className={`${css.submitButton} ${css.mdBttn}`}
+                    type="button"
+                    onClick={() => this.onToggleTab(2)}
+                    // inProgress={submitInProgress}
+                    disabled={this.state.currentTab == 2 ? true : false}
+                    // ready={pristineSinceLastSubmit}
+                  >
+                  Work Experience
+                  </Button>
+                  <Button
+                    className={css.submitButton}
+                    type="button"
+                    onClick={() => this.onToggleTab(3)}
+                    // inProgress={submitInProgress}
+                    disabled={this.state.currentTab == 3 ? true : false}
+                    // ready={pristineSinceLastSubmit}
+                  >
+                  Education
+                  </Button>
+                </div>
+                : null
+              }
               {submitError}
               <Button
                 className={css.submitButton}
