@@ -60,8 +60,42 @@
   }
 }
 
+.rootHomePage {
+  /* Size */
+  width: 100%;
+  height: var(--topbarHeightDesktop);
+
+  /* Layout for child components */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 12px 0 0;
+
+  /* fill */
+  background-color: var(--matterColorLight);
+
+  /* shadows */
+  box-shadow: var(--boxShadowLight);
+
+  @media (--viewportLarge) {
+    padding: 0 24px 0 0;
+  }
+}
+
 /* logo */
 .logoLink {
+  @apply --TopbarDesktop_linkHover;
+  flex-shrink: 0;
+  padding: 21px 24px 21px 24px;
+  height: 100%;
+
+  @media (--viewportLarge) {
+    padding: 21px 36px 21px 36px;
+  }
+}
+
+.logoLinkHomePage {
   @apply --TopbarDesktop_linkHover;
   flex-shrink: 0;
   padding: 21px 24px 21px 24px;
@@ -86,6 +120,19 @@
 
 /* Search */
 .searchLink {
+  flex-grow: 1;
+  height: 100%;
+  margin-right: 24px;
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-left-color: var(--matterColorNegative);
+
+  @media (--viewportLarge) {
+    padding-left: 0;
+  }
+}
+
+.searchLinkHomePage {
   flex-grow: 1;
   height: 100%;
   margin-right: 24px;
@@ -135,12 +182,52 @@
   }
 }
 
+.createListingLinkHomePage {
+  @apply --TopbarDesktop_linkHover;
+  @apply --marketplaceH4FontStyles;
+
+  flex-shrink: 0;
+  height: 100%;
+  padding: 0 12px 0 12px;
+  color: var(--marketplaceColor);
+  margin-top: 0;
+  margin-bottom: 0;
+
+  &:hover {
+    color: var(--marketplaceColorDark);
+  }
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
 .createListing {
   @apply --TopbarDesktop_label;
 }
 
 /* Inbox */
 .inboxLink {
+  @apply --TopbarDesktop_linkHover;
+  @apply --marketplaceH4FontStyles;
+  height: 100%;
+  padding: 0 12px 0 12px;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: var(--matterColor);
+
+  &:hover {
+    color: var(--matterColorDark);
+  }
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.inboxLinkHomePage {
   @apply --TopbarDesktop_linkHover;
   @apply --marketplaceH4FontStyles;
   height: 100%;
