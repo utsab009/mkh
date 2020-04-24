@@ -226,7 +226,7 @@ class TopbarHomePageComponent extends Component {
             <SearchIcon className={css.searchMenuIcon} />
           </Button>
         </div>
-        <div className={css.desktop}>
+        <div className={`${css.desktop} ${css.homeUp}`}>
           <TopbarDesktop
             className={desktopClassName}
             currentUserHasListings={currentUserHasListings}

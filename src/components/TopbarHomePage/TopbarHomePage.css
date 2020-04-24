@@ -270,3 +270,12 @@
     margin: 0;
   }
 }
+.homeUp{
+  position: absolute;
+  width: 100%;
+}
+.homeUp nav{
+  background-color: transparent;
+  box-shadow: none;
+}
+

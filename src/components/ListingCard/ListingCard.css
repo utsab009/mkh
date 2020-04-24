@@ -190,6 +190,8 @@
   background-color: transparent;
   color: #CD2553;
   min-height: auto !important;
+  display: flex;
+  justify-content: flex-end;
 
   &:hover,
   &:focus{
@@ -197,7 +199,12 @@
       box-shadow: none;
   }
 }
-
+.afternm{
+  display: flex;
+  flex-basis: 10%;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
 
 
@@ -208,6 +215,23 @@
   .nameav{
     font-size: 25px;
   }
+  .updateRow{
+    flex-direction: column;
+}
+.afternm{
+  flex-direction: row;
+  justify-content: center;
+
+}
+.favBtn{
+  padding: 5px 0;
+  justify-content: start;
+  margin: 0 15px 0 0;
+
+}
+.info{
+  padding: 16px 10px 2px 10px;
+}
 }
 @media (max-width: 991px) {
   .title{
@@ -219,25 +243,34 @@
   .crr{
     font-size: 14px;
   }
-  
+  .mainInfo {
+    flex-basis: 56%;
+}
+.afternm{
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  padding: 0 10px;
+  margin-bottom: 10px;
+}
 }
 @media (max-width: 767px) {
 .modImageSec{
   width: 100%;
   height: 250px;
 }
-.favSec{
-  position: absolute;
-  right: 6px;
-}
-.info {
-  padding: 16px 0 2px 15px;
-}
+
 }
 
 @media (max-width: 575px) {
   .info {
     flex-direction: column;
   }
+  .price{
+    margin-bottom: 20px;
+  }
+  
+.priceValue{
+  margin-bottom: 0;
+}
 
 }

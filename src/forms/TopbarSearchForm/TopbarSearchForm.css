@@ -86,7 +86,7 @@
   display: flex;
   width: 24px;
   align-self: stretch;
-  background-color: var(--matterColorLight);
+  /* background-color: var(--matterColorLight); */
 }
 
 .desktopInput {
@@ -147,6 +147,7 @@
   padding-top: 0;
   padding-bottom: 0;
   padding-left: 10px;
+  color: #fff;
 
   /* Search text gets ellipsis if it's too wide */
   text-overflow: ellipsis;
@@ -165,7 +166,7 @@
 
   &:hover::placeholder,
   &:focus::placeholder {
-    color: var(--matterColor);
+    color: #fff;
   }
 
   /* Placeholder text might be too wide */
@@ -174,6 +175,7 @@
     overflow-x: hidden;
     font-weight: var(--fontWeightRegular);
     transition: var(--transitionStyleButton);
+    color: #fff;
   }
 
   margin-top: 0;
@@ -223,4 +225,7 @@
       var(--TopbarSearchForm_bottomBorder)
   );
   max-width: 434px;
+}
+.desktopIconHomePage svg g{
+  stroke: #fff !important;
 }
