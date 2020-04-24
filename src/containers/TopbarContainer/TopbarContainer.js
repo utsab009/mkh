@@ -31,6 +31,7 @@ export const TopbarContainerComponent = props => {
     sendVerificationEmailInProgress,
     sendVerificationEmailError,
     onResendVerificationEmail,
+    parentComponent=null,
     ...rest
   } = props;
   console.log("parentComponent in topbarcontainer",parentComponent);
