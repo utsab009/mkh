@@ -151,7 +151,9 @@ class TopbarComponent extends Component {
       sendVerificationEmailInProgress,
       sendVerificationEmailError,
       showGenericError,
+      parentComponent= null,
     } = this.props;
+    console.log("currentPage",currentPage);
 
     const { mobilemenu, mobilesearch, address, origin, bounds } = parse(location.search, {
       latlng: ['origin'],
@@ -175,9 +177,10 @@ class TopbarComponent extends Component {
         onLogout={this.handleLogout}
         notificationCount={notificationCount}
         currentPage={currentPage}
+        parentComponent={parentComponent}
       />
     );
-
+      console.log("parentComponent in topbar",parentComponent);
     // Only render current search if full place object is available in the URL params
     const locationFieldsPresent = config.sortSearchByDistance
       ? address && origin && bounds
@@ -241,6 +244,7 @@ class TopbarComponent extends Component {
             notificationCount={notificationCount}
             onLogout={this.handleLogout}
             onSearchSubmit={this.handleSubmit}
+            parentComponent={parentComponent}
           />
         </div>
         <Modal

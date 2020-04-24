@@ -33,32 +33,68 @@ export const TopbarContainerComponent = props => {
     onResendVerificationEmail,
     ...rest
   } = props;
+  console.log("parentComponent in topbarcontainer",parentComponent);
 
-  return (
-    <Topbar
-      authInProgress={authInProgress}
-      currentPage={currentPage}
-      currentSearchParams={currentSearchParams}
-      currentUser={currentUser}
-      currentUserHasListings={currentUserHasListings}
-      currentUserListing={currentUserListing}
-      currentUserListingFetched={currentUserListingFetched}
-      currentUserHasOrders={currentUserHasOrders}
-      history={history}
-      isAuthenticated={isAuthenticated}
-      isMentor={isMentor}
-      authScopes={authScopes}
-      location={location}
-      notificationCount={notificationCount}
-      onLogout={onLogout}
-      onManageDisableScrolling={onManageDisableScrolling}
-      onResendVerificationEmail={onResendVerificationEmail}
-      sendVerificationEmailInProgress={sendVerificationEmailInProgress}
-      sendVerificationEmailError={sendVerificationEmailError}
-      showGenericError={hasGenericError}
-      {...rest}
-    />
-  );
+  // if (parentComponent === 'homepage')
+  // {
+  //   console.log("topbarhomepage",parentComponent);
+  //   return (
+  //     <TopbarHomePage
+  //       authInProgress={authInProgress}
+  //       currentPage={currentPage}
+  //       currentSearchParams={currentSearchParams}
+  //       currentUser={currentUser}
+  //       currentUserHasListings={currentUserHasListings}
+  //       currentUserListing={currentUserListing}
+  //       currentUserListingFetched={currentUserListingFetched}
+  //       currentUserHasOrders={currentUserHasOrders}
+  //       history={history}
+  //       isAuthenticated={isAuthenticated}
+  //       isMentor={isMentor}
+  //       authScopes={authScopes}
+  //       location={location}
+  //       notificationCount={notificationCount}
+  //       onLogout={onLogout}
+  //       onManageDisableScrolling={onManageDisableScrolling}
+  //       onResendVerificationEmail={onResendVerificationEmail}
+  //       sendVerificationEmailInProgress={sendVerificationEmailInProgress}
+  //       sendVerificationEmailError={sendVerificationEmailError}
+  //       showGenericError={hasGenericError}
+  //       parentComponent={parentComponent}
+  //       {...rest}
+  //     />
+  //   );
+  // }
+  // else
+  // {
+    console.log("topbar",parentComponent);
+    return (
+      <Topbar
+        authInProgress={authInProgress}
+        currentPage={currentPage}
+        currentSearchParams={currentSearchParams}
+        currentUser={currentUser}
+        currentUserHasListings={currentUserHasListings}
+        currentUserListing={currentUserListing}
+        currentUserListingFetched={currentUserListingFetched}
+        currentUserHasOrders={currentUserHasOrders}
+        history={history}
+        isAuthenticated={isAuthenticated}
+        isMentor={isMentor}
+        authScopes={authScopes}
+        location={location}
+        notificationCount={notificationCount}
+        onLogout={onLogout}
+        onManageDisableScrolling={onManageDisableScrolling}
+        onResendVerificationEmail={onResendVerificationEmail}
+        sendVerificationEmailInProgress={sendVerificationEmailInProgress}
+        sendVerificationEmailError={sendVerificationEmailError}
+        showGenericError={hasGenericError}
+        parentComponent={parentComponent}
+        {...rest}
+      />
+    );
+  // }
 };
 
 TopbarContainerComponent.defaultProps = {

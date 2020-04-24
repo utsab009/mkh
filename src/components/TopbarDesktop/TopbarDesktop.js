@@ -37,9 +37,10 @@ const TopbarDesktop = props => {
     onLogout,
     onSearchSubmit,
     initialSearchFormValues,
+    parentComponent = null,
   } = props;
   const [mounted, setMounted] = useState(false);
-  // console.log("currentUser",currentUser,isMentor);
+  console.log("parentComponent in topbardesktop",parentComponent);
 
   useEffect(() => {
     setMounted(true);
@@ -48,22 +49,29 @@ const TopbarDesktop = props => {
   const authenticatedOnClientSide = mounted && isAuthenticated;
   const isAuthenticatedOrJustHydrated = isAuthenticated || !mounted;
 
-  const classes = classNames(rootClassName || css.root, className);
+  //modified by UC
+  const rootVariable = parentComponent === null ? css.root : css.rootHomePage
+  const classes = classNames(rootClassName || rootVariable, className);
 
+  //modified by UC
+  const searchLinkVariable = parentComponent === null ? css.searchLink : css.searchLinkHomePage
   const search = (
     <TopbarSearchForm
-      className={css.searchLink}
+      className={searchLinkVariable}
       desktopInputRoot={css.topbarSearchWithLeftPadding}
       onSubmit={onSearchSubmit}
       initialValues={initialSearchFormValues}
+      parentComponent={parentComponent}
     />
   );
 
   const notificationDot = notificationCount > 0 ? <div className={css.notificationDot} /> : null;
+  
+  const inboxLinkVariable =  parentComponent === null ? css.inboxLink : css.inboxLinkHomePage;
 
   const inboxLink = authenticatedOnClientSide ? (
     <NamedLink
-      className={css.inboxLink}
+      className={inboxLinkVariable}
       name="InboxPage"
       params={{ tab: currentUserHasListings ? 'sales' : 'orders' }}
     >
@@ -209,11 +217,12 @@ const TopbarDesktop = props => {
       </span>
     </NamedLink>
   );
-
+  //modified by UC
+    const createListingLinkVariable = parentComponent === null ? css.createListingLink : css.createListingLinkHomePage
   const listingLink =
     authenticatedOnClientSide && currentUserListingFetched && currentUserListing ? (
       <ListingLink
-        className={css.createListingLink}
+        className={createListingLinkVariable}
         listing={currentUserListing}
         children={
           <span className={css.createListing}>
@@ -222,20 +231,22 @@ const TopbarDesktop = props => {
         }
       />
     ) : null;
-
+  //modified by UC      
   const createListingLink =
     // isAuthenticatedOrJustHydrated && !(currentUserListingFetched && !currentUserListing) ? null : // to generate new listing link
     (
-      <NamedLink className={css.createListingLink} name="NewListingPage">
+      <NamedLink className={createListingLinkVariable} name="NewListingPage">
         <span className={css.createListing}>
           <FormattedMessage id="TopbarDesktop.createListing" />
         </span>
       </NamedLink>
     );
-
+  
+  //modified by UC
+  const logoLinkVariable = parentComponent === null ? css.logoLink : css.logoLinkHomePage  
   return (
     <nav className={classes}>
-      <NamedLink className={css.logoLink} name="LandingPage">
+      <NamedLink className={logoLinkVariable} name="LandingPage">
         <Logo
           format="desktop"
           className={css.logo}
