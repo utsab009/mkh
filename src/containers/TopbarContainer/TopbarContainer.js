@@ -7,8 +7,7 @@ import { propTypes } from '../../util/types';
 import { sendVerificationEmail, hasCurrentUserErrors } from '../../ducks/user.duck';
 import { logout, authenticationInProgress } from '../../ducks/Auth.duck';
 import { manageDisableScrolling } from '../../ducks/UI.duck';
-import { Topbar, TopbarHomePage } from '../../components';
-import { consoleSandbox } from '@sentry/utils';
+import { Topbar } from '../../components';
 
 export const TopbarContainerComponent = props => {
   const {
@@ -32,68 +31,34 @@ export const TopbarContainerComponent = props => {
     sendVerificationEmailInProgress,
     sendVerificationEmailError,
     onResendVerificationEmail,
-    parentComponent = null,
     ...rest
   } = props;
 
-  if (parentComponent === 'homepage')
-  {
-    console.log("topbarhomepage",parentComponent);
-    return (
-      <TopbarHomePage
-        authInProgress={authInProgress}
-        currentPage={currentPage}
-        currentSearchParams={currentSearchParams}
-        currentUser={currentUser}
-        currentUserHasListings={currentUserHasListings}
-        currentUserListing={currentUserListing}
-        currentUserListingFetched={currentUserListingFetched}
-        currentUserHasOrders={currentUserHasOrders}
-        history={history}
-        isAuthenticated={isAuthenticated}
-        isMentor={isMentor}
-        authScopes={authScopes}
-        location={location}
-        notificationCount={notificationCount}
-        onLogout={onLogout}
-        onManageDisableScrolling={onManageDisableScrolling}
-        onResendVerificationEmail={onResendVerificationEmail}
-        sendVerificationEmailInProgress={sendVerificationEmailInProgress}
-        sendVerificationEmailError={sendVerificationEmailError}
-        showGenericError={hasGenericError}
-        {...rest}
-      />
-    );
-  }
-  else
-  {
-    console.log("topbar",parentComponent);
-    return (
-      <Topbar
-        authInProgress={authInProgress}
-        currentPage={currentPage}
-        currentSearchParams={currentSearchParams}
-        currentUser={currentUser}
-        currentUserHasListings={currentUserHasListings}
-        currentUserListing={currentUserListing}
-        currentUserListingFetched={currentUserListingFetched}
-        currentUserHasOrders={currentUserHasOrders}
-        history={history}
-        isAuthenticated={isAuthenticated}
-        isMentor={isMentor}
-        authScopes={authScopes}
-        location={location}
-        notificationCount={notificationCount}
-        onLogout={onLogout}
-        onManageDisableScrolling={onManageDisableScrolling}
-        onResendVerificationEmail={onResendVerificationEmail}
-        sendVerificationEmailInProgress={sendVerificationEmailInProgress}
-        sendVerificationEmailError={sendVerificationEmailError}
-        showGenericError={hasGenericError}
-        {...rest}
-      />
-    );
-  }
+  return (
+    <Topbar
+      authInProgress={authInProgress}
+      currentPage={currentPage}
+      currentSearchParams={currentSearchParams}
+      currentUser={currentUser}
+      currentUserHasListings={currentUserHasListings}
+      currentUserListing={currentUserListing}
+      currentUserListingFetched={currentUserListingFetched}
+      currentUserHasOrders={currentUserHasOrders}
+      history={history}
+      isAuthenticated={isAuthenticated}
+      isMentor={isMentor}
+      authScopes={authScopes}
+      location={location}
+      notificationCount={notificationCount}
+      onLogout={onLogout}
+      onManageDisableScrolling={onManageDisableScrolling}
+      onResendVerificationEmail={onResendVerificationEmail}
+      sendVerificationEmailInProgress={sendVerificationEmailInProgress}
+      sendVerificationEmailError={sendVerificationEmailError}
+      showGenericError={hasGenericError}
+      {...rest}
+    />
+  );
 };
 
 TopbarContainerComponent.defaultProps = {

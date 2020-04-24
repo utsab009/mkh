@@ -248,11 +248,7 @@ export class ListingCardComponent extends Component {
                     }
                   </div>
 
-                  <a href={linkedinLink} className={css.socialLink}>
-                    Linked-in Link
-                     { /*linkedinLink*/
-                    }
-                  </a>
+                  
 
 
 
@@ -271,6 +267,7 @@ export class ListingCardComponent extends Component {
 
         
           </NamedLink>
+          <div className={css.afternm}>
           {currentUser !== null ?
           <div className={css.favSec}>
             {isFavourite.length > 0 ? 
@@ -280,7 +277,12 @@ export class ListingCardComponent extends Component {
           </div>
           : null
           }
-        
+          <a href={linkedinLink} className={css.socialLink}>
+            Linked-in Link
+            { /*linkedinLink*/
+            }
+          </a>
+          </div>
        
       </div>  
     );
