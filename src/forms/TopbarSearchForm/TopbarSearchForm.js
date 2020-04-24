@@ -35,8 +35,11 @@ class TopbarSearchFormComponent extends Component {
       <FinalForm
         {...this.props}
         render={formRenderProps => {
+          const {
+            parentComponent = null,
+            ...rest
+          } = this.props;
           const { rootClassName, className, desktopInputRoot, intl, isMobile } = formRenderProps;
-
           const classes = classNames(rootClassName, className);
           const desktopInputRootClass = desktopInputRoot || css.desktopInputRoot;
 
@@ -61,11 +64,15 @@ class TopbarSearchFormComponent extends Component {
                   };
 
                   const searchInput = { ...restInput, onChange: searchOnChange };
+                  console.log("parentcomponent in topbarsearchform",parentComponent);
+                  //modified by UC
+                  const desktopIconVariable = parentComponent === null ? css.desktopIcon : css.desktopIconHomePage;
+                  const desktopInputVariable = parentComponent === null ? css.desktopInput : css.desktopInputHomePage;
                   return (
                     <LocationAutocompleteInput
                       className={isMobile ? css.mobileInputRoot : desktopInputRootClass}
-                      iconClassName={isMobile ? css.mobileIcon : css.desktopIcon}
-                      inputClassName={isMobile ? css.mobileInput : css.desktopInput}
+                      iconClassName={isMobile ? css.mobileIcon : desktopIconVariable}
+                      inputClassName={isMobile ? css.mobileInput : desktopInputVariable}
                       predictionsClassName={
                         isMobile ? css.mobilePredictions : css.desktopPredictions
                       }
