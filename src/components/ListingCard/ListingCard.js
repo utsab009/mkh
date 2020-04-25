@@ -127,6 +127,7 @@ export class ListingCardComponent extends Component {
     let favouritesArr = currentUser && currentUser.attributes.profile.protectedData.favourites && Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites)) ? JSON.parse(currentUser.attributes.profile.protectedData.favourites) : [];
     const classes = classNames(rootClassName || css.root, className);
     const currentListing = ensureListing(listing);
+    console.log("currentListing in listingcard",currentListing);
     const authorAvailable = currentListing && currentListing.author;
     const currentAuthor = authorAvailable ? currentListing.author : null;
     const ensuredAuthor = ensureUser(currentAuthor);
