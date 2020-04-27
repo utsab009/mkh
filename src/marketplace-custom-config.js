@@ -2,6 +2,10 @@
  * Marketplace specific configuration.
  */
 
+// export const integrationApiClientId = process.env.INTEGRATION_API_CLIENT_ID;
+// export const integrationApiSecret = process.env.INTEGRATION_API_SECRET;
+// export const integrationApiBaseUrl = process.env.INTEGRATION_API_BASE_URL; 
+
 export const yogaStyles = [
   { key: 'ashtanga', label: 'Ashtanga' },
   { key: 'hatha', label: 'Hatha' },
