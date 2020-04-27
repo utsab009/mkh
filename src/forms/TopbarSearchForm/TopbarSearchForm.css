@@ -78,6 +78,17 @@
   background-color: var(--matterColorLight);
 }
 
+.desktopIconHomePage {
+  height: var(--topbarHeightDesktop);
+  border: none;
+  padding-top: 3px;
+
+  display: flex;
+  width: 24px;
+  align-self: stretch;
+  /* background-color: var(--matterColorLight); */
+}
+
 .desktopInput {
   flex-grow: 1;
   /* Font */
@@ -115,6 +126,56 @@
     overflow-x: hidden;
     font-weight: var(--fontWeightRegular);
     transition: var(--transitionStyleButton);
+  }
+
+  margin-top: 0;
+  margin-bottom: 0;
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: var(--fontWeightSemiBold);
+  }
+}
+
+.desktopInputHomePage {
+  flex-grow: 1;
+  /* Font */
+  @apply --marketplaceH4FontStyles;
+  height: var(--topbarHeightDesktop);
+  line-height: unset;
+  border: none;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 10px;
+  color: #fff;
+
+  /* Search text gets ellipsis if it's too wide */
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+
+  /* Safari bugfix: without this Safari will print placeholder to a wrong place */
+  &::-webkit-input-placeholder {
+    line-height: normal;
+  }
+
+  &:hover,
+  &:focus {
+    border-bottom-color: var(--marketplaceColor);
+    outline: none;
+  }
+
+  &:hover::placeholder,
+  &:focus::placeholder {
+    color: #fff;
+  }
+
+  /* Placeholder text might be too wide */
+  &::placeholder {
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    font-weight: var(--fontWeightRegular);
+    transition: var(--transitionStyleButton);
+    color: #fff;
   }
 
   margin-top: 0;
@@ -164,4 +225,7 @@
       var(--TopbarSearchForm_bottomBorder)
   );
   max-width: 434px;
+}
+.desktopIconHomePage svg g{
+  stroke: #fff !important;
 }

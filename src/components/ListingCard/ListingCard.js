@@ -127,9 +127,11 @@ export class ListingCardComponent extends Component {
     let favouritesArr = currentUser && currentUser.attributes.profile.protectedData.favourites && Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites)) ? JSON.parse(currentUser.attributes.profile.protectedData.favourites) : [];
     const classes = classNames(rootClassName || css.root, className);
     const currentListing = ensureListing(listing);
+    console.log("currentListing in listingcard",currentListing);
     const authorAvailable = currentListing && currentListing.author;
     const currentAuthor = authorAvailable ? currentListing.author : null;
     const ensuredAuthor = ensureUser(currentAuthor);
+    const {averageRating = 0, ratingCount = 0} = currentListing.attributes.publicData;
     // console.log("ensuredAuthor",ensuredAuthor);
     // let authorData = this.state.authorData !== null && this.state.authorData.data.attributes.profile.publicData ? this.state.authorData.data.attributes.profile.publicData : {error:"no data"}; 
     let authorData = ensuredAuthor !== null && ensuredAuthor.attributes.profile.publicData ? ensuredAuthor.attributes.profile.publicData : {error:"no data"}; 
@@ -228,7 +230,7 @@ export class ListingCardComponent extends Component {
               </div> */}
 
               <div className={css.rating}>
-              <FontAwesomeIcon icon={solidStar} /> 4.60 <span>(79)</span>
+              <FontAwesomeIcon icon={solidStar} /> {averageRating} <span>({ratingCount})</span>
               </div>
             </div>
 
@@ -248,11 +250,7 @@ export class ListingCardComponent extends Component {
                     }
                   </div>
 
-                  <a href={linkedinLink} className={css.socialLink}>
-                    Linked-in Link
-                     { /*linkedinLink*/
-                    }
-                  </a>
+                  
 
 
 
@@ -271,6 +269,7 @@ export class ListingCardComponent extends Component {
 
         
           </NamedLink>
+          <div className={css.afternm}>
           {currentUser !== null ?
           <div className={css.favSec}>
             {isFavourite.length > 0 ? 
@@ -280,7 +279,12 @@ export class ListingCardComponent extends Component {
           </div>
           : null
           }
-        
+          <a href={linkedinLink} className={css.socialLink}>
+            Linked-in Link
+            { /*linkedinLink*/
+            }
+          </a>
+          </div>
        
       </div>  
     );

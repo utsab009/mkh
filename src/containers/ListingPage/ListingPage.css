@@ -691,7 +691,17 @@
   width: 50%;
 }
 }
-
+@media (max-width: 991px) {
+  .modAv, .sectionAvatar {
+    width: 100%;
+    height: 250px;
+  }
+  .modAv img{
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+}
 @media (max-width: 767px) {
   .mainContent{
     padding: 0 24px;

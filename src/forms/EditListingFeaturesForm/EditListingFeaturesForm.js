@@ -41,6 +41,10 @@ export class EditListingFeaturesFormComponent extends Component {
     {
       this.setState({jobRoles: config.custom.publicRoles});
     }
+    else if(values == "none")
+    {
+      this.setState({jobRoles: []});
+    }
     else
     {
       this.setState({jobRoles: config.custom.nonPublicRoles});
@@ -54,7 +58,9 @@ export class EditListingFeaturesFormComponent extends Component {
       case "Civil and structural engineering":
         return (this.setState({subSectors : config.custom.Civilandstructuralengineering}));
       case "Public Service":
-        return (this.setState({subSectors : config.custom.PublicServices}));  
+        return (this.setState({subSectors : config.custom.PublicServices})); 
+      case "none":
+        return (this.setState({subSectors : []}));   
       case Default :
         return (this.setState({subSectors : config.custom.Accountancyandfinancialmanagement}));  
     }

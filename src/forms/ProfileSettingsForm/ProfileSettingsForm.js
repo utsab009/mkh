@@ -108,6 +108,8 @@ class ProfileSettingsFormComponent extends Component {
           });
           const lastNameRequired = validators.required(lastNameRequiredMessage);
 
+          const dobRequired = validators.validAge("Date of Birth is rquired and it should be atleast 18 years",18);
+
           // Bio
           const bioLabel = intl.formatMessage({
             id: 'ProfileSettingsForm.bioLabel',
@@ -301,39 +303,45 @@ class ProfileSettingsFormComponent extends Component {
                       validate={lastNameRequired}
                     />
                   </div>
-                  <FieldTextInput
-                    // className={css.firstName}
-                    type="text"
-                    id={'linkedin'}
-                    name="linkedinLink"
-                    autoComplete="linkedin"
-                    label={"linked in Link"}
-                    placeholder={"linked Link"}
-                    // validate={firstNameRequired}
-                  />
-                  <FieldTextInput
-                    // className={css.lastName}
-                    type="text"
-                    id={'youtubelink'}
-                    name="youtubeLink"
-                    autoComplete="youtube link"
-                    label={"youtube link"}
-                    placeholder={"youtubelink"}
-                    // validate={lastNameRequired}
-                  />
-                  {user.attributes.profile.protectedData && user.attributes.profile.protectedData.userType == 'mentee' ?   
+                  {user.attributes.profile.protectedData && user.attributes.profile.protectedData.userType == 'mentor' ?
+                    <FieldTextInput
+                      // className={css.firstName}
+                      type="text"
+                      id={'linkedin'}
+                      name="linkedinLink"
+                      autoComplete="linkedin"
+                      label={"linked in Link"}
+                      placeholder={"linked Link"}
+                      // validate={firstNameRequired}
+                    />
+                    :null
+                  }
+                  {user.attributes.profile.protectedData && user.attributes.profile.protectedData.userType == 'mentor' ?
+                    <FieldTextInput
+                      // className={css.lastName}
+                      type="text"
+                      id={'youtubelink'}
+                      name="youtubeLink"
+                      autoComplete="youtube link"
+                      label={"youtube link"}
+                      placeholder={"youtubelink"}
+                      // validate={lastNameRequired}
+                    />
+                    :null
+                  }
+                  {   
                     <FieldTextInput
                       type="date"
                       id={`dob`}
                       name={`dob`}
                       label={'Date of Birth'}
+                      validate={dobRequired}
                     /> 
-                    :null
                   }
                 </div>
                 : null
               }
-              {this.state.currentTab == 1 ?
+              {user.attributes.profile.protectedData && user.attributes.profile.protectedData.userType == 'mentor' && this.state.currentTab == 1 ?
                 <div className={classNames(css.sectionContainer, css.lastSection)}>
                   <h3 className={css.sectionTitle}>
                     <FormattedMessage id="ProfileSettingsForm.bioHeading" />

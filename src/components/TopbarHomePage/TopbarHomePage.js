@@ -24,7 +24,7 @@ import { TopbarSearchForm } from '../../forms';
 
 import MenuIcon from './MenuIcon';
 import SearchIcon from './SearchIcon';
-import css from './Topbar.css';
+import css from './TopbarHomePage.css';
 
 const MAX_MOBILE_SCREEN_WIDTH = 768;
 
@@ -66,7 +66,7 @@ GenericError.propTypes = {
   show: bool.isRequired,
 };
 
-class TopbarComponent extends Component {
+class TopbarHomePageComponent extends Component {
   constructor(props) {
     super(props);
     this.handleMobileMenuOpen = this.handleMobileMenuOpen.bind(this);
@@ -151,9 +151,7 @@ class TopbarComponent extends Component {
       sendVerificationEmailInProgress,
       sendVerificationEmailError,
       showGenericError,
-      parentComponent= null,
     } = this.props;
-    console.log("currentPage",currentPage);
 
     const { mobilemenu, mobilesearch, address, origin, bounds } = parse(location.search, {
       latlng: ['origin'],
@@ -177,10 +175,9 @@ class TopbarComponent extends Component {
         onLogout={this.handleLogout}
         notificationCount={notificationCount}
         currentPage={currentPage}
-        parentComponent={parentComponent}
       />
     );
-      console.log("parentComponent in topbar",parentComponent);
+
     // Only render current search if full place object is available in the URL params
     const locationFieldsPresent = config.sortSearchByDistance
       ? address && origin && bounds
@@ -193,19 +190,8 @@ class TopbarComponent extends Component {
           }
         : null,
     };
-    
-    //modified by UC
-    const rootVariable = parentComponent === null ? css.root : css.rootHomePage
-    const classes = classNames(rootClassName || rootVariable, className);
 
-    //modified by UC
-    const menuVariable = parentComponent === null ? css.menu : css.menuHomePage
-
-    //modified by UC
-    const homeVariable = parentComponent === null ? css.home : css.homeHomePage
-
-    //modified by UC
-    const searchMenuVariable = parentComponent === null ? css.searchMenu : css.searchMenuHomePage
+    const classes = classNames(rootClassName || css.root, className);
 
     return (
       <div className={classes}>
@@ -218,7 +204,7 @@ class TopbarComponent extends Component {
         />
         <div className={classNames(mobileRootClassName || css.container, mobileClassName)}>
           <Button
-            rootClassName={menuVariable}
+            rootClassName={css.menu}
             onClick={this.handleMobileMenuOpen}
             title={intl.formatMessage({ id: 'Topbar.menuIcon' })}
           >
@@ -226,21 +212,21 @@ class TopbarComponent extends Component {
             {notificationDot}
           </Button>
           <NamedLink
-            className={homeVariable}
+            className={css.home}
             name="LandingPage"
             title={intl.formatMessage({ id: 'Topbar.logoIcon' })}
           >
             <Logo format="mobile" />
           </NamedLink>
           <Button
-            rootClassName={searchMenuVariable}
+            rootClassName={css.searchMenu}
             onClick={this.handleMobileSearchOpen}
             title={intl.formatMessage({ id: 'Topbar.searchIcon' })}
           >
             <SearchIcon className={css.searchMenuIcon} />
           </Button>
         </div>
-        <div className={css.desktop}>
+        <div className={`${css.desktop} ${css.homeUp}`}>
           <TopbarDesktop
             className={desktopClassName}
             currentUserHasListings={currentUserHasListings}
@@ -255,7 +241,6 @@ class TopbarComponent extends Component {
             notificationCount={notificationCount}
             onLogout={this.handleLogout}
             onSearchSubmit={this.handleSubmit}
-            parentComponent={parentComponent}
           />
         </div>
         <Modal
@@ -303,7 +288,7 @@ class TopbarComponent extends Component {
   }
 }
 
-TopbarComponent.defaultProps = {
+TopbarHomePageComponent.defaultProps = {
   className: null,
   rootClassName: null,
   desktopClassName: null,
@@ -317,7 +302,7 @@ TopbarComponent.defaultProps = {
   authScopes: [],
 };
 
-TopbarComponent.propTypes = {
+TopbarHomePageComponent.propTypes = {
   className: string,
   rootClassName: string,
   desktopClassName: string,
@@ -357,11 +342,11 @@ TopbarComponent.propTypes = {
   intl: intlShape.isRequired,
 };
 
-const Topbar = compose(
+const TopbarHomePage = compose(
   withViewport,
   injectIntl
-)(TopbarComponent);
+)(TopbarHomePageComponent);
 
-Topbar.displayName = 'Topbar';
+TopbarHomePage.displayName = 'Topbar';
 
-export default Topbar;
+export default TopbarHomePage;
