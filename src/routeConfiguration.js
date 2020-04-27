@@ -105,6 +105,7 @@ const routeConfiguration = () => {
       path: '/l/:slug/:id/checkout',
       name: 'CheckoutPage',
       auth: true,
+      authPage: 'MenteeSignupPage',
       component: props => <CheckoutPage {...props} />,
       setInitialValues: CheckoutPage.setInitialValues,
     },

@@ -42,7 +42,7 @@ const SectionImages = props => {
       <div className={css.threeToTwoWrapper}>
         <div className={css.aspectWrapper} onClick={handleViewPhotosClick}>
           {actionBar}
-          <ResponsiveImage
+          {/*<ResponsiveImage
             rootClassName={css.rootForImage}
             alt={title}
             image={firstImage}
@@ -52,8 +52,8 @@ const SectionImages = props => {
               'landscape-crop4x',
               'landscape-crop6x',
             ]}
-          />
-          {viewPhotosButton}
+          />*/}
+          {/*viewPhotosButton*/}
         </div>
       </div>
       <Modal
