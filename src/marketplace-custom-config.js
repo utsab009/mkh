@@ -84,7 +84,7 @@ export const PublicServices = [
   { key: 'Arts administrator', label: 'Arts administrator' },
 ];
 
-export const publicRoles = [
+export const nonPublicRoles = [
   { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Operational Level', label: 'Operational Level' },
   { key: 'Front Line Management', label: 'Front Line Management' },
@@ -93,7 +93,7 @@ export const publicRoles = [
   { key: 'C Suite Role', label: 'C Suite Role' },
 ]
 
-export const nonPublicRoles = [
+export const publicRoles = [
   { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'AA/Adminstrative Assistant/Clerical Officer', label: 'AA/Adminstrative Assistant/Clerical Officer' },
   { key: 'AO/Adminstrative Officer/Staff Officer', label: 'AO/Adminstrative Officer/Staff Officer' },
@@ -112,7 +112,7 @@ export const nonPublicRoles = [
 ]
 
 export const mentorLanguages = [
-  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
+  // { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'english', label: 'English' },
   { key: 'portuguese', label: 'Portuguese' },
   { key: 'japanese', label: 'Japanese' },
