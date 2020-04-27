@@ -291,3 +291,28 @@
     margin: 0;
   }
 }
+
+
+@media (max-width: 767px) {
+  .rootHomePage {
+    position: absolute;
+  }
+  .rootHomePage .container{
+    background-color: transparent;
+    box-shadow: none;
+  }
+  .menuHomePage,
+  .searchMenuHomePage{
+    border: 0;
+    cursor: pointer;
+  }
+  .menuHomePage .rootMenuIcon{
+    fill: #fff;
+}
+.searchMenuHomePage .rootSearchIcon {
+    stroke: #fff;
+}
+.homeHomePage svg g{
+  stroke: #fff;
+}
+}
