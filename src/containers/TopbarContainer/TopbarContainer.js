@@ -7,8 +7,7 @@ import { propTypes } from '../../util/types';
 import { sendVerificationEmail, hasCurrentUserErrors } from '../../ducks/user.duck';
 import { logout, authenticationInProgress } from '../../ducks/Auth.duck';
 import { manageDisableScrolling } from '../../ducks/UI.duck';
-import { Topbar, TopbarHomePage } from '../../components';
-import { consoleSandbox } from '@sentry/utils';
+import { Topbar } from '../../components';
 
 export const TopbarContainerComponent = props => {
   const {
@@ -32,7 +31,7 @@ export const TopbarContainerComponent = props => {
     sendVerificationEmailInProgress,
     sendVerificationEmailError,
     onResendVerificationEmail,
-    parentComponent = null,
+    parentComponent=null,
     ...rest
   } = props;
   console.log("parentComponent in topbarcontainer",parentComponent);
