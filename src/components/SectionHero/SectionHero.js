@@ -36,7 +36,6 @@ export class  SectionHeroComponent extends Component {
 // const SectionHero = props => {
   render () {
     const { rootClassName, className, onManageDisableScrolling } = this.props;
-    console.log("onManageDisableScrolling",onManageDisableScrolling);
     // const [isSectorModalOpen, setisSectorModalOpen] = useState(true);
     // const [profileTypeSelected, setProfileTypeSelected] = useState(null);
 
@@ -46,27 +45,35 @@ export class  SectionHeroComponent extends Component {
 
     const handleSubmit = values => {
       const { sectors, subsectors, jobroles } = values;
-      // const params = { firstName: fname.trim(), lastName: lname.trim(), ...rest };
-      // submitSignup(params);
-      // console.log("values",values);
-      // console.log("profileTypeSelected",this.state.profileTypeSelected);
-      /////////////////////////
+      
       const routes = routeConfiguration();
-      // Customize checkout page state with current listing and selected bookingDates
-      // const { setInitialValues } = findRouteByRouteName('CheckoutPage', routes);
-      // useInitialValues(setInitialValues, initialValues);
-      // Redirect to CheckoutPage
-      this.props.history.push(
-        createResourceLocatorString(
-          'SearchPage',
-          routes,
-          // { keywords: 'php' },
-          {},
-          // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
-          {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles}
-        )
-      );
-      ////////////////////////
+     
+      if(sectors !== 'none')
+      {
+        this.props.history.push(
+          createResourceLocatorString(
+            'SearchPage',
+            routes,
+            // { keywords: 'php' },
+            {},
+            // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+            {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles}
+          )
+        );
+      }
+      else
+      {
+        this.props.history.push(
+          createResourceLocatorString(
+            'SearchPage',
+            routes,
+            // { keywords: 'php' },
+            {},
+            // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+            {}
+          )
+        );
+      }
     };
 
     return (
