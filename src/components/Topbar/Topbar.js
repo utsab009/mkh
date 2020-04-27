@@ -193,8 +193,19 @@ class TopbarComponent extends Component {
           }
         : null,
     };
+    
+    //modified by UC
+    const rootVariable = parentComponent === null ? css.root : css.rootHomePage
+    const classes = classNames(rootClassName || rootVariable, className);
 
-    const classes = classNames(rootClassName || css.root, className);
+    //modified by UC
+    const menuVariable = parentComponent === null ? css.menu : css.menuHomePage
+
+    //modified by UC
+    const homeVariable = parentComponent === null ? css.home : css.homeHomePage
+
+    //modified by UC
+    const searchMenuVariable = parentComponent === null ? css.searchMenu : css.searchMenuHomePage
 
     return (
       <div className={classes}>
@@ -207,7 +218,7 @@ class TopbarComponent extends Component {
         />
         <div className={classNames(mobileRootClassName || css.container, mobileClassName)}>
           <Button
-            rootClassName={css.menu}
+            rootClassName={menuVariable}
             onClick={this.handleMobileMenuOpen}
             title={intl.formatMessage({ id: 'Topbar.menuIcon' })}
           >
@@ -215,14 +226,14 @@ class TopbarComponent extends Component {
             {notificationDot}
           </Button>
           <NamedLink
-            className={css.home}
+            className={homeVariable}
             name="LandingPage"
             title={intl.formatMessage({ id: 'Topbar.logoIcon' })}
           >
             <Logo format="mobile" />
           </NamedLink>
           <Button
-            rootClassName={css.searchMenu}
+            rootClassName={searchMenuVariable}
             onClick={this.handleMobileSearchOpen}
             title={intl.formatMessage({ id: 'Topbar.searchIcon' })}
           >

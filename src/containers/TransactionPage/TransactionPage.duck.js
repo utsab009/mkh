@@ -21,7 +21,7 @@ import {
 import { findNextBoundary, nextMonthFn, monthIdStringInTimeZone } from '../../util/dates';
 import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { fetchCurrentUserNotifications } from '../../ducks/user.duck';
-
+const flexIntegrationSdk = require('sharetribe-flex-integration-sdk');
 const { UUID } = sdkTypes;
 
 const MESSAGES_PAGE_SIZE = 100;
@@ -551,9 +551,68 @@ const IMAGE_VARIANTS = {
   ],
 };
 
+const updateListingAverageRating = (listingId,averageRating,ratingCounter) => {
+  console.log("averageRating in xyz2",averageRating);
+  console.log("config in xyz",config);
+  const integrationSdk = flexIntegrationSdk.createInstance({
+   
+    clientId: config.integrationApiClientId,
+    clientSecret: config.integrationApiSecret,
+    baseUrl: config.integrationApiBaseUrl,
+  });
+
+  integrationSdk.listings.update({
+    id: listingId,
+    publicData: {
+      averageRating : averageRating.toFixed(2),
+      ratingCount : ratingCounter
+    }
+  })
+  .then(res => {
+    return res;
+  })
+  .catch(e => {
+
+    // Rethrow so the page can track whether the sending failed, and
+    // keep the message in the form for a retry.
+    throw e;  
+  });
+};
+
+const calculateAverageRating = (sdk, listingId) => {
+  sdk.reviews.query({
+    listingId: listingId
+  }).then(res => {
+    // res.data contains the response data
+    if(res.data.data.length > 0)
+    {
+      let totalRating = 0;
+      let ratingCounter = 0;
+      res.data.data.filter(item => {
+        if(item.attributes.rating !== null)
+        {
+          totalRating += item.attributes.rating;
+          ratingCounter += 1;
+        }
+      });
+      const averageRating = totalRating/ratingCounter;
+      console.log("averageRating in xyz",averageRating);
+      updateListingAverageRating(listingId,averageRating,ratingCounter);
+    }
+    return res;
+  })
+  .catch(e => {
+
+    // Rethrow so the page can track whether the sending failed, and
+    // keep the message in the form for a retry.
+    throw e;  
+  });
+};
+
 // If other party has already sent a review, we need to make transition to
 // TRANSITION_REVIEW_2_BY_<CUSTOMER/PROVIDER>
-const sendReviewAsSecond = (id, params, role, dispatch, sdk) => {
+const sendReviewAsSecond = (id, params, role, dispatch, sdk, listingId) => {
+  console.log("params in sendReviewasSecond",params);
   const transition = getReview2Transition(role === CUSTOMER);
 
   const include = REVIEW_TX_INCLUDES;
@@ -561,8 +620,10 @@ const sendReviewAsSecond = (id, params, role, dispatch, sdk) => {
   return sdk.transactions
     .transition({ id, transition, params }, { expand: true, include, ...IMAGE_VARIANTS })
     .then(response => {
+      console.log("response in sendReviewAsFirst",response,"params:",params);
       dispatch(addMarketplaceEntities(response));
       dispatch(sendReviewSuccess());
+      calculateAverageRating(sdk, listingId);
       return response;
     })
     .catch(e => {
@@ -579,15 +640,18 @@ const sendReviewAsSecond = (id, params, role, dispatch, sdk) => {
 // However, the other party might have made the review after previous data synch point.
 // So, error is likely to happen and then we must try another state transition
 // by calling sendReviewAsSecond().
-const sendReviewAsFirst = (id, params, role, dispatch, sdk) => {
+const sendReviewAsFirst = (id, params, role, dispatch, sdk, listingId) => {
+  console.log("params in sendReviewasFirst",params);
   const transition = getReview1Transition(role === CUSTOMER);
   const include = REVIEW_TX_INCLUDES;
 
   return sdk.transactions
     .transition({ id, transition, params }, { expand: true, include, ...IMAGE_VARIANTS })
     .then(response => {
+      console.log("response in sendReviewAsFirst",response,"params:",params);
       dispatch(addMarketplaceEntities(response));
       dispatch(sendReviewSuccess());
+      calculateAverageRating(sdk, listingId);
       return response;
     })
     .catch(e => {
@@ -605,15 +669,24 @@ const sendReviewAsFirst = (id, params, role, dispatch, sdk) => {
 };
 
 export const sendReview = (role, tx, reviewRating, reviewContent) => (dispatch, getState, sdk) => {
+  
+  console.log("tx in sendreview:",tx,"config",config,"role:",role,"reviewrating:",reviewRating,"reviewcontent:",reviewContent);
   const params = { reviewRating, reviewContent };
-
+  const listingId = tx.listing.id;
+  // calculateAverageRating(sdk, listingId);
   const txStateOtherPartyFirst = txIsInFirstReviewBy(tx, role !== CUSTOMER);
-
+  console.log("txStateOtherPartyFirst in sendreview:",txStateOtherPartyFirst);
   dispatch(sendReviewRequest());
 
   return txStateOtherPartyFirst
-    ? sendReviewAsSecond(tx.id, params, role, dispatch, sdk)
-    : sendReviewAsFirst(tx.id, params, role, dispatch, sdk);
+    ? sendReviewAsSecond(tx.id, params, role, dispatch, sdk, listingId)
+    : sendReviewAsFirst(tx.id, params, role, dispatch, sdk, listingId);
+
+  // const reviewSent = txStateOtherPartyFirst
+  //   ? sendReviewAsSecond(tx.id, params, role, dispatch, sdk)
+  //   : sendReviewAsFirst(tx.id, params, role, dispatch, sdk);  
+  // console.log("reviewSent in sendreview",reviewSent);
+  // return reviewSent;
 };
 
 const isNonEmpty = value => {

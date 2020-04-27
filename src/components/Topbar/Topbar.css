@@ -21,6 +21,14 @@
   position: relative;
 }
 
+.rootHomePage {
+  width: 100%;
+
+  /* Top Bar's drop shadow should always be visible */
+  z-index: var(--zIndexTopbar);
+  position: relative;
+}
+
 .container {
   /* Size */
   width: 100%;
@@ -44,6 +52,11 @@
 }
 
 .home {
+  display: flex;
+  padding: calc((var(--topbarHeight) - var(--Topbar_logoHeight)) / 2) 24px;
+}
+
+.homeHomePage {
   display: flex;
   padding: calc((var(--topbarHeight) - var(--Topbar_logoHeight)) / 2) 24px;
 }
@@ -85,7 +98,15 @@
   padding: 15px 24px;
   position: relative;
 }
+.menuHomePage {
+  padding: 15px 24px;
+  position: relative;
+}
 .searchMenu {
+  padding: 12px 24px;
+}
+
+.searchMenuHomePage {
   padding: 12px 24px;
 }
 

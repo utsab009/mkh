@@ -13,6 +13,7 @@ import {
 import { fetchCurrentUser, fetchCurrentUserHasOrdersSuccess } from '../../ducks/user.duck';
 
 const { UUID } = sdkTypes;
+const flexIntegrationSdk = require('sharetribe-flex-integration-sdk');
 
 // ================ Action types ================ //
 
@@ -208,6 +209,7 @@ export const showListing = (listingId, isOwn = false) => (dispatch, getState, sd
 };
 
 export const fetchReviews = listingId => (dispatch, getState, sdk) => {
+  console.log("fetch reviews in listingpage.duck");
   dispatch(fetchReviewsRequest());
   return sdk.reviews
     .query({
