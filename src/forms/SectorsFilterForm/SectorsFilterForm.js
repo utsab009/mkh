@@ -27,7 +27,6 @@ export class SectorsFilterFormComponent extends Component {
 
     handleChange = values => {
         // const subSectors = values.split(' ').join('');
-        console.log("values in handleChange",values);
         if(values == "Public Service")
         {
           this.setState({jobRoles: config.custom.publicRoles});
