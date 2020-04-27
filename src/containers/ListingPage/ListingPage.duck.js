@@ -211,35 +211,6 @@ export const showListing = (listingId, isOwn = false) => (dispatch, getState, sd
 export const fetchReviews = listingId => (dispatch, getState, sdk) => {
   console.log("fetch reviews in listingpage.duck");
   dispatch(fetchReviewsRequest());
-  /////////////////////////////////////////////////////////////////
-  const integrationSdk = flexIntegrationSdk.createInstance({
-
-    // These two env vars need to be set in the `.env` file.
-    clientId: '46f2d5a2-3abd-41d5-9fa4-112af61c81c2',
-    clientSecret: 'e0f8ffbe7955b61d70d63eb33eedc220c4a79bde',
-  
-    // Normally you can just skip setting the base URL and just use the
-    // default that the `createInstance` uses. We explicitly set it here
-    // for local testing and development.
-    baseUrl: 'https://flex-api.sharetribe.com',
-  });
-
-  integrationSdk.listings.query()
-  .then(res => {
-    console.log("res in listingpage.duck",res);
-    // const userId = res.data.data.id;
-    // return integrationSdk.users.updateProfile(
-    //   {
-    //     id: userId,
-    //     metadata: { verified: true },
-    //   },
-    //   {
-    //     expand: true,
-    //     'fields.user': ['email', 'profile.metadata'],
-    //   });
-  });
-  ///////////////////////////////////////////////////////////////////////
-
   return sdk.reviews
     .query({
       listing_id: listingId,

@@ -552,28 +552,23 @@ const IMAGE_VARIANTS = {
 };
 
 const updateListingAverageRating = (listingId,averageRating,ratingCounter) => {
-  /////////////////////////////////////////////////////////////////
+  console.log("averageRating in xyz2",averageRating);
+  console.log("config in xyz",config);
   const integrationSdk = flexIntegrationSdk.createInstance({
-
-    // These two env vars need to be set in the `.env` file.
-    clientId: '46f2d5a2-3abd-41d5-9fa4-112af61c81c2',
-    clientSecret: 'e0f8ffbe7955b61d70d63eb33eedc220c4a79bde',
-  
-    // Normally you can just skip setting the base URL and just use the
-    // default that the `createInstance` uses. We explicitly set it here
-    // for local testing and development.
-    baseUrl: 'https://flex-api.sharetribe.com',
+   
+    clientId: config.integrationApiClientId,
+    clientSecret: config.integrationApiSecret,
+    baseUrl: config.integrationApiBaseUrl,
   });
 
   integrationSdk.listings.update({
     id: listingId,
     publicData: {
-      averageRating : averageRating,
+      averageRating : averageRating.toFixed(2),
       ratingCount : ratingCounter
     }
   })
   .then(res => {
-    console.log("res in updateListingAverageRating",res);
     return res;
   })
   .catch(e => {
@@ -582,7 +577,6 @@ const updateListingAverageRating = (listingId,averageRating,ratingCounter) => {
     // keep the message in the form for a retry.
     throw e;  
   });
-  ///////////////////////////////////////////////////////////////////////
 };
 
 const calculateAverageRating = (sdk, listingId) => {
@@ -602,6 +596,7 @@ const calculateAverageRating = (sdk, listingId) => {
         }
       });
       const averageRating = totalRating/ratingCounter;
+      console.log("averageRating in xyz",averageRating);
       updateListingAverageRating(listingId,averageRating,ratingCounter);
     }
     return res;
@@ -675,7 +670,7 @@ const sendReviewAsFirst = (id, params, role, dispatch, sdk, listingId) => {
 
 export const sendReview = (role, tx, reviewRating, reviewContent) => (dispatch, getState, sdk) => {
   
-  console.log("tx in sendreview:",tx,"role:",role,"reviewrating:",reviewRating,"reviewcontent:",reviewContent);
+  console.log("tx in sendreview:",tx,"config",config,"role:",role,"reviewrating:",reviewRating,"reviewcontent:",reviewContent);
   const params = { reviewRating, reviewContent };
   const listingId = tx.listing.id;
   // calculateAverageRating(sdk, listingId);
