@@ -28,7 +28,6 @@ export class  SectionHeroComponent extends Component {
   }
 
   profileTypeSelection(jobType) {
-    console.log("job type is:",jobType);
     this.setState({profileTypeSelected : jobType, isSectorModalOpen : true});
     // setProfileTypeSelected(jobType);
     // setisSectorModalOpen(true);
