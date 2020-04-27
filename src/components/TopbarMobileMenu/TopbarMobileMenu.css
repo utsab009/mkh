@@ -134,3 +134,9 @@
   margin-left: -24px;
   padding-left: 19px;
 }
+
+@media (max-width: 767px) {
+  .avatar img{
+    height: 100% !important;
+  }
+}
