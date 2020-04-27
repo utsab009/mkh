@@ -27,10 +27,14 @@ export class SectorsFilterFormComponent extends Component {
 
     handleChange = values => {
         // const subSectors = values.split(' ').join('');
-    
+        console.log("values in handleChange",values);
         if(values == "Public Service")
         {
           this.setState({jobRoles: config.custom.publicRoles});
+        }
+        else if(values == "none")
+        {
+          this.setState({jobRoles: []});
         }
         else
         {
@@ -45,7 +49,9 @@ export class SectorsFilterFormComponent extends Component {
           case "Civil and structural engineering":
             return (this.setState({subSectors : config.custom.Civilandstructuralengineering}));
           case "Public Service":
-            return (this.setState({subSectors : config.custom.PublicServices}));  
+            return (this.setState({subSectors : config.custom.PublicServices}));
+          case "none":
+            return (this.setState({subSectors : []}));      
         //   case Default :
         //     return (this.setState({subSectors : config.custom.Accountancyandfinancialmanagement}));  
         }

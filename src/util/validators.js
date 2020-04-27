@@ -54,6 +54,11 @@ export const requiredFieldArrayCheckbox = message => value => {
   return hasSelectedValues ? VALID : message;
 };
 
+export const validAge = (message, validAge) => value => {
+  const ageInDays = moment().diff(value, 'years');
+  return ageInDays >= validAge ? VALID : message;
+};
+
 export const minLength = (message, minimumLength) => value => {
   const hasLength = value && typeof value.length === 'number';
   return hasLength && value.length >= minimumLength ? VALID : message;
