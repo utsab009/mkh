@@ -40,17 +40,38 @@ const listingTab = (listing, selectedPageName) => {
     },
   };
 };
-
+// console.log("tabs in userNav",tabs);
 const UserNav = props => {
-  const { className, rootClassName, selectedPageName, listing } = props;
+  const { className, rootClassName, selectedPageName, listing, profileUserType = null } = props;
   const classes = classNames(rootClassName || css.root, className);
-
-  const tabs = [
+  console.log("profileUserType",profileUserType);
+  const profileUserTypeText = profileUserType === 'mentor' ? "Mentor" : "Mentee";
+  const tabs = profileUserType === 'mentor' ?
+  [
     {
       ...listingTab(listing, selectedPageName),
     },
     {
-      text: <FormattedMessage id="UserNav.profileSettingsPage" />,
+      text: <FormattedMessage id="UserNav.profileSettingsPage" values={{userType : profileUserTypeText}}/>,
+      selected: selectedPageName === 'ProfileSettingsPage',
+      disabled: false,
+      linkProps: {
+        name: 'ProfileSettingsPage',
+      },
+    },
+    {
+      text: <FormattedMessage id="UserNav.contactDetailsPage" />,
+      selected: ACCOUNT_SETTINGS_PAGES.includes(selectedPageName),
+      disabled: false,
+      linkProps: {
+        name: 'ContactDetailsPage',
+      },
+    },
+  ]
+  :
+  [
+    {
+      text: <FormattedMessage id="UserNav.profileSettingsPage" values={{userType : profileUserTypeText}}/>,
       selected: selectedPageName === 'ProfileSettingsPage',
       disabled: false,
       linkProps: {
@@ -68,7 +89,7 @@ const UserNav = props => {
   ];
 
   return (
-    <LinkTabNavHorizontal className={classes} tabRootClassName={css.tab} tabs={tabs} skin="dark" />
+    <LinkTabNavHorizontal className={classes} tabRootClassName={css.tab} tabs={tabs} skin="dark" profileUserType={profileUserType}/>
   );
 };
 

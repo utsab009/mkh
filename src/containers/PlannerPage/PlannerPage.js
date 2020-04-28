@@ -132,7 +132,7 @@ export class PlannerPageComponent extends Component {
         <LayoutSingleColumn>
           <LayoutWrapperTopbar>
             <TopbarContainer currentPage="Planner" />
-            <UserNav selectedPageName="Planner" listing={currentUserListing} />
+            <UserNav selectedPageName="Planner" listing={currentUserListing} profileUserType="mentor" />
           </LayoutWrapperTopbar>
           {<LayoutWrapperMain>
             <div className={css.content}>
