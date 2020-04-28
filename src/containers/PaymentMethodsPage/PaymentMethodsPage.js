@@ -125,6 +125,7 @@ const PaymentMethodsPageComponent = props => {
 
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
   const currentUserLoaded = !!ensuredCurrentUser.id;
+  const protectedData = ensuredCurrentUser.attributes.profile.protectedData || {};
 
   const hasDefaultPaymentMethod =
     currentUser &&
@@ -153,7 +154,7 @@ const PaymentMethodsPageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="PaymentMethodsPage" />
+          <UserNav selectedPageName="PaymentMethodsPage" profileUserType={protectedData.userType}/>
         </LayoutWrapperTopbar>
         <LayoutWrapperAccountSettingsSideNav currentTab="PaymentMethodsPage" />
         <LayoutWrapperMain>

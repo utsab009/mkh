@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { propTypes } from '../../util/types';
+import { ensureCurrentUser } from '../../util/data';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
 import {
   LayoutSideNavigation,
@@ -33,6 +34,11 @@ export const PasswordChangePageComponent = props => {
     intl,
   } = props;
 
+  // console.log("currentUser",current)
+  const user = ensureCurrentUser(currentUser);
+  const currentEmail = user.attributes.email || '';
+  const protectedData = user.attributes.profile.protectedData || {};
+
   const changePasswordForm =
     currentUser && currentUser.id ? (
       <PasswordChangeForm
@@ -57,7 +63,7 @@ export const PasswordChangePageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="PasswordChangePage" />
+          <UserNav selectedPageName="PasswordChangePage" profileUserType={protectedData.userType}/>
         </LayoutWrapperTopbar>
         <LayoutWrapperAccountSettingsSideNav currentTab="PasswordChangePage" />
         <LayoutWrapperMain>

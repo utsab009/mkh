@@ -96,6 +96,7 @@ export const StripePayoutPageComponent = props => {
 
   const { returnURLType } = params;
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
+  const protectedData = ensuredCurrentUser.attributes.profile.protectedData || {};
   const currentUserLoaded = !!ensuredCurrentUser.id;
   const stripeConnected = currentUserLoaded && !!stripeAccount && !!stripeAccount.id;
 
@@ -144,7 +145,7 @@ export const StripePayoutPageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="StripePayoutPage" />
+          <UserNav selectedPageName="StripePayoutPage" profileUserType={protectedData.userType}/>
         </LayoutWrapperTopbar>
         <LayoutWrapperAccountSettingsSideNav currentTab="StripePayoutPage" />
         <LayoutWrapperMain>
