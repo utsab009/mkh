@@ -482,7 +482,7 @@ export class SignupFormComponent extends Component {
                   : null
                 }  
                 {this.state.currentTab > 1 && this.state.currentTab < 4 && signupType == 'mentor' ?
-                  <h6>It is important to Start with your most recent {this.state.currentTab == 2 ? "Position" : "Acredition"} and work backwards </h6>
+                  <h6>It is important to Start with your most recent {this.state.currentTab == 2 ? "Position" : "Accreditation"} and work backwards </h6>
                   : null}
                 { this.state.currentTab == 2 && signupType == 'mentor' ? workExperienceElement : null}
                 { this.state.currentTab == 3 && signupType == 'mentor' ? educationalElement : null}
@@ -539,9 +539,9 @@ export class SignupFormComponent extends Component {
                     />
                   </span>
                 </p>
-                {(this.state.currentTab < 4 && signupType == 'mentor') || (this.state.currentTab < 2 && signupType == 'mentee' ) ? <Button type="button" onClick={() => this.onToggleTab(this.state.currentTab,'next')} disabled={submitDisabled}>{this.state.currentTab == 1 ? "Next" : "Next/Skip for now" }</Button> : null}
+                {(this.state.currentTab < 3 && signupType == 'mentor') || (this.state.currentTab < 2 && signupType == 'mentee' ) ? <Button type="button" onClick={() => this.onToggleTab(this.state.currentTab,'next')} disabled={submitDisabled}>{this.state.currentTab == 1 ? "Next" : "Next/Skip for now" }</Button> : null}
                 {(this.state.currentTab > 1 && signupType == 'mentor') || (this.state.currentTab > 1 && signupType == 'mentee') ? <Button type="button" onClick={() => this.onToggleTab(this.state.currentTab,'previous')} >Previous</Button> : null}
-                {(this.state.currentTab == 4 ) || (signupType == 'mentee' && this.state.termsAccepted) ?
+                {(this.state.currentTab == 3 ) || (signupType == 'mentee' && this.state.termsAccepted) ?
                   <PrimaryButton type="submit" inProgress={submitInProgress} disabled={submitDisabled}>
                     <FormattedMessage id="SignupForm.signUp" />
                   </PrimaryButton>

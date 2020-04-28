@@ -134,8 +134,9 @@ const tabCompleted = (tab, listing) => {
       return !!(publicData && publicData.sectors && publicData.subsectors);
     case POLICY:
       return !!(publicData && typeof publicData.rules !== 'undefined');
-    case LOCATION:
-      return !!(geolocation && publicData && publicData.location && publicData.location.address);
+    // case LOCATION:
+    //   // return !!(geolocation && publicData && publicData.location && publicData.location.address);
+    //   return !!(publicData);
     case PRICING:
       return !!price;
     case AVAILABILITY:
