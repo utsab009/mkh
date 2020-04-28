@@ -207,8 +207,8 @@ export class ListingCardComponent extends Component {
             <div className={css.mainInfo}>
 
             <div className={`${css.title} ${css.nameav}`}>
-                     {title}
-                  </div>
+              {fullName}
+            </div>
               
               
               {/* <div className={css.certificateInfo}>
@@ -259,9 +259,12 @@ export class ListingCardComponent extends Component {
                     : null
                   }
                 </div>
+                <div className={css.priceValue} title={priceTitle}>
+                  {formattedPrice}<FormattedMessage id={unitTranslationKey} />
+                </div>
             </div>
 
-            <div className={`${css.price} ${css.nameSig}`}>
+            {/*<div className={`${css.price} ${css.nameSig}`}>
                   <div className={`${css.title} ${css.nameav}`}>
                      {fullName}
                   </div>
@@ -269,7 +272,7 @@ export class ListingCardComponent extends Component {
                 {formattedPrice}<FormattedMessage id={unitTranslationKey} />
               </div>
 
-            </div>
+                </div>*/}
           </div>
 
         
