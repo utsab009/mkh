@@ -29,7 +29,7 @@
     transition: var(--transitionStyleButton);
 
     &:hover {
-      border-bottom: 4px solid var(--marketplaceColor);
+      border-bottom: 0;
       border-radius: 0;
       text-decoration: none;
     }
@@ -40,7 +40,8 @@
 .root {
   /* Size */
   width: 100%;
-  height: var(--topbarHeightDesktop);
+  /* height: var(--topbarHeightDesktop); */
+  height: auto;
 
   /* Layout for child components */
   display: flex;
@@ -63,7 +64,8 @@
 .rootHomePage {
   /* Size */
   width: 100%;
-  height: var(--topbarHeightDesktop);
+  /* height: var(--topbarHeightDesktop); */
+  height: auto;
 
   /* Layout for child components */
   display: flex;
@@ -89,28 +91,28 @@
 .logoLink {
   @apply --TopbarDesktop_linkHover;
   flex-shrink: 0;
-  padding: 21px 24px 21px 24px;
+  padding: 10px 24px 10px 24px;
   height: 100%;
 
   @media (--viewportLarge) {
-    padding: 21px 36px 21px 36px;
+    padding: 10px 24px 10px 24px;
   }
 }
 
 .logoLinkHomePage {
   @apply --TopbarDesktop_linkHover;
   flex-shrink: 0;
-  padding: 21px 24px 21px 24px;
+  padding: 10px 24px 10px 24px;
   height: 100%;
 
   @media (--viewportLarge) {
-    padding: 21px 36px 21px 36px;
+    padding: 10px 24px 10px 24px;
   }
 }
 
 .logo {
   /* If height is increased, change link paddings accordingly */
-  height: 27px;
+  height: 100px;
 
   /* Good aspect ratio should be less than 160/27 (width/height) */
   /* NOTE: extremely wide logos, need special handling. */
@@ -125,12 +127,14 @@
   flex-grow: 1;
   height: 100%;
   margin-right: 24px;
-  border-left-style: solid;
+  /* border-left-style: solid;
   border-left-width: 1px;
-  border-left-color: var(--matterColorNegative);
+  border-left-color: var(--matterColorNegative); */
+  margin-top: 20px;
 
   @media (--viewportLarge) {
     padding-left: 0;
+    margin-top: 20px;
   }
 }
 
@@ -138,10 +142,12 @@
   flex-grow: 1;
   height: 100%;
   margin-right: 24px;
+  margin-top: 20px;
 
 
   @media (--viewportLarge) {
     padding-left: 0;
+    margin-top: 20px;
   }
 }
 
@@ -169,7 +175,7 @@
   height: 100%;
   padding: 0 12px 0 12px;
   color: var(--marketplaceColor);
-  margin-top: 0;
+  margin-top: 20px;
   margin-bottom: 0;
 
   &:hover {
@@ -177,7 +183,7 @@
   }
 
   @media (--viewportMedium) {
-    margin-top: 0;
+    margin-top: 20px;
     margin-bottom: 0;
   }
 }
@@ -190,7 +196,7 @@
   height: 100%;
   padding: 0 12px 0 12px;
   color: #ccc;
-  margin-top: 0;
+  margin-top: 20px;
   margin-bottom: 0;
 
   &:hover {
@@ -198,7 +204,7 @@
   }
 
   @media (--viewportMedium) {
-    margin-top: 0;
+    margin-top: 20px;
     margin-bottom: 0;
   }
 }
@@ -213,7 +219,7 @@
   @apply --marketplaceH4FontStyles;
   height: 100%;
   padding: 0 12px 0 12px;
-  margin-top: 0;
+  margin-top: 20px;
   margin-bottom: 0;
   color: var(--matterColor);
 
@@ -222,7 +228,7 @@
   }
 
   @media (--viewportMedium) {
-    margin-top: 0;
+    margin-top: 20px;
     margin-bottom: 0;
   }
 }
@@ -232,7 +238,7 @@
   @apply --marketplaceH4FontStyles;
   height: 100%;
   padding: 0 12px 0 12px;
-  margin-top: 0;
+  margin-top: 20px;
   margin-bottom: 0;
   color: #fff;
 
@@ -241,7 +247,7 @@
   }
 
   @media (--viewportMedium) {
-    margin-top: 0;
+    margin-top: 20px;
     margin-bottom: 0;
   }
 }
@@ -322,24 +328,48 @@
   flex-shrink: 0;
   height: 100%;
   padding: 0 12px 0 12px;
-
+  margin-top: 20px;
   color: var(--matterColor);
 
   &:hover {
     color: var(--matterColorDark);
   }
 }
+.signupLinkHomePage  {
+  @apply --TopbarDesktop_linkHover;
+  flex-shrink: 0;
+  height: 100%;
+  padding: 0 12px 0 12px;
+  margin-top: 20px;
 
+  color: #fff;
+
+  &:hover {
+    color: #ccc;
+  }
+}
 .loginLink {
   @apply --TopbarDesktop_linkHover;
   flex-shrink: 0;
   height: 100%;
   padding: 0 12px 0 12px;
-
+  margin-top: 20px;
   color: var(--matterColor);
 
   &:hover {
     color: var(--matterColorDark);
+  }
+}
+.loginLinkHomePage {
+  @apply --TopbarDesktop_linkHover;
+  flex-shrink: 0;
+  height: 100%;
+  padding: 0 12px 0 12px;
+  margin-top: 20px;
+  color: #fff;
+
+  &:hover {
+    color: #ccc;
   }
 }
 
