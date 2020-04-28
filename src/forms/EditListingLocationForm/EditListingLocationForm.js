@@ -106,10 +106,10 @@ export const EditListingLocationFormComponent = props => (
               useDefaultPredictions={false}
               format={identity}
               valueFromForm={values.location}
-              validate={composeValidators(
-                autocompleteSearchRequired(addressRequiredMessage),
-                autocompletePlaceSelected(addressNotRecognizedMessage)
-              )}
+              // validate={composeValidators(
+              //   autocompleteSearchRequired(addressRequiredMessage),
+              //   autocompletePlaceSelected(addressNotRecognizedMessage)
+              // )}
             />
 
             <p>Not shared with Mentee</p>
