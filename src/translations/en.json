@@ -35,6 +35,8 @@
   "AuthenticationPage.verifyEmailClose": "LATER",
   "AuthenticationPage.verifyEmailText": "Thanks for signing up! There's one quick step left. To be able to contact you, we need you to verify your email address. Please click the link we sent to {email}.",
   "AuthenticationPage.verifyEmailTitle": "{name}, check your inbox to verify your email",
+  "MenteeSignupPage.verifyEmailClose": "LATER",
+  "MenteeSignupPage.verifyEmailTitle": "{name}, check your inbox to verify your email",
   "Avatar.bannedUserDisplayName": "Banned user",
   "Avatar.deletedUserDisplayName": "Deleted user",
   "BookingBreakdown.baseUnitDay": "{unitPrice} * {quantity, number} {quantity, plural, one {day} other {days}}",
