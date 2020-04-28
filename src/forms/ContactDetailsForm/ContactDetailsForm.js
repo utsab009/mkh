@@ -291,6 +291,8 @@ class ContactDetailsFormComponent extends Component {
                   label={phoneLabel}
                   placeholder={phonePlaceholder}
                 />
+                <h6>This phone number will only be used by Try A Mentor staff (not by Mentors) 
+                   and never for marketing or promotional reasons</h6>
               </div>
 
               <div className={confirmClasses}>

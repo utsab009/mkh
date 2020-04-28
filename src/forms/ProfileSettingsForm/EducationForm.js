@@ -63,7 +63,7 @@ const EducationFormComponent = props => {
                             type="text"
                             id={`${name}.duration`}
                             name={`${name}.duration`}
-                            label={'Over what length of Time'}
+                            label={'length of Time'}
                             />    
                         </div>
                         <div className={css.field}>
