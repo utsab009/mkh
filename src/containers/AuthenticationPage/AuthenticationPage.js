@@ -102,20 +102,9 @@ export class AuthenticationPageComponent extends Component {
       : errorMessage(signupError, signupErrorMessage);
 
     const fromState = { state: from ? { from } : null };
-
-    const tabs = [
-      {
-        text: (
-          <h1 className={css.tab}>
-            <FormattedMessage id="AuthenticationPage.signupLinkText" />
-          </h1>
-        ),
-        selected: !isLogin,
-        linkProps: {
-          name: 'SignupPage',
-          to: fromState,
-        },
-      },
+    
+    const tabs = isLogin ? 
+    [
       {
         text: (
           <h1 className={css.tab}>
@@ -128,6 +117,21 @@ export class AuthenticationPageComponent extends Component {
           to: fromState,
         },
       },
+    ]
+    :
+    [
+      {
+        text: (
+          <h1 className={css.tab}>
+            <FormattedMessage id="AuthenticationPage.signupLinkText" />
+          </h1>
+        ),
+        selected: !isLogin,
+        linkProps: {
+          name: 'SignupPage',
+          to: fromState,
+        },
+      }
     ];
 
     const handleSubmitSignup = values => {
@@ -139,7 +143,7 @@ export class AuthenticationPageComponent extends Component {
 
     const formContent = (
       <div className={css.content}>
-        {/*<LinkTabNavHorizontal className={css.tabs} tabs={tabs} />*/}
+        {<LinkTabNavHorizontal className={css.tabs} tabs={tabs} />}
         {loginOrSignupError}
         {isLogin ? (
           <LoginForm className={css.form} onSubmit={submitLogin} inProgress={authInProgress} />
