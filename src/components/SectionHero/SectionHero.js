@@ -82,9 +82,9 @@ export class  SectionHeroComponent extends Component {
           <h1 className={css.heroMainTitle}>
             <FormattedMessage id="SectionHero.title" />
           </h1>
-          <h2 className={css.heroSubTitle}>
+          {/* <h2 className={css.heroSubTitle}>
             <FormattedMessage id="SectionHero.subTitle" />
-          </h2>
+          </h2> */}
           {/*<NamedLink
             name="SearchPage"
             to={{

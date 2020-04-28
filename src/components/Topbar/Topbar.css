@@ -315,4 +315,11 @@
 .homeHomePage svg g{
   stroke: #fff;
 }
+.homeHomePage img,
+.home img{
+  height: 50px;
+}
+.homeHomePage{
+  margin-top: 15px;
+}
 }
