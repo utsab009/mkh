@@ -4,10 +4,18 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { twitterPageURL } from '../../util/urlHelpers';
 import config from '../../config';
+import FooterLogo from '../../assets/footer-logo.png';
+import HrmImg1 from '../../assets/footer-img1.png';
+import HrmImg2 from '../../assets/footer-img2.png';
+import HrmImg3 from '../../assets/footer-img3.png';
+import HrmImg4 from '../../assets/footer-img4.png';
+
 import {
   IconSocialMediaFacebook,
   IconSocialMediaInstagram,
   IconSocialMediaTwitter,
+  IconSocialMediaLinkedin,
+  IconSocialMediaWhatsapp,
   Logo,
   ExternalLink,
   NamedLink,
@@ -40,6 +48,7 @@ const renderSocialMediaLinks = intl => {
     </ExternalLink>
   ) : null;
 
+
   const instragramLink = siteInstagramPage ? (
     <ExternalLink
       key="linkToInstagram"
@@ -66,11 +75,12 @@ const Footer = props => {
           <div className={css.links}>
             <div className={css.organization} id="organization">
               <NamedLink name="LandingPage" className={css.logoLink}>
-                <span className={css.logo}>
+                {/* <span className={css.logo}>
                   <Logo format="desktop" />
-                </span>
+                </span> */}
+                <img src={FooterLogo} className={css.Flogo} />
               </NamedLink>
-              <div className={css.organizationInfo}>
+              {/* <div className={css.organizationInfo}>
                 <p className={css.organizationDescription}>
                   <FormattedMessage id="Footer.organizationDescription" />
                 </p>
@@ -79,7 +89,7 @@ const Footer = props => {
                     <FormattedMessage id="Footer.copyright" />
                   </NamedLink>
                 </p>
-              </div>
+              </div> */}
             </div>
             <div className={css.infoLinks}>
               <ul className={css.list}>
@@ -110,8 +120,18 @@ const Footer = props => {
                 </li>
               </ul>
             </div>
-            <div className={css.searches}>
-              <ul className={css.list}>
+            <div className={`${css.searches} ${css.hrmSec}`}>
+              <h3>Try A Mentor is part of the Beacon HRM Group. Visit our parent website today</h3>
+              
+              <span>
+                <a href="#"><img src={HrmImg3} /></a>
+                <a href="#"><img src={HrmImg1} /></a>
+                <a href="#"><img src={HrmImg4} /></a>
+                <a href="#"><img src={HrmImg2} /></a>
+              </span>
+
+
+              {/* <ul className={css.list}>
                 <li className={css.listItem}>
                   <NamedLink
                     name="SearchPage"
@@ -172,9 +192,9 @@ const Footer = props => {
                     <FormattedMessage id="Footer.searchPortland" />
                   </NamedLink>
                 </li>
-              </ul>
+              </ul> */}
             </div>
-            <div className={css.searchesExtra}>
+            {/* <div className={css.searchesExtra}>
               <ul className={css.list}>
                 <li className={css.listItem}>
                   <NamedLink
@@ -237,9 +257,14 @@ const Footer = props => {
                   </NamedLink>
                 </li>
               </ul>
-            </div>
+            </div> */}
             <div className={css.extraLinks}>
+              
               <div className={css.someLinks}>{socialMediaLinks}</div>
+
+
+
+
               <div className={css.legalMatters}>
                 <ul className={css.tosAndPrivacy}>
                   <li>
@@ -255,10 +280,20 @@ const Footer = props => {
                 </ul>
               </div>
             </div>
+
+
           </div>
+
+
+           <div className={css.copyright}>
+            © Beacon HRM 2020. All Right Reserved.
+           </div>
+
+
+
           <div className={css.copyrightAndTermsMobile}>
             <NamedLink name="LandingPage" className={css.organizationCopyrightMobile}>
-              <FormattedMessage id="Footer.copyright" />
+              © Beacon HRM 2020. All Right Reserved.
             </NamedLink>
             <div className={css.tosAndPrivacyMobile}>
               <NamedLink name="PrivacyPolicyPage" className={css.privacy}>

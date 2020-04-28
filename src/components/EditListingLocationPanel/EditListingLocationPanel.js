@@ -91,24 +91,43 @@ class EditListingLocationPanel extends Component {
           initialValues={this.state.initialValues}
           onSubmit={values => {
             const { building = '', location, onlineAddress = '' } = values;
-            const {
-              selectedPlace: { address, origin },
-            } = location;
-            const updateValues = {
-              geolocation: origin,
-              publicData: {
-                onlineAddress, 
-                location: { address, building },
-              },
-            };
-            this.setState({
-              initialValues: {
-                building,
-                onlineAddress,
-                location: { search: address, selectedPlace: { address, origin } },
-              },
-            });
-            onSubmit(updateValues);
+            if(location !== null)
+            {
+              const {
+                selectedPlace: { address, origin },
+              } = location;
+              const updateValues = {
+                geolocation: origin,
+                publicData: {
+                  onlineAddress, 
+                  location: { address, building },
+                },
+              };
+              this.setState({
+                initialValues: {
+                  building,
+                  onlineAddress,
+                  location: { search: address, selectedPlace: { address, origin } },
+                },
+              });
+              onSubmit(updateValues);
+            }
+            else 
+            {
+              
+              const updateValues = {
+                publicData: {
+                  onlineAddress
+                },
+              };
+              this.setState({
+                initialValues: {
+                  building,
+                  onlineAddress,
+                },
+              });
+              onSubmit(updateValues);
+            }
           }}
           onChange={onChange}
           saveActionMsg={submitButtonText}

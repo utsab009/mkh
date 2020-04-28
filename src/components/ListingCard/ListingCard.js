@@ -135,7 +135,7 @@ export class ListingCardComponent extends Component {
     // console.log("ensuredAuthor",ensuredAuthor);
     // let authorData = this.state.authorData !== null && this.state.authorData.data.attributes.profile.publicData ? this.state.authorData.data.attributes.profile.publicData : {error:"no data"}; 
     let authorData = ensuredAuthor !== null && ensuredAuthor.attributes.profile.publicData ? ensuredAuthor.attributes.profile.publicData : {error:"no data"}; 
-    let {workExp = null, education = null, linkedinLink = null, youtubeLink = null } = authorData;
+    let {workExp = null, education = null, linkedinLink = null, youtubeLink = null, fullName = ensuredAuthor.attributes.profile.displayName } = authorData;
     // console.log("authorData",authorData);
     const id = currentListing.id.uuid;
     const { title = '', price, publicData } = currentListing.attributes;
@@ -205,7 +205,26 @@ export class ListingCardComponent extends Component {
               </div>
             </div> */}
             <div className={css.mainInfo}>
-              <div className={css.title}>
+
+            <div className={`${css.title} ${css.nameav}`}>
+                     {title}
+                  </div>
+              
+              
+              {/* <div className={css.certificateInfo}>
+                {certificate && !certificate.hideFromListingInfo ? (
+                  <span>{certificate.label}</span>
+                ) : null}
+              </div> */}
+
+              <div className={css.rating}>
+              <FontAwesomeIcon icon={solidStar} /> {averageRating} <span>({ratingCount})</span>
+              </div>
+            </div>
+
+             <div className={css.price}>
+
+             <div className={css.title}>
                 {richText('Organisations Worked in:', {
                   longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
                   longWordClass: css.longWord,
@@ -222,43 +241,29 @@ export class ListingCardComponent extends Component {
                   : null
                 }
               </div>
-              
-              {/* <div className={css.certificateInfo}>
-                {certificate && !certificate.hideFromListingInfo ? (
-                  <span>{certificate.label}</span>
-                ) : null}
-              </div> */}
 
-              <div className={css.rating}>
-              <FontAwesomeIcon icon={solidStar} /> {averageRating} <span>({ratingCount})</span>
-              </div>
             </div>
 
              <div className={css.price}>
-                  <div className={css.title}>
-                    Career Roles:
-                    {
-                      workExp !== null ? workExp.map((item, index) => {
-                        if(index < 4)
-                        {
-                          return (
-                            <span className={css.crr}>{item.position}</span>
-                          );
-                        }
-                      })
-                      : null
-                    }
-                  </div>
-
-                  
-
-
-
+                <div className={css.title}>
+                  Career Roles:
+                  {
+                    workExp !== null ? workExp.map((item, index) => {
+                      if(index < 4)
+                      {
+                        return (
+                          <span className={css.crr}>{item.position}</span>
+                        );
+                      }
+                    })
+                    : null
+                  }
+                </div>
             </div>
 
             <div className={`${css.price} ${css.nameSig}`}>
                   <div className={`${css.title} ${css.nameav}`}>
-                     {title}
+                     {fullName}
                   </div>
               <div className={css.priceValue} title={priceTitle}>
                 {formattedPrice}<FormattedMessage id={unitTranslationKey} />

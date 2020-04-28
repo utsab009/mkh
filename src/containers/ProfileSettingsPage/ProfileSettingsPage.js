@@ -55,7 +55,7 @@ export class ProfileSettingsPageComponent extends Component {
         lastName: lastName.trim(),
         bio,
         // protectedData: { ...rest }, 
-        publicData: { ...rest }, 
+        publicData: { ...rest, fullName : firstName.trim() + ' ' + lastName.trim()}, 
       };
       const uploadedImage = this.props.image;
 
