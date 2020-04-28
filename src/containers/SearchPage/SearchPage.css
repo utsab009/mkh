@@ -37,7 +37,7 @@
 
   @media (--viewportMedium) {
     position: relative;
-    padding-top: var(--topbarHeightDesktop);
+    padding-top: 142px;
     min-height: var(--SearchPage_containerHeight);
   }
 }

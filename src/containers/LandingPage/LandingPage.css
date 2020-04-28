@@ -48,11 +48,11 @@
   padding-bottom: 32px;
 
   @media (--viewportMedium) {
-    padding-bottom: 83px;
+    padding-bottom: 50px;
   }
 
   @media (--viewportLarge) {
-    justify-content: center;
+    justify-content: flex-end;
     padding-top: 60px;
   }
 }

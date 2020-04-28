@@ -50,27 +50,10 @@
 }
 
 .heroContent {
-  margin: 0 24px 0 24px;
-
-  @media (--viewportMedium) {
-    margin: 0 7.5vw 0 7.5vw;
-  }
-
-  /* Special viewport for adjusting the heroContent's placement */
-
-  @media only screen and (min-width: 1025px) and (max-width: 1366px) {
-    padding: 0 36px 0 36px;
-  }
-
-  @media only screen and (min-width: 1367px) {
-    margin: 0 auto;
-    max-width: calc(1052px + 36px + 36px);
-    width: 100%;
-    padding: 0 36px 0 36px;
-  }
+  margin: 240px 0 0;
 }
 
-.heroMainTitle {
+/* .heroMainTitle {
   @apply --marketplaceHeroTitleFontStyles;
   color: var(--matterColorLight);
   margin-top: 85px;
@@ -81,6 +64,18 @@
   @media (--viewportMedium) {
     max-width: var(--SectionHero_desktopTitleMaxWidth);
   }
+} */
+.heroMainTitle {
+    max-width: none;
+    background: #2a364c;
+    font-size: 35px;
+    text-align: right;
+    padding: 18px 40px 25px;
+    line-height: 35px;
+    font-weight: normal;
+    color: #fff;
+    margin-bottom: 100px;
+
 }
 
 .heroSubTitle {
@@ -114,37 +109,38 @@
   display: inline-flex;
   width: 100%;
   justify-content: space-between;
-  margin: 40px 0 0;
+  padding: 0 80px;
 }
 .inlineButtons button {
-  padding: 10px 60px;
-  min-width: 40%;
+  padding: 10px 20px;
+  min-width: 35%;
 }
 .modBtn{
-  background-color: transparent;
-  border: 2px solid #fff;
+  background-color: #cc814b;
 
-  &:hover{
-    border-color: #006a80;
+  &:hover,
+  &:focus{
+    background-color: #bb7746;
   }
 }
 
 @media (max-width: 1199px) {
 .inlineButtons button {
   padding: 10px ;
+  min-width: 40%;
 }
 }
 @media (max-width: 991px) {
   .inlineButtons {
     margin: 10px 0 0;
+    padding: 0 50px;
 }
   .inlineButtons button{
-    font-size: 15px;
+    font-size: 16px;
     min-height: auto;
   }
   .heroMainTitle{
-    font-size: 52px;
-    line-height: 48px;
+    text-align: center;
 }
 .heroContainer{
   min-height: 430px;
@@ -154,17 +150,24 @@
   .inlineButtons button {
     margin: 0 5px 0;
   }
+  .inlineButtons{
+    padding: 0 10px;
+}
+.heroMainTitle{
+  font-size: 30px;
+  line-height: 18px;
+}
 }
 @media (max-width: 575px) {
 .heroMainTitle{
-  font-size: 40px;
-  line-height: 40px;
+  font-size: 21px;
 }
 
 .inlineButtons button{
-  margin: 0 0 15px;
+  margin: 0 0 10px;
 }
 .inlineButtons{
   flex-direction: column;
+  margin: 0 0 15px;
 }
 }

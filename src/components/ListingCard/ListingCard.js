@@ -205,7 +205,26 @@ export class ListingCardComponent extends Component {
               </div>
             </div> */}
             <div className={css.mainInfo}>
-              <div className={css.title}>
+
+            <div className={`${css.title} ${css.nameav}`}>
+                     {title}
+                  </div>
+              
+              
+              {/* <div className={css.certificateInfo}>
+                {certificate && !certificate.hideFromListingInfo ? (
+                  <span>{certificate.label}</span>
+                ) : null}
+              </div> */}
+
+              <div className={css.rating}>
+              <FontAwesomeIcon icon={solidStar} /> {averageRating} <span>({ratingCount})</span>
+              </div>
+            </div>
+
+             <div className={css.price}>
+
+             <div className={css.title}>
                 {richText('Organisations Worked in:', {
                   longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
                   longWordClass: css.longWord,
@@ -222,20 +241,12 @@ export class ListingCardComponent extends Component {
                   : null
                 }
               </div>
-              
-              {/* <div className={css.certificateInfo}>
-                {certificate && !certificate.hideFromListingInfo ? (
-                  <span>{certificate.label}</span>
-                ) : null}
-              </div> */}
 
-              <div className={css.rating}>
-              <FontAwesomeIcon icon={solidStar} /> {averageRating} <span>({ratingCount})</span>
-              </div>
             </div>
 
-             <div className={css.price}>
-                  <div className={css.title}>
+            <div className={`${css.price} ${css.nameSig}`}>
+
+            <div className={css.title}>
                     Career Roles:
                     {
                       workExp !== null ? workExp.map((item, index) => {
@@ -249,17 +260,7 @@ export class ListingCardComponent extends Component {
                       : null
                     }
                   </div>
-
                   
-
-
-
-            </div>
-
-            <div className={`${css.price} ${css.nameSig}`}>
-                  <div className={`${css.title} ${css.nameav}`}>
-                     {title}
-                  </div>
               <div className={css.priceValue} title={priceTitle}>
                 {formattedPrice}<FormattedMessage id={unitTranslationKey} />
               </div>

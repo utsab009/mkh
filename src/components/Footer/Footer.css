@@ -5,17 +5,18 @@
   border-top-style: solid;
   border-top-width: 1px;
   border-top-color: var(--matterColorNegative);
+  
 
   width: 100%;
   padding: 24px 24px 42px 24px;
-  background-color: var(--matterColorBright);
+  background: #f9f9f9;
 
   @media (--viewportMedium) {
     padding: 0 24px 33px 24px;
   }
 
   @media (--viewportLarge) {
-    padding: 0 0 81px 0;
+    padding: 0 0 20px 0;
     border-top: none;
   }
 }
@@ -23,12 +24,13 @@
 /* Wrapper to limit the top border in desktop
  * view from the outermost paddings*/
 .topBorderWrapper {
+  background: #f9f9f9;
   @media (--viewportMedium) {
     padding-top: 41px;
   }
 
   @media (--viewportLarge) {
-    padding-top: 73px;
+    padding-top: 40px;
 
     border-top-style: solid;
     border-top-width: 1px;
@@ -92,7 +94,7 @@
 /* Desktop: logo and organization stuff */
 .organization {
   flex-shrink: 0;
-  flex-basis: 220px;
+  flex-basis: 180px;
   display: none;
   margin-right: 24px;
   margin-bottom: 24px;
@@ -103,11 +105,11 @@
     margin-right: 12px;
   }
   @media (--viewportLarge) {
-    flex-basis: 240px;
+    flex-basis: 180px;
     margin-right: 57px;
   }
   @media (--viewportLargeWithPaddings) {
-    flex-basis: 250px;
+    flex-basis: 180px;
     margin-right: 12px;
   }
 }
@@ -326,4 +328,60 @@
 
 .privacy {
   margin-right: 24px;
+}
+.Flogo{
+  height: 70px;
+}
+.hrmSec h3{
+  font-size: 16px;
+line-height: 20px;
+margin: 0 0 28px;
+}
+.hrmSec span{
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.hrmSec span img {
+  height: 70px;
+  margin: 0 18px 0 0;
+}
+.copyright{
+  font-size: 12px;
+  color: #b2b2b2;
+  text-align: center;
+  margin-top: 40px;
+}
+@media (max-width: 992px) {
+  .organization{
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .organizationCopyrightMobile{
+    flex-basis: 50%;
+  }
+}
+@media (max-width: 575px) {
+  .hrmSec {
+  flex-basis: 100%;
+  margin-right: 0;
+}
+.hrmSec span img {
+  height: 55px;
+  margin: 0 10px 0 0;
+}
+.hrmSec h3 {
+  font-size: 15px;
+}
+.copyrightAndTermsMobile{
+  height: auto;
+  padding: 12px 24px 10px 24px;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+.tosAndPrivacyMobile{
+  flex-basis: 100%;
+}
 }
