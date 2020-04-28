@@ -194,6 +194,7 @@ export const EditListingPageComponent = props => {
         <UserNav
           selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
           listing={listing}
+          profileUserType="mentor"
         />
         <EditListingWizard
           id="EditListingWizard"
@@ -250,6 +251,7 @@ export const EditListingPageComponent = props => {
         <UserNav
           selectedPageName={listing ? 'EditListingPage' : 'NewListingPage'}
           listing={listing}
+          profileUserType="mentor"
         />
         <div className={css.placeholderWhileLoading} />
         <Footer />

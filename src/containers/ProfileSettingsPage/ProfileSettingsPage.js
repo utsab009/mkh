@@ -110,7 +110,7 @@ export class ProfileSettingsPageComponent extends Component {
         <LayoutSingleColumn>
           <LayoutWrapperTopbar>
             <TopbarContainer currentPage="ProfileSettingsPage" />
-            <UserNav selectedPageName="ProfileSettingsPage" listing={currentUserListing} />
+            <UserNav selectedPageName="ProfileSettingsPage" listing={currentUserListing} profileUserType={profileUserType}/>
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
             <div className={css.content}>
