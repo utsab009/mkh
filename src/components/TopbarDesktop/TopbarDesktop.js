@@ -194,18 +194,18 @@ const TopbarDesktop = props => {
     </Menu>
   ) : null;
 
-  const signupLink = isAuthenticatedOrJustHydrated ? null : (
-    <NamedLink name="SignupPage" className={css.signupLink}>
-      <span className={css.signup}>
-        <FormattedMessage id="TopbarDesktop.signup" />
-      </span>
-    </NamedLink>
-  );
-
   const menteeSignupLink = isAuthenticatedOrJustHydrated ? null : (
     <NamedLink name="MenteeSignupPage" className={css.signupLink}>
       <span className={css.signup}>
         <FormattedMessage id="TopbarDesktop.menteeSignup" />
+      </span>
+    </NamedLink>
+  );
+
+  const signupLink = isAuthenticatedOrJustHydrated ? null : (
+    <NamedLink name="SignupPage" className={css.signupLink}>
+      <span className={css.signup}>
+        <FormattedMessage id="TopbarDesktop.signup" />
       </span>
     </NamedLink>
   );
@@ -255,11 +255,11 @@ const TopbarDesktop = props => {
       </NamedLink>
       {search}
       {/*listingLink*/}
+      {menteeSignupLink}
       {signupLink}
       {isMentor ? createListingLink : null}
       {inboxLink}
       {profileMenu}
-      {menteeSignupLink}
       {loginLink}
     </nav>
   );
