@@ -40,8 +40,9 @@ const TopbarDesktop = props => {
     parentComponent = null,
   } = props;
   const [mounted, setMounted] = useState(false);
-  console.log("parentComponent in topbardesktop",parentComponent);
-
+  console.log("currentUser:",currentUser);
+  const userType = currentUser && currentUser.attributes.profile.protectedData ? currentUser.attributes.profile.protectedData.userType : null;
+  const userTypeText = userType !== null && userType === 'mentor' ? "Mentor" : "Mentee";
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -138,7 +139,7 @@ const TopbarDesktop = props => {
               name="ProfileSettingsPage"
             >
               <span className={css.menuItemBorder} />
-              <FormattedMessage id="TopbarDesktop.profileSettingsLink" />
+              <FormattedMessage id="TopbarDesktop.profileSettingsLink" values={{ userType : userTypeText }} />
             </NamedLink>
           </MenuItem>
           <MenuItem key="AccountSettingsPage">
@@ -171,7 +172,7 @@ const TopbarDesktop = props => {
               name="ProfileSettingsPage"
             >
               <span className={css.menuItemBorder} />
-              <FormattedMessage id="TopbarDesktop.profileSettingsLink" />
+              <FormattedMessage id="TopbarDesktop.profileSettingsLink" values={{ userType : userTypeText }} />
             </NamedLink>
           </MenuItem>
           <MenuItem key="AccountSettingsPage">
