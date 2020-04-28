@@ -503,14 +503,14 @@ Work and Organisational Psychology and Coaching groups </li>
                       </ul>
                     </div>
 
-                    <span><a href={linkedinLink} className={css.sociallink}>Linked-in Link</a></span>
-                    <span><a href={youtubeLink} className={css.sociallink}>Youtube Link</a></span>
+                    <span><a href={linkedinLink} target="_blank" className={css.sociallink}>Linked-in Link</a></span>
+                    <span><a href={youtubeLink} target="_blank" className={css.sociallink}>Youtube Link</a></span>
                   <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
 
                 </div>
 
                 <div className={css.rightSecbooking}>
-                <button type="button" onClick={this.onContactUser} className={css.qtbtn}>Question through us buttons</button>
+                <button type="button" onClick={this.onContactUser} className={css.qtbtn}>Would you like to ask me a question</button>
                 <BookingPanel
                   className={`${css.bookingPanel} ${css.modbp}`}
                   listing={currentListing}

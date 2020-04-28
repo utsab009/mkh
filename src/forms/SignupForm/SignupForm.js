@@ -167,6 +167,8 @@ export class SignupFormComponent extends Component {
           });
           const lastNameRequired = validators.required(lastNameRequiredMessage);
 
+          const dobRequired = validators.validAge("Date of Birth is rquired and it should be atleast 18 years",18);
+
           const classes = classNames(rootClassName || css.root, className);
           const submitInProgress = inProgress;
           const submitDisabled = invalid || submitInProgress;
@@ -441,28 +443,31 @@ export class SignupFormComponent extends Component {
                         validate={lastNameRequired}
                       />
                     </div>
-                    <div className={css.name}>
-                      <FieldTextInput
-                        className={css.firstNameRoot}
-                        type="text"
-                        id={formId ? `${formId}.linkedin` : 'linkedin'}
-                        name="linkedinLink"
-                        autoComplete="linkedin"
-                        label={"linked Link"}
-                        placeholder={"linked Link"}
-                        // validate={firstNameRequired}
-                      />
-                      <FieldTextInput
-                        className={css.lastNameRoot}
-                        type="text"
-                        id={formId ? `${formId}.youtubelink` : 'youtubelink'}
-                        name="youtubeLink"
-                        autoComplete="youtube link"
-                        label={"youtube link"}
-                        placeholder={"youtubelink"}
-                        // validate={lastNameRequired}
-                      />
-                    </div>
+                    {/*signupType == 'mentor' ?
+                      <div className={css.name}>
+                        <FieldTextInput
+                          className={css.firstNameRoot}
+                          type="text"
+                          id={formId ? `${formId}.linkedin` : 'linkedin'}
+                          name="linkedinLink"
+                          autoComplete="linkedin"
+                          label={"linked Link"}
+                          placeholder={"linked Link"}
+                          // validate={firstNameRequired}
+                        />
+                        <FieldTextInput
+                          className={css.lastNameRoot}
+                          type="text"
+                          id={formId ? `${formId}.youtubelink` : 'youtubelink'}
+                          name="youtubeLink"
+                          autoComplete="youtube link"
+                          label={"youtube link"}
+                          placeholder={"youtubelink"}
+                          // validate={lastNameRequired}
+                        />
+                      </div>
+                      : null
+                    */}
                     <FieldTextInput
                       className={css.password}
                       type="password"
@@ -489,12 +494,13 @@ export class SignupFormComponent extends Component {
                   />
                   : null
                 }
-                { signupType === 'mentee' && this.state.currentTab == 1 ?
+                { this.state.currentTab == 1 ?
                   <FieldTextInput
                     type="date"
                     id={`dob`}
                     name={`dob`}
                     label={'Date of Birth'}
+                    validate={dobRequired}
                   /> 
                   : null
                 }
