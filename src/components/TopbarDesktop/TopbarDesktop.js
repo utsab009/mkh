@@ -194,24 +194,29 @@ const TopbarDesktop = props => {
     </Menu>
   ) : null;
 
-  const menteeSignupLink = isAuthenticatedOrJustHydrated ? null : (
-    <NamedLink name="MenteeSignupPage" className={css.signupLink}>
+  //modified by SD
+  const signupLinkVariable = parentComponent === null ? css.signupLink : css.signupLinkHomePage    
+  const menteeSignupLink = isAuthenticatedOrJustHydrated ? null :  (
+    <NamedLink name="MenteeSignupPage" className={signupLinkVariable}>
       <span className={css.signup}>
         <FormattedMessage id="TopbarDesktop.menteeSignup" />
       </span>
     </NamedLink>
   );
 
+  //modified by SD
   const signupLink = isAuthenticatedOrJustHydrated ? null : (
-    <NamedLink name="SignupPage" className={css.signupLink}>
+    <NamedLink name="SignupPage" className={signupLinkVariable}>
       <span className={css.signup}>
         <FormattedMessage id="TopbarDesktop.signup" />
       </span>
     </NamedLink>
   );
-
+  
+  //modified by SD
+  const loginLinkVariable = parentComponent === null ? css.loginLink : css.loginLinkHomePage
   const loginLink = isAuthenticatedOrJustHydrated ? null : (
-    <NamedLink name="LoginPage" className={css.loginLink}>
+    <NamedLink name="LoginPage" className={loginLinkVariable}>
       <span className={css.login}>
         <FormattedMessage id="TopbarDesktop.login" />
       </span>
