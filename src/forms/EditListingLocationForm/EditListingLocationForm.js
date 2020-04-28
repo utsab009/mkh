@@ -112,7 +112,7 @@ export const EditListingLocationFormComponent = props => (
               )}
             />
 
-            <p>Not shared with Menteen</p>
+            <p>Not shared with Mentee</p>
           </div>
 
           <div className={css.secloc}>
@@ -125,7 +125,7 @@ export const EditListingLocationFormComponent = props => (
             placeholder={buildingPlaceholderMessage}
           />
           
-          <p>Not shared with Menteen</p>
+          <p>Not shared with Mentee</p>
           </div>  
           <div className={css.secloc}>
           <FieldTextInput
@@ -137,7 +137,7 @@ export const EditListingLocationFormComponent = props => (
             placeholder={onlineAddressPlaceholder}
           />
 
-          <p>Will be shared with Menteen</p>
+          <p>Will be shared with Mentee</p>
           </div>
 
           <Button

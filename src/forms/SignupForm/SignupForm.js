@@ -347,7 +347,7 @@ export class SignupFormComponent extends Component {
                                     type="text"
                                     id={`${name}.duration`}
                                     name={`${name}.duration`}
-                                    label={'Over what length of Time'}
+                                    label={'length of Time'}
                                   />    
                                 </div>
                                 <div className={css.field}>
@@ -481,9 +481,12 @@ export class SignupFormComponent extends Component {
                   </div>
                   : null
                 }  
+                {this.state.currentTab > 1 && this.state.currentTab < 4 && signupType == 'mentor' ?
+                  <h6>It is important to Start with your most recent {this.state.currentTab == 2 ? "Position" : "Acredition"} and work backwards </h6>
+                  : null}
                 { this.state.currentTab == 2 && signupType == 'mentor' ? workExperienceElement : null}
                 { this.state.currentTab == 3 && signupType == 'mentor' ? educationalElement : null}
-                { this.state.currentTab == 4 && signupType == 'mentor' ?
+                {/* this.state.currentTab == 4 && signupType == 'mentor' ?
                   <FieldTextInput
                     className={css.field}
                     type="textarea"
@@ -493,7 +496,7 @@ export class SignupFormComponent extends Component {
                     // validate={required}
                   />
                   : null
-                }
+                */}
                 { this.state.currentTab == 1 ?
                   <FieldTextInput
                     type="date"
@@ -536,7 +539,7 @@ export class SignupFormComponent extends Component {
                     />
                   </span>
                 </p>
-                {(this.state.currentTab < 4 && signupType == 'mentor') || (this.state.currentTab < 2 && signupType == 'mentee' ) ? <Button type="button" onClick={() => this.onToggleTab(this.state.currentTab,'next')} disabled={submitDisabled}>Next</Button> : null}
+                {(this.state.currentTab < 4 && signupType == 'mentor') || (this.state.currentTab < 2 && signupType == 'mentee' ) ? <Button type="button" onClick={() => this.onToggleTab(this.state.currentTab,'next')} disabled={submitDisabled}>{this.state.currentTab == 1 ? "Next" : "Next/Skip for now" }</Button> : null}
                 {(this.state.currentTab > 1 && signupType == 'mentor') || (this.state.currentTab > 1 && signupType == 'mentee') ? <Button type="button" onClick={() => this.onToggleTab(this.state.currentTab,'previous')} >Previous</Button> : null}
                 {(this.state.currentTab == 4 ) || (signupType == 'mentee' && this.state.termsAccepted) ?
                   <PrimaryButton type="submit" inProgress={submitInProgress} disabled={submitDisabled}>

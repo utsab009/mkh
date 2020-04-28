@@ -112,14 +112,13 @@ const TopbarMobileMenu = props => {
         >
           <FormattedMessage id="TopbarMobileMenu.profileSettingsLink" />
         </NamedLink>
-        {!isMentor ?
+        {
           <NamedLink
             className={classNames(css.navigationLink, currentPageClass('FavouritesPage'))}
             name="FavouritesPage"
           >
             <FormattedMessage id="TopbarMobileMenu.favourites" />
           </NamedLink>
-          : null
         }
         {isMentor ?
           <NamedLink className={classNames(css.navigationLink, currentPageClass('ManageListingsPage'))} name="ManageListingsPage">

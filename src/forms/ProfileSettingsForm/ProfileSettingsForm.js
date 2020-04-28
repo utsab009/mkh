@@ -359,6 +359,10 @@ class ProfileSettingsFormComponent extends Component {
                 </div>
                 : null
               }
+              {this.state.currentTab > 1 && this.state.currentTab < 4 ?
+                <h6>It is important to Start with your most recent {this.state.currentTab == 2 ? "Position" : "Acredition"} and work backwards </h6>
+                : null
+              }
               {this.state.currentTab == 2 ? 
                 <div className={classNames(css.sectionContainer, css.lastSection)}>
                   <h3 className={css.sectionTitle}>

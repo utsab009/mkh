@@ -182,13 +182,17 @@ const EditListingFeaturesPanel = props => {
     {/*<div className={classes} ref={setPortalRootAfterInitialRender}>*/}
      
       <h1 className={css.title}>{panelTitle}</h1>
+      <p>
+      My sector and or job is not listed, click
       <InlineTextButton
         className={css.btnModSl}
         onClick={() => setIsSendMsgModalOpen(true)}
       >
-      My sector is not listed, I want to write a message to the admin.
+      &nbsp;here &nbsp; 
       </InlineTextButton>
-      
+      and tell us so we can include it for you.
+      </p>
+
       <EditListingFeaturesForm
         className={css.form}
         name={FEATURES_NAME}

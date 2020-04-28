@@ -73,6 +73,9 @@ export class ProfileSettingsPageComponent extends Component {
     const { firstName, lastName, bio, protectedData,publicData } = user.attributes.profile;
     const profileImageId = user.profileImage ? user.profileImage.id : null;
     const profileImage = image || { imageId: profileImageId };
+    // console.log("protectedData",protectedData);
+    // const { userType = "Mentee"} = protectedData;
+    const profileUserType = protectedData && protectedData.userType ? protectedData.userType : null;
 
     const profileSettingsForm = user.id ? (
       <ProfileSettingsForm
@@ -113,9 +116,9 @@ export class ProfileSettingsPageComponent extends Component {
             <div className={css.content}>
               <div className={css.headingContainer}>
                 <h1 className={css.heading}>
-                  <FormattedMessage id="ProfileSettingsPage.heading" />
+                  <FormattedMessage id="ProfileSettingsPage.heading" values={{ userType: profileUserType }} />
                 </h1>
-                {user.id ? (
+                {/*user.id ? (
                   <NamedLink
                     className={css.profileLink}
                     name="ProfilePage"
@@ -123,7 +126,7 @@ export class ProfileSettingsPageComponent extends Component {
                   >
                     <FormattedMessage id="ProfileSettingsPage.viewProfileLink" />
                   </NamedLink>
-                ) : null}
+                ) : null*/}
               </div>
               {profileSettingsForm}
             </div>
