@@ -754,7 +754,7 @@
   "ProfileSettingsForm.updateProfileFailed": "Whoops, something went wrong. Please try again.",
   "ProfileSettingsForm.yourName": "Your name",
   "ProfileSettingsForm.yourProfilePicture": "Your profile picture",
-  "ProfileSettingsPage.heading": "{userType} profile",
+  "ProfileSettingsPage.heading": "{userType} Profile",
   "ProfileSettingsPage.title": "User profile",
   "ProfileSettingsPage.viewProfileLink": "View your user profile",
   "ResponsiveImage.noImage": "No image",

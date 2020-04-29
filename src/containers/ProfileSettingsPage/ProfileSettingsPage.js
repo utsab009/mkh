@@ -105,6 +105,8 @@ export class ProfileSettingsPageComponent extends Component {
 
     const title = intl.formatMessage({ id: 'ProfileSettingsPage.title' });
 
+    const profileTypeText = profileUserType === "mentor" ? "Mentor" : "Mentee";
+
     return (
       <Page className={css.root} title={title} scrollingDisabled={scrollingDisabled}>
         <LayoutSingleColumn>
@@ -116,7 +118,7 @@ export class ProfileSettingsPageComponent extends Component {
             <div className={css.content}>
               <div className={css.headingContainer}>
                 <h1 className={css.heading}>
-                  <FormattedMessage id="ProfileSettingsPage.heading" values={{ userType: profileUserType }} />
+                  <FormattedMessage id="ProfileSettingsPage.heading" values={{ userType: profileTypeText }} />
                 </h1>
                 {/*user.id ? (
                   <NamedLink

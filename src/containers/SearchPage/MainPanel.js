@@ -74,7 +74,7 @@ class MainPanel extends Component {
     const secondaryFilterParamNames = secondaryFilters
       ? Object.values(secondaryFilters).map(f => f.paramName)
       : [];
-
+      console.log("url: ",urlQueryParams);
     return (
       <div className={classes}>
         <SearchFilters
