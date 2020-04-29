@@ -30,6 +30,9 @@ export { default as IconSearch } from './IconSearch/IconSearch';
 export { default as IconSocialMediaFacebook } from './IconSocialMediaFacebook/IconSocialMediaFacebook';
 export { default as IconSocialMediaInstagram } from './IconSocialMediaInstagram/IconSocialMediaInstagram';
 export { default as IconSocialMediaTwitter } from './IconSocialMediaTwitter/IconSocialMediaTwitter';
+export { default as IconSocialMediaLinkedin } from './IconSocialMediaLinkedin/IconSocialMediaLinkedin';
+export { default as IconSocialMediaQuora } from './IconSocialMediaQuora/IconSocialMediaQuora';
+export { default as IconSocialMediaPinterest } from './IconSocialMediaPinterest/IconSocialMediaPinterest';
 export { default as IconSpinner } from './IconSpinner/IconSpinner';
 export { default as IconSuccess } from './IconSuccess/IconSuccess';
 

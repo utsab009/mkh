@@ -101,6 +101,11 @@ const siteInstagramPage = 'https://www.instagram.com/tryamentor/';
 // const siteFacebookPage = 'https://www.facebook.com/Sharetribe/';
 const siteFacebookPage = 'https://www.facebook.com/kenneth.glynn.507';
 
+const siteLinkedinPage = 'https://www.linkedin.com/in/try-a-mentor-12a3791a8/';
+
+const siteQuoraPage = 'https://www.quora.com/profile/Try-A-Mentor';
+const sitePinterestPage = 'http://www.pinterest.com/tarmstrong0987';
+
 // Facebook counts shares with app or page associated by this id
 // Currently it is unset, but you can read more about fb:app_id from
 // https://developers.facebook.com/docs/sharing/webmasters#basic
@@ -218,6 +223,9 @@ const config = {
   siteFacebookPage,
   siteInstagramPage,
   siteTwitterHandle,
+  siteLinkedinPage,
+  siteQuoraPage,
+  sitePinterestPage,
   facebookAppId,
   sentryDsn,
   usingSSL,
