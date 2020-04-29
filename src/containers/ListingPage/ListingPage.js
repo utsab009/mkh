@@ -147,7 +147,7 @@ export class ListingPageComponent extends Component {
       callSetInitialValues(setInitialValues, { enquiryModalOpenForListingId: params.id });
 
       // signup and return back to listingPage.
-      history.push(createResourceLocatorString('SignupPage', routeConfiguration(), {}, {}), state);
+      history.push(createResourceLocatorString('MenteeSignupPage', routeConfiguration(), {}, {}), state);
     } else {
       this.setState({ enquiryModalOpen: true });
     }
