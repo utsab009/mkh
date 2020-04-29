@@ -15,7 +15,8 @@ import {
   IconSocialMediaInstagram,
   IconSocialMediaTwitter,
   IconSocialMediaLinkedin,
-  IconSocialMediaWhatsapp,
+  IconSocialMediaQuora,
+  IconSocialMediaPinterest,
   Logo,
   ExternalLink,
   NamedLink,
@@ -24,9 +25,9 @@ import {
 import css from './Footer.css';
 
 const renderSocialMediaLinks = intl => {
-  const { siteFacebookPage, siteInstagramPage, siteTwitterHandle } = config;
+  const { siteFacebookPage, siteInstagramPage, siteTwitterHandle, siteLinkedinPage, siteQuoraPage, sitePinterestPage } = config;
   const siteTwitterPage = twitterPageURL(siteTwitterHandle);
-
+  console.log("siteLinkedinPage",siteLinkedinPage);
   const goToFb = intl.formatMessage({ id: 'Footer.goToFacebook' });
   const goToInsta = intl.formatMessage({ id: 'Footer.goToInstagram' });
   const goToTwitter = intl.formatMessage({ id: 'Footer.goToTwitter' });
@@ -59,7 +60,40 @@ const renderSocialMediaLinks = intl => {
       <IconSocialMediaInstagram />
     </ExternalLink>
   ) : null;
-  return [fbLink, twitterLink, instragramLink].filter(v => v != null);
+
+  const linkedinLink = siteLinkedinPage ? (
+    <ExternalLink
+      key="linkToLinkedin"
+      href={siteLinkedinPage}
+      className={css.icon}
+      title={"go To Linked in"}
+    >
+      <IconSocialMediaLinkedin />
+    </ExternalLink>
+  ) : null;
+
+  const quoraLink = siteQuoraPage ? (
+    <ExternalLink
+      key="linkToLinkedin"
+      href={siteQuoraPage}
+      className={css.icon}
+      title={"go To Quora"}
+    >
+      <IconSocialMediaQuora />
+    </ExternalLink>
+  ) : null;
+
+  const pinterestLink = sitePinterestPage ? (
+    <ExternalLink
+      key="linkToLinkedin"
+      href={sitePinterestPage}
+      className={css.icon}
+      title={"go To Pinterest"}
+    >
+      <IconSocialMediaPinterest />
+    </ExternalLink>
+  ) : null;
+  return [fbLink, twitterLink, instragramLink, linkedinLink, quoraLink, pinterestLink].filter(v => v != null);
 };
 
 const Footer = props => {
