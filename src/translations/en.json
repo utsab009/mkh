@@ -1059,7 +1059,7 @@
   "TopbarMobileMenu.profileSettingsLink": "Mentor profile",
   "TopbarMobileMenu.signupLink": "Try a Mentor",
   "TopbarMobileMenu.mentorSignupLink": "Become a Mentor",
-  "TopbarMobileMenu.signupOrLogin": "{Menteesignup} or {Mentorsignup} or {lineBreak}{login}",
+  "TopbarMobileMenu.signupOrLogin": "{Menteesignup} or {lineBreak}{Mentorsignup} or {lineBreak}{login}",
   "TopbarMobileMenu.unauthorizedGreeting": "Hello there,{lineBreak}would you like to {signupOrLogin}?",
   "TopbarMobileMenu.yourListingsLink": "Your Mentor profile",
   "TopbarMobileMenu.plannerLink": "Planner",
