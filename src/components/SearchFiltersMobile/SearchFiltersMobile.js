@@ -336,9 +336,9 @@ class SearchFiltersMobileComponent extends Component {
           <Button rootClassName={filtersButtonClasses} onClick={this.openFilters}>
             <FormattedMessage id="SearchFilters.filtersButtonLabel" className={css.mapIconText} />
           </Button>
-          <div className={css.mapIcon} onClick={onMapIconClick}>
+          {/* <div className={css.mapIcon} onClick={onMapIconClick}>
             <FormattedMessage id="SearchFilters.openMapView" className={css.mapIconText} />
-          </div>
+          </div> */}
         </div>
         <ModalInMobile
           id="SearchFiltersMobile.filters"

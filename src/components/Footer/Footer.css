@@ -361,6 +361,9 @@ margin: 0 0 28px;
   .organizationCopyrightMobile{
     flex-basis: 50%;
   }
+  .copyright{
+    display: none;
+  }
 }
 @media (max-width: 575px) {
   .hrmSec {
