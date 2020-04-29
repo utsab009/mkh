@@ -5,6 +5,7 @@ import css from './ListingPage.css';
 
 const SectionAvatar = props => {
   const { user } = props;
+  console.log("user in sectionAvatar",user);
   return (
     <div className={css.sectionAvatar}>
       <AvatarLarge

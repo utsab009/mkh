@@ -40,6 +40,7 @@ import {
   Page,
   ResponsiveImage,
 } from '../../components';
+import SectionAvatar from '../../containers/ListingPage/SectionAvatar';
 import { StripePaymentForm } from '../../forms';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
 import { handleCardPayment, retrievePaymentIntent } from '../../ducks/stripe.duck';
@@ -750,13 +751,15 @@ export class CheckoutPageComponent extends Component {
       <Page {...pageProps}>
         {topbar}
         <div className={css.contentContainer}>
-          <div className={css.aspectWrapper}>
-            <ResponsiveImage
+          <div 
+          className={css.aspectWrapper}
+          >
+            {/*<ResponsiveImage
               rootClassName={css.rootForImage}
               alt={listingTitle}
               image={firstImage}
               variants={['landscape-crop', 'landscape-crop2x']}
-            />
+            />*/}
           </div>
           <div className={classNames(css.avatarWrapper, css.avatarMobile)}>
             <AvatarMedium user={currentAuthor} disableProfileLink />
@@ -783,6 +786,7 @@ export class CheckoutPageComponent extends Component {
                   />
                 </p>
               ) : null}
+              {<p>This is a Secure external Payment System (Stripe) in which none of your details are saved</p>}
               {showPaymentForm ? (
                 <StripePaymentForm
                   className={css.paymentForm}
@@ -817,16 +821,19 @@ export class CheckoutPageComponent extends Component {
           </div>
 
           <div className={css.detailsContainerDesktop}>
-            <div className={css.detailsAspectWrapper}>
-              <ResponsiveImage
+            <div 
+              // className={css.detailsAspectWrapper}
+            >
+              {/*<ResponsiveImage
                 rootClassName={css.rootForImage}
                 alt={listingTitle}
                 image={firstImage}
                 variants={['landscape-crop', 'landscape-crop2x']}
-              />
+              />*/}
             </div>
             <div className={css.avatarWrapper}>
-              <AvatarMedium user={currentAuthor} disableProfileLink />
+              {/*<AvatarMedium user={currentAuthor} disableProfileLink />*/}
+              <SectionAvatar user={currentAuthor} disableProfileLink />
             </div>
             <div className={css.detailsHeadings}>
               <h2 className={css.detailsTitle}>{listingTitle}</h2>
