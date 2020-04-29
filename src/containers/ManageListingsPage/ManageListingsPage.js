@@ -59,8 +59,9 @@ export class ManageListingsPageComponent extends Component {
       queryParams,
       scrollingDisabled,
       intl,
+      currentUser,
     } = this.props;
-
+    console.log('currentUser in managelistingspage',currentUser);
     const hasPaginationInfo = !!pagination && pagination.totalItems != null;
     const listingsAreLoaded = !queryInProgress && hasPaginationInfo;
 
@@ -146,6 +147,7 @@ export class ManageListingsPageComponent extends Component {
                     hasOpeningError={openingErrorListingId.uuid === l.id.uuid}
                     hasClosingError={closingErrorListingId.uuid === l.id.uuid}
                     renderSizes={renderSizes}
+                    currentUser={currentUser}
                   />
                 ))}
               </div>
@@ -210,7 +212,8 @@ const mapStateToProps = state => {
     closingListing,
     closingListingError,
   } = state.ManageListingsPage;
-  console.log("currentPageResultIds",currentPageResultIds);
+  const {currentUser} = state.user;
+  console.log("currentPageResultIds",state);
   const listings = getOwnListingsById(state, currentPageResultIds);
   return {
     currentPageResultIds,
@@ -224,6 +227,7 @@ const mapStateToProps = state => {
     openingListingError,
     closingListing,
     closingListingError,
+    currentUser,
   };
 };
 
