@@ -124,10 +124,10 @@ const Footer = props => {
               <h3>Try A Mentor is part of the Beacon HRM Group. Visit our parent website today</h3>
               
               <span>
-                <a href="#"><img src={HrmImg3} /></a>
-                <a href="#"><img src={HrmImg1} /></a>
-                <a href="#"><img src={HrmImg4} /></a>
-                <a href="#"><img src={HrmImg2} /></a>
+                <a href="http://www.beaconhrm.com/"><img src={HrmImg3} /></a>
+                <a href="http://www.beaconhrm.com/"><img src={HrmImg1} /></a>
+                <a href="http://www.beaconhrm.com/"><img src={HrmImg4} /></a>
+                <a href="http://www.beaconhrm.com/"><img src={HrmImg2} /></a>
               </span>
 
 
