@@ -14,7 +14,7 @@ import {
   propTypes,
 } from '../../util/types';
 import { formatMoney } from '../../util/currency';
-import { ensureOwnListing } from '../../util/data';
+import { ensureOwnListing,ensureUser } from '../../util/data';
 import {
   LISTING_PAGE_PENDING_APPROVAL_VARIANT,
   LISTING_PAGE_DRAFT_VARIANT,
@@ -34,6 +34,8 @@ import {
   IconSpinner,
   ResponsiveImage,
 } from '../../components';
+
+import SectionAvatar from '../../containers/ListingPage/SectionAvatar';
 
 import MenuIcon from './MenuIcon';
 import Overlay from './Overlay';
@@ -124,9 +126,15 @@ export const ManageListingCardComponent = props => {
     onToggleMenu,
     renderSizes,
     availabilityEnabled,
+    currentUser,
   } = props;
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
+  const authorAvailable = currentListing && currentListing.author;
+  
+  const currentAuthor = authorAvailable ? currentListing.author : null;
+  const ensuredAuthor = ensureUser(currentAuthor);
+  console.log("authorAvailable",authorAvailable,"currentAuthor",currentAuthor,"ensuredAuthor",ensuredAuthor,"currentListing",currentListing);
   const id = currentListing.id.uuid;
   const { title = '', price, state } = currentListing.attributes;
   const slug = createSlug(title);
@@ -168,7 +176,7 @@ export const ManageListingCardComponent = props => {
   return (
     <div className={classes}>
       <div
-        className={css.threeToTwoWrapper}
+        
         tabIndex={0}
         onClick={event => {
           event.preventDefault();
@@ -182,15 +190,18 @@ export const ManageListingCardComponent = props => {
           history.push(createListingURL(routeConfiguration(), listing));
         }}
       >
-        <div className={css.aspectWrapper}>
-          <ResponsiveImage
+        <div>
+        {/*<div className={css.aspectWrapper}>*/}
+          {/*<ResponsiveImage
             rootClassName={css.rootForImage}
             alt={title}
             image={firstImage}
             variants={['landscape-crop', 'landscape-crop2x']}
             sizes={renderSizes}
           />
+          <SectionAvatar user={currentAuthor} />*/}
         </div>
+        <SectionAvatar user={currentUser} />
         <div className={classNames(css.menuOverlayWrapper, { [css.menuOverlayOpen]: isMenuOpen })}>
           <div className={classNames(css.menuOverlay)} />
           <div className={css.menuOverlayContent}>

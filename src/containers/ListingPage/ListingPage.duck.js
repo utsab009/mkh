@@ -168,6 +168,7 @@ export const sendEnquiryError = e => ({ type: SEND_ENQUIRY_ERROR, error: true, p
 // ================ Thunks ================ //
 
 export const showListing = (listingId, isOwn = false) => (dispatch, getState, sdk) => {
+  console.log("listingId in showlisting",listingId);
   dispatch(showListingRequest(listingId));
   dispatch(fetchCurrentUser());
   const params = {
@@ -209,7 +210,6 @@ export const showListing = (listingId, isOwn = false) => (dispatch, getState, sd
 };
 
 export const fetchReviews = listingId => (dispatch, getState, sdk) => {
-  console.log("fetch reviews in listingpage.duck");
   dispatch(fetchReviewsRequest());
   return sdk.reviews
     .query({

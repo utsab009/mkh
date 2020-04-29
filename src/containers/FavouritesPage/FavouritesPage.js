@@ -6,6 +6,8 @@ import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import { propTypes } from '../../util/types';
 import config from '../../config';
+import { showListing } from '../../containers/ListingPage/ListingPage.duck';
+import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { parse } from '../../util/urlHelpers';
 import { isScrollingDisabled } from '../../ducks/UI.duck';
 import {
@@ -63,6 +65,7 @@ export class FavouritesPageComponent extends Component {
       queryParams,
       scrollingDisabled,
       intl,
+      onShowListing,
     } = this.props;
 
     let favouritesArr = currentUser && currentUser.attributes.profile.protectedData.favourites && Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites)) ? JSON.parse(currentUser.attributes.profile.protectedData.favourites) : [];
@@ -128,7 +131,17 @@ export class FavouritesPageComponent extends Component {
     ].join(', ');
 
     const { Money, UUID } = sdkTypes;
+    console.log("favouritesArr",favouritesArr);
+    const newfav = []
+    // for(var i = 0;i<favouritesArr.length;i++)
+    // {
+    //   console.log(onShowListing({id : favouritesArr[i].listing.id}));
+    //   // newfav.push(onShowListing({id : favouritesArr[i].listing.id}));
 
+    // }
+    console.log("newfav",newfav);
+    // const pageListings = getListingsById(ourState, newfav);
+    // console.log("pageListings",pageListings);
     return (
       <Page title={title} scrollingDisabled={scrollingDisabled}>
         <LayoutSingleColumn>
@@ -142,7 +155,9 @@ export class FavouritesPageComponent extends Component {
             <div className={css.listingPanel}>
               {heading}
               <div className={css.listingCards}>
-                {favouritesArr.map(l => {
+                {
+                  // pageListings.map(l => {
+                  favouritesArr.map(l => {
                 //   <ManageListingCard
                 //     className={css.listingCard}
                 //     key={l.id}
@@ -221,18 +236,19 @@ const mapStateToProps = state => {
     const { currentUser} = state.user;
     return {
       currentUser,
+      ourState : state,
     };
 };
 
-// const mapDispatchToProps = dispatch => ({
-//   onCloseListing: listingId => dispatch(closeListing(listingId)),
-//   onOpenListing: listingId => dispatch(openListing(listingId)),
-// });
+const mapDispatchToProps = dispatch => ({
+  onShowListing: listingId => dispatch(showListing(listingId)),
+  // onOpenListing: listingId => dispatch(openListing(listingId)),
+});
 
 const FavouritesPage = compose(
   connect(
     mapStateToProps,
-    // mapDispatchToProps
+    mapDispatchToProps
   ),
   injectIntl
 )(FavouritesPageComponent);

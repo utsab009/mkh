@@ -28,7 +28,7 @@ const SearchResultsPanel = props => {
     `(max-width: 1920px) ${panelLargeWidth / 2}vw`,
     `${panelLargeWidth / 3}vw`,
   ].join(', ');
-
+  console.log("listings in searchresultspanel",listings );
   return (
     <div className={classes}>
       <div className={css.listingCards}>

@@ -99,7 +99,7 @@ export const EditListingPricingFormComponent = props => (
             currencyConfig={config.currencyConfig}
             validate={priceValidators}
           />
-          <div><h5>You can charge the mentees for a minimum of 1€ to maximum of any value</h5></div>
+          <div><h5>Pick a price from 1€ to any value</h5></div>
 
           <Button
             className={css.submitButton}
