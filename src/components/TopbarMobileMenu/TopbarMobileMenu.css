@@ -136,6 +136,9 @@
 }
 
 @media (max-width: 767px) {
+  .avatar{
+    margin: 0;
+}
   .avatar img{
     height: 100% !important;
   }

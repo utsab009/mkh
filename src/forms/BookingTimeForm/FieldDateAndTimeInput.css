@@ -160,3 +160,11 @@ Remember to do required code changes also in FieldDateAndTimeInput.js!
 /**
 CSS for hiding the end date above
 **/
+@media (max-width: 767px) {
+  .fieldSelectDisabled,
+  .fieldSelect {
+    &::after {
+      bottom: 33px;
+    }
+  }
+}

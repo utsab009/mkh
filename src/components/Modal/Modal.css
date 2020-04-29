@@ -78,6 +78,9 @@
 }
 @media (max-width: 767px) {
   .updateModalcolclose{
-    position: absolute;
-  }
+    position: relative;
+    justify-content: flex-end;
+    padding: 10px 10px 30px 0;
+    width: 100%;
+}
 }
