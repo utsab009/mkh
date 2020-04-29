@@ -176,7 +176,7 @@ export class EditListingFeaturesFormComponent extends Component {
               : null
               }
 
-              <div className={css.ffsec}><p>Ok, so you have noticed you cannot sign-up for morethen  one  Job  Role  to  mentor  and  yet  you  could mentor for the role at many levels and even many different Job Roles.  We promise the next version of Try A Mentor will not have this limitation but for now, to overcome this,you simply create as many personal Mentor Profiles as you need so that all of what you are capable of is captured and offered to mentees.</p></div>
+              <div className={css.ffsec}><p>Remember, for each job / role you will need to create a new Role Profile for each level of seniority you can Mentor at </p></div>
 
             
               <Button

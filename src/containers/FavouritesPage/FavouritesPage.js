@@ -134,7 +134,7 @@ export class FavouritesPageComponent extends Component {
         <LayoutSingleColumn>
           <LayoutWrapperTopbar>
             <TopbarContainer currentPage="FavouritesPage" />
-            <UserNav selectedPageName="FavouritesPage" />
+            {/*<UserNav selectedPageName="FavouritesPage" />*/}
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
             {queryInProgress ? loadingResults : null}

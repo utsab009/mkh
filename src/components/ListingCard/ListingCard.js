@@ -135,7 +135,7 @@ export class ListingCardComponent extends Component {
     // console.log("ensuredAuthor",ensuredAuthor);
     // let authorData = this.state.authorData !== null && this.state.authorData.data.attributes.profile.publicData ? this.state.authorData.data.attributes.profile.publicData : {error:"no data"}; 
     let authorData = ensuredAuthor !== null && ensuredAuthor.attributes.profile.publicData ? ensuredAuthor.attributes.profile.publicData : {error:"no data"}; 
-    let {workExp = null, education = null, linkedinLink = null, youtubeLink = null } = authorData;
+    let {workExp = null, education = null, linkedinLink = null, youtubeLink = null, fullName = ensuredAuthor.attributes.profile.displayName } = authorData;
     // console.log("authorData",authorData);
     const id = currentListing.id.uuid;
     const { title = '', price, publicData } = currentListing.attributes;
@@ -207,8 +207,8 @@ export class ListingCardComponent extends Component {
             <div className={css.mainInfo}>
 
             <div className={`${css.title} ${css.nameav}`}>
-                     {title}
-                  </div>
+              {fullName}
+            </div>
               
               
               {/* <div className={css.certificateInfo}>
@@ -244,28 +244,35 @@ export class ListingCardComponent extends Component {
 
             </div>
 
-            <div className={`${css.price} ${css.nameSig}`}>
+             <div className={css.price}>
+                <div className={css.title}>
+                  Career Roles:
+                  {
+                    workExp !== null ? workExp.map((item, index) => {
+                      if(index < 4)
+                      {
+                        return (
+                          <span className={css.crr}>{item.position}</span>
+                        );
+                      }
+                    })
+                    : null
+                  }
+                </div>
+                <div className={css.priceValue} title={priceTitle}>
+                  {formattedPrice}<FormattedMessage id={unitTranslationKey} />
+                </div>
+            </div>
 
-            <div className={css.title}>
-                    Career Roles:
-                    {
-                      workExp !== null ? workExp.map((item, index) => {
-                        if(index < 4)
-                        {
-                          return (
-                            <span className={css.crr}>{item.position}</span>
-                          );
-                        }
-                      })
-                      : null
-                    }
+            {/*<div className={`${css.price} ${css.nameSig}`}>
+                  <div className={`${css.title} ${css.nameav}`}>
+                     {fullName}
                   </div>
-                  
               <div className={css.priceValue} title={priceTitle}>
                 {formattedPrice}<FormattedMessage id={unitTranslationKey} />
               </div>
 
-            </div>
+                </div>*/}
           </div>
 
         

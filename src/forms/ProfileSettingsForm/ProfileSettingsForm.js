@@ -205,7 +205,7 @@ class ProfileSettingsFormComponent extends Component {
               className={classes}
               onSubmit={e => {
                 this.submittedValues = values;
-                console.log("values",values);
+                console.log("values in psf",values,e);
                 handleSubmit(e);
               }}
             >
@@ -357,6 +357,10 @@ class ProfileSettingsFormComponent extends Component {
                     <FormattedMessage id="ProfileSettingsForm.bioInfo" />
               </p>*/}
                 </div>
+                : null
+              }
+              {this.state.currentTab > 1 && this.state.currentTab < 4 ?
+                <h6>It is important to Start with your most recent {this.state.currentTab == 2 ? "Position" : "Accreditation"} and work backwards </h6>
                 : null
               }
               {this.state.currentTab == 2 ? 
