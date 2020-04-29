@@ -13,6 +13,7 @@ import config from '../../config';
 import { NamedLink, ResponsiveImage, Button } from '../../components';
 import { updateProfile } from '../../containers/ProfileSettingsPage/ProfileSettingsPage.duck';
 import { showUser } from '../../containers/ProfilePage/ProfilePage.duck';
+import { showListing } from '../../containers/ListingPage/ListingPage.duck';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee,faHeart as solidHeart,faHeartBroken,faHeartbeat, faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import { faHeart} from '@fortawesome/free-regular-svg-icons';
@@ -68,14 +69,20 @@ export class ListingCardComponent extends Component {
       authorData: null,
 
     };
-    // console.log("props in listingcard",props);
+    console.log("props in listingcard",props);
 
     this.addToFav = this.addToFav.bind(this);
     this.removeFromFav = this.removeFromFav.bind(this);
   }
 
   componentDidMount() {
-    this.props.onShowUser(this.props.listing.author.id);
+    // console.log("inside componentdidmount",this.props.onShowUser(this.props.listing.author.id));
+    // const authorData = this.props.onShowUser(this.props.listing.author.id);
+    // authorData.then(data => {
+    //   console.log("data in showlisting",data);
+     
+    // })
+    console.log("Listingcard");
   }
 
   addToFav = id => {
@@ -123,7 +130,10 @@ export class ListingCardComponent extends Component {
       renderSizes,
       certificateConfig,
       setActiveListing,
+      onShowListing,
     } = this.props;
+    // const listingDetails = onShowListing({id : listing.id});
+    // console.log("listingDetails",listingDetails);
     let favouritesArr = currentUser && currentUser.attributes.profile.protectedData.favourites && Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites)) ? JSON.parse(currentUser.attributes.profile.protectedData.favourites) : [];
     const classes = classNames(rootClassName || css.root, className);
     const currentListing = ensureListing(listing);
@@ -133,8 +143,8 @@ export class ListingCardComponent extends Component {
     const ensuredAuthor = ensureUser(currentAuthor);
     const {averageRating = 0, ratingCount = 0} = currentListing.attributes.publicData;
     // console.log("ensuredAuthor",ensuredAuthor);
-    // let authorData = this.state.authorData !== null && this.state.authorData.data.attributes.profile.publicData ? this.state.authorData.data.attributes.profile.publicData : {error:"no data"}; 
-    let authorData = ensuredAuthor !== null && ensuredAuthor.attributes.profile.publicData ? ensuredAuthor.attributes.profile.publicData : {error:"no data"}; 
+    let authorData = this.state.authorData !== null && this.state.authorData.data.attributes.profile.publicData ? this.state.authorData.data.attributes.profile.publicData : {error:"no data"}; 
+    // let authorData = ensuredAuthor !== null && ensuredAuthor.attributes.profile.publicData ? ensuredAuthor.attributes.profile.publicData : {error:"no data"}; 
     let {workExp = null, education = null, linkedinLink = null, youtubeLink = null, fullName = ensuredAuthor.attributes.profile.displayName } = authorData;
     // console.log("authorData",authorData);
     const id = currentListing.id.uuid;
@@ -172,6 +182,7 @@ export class ListingCardComponent extends Component {
         // }
       })
     }
+    console.log("ensuredAuthor in listingcard",ensuredAuthor,"state.authordata",authorData);
     return (
       <div className={css.updateRow}>
         <NamedLink className={classes} name="ListingPage" params={{ id, slug }}>
@@ -193,7 +204,7 @@ export class ListingCardComponent extends Component {
            {/*<div className={css.modImageSec}>*/}
            <div>
              {/*<img src="" />*/}
-             <SectionAvatar user={currentAuthor} />
+             <SectionAvatar user={ensuredAuthor} />
            </div>
           <div className={css.info}>
             {/* <div className={css.price}>
@@ -346,6 +357,7 @@ const mapDispatchToProps = dispatch => ({
   // onImageUpload: data => dispatch(uploadImage(data)),
   onUpdateProfile: data => dispatch(updateProfile(data)),
   onShowUser: data => dispatch(showUser(data)),
+  onShowListing: data => dispatch(showListing(data)),
 });
 
 // export default injectIntl(ListingCardComponent);

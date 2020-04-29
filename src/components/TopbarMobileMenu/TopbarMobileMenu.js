@@ -35,9 +35,15 @@ const TopbarMobileMenu = props => {
   const user = ensureCurrentUser(currentUser);
 
   if (!isAuthenticated) {
-    const signup = (
-      <NamedLink name="SignupPage" className={css.signupLink}>
+    const Menteesignup = (
+      <NamedLink name="MenteeSignupPage" className={css.signupLink}>
         <FormattedMessage id="TopbarMobileMenu.signupLink" />
+      </NamedLink>
+    );
+
+    const Mentorsignup = (
+      <NamedLink name="SignupPage" className={css.signupLink}>
+        <FormattedMessage id="TopbarMobileMenu.mentorSignupLink" />
       </NamedLink>
     );
 
@@ -49,7 +55,7 @@ const TopbarMobileMenu = props => {
 
     const signupOrLogin = (
       <span className={css.authenticationLinks}>
-        <FormattedMessage id="TopbarMobileMenu.signupOrLogin" values={{ signup, login }} />
+        <FormattedMessage id="TopbarMobileMenu.signupOrLogin" values={{ Menteesignup,Mentorsignup,lineBreak: <br />, login }} />
       </span>
     );
     return (

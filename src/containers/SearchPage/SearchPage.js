@@ -391,6 +391,7 @@ const mapStateToProps = state => {
     searchMapListingIds,
     activeListingId,
   } = state.SearchPage;
+  console.log("currentPageResultIds",currentPageResultIds);
   const pageListings = getListingsById(state, currentPageResultIds);
   const mapListings = getListingsById(
     state,

@@ -246,9 +246,10 @@ export class ListingPageComponent extends Component {
       publicData,
     } = currentListing.attributes;
 
-    const richTitle = (
+
+    const richTitle = (fullName) => (
       <span>
-        {richText(title, {
+        {richText(fullName, {
           longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE,
           longWordClass: css.longWord,
         })}
@@ -328,9 +329,10 @@ export class ListingPageComponent extends Component {
     const currentAuthor = authorAvailable ? currentListing.author : null;
     const ensuredAuthor = ensureUser(currentAuthor);
     let authorData = ensuredAuthor !== null && ensuredAuthor.attributes.profile.publicData ? ensuredAuthor.attributes.profile.publicData : {error:"no data"}; 
-    let {workExp = null, education = null, linkedinLink = null, youtubeLink = null } = authorData;
+    let {workExp = null, education = null, linkedinLink = null, youtubeLink = null, fullName = ensuredAuthor.attributes.profile.displayName } = authorData;
     let authorBio =  ensuredAuthor !== null && ensuredAuthor.attributes.profile.bio ? ensuredAuthor.attributes.profile.bio : null;
-
+    const linkedinLinkMsg = linkedinLink === null ? "You have not provided your linked-in link yet, You can do that in mentor profile" : null;
+    const youtubeMsg = youtubeLink === null ? "You have not provided your youtube link yet, You can do that in mentor profile" : null;
     // When user is banned or deleted the listing is also deleted.
     // Because listing can be never showed with banned or deleted user we don't have to provide
     // banned or deleted display names for the function
@@ -424,16 +426,16 @@ export class ListingPageComponent extends Component {
                   <SectionAvatar user={currentAuthor} params={params} />
 
                   <div className={css.hedRating}>
-                  <SectionHeading
+                  {<SectionHeading
                     priceTitle={priceTitle}
                     formattedPrice={formattedPrice}
-                    richTitle={richTitle}
+                    richTitle={richTitle(fullName)}
                     listingCertificate={publicData ? publicData.certificate : null}
                     certificateConfig={certificateConfig}
                     hostLink={hostLink}
                     showContactUser={showContactUser}
                     onContactUser={this.onContactUser}
-                  />
+                  />}
 
                   <div className={css.rating}>
                      <FontAwesomeIcon icon={solidStar} /> {isNaN(averageRating) ? 0 : averageRating} <span>({reviews.length})</span>
@@ -442,15 +444,7 @@ export class ListingPageComponent extends Component {
                   </div>
 
                   <p className={css.avtardec}>
-                    {authorBio}
-                  {/*Hello my name is Leisha. I have worked in IT for 25 years and previous to that I was a Lab Technician. As head of the IT Department in Pfizer I am respons
-ible for an annual spend of $30 million dollars 
-and a team of forty. I recently established the wor
-ld-wide IT Helpdesk. This was created over an 18-
-month period at a cost of 1 million and currently 1
-2 staff operate it. Since then I have mentored a 
-host of people to begin or continue successful care
-                  ers in area of IT with 12 getting promoted.  */}
+                    {description}
                   </p>
               
                   {/*<SectionDescriptionMaybe description={description} />
@@ -495,16 +489,11 @@ host of people to begin or continue successful care
                         })
                         : null
                       }
-                        {/*<li>Masters in Occupational Psychology from Goldsmiths College and a first-class honours 
-International degree from University College Dublinand Université de Lille3.  </li>
-                        <li>Associate Fellow of the Psychological Society of Ireland and a member of their Division of 
-Work and Organisational Psychology and Coaching groups </li>
-                      <li>Fellow of the Chartered Institute of Personnel Development since 2000 </li>*/}
                       </ul>
                     </div>
 
-                    <span><a href={linkedinLink} target="_blank" className={css.sociallink}>Linked-in Link</a></span>
-                    <span><a href={youtubeLink} target="_blank" className={css.sociallink}>Youtube Link</a></span>
+                    <span><a href={linkedinLink} target="_blank" title={linkedinLinkMsg} className={css.sociallink}>Linked-in Link</a></span>
+                    <span><a href={youtubeLink} target="_blank" title={youtubeMsg} className={css.sociallink}>Youtube Link</a></span>
                   <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
 
                 </div>
