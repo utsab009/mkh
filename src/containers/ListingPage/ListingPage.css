@@ -690,12 +690,13 @@
 .modbp{
   border: 0;
   padding: 0;
-  display: none;
+  min-height: auto;
 }
 .rightSecbooking{
   margin: 0;
   width: 50%;
 }
+
 }
 @media (max-width: 991px) {
 
