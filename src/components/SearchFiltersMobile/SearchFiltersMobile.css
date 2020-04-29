@@ -132,3 +132,11 @@
   display: inline-block;
   border-radius: 3px;
 }
+
+@media (max-width: 767px) {
+  .modalContainer{
+    width: 100%;
+    padding: 14px 15px;
+    margin: 0 0;
+}
+}
