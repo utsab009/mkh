@@ -25,7 +25,7 @@ const AboutPage = () => {
       schema={{
         '@context': 'http://schema.org',
         '@type': 'AboutPage',
-        description: 'About Yogatime',
+        description: 'About Try A Mentor',
         name: 'About page',
       }}
     >
@@ -53,24 +53,24 @@ const AboutPage = () => {
               <p>
                 Whether it is the alignment of asanas or being able to set the focus of the class,
                 we all have our own struggles and goals. Some of these cannot be addressed in a
-                regular class of twenty yogis. Working together with the experienced yoga teachers
-                from Yogatime, you can together create just the right class for you.
+                regular class of twenty yogis. Working together with the experienced yoga mentors
+                from Try A Mentor, you can together create just the right class for you.
               </p>
 
               <h3 className={css.subtitle}>Are you a yoga teacher?</h3>
 
               <p>
-                Yogatime offers you a platform through which you can reach thousands of yoga
-                practitioners. Offering private yoga classes through Yogatime offers you a
+                Try A Mentor offers you a platform through which you can reach thousands of yoga
+                practitioners. Offering private yoga classes through Try A Mentor offers you a
                 possibility to grow your customer base and earn some extra income on top of your
                 regular classes.
               </p>
 
               <h3 id="contact" className={css.subtitle}>
-                Create your own marketplace like Yogatime
+                Create your own marketplace like Try A Mentor
               </h3>
               <p>
-                Yogatime is brought to you by{' '}
+                Try A Mentor is brought to you by{' '}
                 <ExternalLink href="http://sharetribe.com">Sharetribe</ExternalLink>. Sharetribe
                 offers anyone a possibility to create a marketplace without restricting your own
                 creativity. Do not hesitate to reach out and learn how to best turn your
