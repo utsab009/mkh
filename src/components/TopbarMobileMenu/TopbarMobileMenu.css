@@ -112,7 +112,7 @@
   margin-top: var(--TopbarMobileMenu_topMargin);
 }
 .authenticationLinks {
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .signupLink {
