@@ -11,7 +11,16 @@ import { ensureCurrentUser } from '../../util/data';
 import { propTypes } from '../../util/types';
 import * as validators from '../../util/validators';
 import { isUploadImageOverLimitError } from '../../util/errors';
-import { Form, Avatar, Button, ImageFromFile, IconSpinner, FieldTextInput, IconClose, InlineTextButton } from '../../components';
+import {
+  Form,
+  Avatar,
+  Button,
+  ImageFromFile,
+  IconSpinner,
+  FieldTextInput,
+  IconClose,
+  InlineTextButton,
+} from '../../components';
 
 import css from './ProfileSettingsForm.css';
 import WorkExperienceForm from './WorkExperienceForm';
@@ -20,23 +29,20 @@ import EducationForm from './EducationForm';
 const ACCEPT_IMAGES = 'image/*';
 const UPLOAD_CHANGE_DELAY = 2000; // Show spinner so that browser has time to load img srcset
 
-
-
 class ProfileSettingsFormComponent extends Component {
   constructor(props) {
     super(props);
 
     this.uploadDelayTimeoutId = null;
-    this.state = { uploadDelay: false, currentTab : 1 };
+    this.state = { uploadDelay: false, currentTab: 1 };
     this.onToggleTab = this.onToggleTab.bind(this);
     this.submittedValues = {};
-    console.log("props in psf",props);
+    console.log('props in psf', props);
   }
 
   onToggleTab(tab) {
-    
     this.setState({ currentTab: tab });
-  }  
+  }
 
   componentDidUpdate(prevProps) {
     // Upload delay is additional time window where Avatar is added to the DOM,
@@ -54,9 +60,6 @@ class ProfileSettingsFormComponent extends Component {
   }
 
   render() {
-
-    
-
     return (
       <FinalForm
         {...this.props}
@@ -80,10 +83,10 @@ class ProfileSettingsFormComponent extends Component {
             values,
           } = fieldRenderProps;
 
-          console.log("values in psf",values);
+          console.log('values in psf', values);
 
           const user = ensureCurrentUser(currentUser);
-          console.log("user in psf",user);
+          console.log('user in psf', user);
           // First name
           const firstNameLabel = intl.formatMessage({
             id: 'ProfileSettingsForm.firstNameLabel',
@@ -108,7 +111,10 @@ class ProfileSettingsFormComponent extends Component {
           });
           const lastNameRequired = validators.required(lastNameRequiredMessage);
 
-          const dobRequired = validators.validAge("Date of Birth is rquired and it should be atleast 18 years",18);
+          const dobRequired = validators.validAge(
+            'Date of Birth is rquired and it should be atleast 18 years',
+            18
+          );
 
           // Bio
           const bioLabel = intl.formatMessage({
@@ -168,7 +174,7 @@ class ProfileSettingsFormComponent extends Component {
               <div className={css.avatarContainer}>
                 {imageFromFile}
 
-                  <div className={css.profilepav}>{avatarComponent}</div>
+                <div className={css.profilepav}>{avatarComponent}</div>
                 <div className={css.changeAvatar}>
                   <FormattedMessage id="ProfileSettingsForm.changeAvatar" />
                 </div>
@@ -176,7 +182,17 @@ class ProfileSettingsFormComponent extends Component {
             ) : (
               <div className={css.avatarPlaceholder}>
                 <div className={css.avatarPlaceholderText}>
-                  <FormattedMessage id="ProfileSettingsForm.addYourProfilePicture" />
+                  <FormattedMessage
+                    id={
+                      user &&
+                      user.attributes &&
+                      user.attributes.profile &&
+                      user.attributes.profile.metadata &&
+                      user.attributes.profile.metadata.type === 'mentor'
+                        ? 'ProfileSettingsForm.addYourProfilePictureMentor'
+                        : 'ProfileSettingsForm.addYourProfilePictureMentee'
+                    }
+                  />
                 </div>
                 <div className={css.avatarPlaceholderTextMobile}>
                   <FormattedMessage id="ProfileSettingsForm.addYourProfilePictureMobile" />
@@ -197,15 +213,12 @@ class ProfileSettingsFormComponent extends Component {
           const submitDisabled =
             invalid || pristine || pristineSinceLastSubmit || uploadInProgress || submitInProgress;
 
-
-          
-
           return (
             <Form
               className={classes}
               onSubmit={e => {
                 this.submittedValues = values;
-                console.log("values in psf",values,e);
+                console.log('values in psf', values, e);
                 handleSubmit(e);
               }}
             >
@@ -278,7 +291,7 @@ class ProfileSettingsFormComponent extends Component {
                   <FormattedMessage id="ProfileSettingsForm.fileInfo" />
                 </div>
               </div>
-              {this.state.currentTab == 1 ?
+              {this.state.currentTab == 1 ? (
                 <div className={css.sectionContainer}>
                   <h3 className={css.sectionTitle}>
                     <FormattedMessage id="ProfileSettingsForm.yourName" />
@@ -303,45 +316,44 @@ class ProfileSettingsFormComponent extends Component {
                       validate={lastNameRequired}
                     />
                   </div>
-                  {user.attributes.profile.protectedData && user.attributes.profile.protectedData.userType == 'mentor' ?
+                  {user.attributes.profile.protectedData &&
+                  user.attributes.profile.protectedData.userType == 'mentor' ? (
                     <FieldTextInput
                       // className={css.firstName}
                       type="text"
                       id={'linkedin'}
                       name="linkedinLink"
                       autoComplete="linkedin"
-                      label={"linked in Link"}
-                      placeholder={"linked Link"}
+                      label={'linked in Link'}
+                      placeholder={'linked Link'}
                       // validate={firstNameRequired}
                     />
-                    :null
-                  }
-                  {user.attributes.profile.protectedData && user.attributes.profile.protectedData.userType == 'mentor' ?
+                  ) : null}
+                  {user.attributes.profile.protectedData &&
+                  user.attributes.profile.protectedData.userType == 'mentor' ? (
                     <FieldTextInput
                       // className={css.lastName}
                       type="text"
                       id={'youtubelink'}
                       name="youtubeLink"
                       autoComplete="youtube link"
-                      label={"youtube link"}
-                      placeholder={"youtubelink"}
+                      label={'youtube link'}
+                      placeholder={'youtubelink'}
                       // validate={lastNameRequired}
                     />
-                    :null
-                  }
-                  {   
+                  ) : null}
+                  {
                     <FieldTextInput
                       type="date"
                       id={`dob`}
                       name={`dob`}
                       label={'Date of Birth'}
                       validate={dobRequired}
-                    /> 
+                    />
                   }
                 </div>
-                : null
-              }
-              {user.attributes.profile.protectedData && user.attributes.profile.protectedData.userType == 'mentor' && this.state.currentTab == 1 ?
+              ) : null}
+              {/* {user.attributes.profile.protectedData && user.attributes.profile.protectedData.userType == 'mentor' && this.state.currentTab == 1 ?
                 <div className={classNames(css.sectionContainer, css.lastSection)}>
                   <h3 className={css.sectionTitle}>
                     <FormattedMessage id="ProfileSettingsForm.bioHeading" />
@@ -353,37 +365,33 @@ class ProfileSettingsFormComponent extends Component {
                     label={bioLabel}
                     placeholder={bioPlaceholder}
                   />
-                  {/*<p className={css.bioInfo}>
-                    <FormattedMessage id="ProfileSettingsForm.bioInfo" />
-              </p>*/}
                 </div>
                 : null
-              }
-              {this.state.currentTab > 1 && this.state.currentTab < 4 ?
-                <h6>It is important to Start with your most recent {this.state.currentTab == 2 ? "Position" : "Accreditation"} and work backwards </h6>
-                : null
-              }
-              {this.state.currentTab == 2 ? 
+              } */}
+              {this.state.currentTab > 1 && this.state.currentTab < 4 ? (
+                <h6>
+                  It is important to Start with your most recent{' '}
+                  {this.state.currentTab == 2 ? 'Position' : 'Accreditation'} and work backwards{' '}
+                </h6>
+              ) : null}
+              {this.state.currentTab == 2 ? (
                 <div className={classNames(css.sectionContainer, css.lastSection)}>
                   <h3 className={css.sectionTitle}>
                     <FormattedMessage id="ProfileSettingsForm.workExpHeading" />
                   </h3>
-                  <WorkExperienceForm workExp={'workExp'}
-                    intl={intl}  />
-                </div> 
-                : null
-              }
-              {this.state.currentTab == 3 ?  
-                <div className={classNames(css.sectionContainer, css.lastSection)}>    
+                  <WorkExperienceForm workExp={'workExp'} intl={intl} />
+                </div>
+              ) : null}
+              {this.state.currentTab == 3 ? (
+                <div className={classNames(css.sectionContainer, css.lastSection)}>
                   <h3 className={css.sectionTitle}>
                     <FormattedMessage id="ProfileSettingsForm.educationHeading" />
                   </h3>
-                    <EducationForm workExp={'workExp'}
-                    intl={intl}  />
+                  <EducationForm workExp={'workExp'} intl={intl} />
                 </div>
-                : null
-              }
-              {user.attributes.profile.protectedData && user.attributes.profile.protectedData.userType == 'mentor' ?
+              ) : null}
+              {user.attributes.profile.protectedData &&
+              user.attributes.profile.protectedData.userType == 'mentor' ? (
                 <div className={css.nameContainer}>
                   <Button
                     className={css.submitButton}
@@ -403,7 +411,7 @@ class ProfileSettingsFormComponent extends Component {
                     disabled={this.state.currentTab == 2 ? true : false}
                     // ready={pristineSinceLastSubmit}
                   >
-                  Work Experience
+                    Work Experience
                   </Button>
                   <Button
                     className={css.submitButton}
@@ -413,11 +421,10 @@ class ProfileSettingsFormComponent extends Component {
                     disabled={this.state.currentTab == 3 ? true : false}
                     // ready={pristineSinceLastSubmit}
                   >
-                  Education
+                    Education
                   </Button>
                 </div>
-                : null
-              }
+              ) : null}
               {submitError}
               <Button
                 className={css.submitButton}

@@ -751,9 +751,7 @@ export class CheckoutPageComponent extends Component {
       <Page {...pageProps}>
         {topbar}
         <div className={css.contentContainer}>
-          <div 
-          className={css.aspectWrapper}
-          >
+          <div className={css.aspectWrapper}>
             {/*<ResponsiveImage
               rootClassName={css.rootForImage}
               alt={listingTitle}
@@ -786,7 +784,12 @@ export class CheckoutPageComponent extends Component {
                   />
                 </p>
               ) : null}
-              {<p>This is a Secure external Payment System (Stripe) in which none of your details are saved</p>}
+              {
+                <p>
+                  This is a Secure external Payment System (Stripe) in which none of your details
+                  are saved(unless requested)
+                </p>
+              }
               {showPaymentForm ? (
                 <StripePaymentForm
                   className={css.paymentForm}
@@ -821,8 +824,8 @@ export class CheckoutPageComponent extends Component {
           </div>
 
           <div className={css.detailsContainerDesktop}>
-            <div 
-              // className={css.detailsAspectWrapper}
+            <div
+            // className={css.detailsAspectWrapper}
             >
               {/*<ResponsiveImage
                 rootClassName={css.rootForImage}
