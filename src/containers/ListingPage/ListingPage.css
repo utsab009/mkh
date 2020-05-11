@@ -612,7 +612,7 @@
   margin: 20px 0 0 15px;
 }
 .rating svg {
-  color: #0095b3;
+  color: #2a364c;
   font-size: 13px;
   vertical-align: text-top;
   margin: 3px 0 0;
@@ -642,7 +642,7 @@
   &::before{
     width: 8px;
     height: 8px;
-    background: #0095b3;
+    background: #2a364c;
     content: '';
     position: absolute;
     border-radius: 50px;
@@ -652,7 +652,7 @@
 }
 .sociallink,
 .qtbtn {
-  background: #0095b3;
+  background: #2a364c;
   color: #fff;
   padding: 7px 21px;
   display: inline-block;
