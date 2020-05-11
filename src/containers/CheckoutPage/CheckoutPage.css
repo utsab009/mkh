@@ -49,7 +49,7 @@
 
 .logoMobile {
   display: block;
-
+  height: 50px;
   @media (--viewportLarge) {
     display: none;
   }
@@ -58,7 +58,7 @@
 .logoDesktop {
   display: none;
   width: auto;
-  height: 27px;
+  height: 50px;
 
   @media (--viewportLarge) {
     display: block;
@@ -125,17 +125,19 @@
 
 .avatarWrapper {
   /* Position (over the listing image)*/
-  margin-left: 24px;
-  margin-top: -31px;
+  /* margin-left: 0;
+  margin-top: 0; */
+  margin: 0 auto !important;
+  display: table;
 
   /* Rendering context to the same lavel as listing image */
   position: relative;
 
   /* Layout */
-  display: block;
+  /* display: block; */
 
   @media (--viewportLarge) {
-    margin-left: 48px;
+    margin-left: 0;
   }
 }
 
@@ -342,4 +344,19 @@
   @media (--viewportLarge) {
     margin: 0 48px;
   }
+}
+
+@media (max-width: 1023px) {
+  .aspectWrapper {
+    padding-bottom: 8.667%;
+}
+.avatarWrapper{
+  margin-left: 24px;
+}
+}
+
+@media (max-width: 575px) {
+.avatarWrapper{
+  margin-top: 0;
+}
 }

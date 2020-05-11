@@ -1,10 +1,7 @@
 {
   "name": "Sharetribe Flex Template Demo: Time-based Process",
-  "description": "Yogatime, Sharetribe Flex template for time-based process",
-  "keywords": [
-    "node",
-    "react"
-  ],
+  "description": "Try A Mentor, Sharetribe Flex template for time-based process",
+  "keywords": ["node", "react"],
   "repository": "https://github.com/sharetribe/ftw-hourly/",
   "env": {
     "REACT_APP_MAPBOX_ACCESS_TOKEN": {

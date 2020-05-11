@@ -35,7 +35,9 @@
 .bottomWrapper {
   @apply --marketplaceModalBottomWrapper;
 }
-
+.bottomWrapper button{
+  margin-bottom: 10px;
+}
 .bottomWrapperText {
   @apply --marketplaceModalBottomWrapperText;
 }
@@ -86,7 +88,7 @@
   padding-bottom: 6px;
 
   position: relative;
-  &::before {
+  /* &::before {
     content: '';
     position: absolute;
     top: 41px;
@@ -94,7 +96,7 @@
     width: 100%;
     border-bottom: 1px solid var(--matterColorNegative);
     z-index: 0;
-  }
+  } */
 }
 
 .formRow {

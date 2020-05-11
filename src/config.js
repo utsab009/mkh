@@ -5,7 +5,7 @@ import { currencyConfiguration } from './currency-config';
 
 const env = process.env.REACT_APP_ENV;
 const dev = process.env.REACT_APP_ENV === 'development';
-console.log("inside config",process.env);
+console.log('inside config', process.env);
 const integrationApiClientId = process.env.REACT_APP_SHARETRIBE_INTEGRATION_API_CLIENT_ID;
 const integrationApiSecret = process.env.REACT_APP_SHARETRIBE_INTEGRATION_API_SECRET;
 const integrationApiBaseUrl = process.env.REACT_APP_SHARETRIBE_INTEGRATION_API_BASE_URL;
@@ -89,7 +89,7 @@ const streetAddress = 'Bulevardi 14';
 const canonicalRootURL = process.env.REACT_APP_CANONICAL_ROOT_URL;
 
 // Site title is needed in meta tags (bots and social media sharing reads those)
-const siteTitle = 'Yogatime';
+const siteTitle = 'Try A Mentor';
 
 // Twitter handle is needed in meta tags (twitter:site). Start it with '@' character
 const siteTwitterHandle = 'tryamentor';

@@ -54,7 +54,13 @@ import SectionReviews from './SectionReviews';
 import SectionMapMaybe from './SectionMapMaybe';
 import css from './ListingPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee,faHeart as solidHeart,faHeartBroken,faHeartbeat, faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCoffee,
+  faHeart as solidHeart,
+  faHeartBroken,
+  faHeartbeat,
+  faStar as solidStar,
+} from '@fortawesome/free-solid-svg-icons';
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
 
 const { UUID } = sdkTypes;
@@ -147,7 +153,10 @@ export class ListingPageComponent extends Component {
       callSetInitialValues(setInitialValues, { enquiryModalOpenForListingId: params.id });
 
       // signup and return back to listingPage.
-      history.push(createResourceLocatorString('MenteeSignupPage', routeConfiguration(), {}, {}), state);
+      history.push(
+        createResourceLocatorString('MenteeSignupPage', routeConfiguration(), {}, {}),
+        state
+      );
     } else {
       this.setState({ enquiryModalOpen: true });
     }
@@ -246,8 +255,7 @@ export class ListingPageComponent extends Component {
       publicData,
     } = currentListing.attributes;
 
-
-    const richTitle = (fullName) => (
+    const richTitle = fullName => (
       <span>
         {richText(fullName, {
           longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE,
@@ -328,11 +336,24 @@ export class ListingPageComponent extends Component {
 
     const currentAuthor = authorAvailable ? currentListing.author : null;
     const ensuredAuthor = ensureUser(currentAuthor);
-    let authorData = ensuredAuthor !== null && ensuredAuthor.attributes.profile.publicData ? ensuredAuthor.attributes.profile.publicData : {error:"no data"}; 
-    let {workExp = null, education = null, linkedinLink = null, youtubeLink = null, fullName = ensuredAuthor.attributes.profile.displayName } = authorData;
-    let authorBio =  ensuredAuthor !== null && ensuredAuthor.attributes.profile.bio ? ensuredAuthor.attributes.profile.bio : null;
-    const linkedinLinkMsg = linkedinLink === null ? "You have not provided your linked-in link yet, You can do that in mentor profile" : null;
-    const youtubeMsg = youtubeLink === null ? "You have not provided your youtube link yet, You can do that in mentor profile" : null;
+    let authorData =
+      ensuredAuthor !== null && ensuredAuthor.attributes.profile.publicData
+        ? ensuredAuthor.attributes.profile.publicData
+        : { error: 'no data' };
+    let {
+      workExp = null,
+      education = null,
+      linkedinLink = null,
+      youtubeLink = null,
+      fullName = ensuredAuthor.attributes.profile.displayName,
+    } = authorData;
+    let authorBio =
+      ensuredAuthor !== null && ensuredAuthor.attributes.profile.bio
+        ? ensuredAuthor.attributes.profile.bio
+        : null;
+    const linkedinLinkMsg = linkedinLink === null ? 'See your Mentor’s Linked-In Profile' : null;
+    const youtubeMsg =
+      youtubeLink === null ? 'Your Mentor may have created a Video on how they can help' : null;
     // When user is banned or deleted the listing is also deleted.
     // Because listing can be never showed with banned or deleted user we don't have to provide
     // banned or deleted display names for the function
@@ -420,33 +441,33 @@ export class ListingPageComponent extends Component {
                 onManageDisableScrolling={onManageDisableScrolling}
               />
               <div className={css.contentContainer}>
-               
                 <div className={`${css.mainContent} ${css.modCon}`}>
                   <div className={css.inlineavhed}>
-                  <SectionAvatar user={currentAuthor} params={params} />
+                    <SectionAvatar user={currentAuthor} params={params} />
 
-                  <div className={css.hedRating}>
-                  {<SectionHeading
-                    priceTitle={priceTitle}
-                    formattedPrice={formattedPrice}
-                    richTitle={richTitle(fullName)}
-                    listingCertificate={publicData ? publicData.certificate : null}
-                    certificateConfig={certificateConfig}
-                    hostLink={hostLink}
-                    showContactUser={showContactUser}
-                    onContactUser={this.onContactUser}
-                  />}
+                    <div className={css.hedRating}>
+                      {
+                        <SectionHeading
+                          priceTitle={priceTitle}
+                          formattedPrice={formattedPrice}
+                          richTitle={richTitle(fullName)}
+                          listingCertificate={publicData ? publicData.certificate : null}
+                          certificateConfig={certificateConfig}
+                          hostLink={hostLink}
+                          showContactUser={showContactUser}
+                          onContactUser={this.onContactUser}
+                        />
+                      }
 
-                  <div className={css.rating}>
-                     <FontAwesomeIcon icon={solidStar} /> {isNaN(averageRating) ? 0 : averageRating} <span>({reviews.length})</span>
-                  </div>
-                  </div>
+                      <div className={css.rating}>
+                        <FontAwesomeIcon icon={solidStar} />{' '}
+                        {isNaN(averageRating) ? 0 : averageRating} <span>({reviews.length})</span>
+                      </div>
+                    </div>
                   </div>
 
-                  <p className={css.avtardec}>
-                    {description}
-                  </p>
-              
+                  <p className={css.avtardec}>{description}</p>
+
                   {/*<SectionDescriptionMaybe description={description} />
                   <SectionFeaturesMaybe options={sectorsConfig} publicData={publicData} />*/}
                   {/*<SectionMapMaybe
@@ -455,63 +476,81 @@ export class ListingPageComponent extends Component {
                     listingId={currentListing.id}
                   />*/}
 
-                    <div className={css.casec}>
-                      <h2>Career: </h2>
-                      <ul>
-                        {
-                          workExp !== null ? workExp.map((item, index) => {
-                            if(index < 4)
-                            {
+                  <div className={css.casec}>
+                    <h2>Career: </h2>
+                    <ul>
+                      {workExp !== null
+                        ? workExp.map((item, index) => {
+                            if (index < 4) {
                               return (
-                                <li>{item.position} in {item.company} for {item.duration} </li>
+                                <li>
+                                  {item.position} in {item.company} for {item.duration}{' '}
+                                </li>
                               );
                             }
                           })
-                          : null
-                        }
-                        {/*<li>Head of IT in Pfizer for 25 years </li>
+                        : null}
+                      {/*<li>Head of IT in Pfizer for 25 years </li>
                         <li>Lab technician in Pfizer for 5 years</li>*/}
-                      </ul>
-                    </div>
+                    </ul>
+                  </div>
 
+                  <div className={css.casec}>
+                    <h2>Accreditation:</h2>
+                    <ul>
+                      {education !== null
+                        ? education.map((item, index) => {
+                            if (index < 4) {
+                              return (
+                                <li>
+                                  {item.course} from {item.board} during {item.startEndDate}{' '}
+                                </li>
+                              );
+                            }
+                          })
+                        : null}
+                    </ul>
+                  </div>
 
-                    <div className={css.casec}>
-                      <h2>Accreditation:</h2>
-                      <ul>
-                      {
-                        education !== null ? education.map((item, index) => {
-                          if(index < 4)
-                          {
-                            return (
-                              <li>{item.course} from {item.board} during {item.startEndDate} </li>
-                            );
-                          }
-                        })
-                        : null
-                      }
-                      </ul>
-                    </div>
-
-                    <span><a href={linkedinLink} target="_blank" title={linkedinLinkMsg} className={css.sociallink}>Linked-in Link</a></span>
-                    <span><a href={youtubeLink} target="_blank" title={youtubeMsg} className={css.sociallink}>Youtube Link</a></span>
+                  <span>
+                    <a
+                      href={linkedinLink}
+                      target="_blank"
+                      title={linkedinLinkMsg}
+                      className={css.sociallink}
+                    >
+                      Linked-in Link
+                    </a>
+                  </span>
+                  <span>
+                    <a
+                      href={youtubeLink}
+                      target="_blank"
+                      title={youtubeMsg}
+                      className={css.sociallink}
+                    >
+                      Mentor Video
+                    </a>
+                  </span>
                   <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
-
                 </div>
 
                 <div className={css.rightSecbooking}>
-                <button type="button" onClick={this.onContactUser} className={css.qtbtn}>Would you like to ask me a question</button>
-                <BookingPanel
-                  className={`${css.bookingPanel} ${css.modbp}`}
-                  listing={currentListing}
-                  isOwnListing={isOwnListing}
-                  unitType={unitType}
-                  onSubmit={handleBookingSubmit}
-                  title={bookingTitle}
-                  authorDisplayName={authorDisplayName}
-                  onManageDisableScrolling={onManageDisableScrolling}
-                  monthlyTimeSlots={monthlyTimeSlots}
-                  onFetchTimeSlots={onFetchTimeSlots}
-                />
+                  <button type="button" onClick={this.onContactUser} className={css.qtbtn}>
+                    Would you like to ask me a question
+                  </button>
+                  <BookingPanel
+                    className={`${css.bookingPanel} ${css.modbp}`}
+                    listing={currentListing}
+                    isOwnListing={isOwnListing}
+                    unitType={unitType}
+                    onSubmit={handleBookingSubmit}
+                    title={bookingTitle}
+                    authorDisplayName={authorDisplayName}
+                    onManageDisableScrolling={onManageDisableScrolling}
+                    monthlyTimeSlots={monthlyTimeSlots}
+                    onFetchTimeSlots={onFetchTimeSlots}
+                  />
                 </div>
               </div>
             </div>
@@ -522,7 +561,6 @@ export class ListingPageComponent extends Component {
               onClose={() => this.setState({ enquiryModalOpen: false })}
               onManageDisableScrolling={onManageDisableScrolling}
             >
-              
               <EnquiryForm
                 className={css.enquiryForm}
                 submitButtonWrapperClassName={css.enquirySubmitButtonWrapper}

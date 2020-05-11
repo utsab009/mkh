@@ -222,16 +222,18 @@
   & :global(.CalendarDay__blocked_out_of_range:active),
   & :global(.CalendarDay__blocked_out_of_range:hover) {
     background-color: transparent;
-    color: var(--marketplaceColorDark);
+    /* color: var(--marketplaceColorDark); */
     border: 0;
+    color: #938e8e;
   }
   /* Remove default bg-color and use our extra span instead '.renderedDay' */
   & :global(.CalendarDay__blocked_calendar),
   & :global(.CalendarDay__blocked_calendar:active),
   & :global(.CalendarDay__blocked_calendar:hover) {
     background-color: transparent;
-    color: var(--marketplaceColorDark);
+    /* color: var(--marketplaceColorDark); */
     border: 0;
+    color: #938e8e;
   }
   & :global(.CalendarDay__blocked_out_of_range .CalendarDay__blocked_calendar .renderedDay) {
     background-color: transparent;
