@@ -787,7 +787,7 @@ export class CheckoutPageComponent extends Component {
               {
                 <p>
                   This is a Secure external Payment System (Stripe) in which none of your details
-                  are saved(unless requested)
+                  are saved (unless requested)
                 </p>
               }
               {showPaymentForm ? (
