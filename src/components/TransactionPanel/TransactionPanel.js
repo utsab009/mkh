@@ -28,6 +28,7 @@ import {
   NamedLink,
   ReviewModal,
   UserDisplayName,
+  AvatarMedium,
 } from '../../components';
 import { SendMessageForm } from '../../forms';
 import config from '../../config';
@@ -337,7 +338,7 @@ export class TransactionPanelComponent extends Component {
       <div className={classes}>
         <div className={css.container}>
           <div className={css.txInfo}>
-            <DetailCardImage
+            {/* <DetailCardImage
               rootClassName={css.imageWrapperMobile}
               avatarWrapperClassName={css.avatarWrapperMobile}
               listingTitle={listingTitle}
@@ -346,12 +347,12 @@ export class TransactionPanelComponent extends Component {
               isCustomer={isCustomer}
               listingId={currentListing.id && currentListing.id.uuid}
               listingDeleted={listingDeleted}
-            />
-            {isProvider ? (
+            /> */}
+            {/* {isProvider ? (
               <div className={css.avatarWrapperProviderDesktop}>
                 <AvatarLarge user={currentCustomer} className={css.avatarDesktop} />
               </div>
-            ) : null}
+            ) : null} */}
 
             <PanelHeading
               panelHeadingState={stateData.headingState}
