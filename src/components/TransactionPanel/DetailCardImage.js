@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from '../../util/reactIntl';
 import classNames from 'classnames';
 import { createSlug, stringify } from '../../util/urlHelpers';
-import { AvatarMedium, NamedLink, ResponsiveImage } from '../../components';
+import { AvatarLarge, AvatarMedium, NamedLink, ResponsiveImage } from '../../components';
 
 import css from './TransactionPanel.css';
 
@@ -18,9 +18,32 @@ const createListingLink = (
     const params = { id: listingId, slug: createSlug(label) };
     const to = { search: stringify(searchParams) };
     return (
-      <NamedLink className={className} name="ListingPage" params={params} to={to}>
-        <AvatarMedium user={provider} disableProfileLink />
-      </NamedLink>
+      <div className={css.sectionAvatar}>
+        <AvatarLarge
+          user={provider}
+          className={`${css.avatarDesktop} ${css.modAv}`}
+          initialsClassName={css.initialsDesktop}
+          disableProfileLink
+        />
+
+        <AvatarMedium
+          user={provider}
+          // className={`${css.avatarMobile} ${css.modAv}`}
+          className={classNames(css.avatarWrapper, css.avatarMobile)}
+          disableProfileLink
+        />
+      </div>
+      // <div className={classNames(css.avatarWrapper, css.avatarMobile)}>
+      // <NamedLink className={className} name="ListingPage" params={params} to={to}>
+      //   {/* <NamedLink
+      //   className={classNames(css.avatarWrapper, css.avatarMobile)}
+      //   name="ListingPage"
+      //   params={params}
+      //   to={to}
+      // > */}
+      //   <AvatarMedium user={provider} disableProfileLink />
+      // </NamedLink>
+      // </div>
     );
   } else {
     return <FormattedMessage id="TransactionPanel.deletedListingOrderTitle" />;
@@ -47,18 +70,21 @@ const DetailCardImage = props => {
   return (
     <React.Fragment>
       <div className={classes}>
-        <div className={css.aspectWrapper}>
+        {/* <div className={css.aspectWrapper}>
           <ResponsiveImage
             rootClassName={css.rootForImage}
             alt={listingTitle}
             image={image}
             variants={['landscape-crop', 'landscape-crop2x']}
           />
-        </div>
+        </div> */}
+        {/* <div className={classNames(css.avatarWrapper, css.avatarMobile)}>
+          <AvatarMedium user={provider} disableProfileLink />
+        </div> */}
       </div>
-      {isCustomer ? (
-        <div className={avatarWrapperClassName || css.avatarWrapper}>{listingLink}</div>
-      ) : null}
+      {/* {isCustomer ? ( */}
+      <div className={avatarWrapperClassName || css.avatarWrapper}>{listingLink}</div>
+      {/* ) : null} */}
     </React.Fragment>
   );
 };

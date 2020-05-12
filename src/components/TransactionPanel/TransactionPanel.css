@@ -82,22 +82,25 @@
 
 .avatarWrapper {
   /* Position (over the listing image)*/
-  margin-left: 24px;
-  margin-top: -30px;
+  /* margin-left: 0;
+  margin-top: 0; */
+  margin: 0 auto !important;
+  display: table;
 
   /* Rendering context to the same lavel as listing image */
   position: relative;
-  /* Flex would give too much width by default. */
-  width: 60px;
 
-  @media (--viewportMedium) {
-    margin-top: -32px;
-    padding: 2px 0;
-  }
+  /* Layout */
+  /* display: block; */
+
   @media (--viewportLarge) {
-    margin-left: 48px;
-    width: unset;
-    padding: 2px 0;
+    margin-left: 0;
+  }
+}
+
+.avatarMobile {
+  @media (--viewportLarge) {
+    display: none;
   }
 }
 
@@ -123,7 +126,7 @@
   display: none;
 
   @media (--viewportLarge) {
-    display: block;
+    display: table;
   }
 }
 
@@ -135,9 +138,40 @@
     margin-top: 119px;
   }
 }
-.avatarDesktop {
+/* .avatarDesktop {
   @media (--viewportLarge) {
     display: flex;
+  }
+} */
+
+.avatarDesktop {
+  display: none; /* Hide the large avatar from the smaller screens */
+  width: 152px;
+  height: 100%;
+  min-height: 152px;
+
+  @media (--viewportMedium) {
+    display: flex;
+  }
+}
+.avatarDesktop img {
+  object-fit: cover;
+}
+
+.modAv {
+  border-radius: 0;
+}
+
+@media (max-width: 991px) {
+  .modAv,
+  .sectionAvatar {
+    width: 100%;
+    height: 250px;
+  }
+  .modAv img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
   }
 }
 
@@ -218,15 +252,15 @@
 }
 
 .detailCard {
-  @media (--viewportLarge) {
-    position: sticky;
-    top: -200px; /* This is a hack to showcase how the component would look when the image isn't sticky */
-    width: 409px;
-    background-color: var(--matterColorLight);
-    border: 1px solid var(--matterColorNegative);
-    border-radius: 2px;
-    z-index: 1;
-  }
+  /* @media (--viewportLarge) { */
+  position: sticky;
+  top: -200px; /* This is a hack to showcase how the component would look when the image isn't sticky */
+  width: 409px;
+  background-color: var(--matterColorLight);
+  border: 1px solid var(--matterColorNegative);
+  border-radius: 2px;
+  z-index: 1;
+  /* } */
 }
 
 /* DetailCardHeadingsMaybe subcomponent */
@@ -479,4 +513,16 @@
 
   margin-top: 0;
   margin-bottom: 1px;
+}
+
+@media (max-width: 1023px) {
+  .avatarWrapper {
+    margin-left: 24px;
+  }
+}
+
+@media (max-width: 575px) {
+  .avatarWrapper {
+    margin-top: 0;
+  }
 }
