@@ -194,6 +194,7 @@ class ProfileSettingsFormComponent extends Component {
                     }
                   />
                 </div>
+                {console.log('test: ', user.attributes.profile.metadata)}
                 <div className={css.avatarPlaceholderTextMobile}>
                   <FormattedMessage id="ProfileSettingsForm.addYourProfilePictureMobile" />
                 </div>
