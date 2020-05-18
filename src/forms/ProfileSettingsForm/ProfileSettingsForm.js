@@ -182,13 +182,22 @@ class ProfileSettingsFormComponent extends Component {
             ) : (
               <div className={css.avatarPlaceholder}>
                 <div className={css.avatarPlaceholderText}>
+                  {console.log(
+                    'user: ',
+                    user,
+                    user &&
+                      user.attributes &&
+                      user.attributes.profile &&
+                      user.attributes.profile.protectedData &&
+                      user.attributes.profile.protectedData.userType === 'mentor'
+                  )}
                   <FormattedMessage
                     id={
                       user &&
                       user.attributes &&
                       user.attributes.profile &&
-                      user.attributes.profile.metadata &&
-                      user.attributes.profile.metadata.type === 'mentor'
+                      user.attributes.profile.protectedData &&
+                      user.attributes.profile.protectedData.userType === 'mentor'
                         ? 'ProfileSettingsForm.addYourProfilePictureMentor'
                         : 'ProfileSettingsForm.addYourProfilePictureMentee'
                     }
