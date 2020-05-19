@@ -15,8 +15,14 @@ import { updateProfile } from '../../containers/ProfileSettingsPage/ProfileSetti
 import { showUser } from '../../containers/ProfilePage/ProfilePage.duck';
 import { showListing } from '../../containers/ListingPage/ListingPage.duck';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee,faHeart as solidHeart,faHeartBroken,faHeartbeat, faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
-import { faHeart} from '@fortawesome/free-regular-svg-icons';
+import {
+  faCoffee,
+  faHeart as solidHeart,
+  faHeartBroken,
+  faHeartbeat,
+  faStar as solidStar,
+} from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import SectionAvatar from '../../containers/ListingPage/SectionAvatar';
 
@@ -67,44 +73,54 @@ export class ListingCardComponent extends Component {
     this.state = {
       validation_error: false,
       authorData: null,
-
     };
-    console.log("props in listingcard",props);
+    console.log('props in listingcard', props);
 
     this.addToFav = this.addToFav.bind(this);
     this.removeFromFav = this.removeFromFav.bind(this);
   }
 
   componentDidMount() {
-    // console.log("inside componentdidmount",this.props.onShowUser(this.props.listing.author.id));
-    // const authorData = this.props.onShowUser(this.props.listing.author.id);
-    // authorData.then(data => {
-    //   console.log("data in showlisting",data);
-     
-    // })
-    console.log("Listingcard");
+    console.log('inside componentdidmount', this.props.onShowUser(this.props.listing.author.id));
+    const authorData = this.props.onShowUser(this.props.listing.author.id);
+    authorData.then(data => {
+      console.log('data in showlisting', data);
+      this.setState({ authorData: data.data });
+    });
+    console.log('Listingcard');
   }
 
   addToFav = id => {
-    let {profile} = this.props.currentUser.attributes;
-    let newFavourites = profile.protectedData.favourites && Array.isArray(JSON.parse(profile.protectedData.favourites)) ? JSON.parse(profile.protectedData.favourites) : [];
-    newFavourites.push({id : id, listing : this.props.listing, renderSizes : this.props.renderSizes});
+    let { profile } = this.props.currentUser.attributes;
+    let newFavourites =
+      profile.protectedData.favourites &&
+      Array.isArray(JSON.parse(profile.protectedData.favourites))
+        ? JSON.parse(profile.protectedData.favourites)
+        : [];
+    newFavourites.push({
+      id: id,
+      listing: this.props.listing,
+      renderSizes: this.props.renderSizes,
+    });
     // profile.protectedData = {favourites : JSON.stringify(favourites)};
     profile.protectedData.favourites = JSON.stringify(newFavourites);
     const profileToSaved = {
       firstName: profile.firstName.trim(),
       lastName: profile.lastName.trim(),
       bio: profile.bio,
-      protectedData : profile.protectedData
-    }
+      protectedData: profile.protectedData,
+    };
     this.props.onUpdateProfile(profileToSaved);
-  }
+  };
 
   removeFromFav = id => {
-    let {profile} = this.props.currentUser.attributes;
-    let newFavourites = profile.protectedData.favourites && Array.isArray(JSON.parse(profile.protectedData.favourites)) ? JSON.parse(profile.protectedData.favourites) : [];
-    if(newFavourites.length == 0)
-    {
+    let { profile } = this.props.currentUser.attributes;
+    let newFavourites =
+      profile.protectedData.favourites &&
+      Array.isArray(JSON.parse(profile.protectedData.favourites))
+        ? JSON.parse(profile.protectedData.favourites)
+        : [];
+    if (newFavourites.length == 0) {
       return false;
     }
     const removedArr = newFavourites.filter(c => c.id !== id);
@@ -113,12 +129,12 @@ export class ListingCardComponent extends Component {
       firstName: profile.firstName.trim(),
       lastName: profile.lastName.trim(),
       bio: profile.bio,
-      protectedData : profile.protectedData
-    }
+      protectedData: profile.protectedData,
+    };
     this.props.onUpdateProfile(profileToSaved);
-  }
+  };
   render() {
-  // export const ListingCardComponent = props => {
+    // export const ListingCardComponent = props => {
     const {
       currentUser,
       className,
@@ -134,19 +150,41 @@ export class ListingCardComponent extends Component {
     } = this.props;
     // const listingDetails = onShowListing({id : listing.id});
     // console.log("listingDetails",listingDetails);
-    let favouritesArr = currentUser && currentUser.attributes.profile.protectedData.favourites && Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites)) ? JSON.parse(currentUser.attributes.profile.protectedData.favourites) : [];
+    let favouritesArr =
+      currentUser &&
+      currentUser.attributes.profile.protectedData.favourites &&
+      Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites))
+        ? JSON.parse(currentUser.attributes.profile.protectedData.favourites)
+        : [];
     const classes = classNames(rootClassName || css.root, className);
     const currentListing = ensureListing(listing);
-    console.log("currentListing in listingcard",currentListing);
+    console.log('currentListing in listingcard', currentListing);
     const authorAvailable = currentListing && currentListing.author;
     const currentAuthor = authorAvailable ? currentListing.author : null;
     const ensuredAuthor = ensureUser(currentAuthor);
-    const {averageRating = 0, ratingCount = 0} = currentListing.attributes.publicData;
+    const { averageRating = 0, ratingCount = 0 } = currentListing.attributes.publicData;
     // console.log("ensuredAuthor",ensuredAuthor);
-    let authorData = this.state.authorData !== null && this.state.authorData.data.attributes.profile.publicData ? this.state.authorData.data.attributes.profile.publicData : {error:"no data"}; 
-    // let authorData = ensuredAuthor !== null && ensuredAuthor.attributes.profile.publicData ? ensuredAuthor.attributes.profile.publicData : {error:"no data"}; 
-    let {workExp = null, education = null, linkedinLink = null, youtubeLink = null, fullName = ensuredAuthor.attributes.profile.displayName } = authorData;
-    // console.log("authorData",authorData);
+    let authorData =
+      this.state.authorData !== null &&
+      this.state.authorData.data &&
+      this.state.authorData.data.attributes &&
+      this.state.authorData.data.attributes.profile &&
+      this.state.authorData.data.attributes.profile.publicData
+        ? this.state.authorData.data.attributes.profile.publicData
+        : { error: 'no data' };
+
+    // let authorData =
+    //   ensuredAuthor !== null && ensuredAuthor.attributes.profile.publicData
+    //     ? ensuredAuthor.attributes.profile.publicData
+    //     : { error: 'no data' };
+    let {
+      workExp = null,
+      education = null,
+      linkedinLink = null,
+      youtubeLink = null,
+      fullName = ensuredAuthor.attributes.profile.displayName,
+    } = authorData;
+    console.log('authorData', authorData, this.state);
     const id = currentListing.id.uuid;
     const { title = '', price, publicData } = currentListing.attributes;
     const slug = createSlug(title);
@@ -168,21 +206,19 @@ export class ListingCardComponent extends Component {
       ? 'ListingCard.perDay'
       : 'ListingCard.perUnit';
     let isFavourite = false;
-    if (favouritesArr.length > 0)
-    {
+    if (favouritesArr.length > 0) {
       // isFavourite = favouritesArr.filter(c => c.id !== id).length > 0 ? true : false;
       isFavourite = favouritesArr.filter(c => {
-        if(c.id == id)
-        {
+        if (c.id == id) {
           return true;
         }
         // else
         // {
         //   return false;
         // }
-      })
+      });
     }
-    console.log("ensuredAuthor in listingcard",ensuredAuthor,"state.authordata",authorData);
+    console.log('ensuredAuthor in listingcard', ensuredAuthor, 'state.authordata', authorData);
     return (
       <div className={css.updateRow}>
         <NamedLink className={classes} name="ListingPage" params={{ id, slug }}>
@@ -201,11 +237,11 @@ export class ListingCardComponent extends Component {
               />
             </div>
           </div> */}
-           {/*<div className={css.modImageSec}>*/}
-           <div>
-             {/*<img src="" />*/}
-             <SectionAvatar user={ensuredAuthor} />
-           </div>
+          {/*<div className={css.modImageSec}>*/}
+          <div>
+            {/*<img src="" />*/}
+            <SectionAvatar user={ensuredAuthor} />
+          </div>
           <div className={css.info}>
             {/* <div className={css.price}>
               <div className={css.priceValue} title={priceTitle}>
@@ -216,12 +252,8 @@ export class ListingCardComponent extends Component {
               </div>
             </div> */}
             <div className={css.mainInfo}>
+              <div className={`${css.title} ${css.nameav}`}>{fullName}</div>
 
-            <div className={`${css.title} ${css.nameav}`}>
-              {fullName}
-            </div>
-              
-              
               {/* <div className={css.certificateInfo}>
                 {certificate && !certificate.hideFromListingInfo ? (
                   <span>{certificate.label}</span>
@@ -229,50 +261,43 @@ export class ListingCardComponent extends Component {
               </div> */}
 
               <div className={css.rating}>
-              <FontAwesomeIcon icon={solidStar} /> {averageRating} <span>({ratingCount})</span>
+                <FontAwesomeIcon icon={solidStar} /> {averageRating} <span>({ratingCount})</span>
               </div>
             </div>
 
-             <div className={css.price}>
+            <div className={css.price}>
+              {console.log('workExp: ', workExp)}
 
-             <div className={css.title}>
+              <div className={css.title}>
                 {richText('Organisations Worked in:', {
                   longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
                   longWordClass: css.longWord,
                 })}
-                {
-                  workExp !== null ? workExp.map((item, index) => {
-                    if(index < 4)
-                    {
-                      return (
-                        <span className={css.crr}>{item.company}</span>
-                      );
-                    }
-                  })
-                  : null
-                }
-              </div>
-
-            </div>
-
-             <div className={css.price}>
-                <div className={css.title}>
-                  Career Roles:
-                  {
-                    workExp !== null ? workExp.map((item, index) => {
-                      if(index < 4)
-                      {
-                        return (
-                          <span className={css.crr}>{item.position}</span>
-                        );
+                {workExp !== null
+                  ? workExp.map((item, index) => {
+                      if (index < 4) {
+                        return <span className={css.crr}>{item.company}</span>;
                       }
                     })
-                    : null
-                  }
-                </div>
-                <div className={css.priceValue} title={priceTitle}>
-                  {formattedPrice}<FormattedMessage id={unitTranslationKey} />
-                </div>
+                  : null}
+              </div>
+            </div>
+
+            <div className={css.price}>
+              <div className={css.title}>
+                Career Roles:
+                {workExp !== null
+                  ? workExp.map((item, index) => {
+                      if (index < 4) {
+                        return <span className={css.crr}>{item.position}</span>;
+                      }
+                    })
+                  : null}
+              </div>
+              <div className={css.priceValue} title={priceTitle}>
+                {formattedPrice}
+                <FormattedMessage id={unitTranslationKey} />
+              </div>
             </div>
 
             {/*<div className={`${css.price} ${css.nameSig}`}>
@@ -285,27 +310,27 @@ export class ListingCardComponent extends Component {
 
                 </div>*/}
           </div>
-
-        
-          </NamedLink>
-          <div className={css.afternm}>
-          {currentUser !== null ?
-          <div className={css.favSec}>
-            {isFavourite.length > 0 ? 
-              (<Button onClick={() => this.removeFromFav(id)} className={css.favBtn}><FontAwesomeIcon icon={solidHeart} /></Button>)
-              :(<Button onClick={() => this.addToFav(id)} className={css.favBtn}><FontAwesomeIcon icon={faHeart} /> </Button>)        
-            }
-          </div>
-          : null
-          }
+        </NamedLink>
+        <div className={css.afternm}>
+          {currentUser !== null ? (
+            <div className={css.favSec}>
+              {isFavourite.length > 0 ? (
+                <Button onClick={() => this.removeFromFav(id)} className={css.favBtn}>
+                  <FontAwesomeIcon icon={solidHeart} />
+                </Button>
+              ) : (
+                <Button onClick={() => this.addToFav(id)} className={css.favBtn}>
+                  <FontAwesomeIcon icon={faHeart} />{' '}
+                </Button>
+              )}
+            </div>
+          ) : null}
           <a href={linkedinLink} className={css.socialLink}>
             Linked-in Link
-            { /*linkedinLink*/
-            }
+            {/*linkedinLink*/}
           </a>
-          </div>
-       
-      </div>  
+        </div>
+      </div>
     );
   }
 }
@@ -333,7 +358,7 @@ ListingCardComponent.propTypes = {
 
 const mapStateToProps = state => {
   // console.log("state in listingcard",state)
-  const { currentUser} = state.user;
+  const { currentUser } = state.user;
   // const {
   //   image,
   //   uploadImageError,
