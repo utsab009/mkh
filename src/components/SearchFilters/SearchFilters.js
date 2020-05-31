@@ -65,7 +65,7 @@ const SearchFiltersComponent = props => {
     history,
     intl,
   } = props;
-  console.log("props in searchfilters",props)
+  console.log('props in searchfilters', props);
 
   const hasNoResult = listingsAreLoaded && resultsCount === 0;
   const classes = classNames(rootClassName || css.root, { [css.longInfo]: hasNoResult }, className);
@@ -104,7 +104,7 @@ const SearchFiltersComponent = props => {
 
   const initialmentorShift = mentorShiftFilter
     ? initialValues(urlQueryParams, mentorShiftFilter.paramName)
-    : null;  
+    : null;
 
   const initialcertificate = certificateFilter
     ? initialValue(urlQueryParams, certificateFilter.paramName)
@@ -112,15 +112,15 @@ const SearchFiltersComponent = props => {
 
   const initialmentorLanguage = mentorLanguageFilter
     ? initialValues(urlQueryParams, mentorLanguageFilter.paramName)
-    : null;  
+    : null;
 
   const initialsectors = sectorsFilter
     ? initialValue(urlQueryParams, sectorsFilter.paramName)
-    : null; 
-    
+    : null;
+
   // const initialsubsectors = subsectorsFilter
   //   ? initialValue(urlQueryParams, subsectorsFilter.paramName)
-  //   : null;   
+  //   : null;
 
   const initialPriceRange = priceFilter
     ? initialPriceRangeValue(urlQueryParams, priceFilter.paramName)
@@ -135,6 +135,10 @@ const SearchFiltersComponent = props => {
       options && options.length > 0
         ? { ...urlQueryParams, [urlParam]: options.join(',') }
         : omit(urlQueryParams, urlParam);
+    console.log(
+      'test: ',
+      createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams)
+    );
 
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
   };
@@ -190,7 +194,12 @@ const SearchFiltersComponent = props => {
   //     contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
   //   />
   // ) : null;
-  console.log("initialmentorlanguage",initialmentorLanguage,"initialmentorshift",initialmentorShift);  
+  console.log(
+    'initialmentorlanguage',
+    initialmentorLanguage,
+    'initialmentorshift',
+    initialmentorShift
+  );
   const mentorLanguageFilterElement = mentorLanguageFilter ? (
     <SelectMultipleFilter
       id={'SearchFilters.mentorLanguageFilter'}

@@ -56,6 +56,58 @@ export class EditListingFeaturesFormComponent extends Component {
         return this.setState({ subSectors: [] });
       case 'Accounting':
         return this.setState({ subSectors: config.custom.Accounting });
+      case 'Administration and Office Support':
+        return this.setState({ subSectors: config.custom.AdministrationAndOfficeSupport });
+      case 'Advertising Arts and Media':
+        return this.setState({ subSectors: config.custom.AdvertisingArtsAndMedia });
+      case 'Banking and Financial Services':
+        return this.setState({ subSectors: config.custom.BankingAndFinancialServices });
+      case 'Call Center and Customer Service':
+        return this.setState({ subSectors: config.custom.CallCenterAndCustomerService });
+      case 'Community Services and Development':
+        return this.setState({ subSectors: config.custom.CommunityServicesAndDevelopment });
+      case 'Construction':
+        return this.setState({ subSectors: config.custom.Construction });
+      case 'Consulting and Strategy':
+        return this.setState({ subSectors: config.custom.ConsultingAndStrategy });
+      case 'Design and Architecture':
+        return this.setState({ subSectors: config.custom.DesignAndArchitecture });
+      case 'Education and Training':
+        return this.setState({ subSectors: config.custom.EducationAndTraining });
+      case 'Engineering':
+        return this.setState({ subSectors: config.custom.Engineering });
+      case 'Executive':
+        return this.setState({ subSectors: config.custom.Executive });
+      case 'Farming Animals and Conservation':
+        return this.setState({ subSectors: config.custom.FarmingAnimalsAndConservation });
+      case 'Healthcare and Medical':
+        return this.setState({ subSectors: config.custom.HealthcareAndMedical });
+      case 'Hospitality and Tourism':
+        return this.setState({ subSectors: config.custom.HospitalityAndTourism });
+      case 'Human Resources and Recruitment':
+        return this.setState({ subSectors: config.custom.HumanResourcesAndRecruitment });
+      case 'Information Technology':
+        return this.setState({ subSectors: config.custom.InformationTechnology });
+      case 'Insurance':
+        return this.setState({ subSectors: config.custom.Insurance });
+      case 'Legal':
+        return this.setState({ subSectors: config.custom.Legal });
+      case 'Manufacturing Transport and Logistics':
+        return this.setState({ subSectors: config.custom.ManufacturingTransportAndLogistics });
+      case 'Marketing and Communications':
+        return this.setState({ subSectors: config.custom.MarketingAndCommunications });
+      case 'Real Estate and Property':
+        return this.setState({ subSectors: config.custom.RealEstateAndProperty });
+      case 'Retail and Consumer Products':
+        return this.setState({ subSectors: config.custom.RetailAndConsumerProducts });
+      case 'Sales':
+        return this.setState({ subSectors: config.custom.Sales });
+      case 'Science and Technology':
+        return this.setState({ subSectors: config.custom.ScienceAndTechnology });
+      case 'Sports and Recreation':
+        return this.setState({ subSectors: config.custom.SportsAndRecreation });
+      case 'Trades and Services':
+        return this.setState({ subSectors: config.custom.TradesAndServices });
       case Default:
         return this.setState({ subSectors: config.custom.Accountancyandfinancialmanagement });
     }
