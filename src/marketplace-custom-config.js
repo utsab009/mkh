@@ -209,7 +209,8 @@ export const Civilandstructuralengineering = [
 ];
 
 export const PublicServices = [
-  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
+  // { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
+  { key: 'Generalist', label: 'All Generalists Roles (grade focus)' },
   { key: 'Academic librarian', label: 'Academic librarian' },
   { key: 'Advice worker', label: 'Advice worker' },
   { key: 'Aid worker/humanitarian worker', label: 'Aid worker/humanitarian worker' },
@@ -220,48 +221,20 @@ export const PublicServices = [
 ];
 
 export const nonPublicRoles = [
-  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Operational Level', label: 'Operational Level' },
   { key: 'Front Line Management', label: 'Front Line Management' },
   { key: 'Middle Management', label: 'Middle Management' },
   { key: 'Senior Management', label: 'Senior Management' },
-  { key: 'C Suite Role', label: 'C Suite Role' },
 ];
 
 export const publicRoles = [
-  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
+  { key: 'AA / CO / SO / EO', label: 'AA / CO / SO / EO' },
+  { key: 'AO / HEO / FS-HEO / SEO', label: 'AO / HEO / FS-HEO / SEO' },
+  { key: 'Grade 5, 6 & 7 / APO / PO', label: 'Grade 5, 6 & 7 / APO / PO' },
   {
-    key: 'AA/Adminstrative Assistant/Clerical Officer',
-    label: 'AA/Adminstrative Assistant/Clerical Officer',
+    key: 'Grade 2 / Assistant Secretary / Perm. Sec. / Sec. Gen.',
+    label: 'Grade 2 / Assistant Secretary / Perm. Sec. / Sec. Gen.',
   },
-  {
-    key: 'AO/Adminstrative Officer/Staff Officer',
-    label: 'AO/Adminstrative Officer/Staff Officer',
-  },
-  { key: 'EO/Executive Officer', label: 'EO/Executive Officer' },
-  { key: 'HEO/Higher Executive Officer', label: 'HEO/Higher Executive Officer' },
-  {
-    key: 'FS/Fast Stream Higher Executive Officer',
-    label: 'FS/Fast Stream Higher Executive Officer',
-  },
-  { key: 'SEO/Senior Executive Officer', label: 'SEO/Senior Executive Officer' },
-  {
-    key: 'SEO/Vets Senior Executive Officer Veterinary Band C',
-    label: 'SEO/Vets Senior Executive Officer Veterinary Band C',
-  },
-  { key: 'VO/Veterinary Officer', label: 'VO/Veterinary Officer' },
-  {
-    key: 'Grade 6 & 7/Assistance Principle Officer',
-    label: 'Grade 6 & 7/Assistance Principle Officer',
-  },
-  { key: 'Grade 5/ Principle Office', label: 'Grade 5/ Principle Office' },
-  {
-    key: 'SEO/Vets Senior Executive Officer Veterinary Band C',
-    label: 'SEO/Vets Senior Executive Officer Veterinary Band C',
-  },
-  { key: 'Grade 2/ Assistant Secretary', label: 'Grade 2/ Assistant Secretary' },
-  { key: 'Permanent Secretary/ Secretary', label: 'Permanent Secretary/ Secretary' },
-  { key: 'General', label: 'General' },
 ];
 
 export const mentorLanguages = [
