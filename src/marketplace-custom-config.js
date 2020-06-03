@@ -218,6 +218,179 @@ export const PublicServices = [
   { key: 'Archivist', label: 'Archivist' },
   { key: 'Armed forces officer', label: 'Armed forces officer' },
   { key: 'Arts administrator', label: 'Arts administrator' },
+  { key: 'Border force officer', label: 'Border force officer' },
+  {
+    key: 'Building control officer/surveyor',
+    label: 'Building control officer/surveyor',
+  },
+  {
+    key: 'Charities administrator',
+    label: 'Charities administrator',
+  },
+  {
+    key: 'Charities fundraiser',
+    label: 'Charities fundraiser',
+  },
+  {
+    key: 'Civil Service administrator',
+    label: 'Civil Service administrator',
+  },
+  {
+    key: 'Community arts worker',
+    label: 'Community arts worker',
+  },
+  { key: 'Community worker', label: 'Community worker' },
+  {
+    key: 'Consumer rights adviser',
+    label: 'Consumer rights adviser',
+  },
+  { key: 'Customs officer', label: 'Customs officer' },
+  {
+    key: 'Debt/finance adviser',
+    label: 'Debt/finance adviser',
+  },
+  {
+    key: 'Diplomatic service',
+    label: 'Diplomatic service',
+  },
+  { key: 'Economist', label: 'Economist' },
+  {
+    key: 'Employment advice worker',
+    label: 'Employment advice worker',
+  },
+  {
+    key: 'Energy conservation officer',
+    label: 'Energy conservation officer',
+  },
+  { key: 'Energy consultant', label: 'Energy consultant' },
+  {
+    key: 'Environmental education officer',
+    label: 'Environmental education officer',
+  },
+  {
+    key: 'Environmental health officer',
+    label: 'Environmental health officer',
+  },
+  {
+    key: 'Environmental manager',
+    label: 'Environmental manager',
+  },
+  {
+    key: 'Equal opportunities officer',
+    label: 'Equal opportunities officer',
+  },
+  {
+    key: 'Equality and diversity officer',
+    label: 'Equality and diversity officer',
+  },
+  {
+    key: 'European Commission administrators',
+    label: 'European Commission administrators',
+  },
+  { key: 'Firefighter', label: 'Firefighter' },
+  {
+    key: 'Fisheries enforcement officer',
+    label: 'Fisheries enforcement officer',
+  },
+  {
+    key: 'Government research officer',
+    label: 'Government research officer',
+  },
+  {
+    key: 'Health and safety adviser',
+    label: 'Health and safety adviser',
+  },
+  {
+    key: 'Health and safety inspector',
+    label: 'Health and safety inspector',
+  },
+  { key: 'Heritage manager', label: 'Heritage manager' },
+  {
+    key: 'Homeless support worker',
+    label: 'Homeless support worker',
+  },
+  { key: 'Housing adviser', label: 'Housing adviser' },
+  {
+    key: 'Immigration officer',
+    label: 'Immigration officer',
+  },
+  { key: 'Interpreter', label: 'Interpreter' },
+  {
+    key: 'Local government administrator',
+    label: 'Local government administrator',
+  },
+  {
+    key: 'Museum education officer',
+    label: 'Museum education officer',
+  },
+  {
+    key: 'Nature conservation officer',
+    label: 'Nature conservation officer',
+  },
+  {
+    key: 'Planning and development surveyor',
+    label: 'Planning and development surveyor',
+  },
+  {
+    key: 'Planning technician',
+    label: 'Planning technician',
+  },
+  { key: 'Police officer', label: 'Police officer' },
+  {
+    key: 'Political party agent',
+    label: 'Political party agent',
+  },
+  {
+    key: 'Political researcher',
+    label: 'Political researcher',
+  },
+  { key: 'Prison officer', label: 'Prison officer' },
+  { key: 'Probation officer', label: 'Probation officer' },
+  { key: 'Public librarian', label: 'Public librarian' },
+  { key: 'Recycling officer', label: 'Recycling officer' },
+  {
+    key: 'Scene of crime officer',
+    label: 'Scene of crime officer',
+  },
+  { key: 'Social worker', label: 'Social worker' },
+  { key: 'Tax inspector', label: 'Tax inspector' },
+  {
+    key: 'Town and country planner',
+    label: 'Town and country planner',
+  },
+  {
+    key: 'Trade union official',
+    label: 'Trade union official',
+  },
+  {
+    key: 'Trade union research officer',
+    label: 'Trade union research officer',
+  },
+  {
+    key: 'Trading standards officer',
+    label: 'Trading standards officer',
+  },
+  {
+    key: 'Transportation planner',
+    label: 'Transportation planner',
+  },
+  {
+    key: 'Volunteer work organiser: Job description',
+    label: 'Volunteer work organiser: Job description',
+  },
+  {
+    key: 'Waste management officer',
+    label: 'Waste management officer',
+  },
+  {
+    key: 'Water conservation officer',
+    label: 'Water conservation officer',
+  },
+  {
+    key: 'Welfare rights adviser',
+    label: 'Welfare rights adviser',
+  },
+  { key: 'Youth worker', label: 'Youth worker' },
 ];
 
 export const nonPublicRoles = [
