@@ -313,7 +313,7 @@ export const InboxPageComponent = props => {
   const toTxItem = tx => {
     const type = isOrders ? 'order' : 'sale';
     const stateData = txState(intl, tx, type);
-    console.log("tx",tx);
+    console.log('tx', tx);
     // Render InboxItem only if the latest transition of the transaction is handled in the `txState` function.
     return stateData ? (
       <li key={tx.id.uuid} className={css.listItem}>
@@ -359,18 +359,6 @@ export const InboxPageComponent = props => {
     {
       text: (
         <span>
-          <FormattedMessage id="InboxPage.ordersTabTitle" />
-        </span>
-      ),
-      selected: isOrders,
-      linkProps: {
-        name: 'InboxPage',
-        params: { tab: 'orders' },
-      },
-    },
-    {
-      text: (
-        <span>
           <FormattedMessage id="InboxPage.salesTabTitle" />
           {providerNotificationBadge}
         </span>
@@ -379,6 +367,18 @@ export const InboxPageComponent = props => {
       linkProps: {
         name: 'InboxPage',
         params: { tab: 'sales' },
+      },
+    },
+    {
+      text: (
+        <span>
+          <FormattedMessage id="InboxPage.ordersTabTitle" />
+        </span>
+      ),
+      selected: isOrders,
+      linkProps: {
+        name: 'InboxPage',
+        params: { tab: 'orders' },
       },
     },
   ];

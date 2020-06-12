@@ -275,7 +275,7 @@ export class ListingCardComponent extends Component {
                 })}
                 {workExp !== null
                   ? workExp.map((item, index) => {
-                      if (index < 4) {
+                      if (index < 3) {
                         return <span className={css.crr}>{item.company}</span>;
                       }
                     })
@@ -285,10 +285,10 @@ export class ListingCardComponent extends Component {
 
             <div className={css.price}>
               <div className={css.title}>
-                Career Roles:
+                Sample Career Roles:
                 {workExp !== null
                   ? workExp.map((item, index) => {
-                      if (index < 4) {
+                      if (index < 3) {
                         return <span className={css.crr}>{item.position}</span>;
                       }
                     })
