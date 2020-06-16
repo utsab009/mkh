@@ -24,10 +24,10 @@ export const certificate = [
 export const sectors = [
   { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   {
-    key: 'Accountancy and financial management',
-    label: 'Accountancy and financial management',
+    key: 'Accountancy and Financial Management',
+    label: 'Accountancy and Financial Management',
   },
-  { key: 'Civil and structural engineering', label: 'Civil and structural engineering' },
+  { key: 'Civil and Structural Engineering', label: 'Civil and Structural Engineering' },
   { key: 'Public Service', label: 'Public Service' },
   { key: 'Accounting', label: 'Accounting' },
   {

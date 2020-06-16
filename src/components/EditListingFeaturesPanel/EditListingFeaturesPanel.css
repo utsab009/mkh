@@ -49,25 +49,27 @@
   text-align: left;
   margin: 0 0 30px;
   font-size: 16px;
+
+  @media (max-width: 767px) {
+    margin: 0 0 2px;
+  }
 }
-.updatePnl{
+.updatePnl {
   padding: 88px 0 !important;
   border: 0 !important;
 }
-.formg{
+.formg {
   margin-bottom: 15px;
 }
-.submitButtonFG{
+.submitButtonFG {
   margin-top: 20px;
 }
 
-
 @media (max-width: 767px) {
-  .updateModalcol{
+  .updateModalcol {
     margin-top: 108px;
   }
-  .updatePnl{
+  .updatePnl {
     padding: 48px 0 !important;
   }
 }
-
