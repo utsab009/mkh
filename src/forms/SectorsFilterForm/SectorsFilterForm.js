@@ -38,9 +38,9 @@ export class SectorsFilterFormComponent extends Component {
     // this.setState({subSectors : subSectors})
     // console.log("subsector using scope",$[subSectors]);
     switch (values) {
-      case 'Accountancy and financial management':
+      case 'Accountancy and Financial Management':
         return this.setState({ subSectors: config.custom.Accountancyandfinancialmanagement });
-      case 'Civil and structural engineering':
+      case 'Civil and Structural Engineering':
         return this.setState({ subSectors: config.custom.Civilandstructuralengineering });
       case 'Public Service':
         return this.setState({ subSectors: config.custom.PublicServices });
