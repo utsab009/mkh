@@ -255,7 +255,6 @@
   @media (--viewportMedium) {
     top: 0;
     margin-left: 0;
-
   }
 }
 
@@ -263,8 +262,6 @@
   display: flex;
   width: 100%;
   height: 250px;
- 
-
 
   @media (--viewportMedium) {
     display: none; /* Hide the medium avatar from the bigger screens */
@@ -281,7 +278,7 @@
     display: flex;
   }
 }
-.avatarDesktop img{
+.avatarDesktop img {
   object-fit: cover;
 }
 .initialsDesktop {
@@ -591,22 +588,22 @@
   word-break: break-word;
   hyphens: auto;
 }
-.modAv{
+.modAv {
   border-radius: 0;
 }
-.inlineavhed{
+.inlineavhed {
   display: flex;
 }
-.inlineavhed .sectionHeading{
+.inlineavhed .sectionHeading {
   margin: 8px 0 0 15px;
 }
 
-.inlineavhed .title{
+.inlineavhed .title {
   line-height: 32px;
   font-size: 30px;
 }
 
-.rating{
+.rating {
   color: #4a4a4a;
   font-size: 16px;
   margin: 20px 0 0 15px;
@@ -620,26 +617,26 @@
 .rating span {
   color: #c4c0c0;
 }
-.avtardec{
+.avtardec {
   font-size: 16px;
   line-height: 24px;
 }
-.casec{
+.casec {
   margin: 0 0 20px;
 }
-.casec h2{
+.casec h2 {
   margin-bottom: 8px;
 }
-.casec ul{
+.casec ul {
   margin: 0;
 }
-.casec ul li{
+.casec ul li {
   font-size: 16px;
   position: relative;
   margin: 0 0 5px;
   padding: 0 0 0 30px;
 
-  &::before{
+  &::before {
     width: 8px;
     height: 8px;
     background: #2a364c;
@@ -659,95 +656,101 @@
   margin: 26px 10px;
   font-size: 16px;
 }
-.modbp{
+.socialLinkedInlink {
+  color: #fff;
+  padding: 7px 21px;
+  display: inline-block;
+  margin: 26px 10px;
+  font-size: 16px;
+}
+.modbp {
   border: 1px solid #e7e7e7;
   padding: 30px;
   min-height: 535px;
   margin: 0;
 }
-.rightSecbooking{
+.rightSecbooking {
   margin: 20px 0 0 40px;
 }
-.qtbtn{
+.qtbtn {
   margin: 20px auto;
   min-width: 100%;
   text-align: center;
   cursor: pointer;
-  border:0;
+  border: 0;
 }
-.modCon{
+.modCon {
   min-height: 720px;
 }
 @media (max-width: 1199px) {
-.mainContent{
-  max-width: none;
-}
+  .mainContent {
+    max-width: none;
+  }
 }
 @media (max-width: 1024px) {
-  .contentContainer{
+  .contentContainer {
     flex-wrap: wrap;
   }
-.modbp{
-  border: 0;
-  padding: 0;
-  min-height: auto;
-}
-.rightSecbooking{
-  margin: 0;
-  width: 50%;
-}
-
+  .modbp {
+    border: 0;
+    padding: 0;
+    min-height: auto;
+  }
+  .rightSecbooking {
+    margin: 0;
+    width: 50%;
+  }
 }
 @media (max-width: 991px) {
-
-  .modAv, .sectionAvatar {
+  .modAv,
+  .sectionAvatar {
     width: 100%;
     height: 250px;
   }
-  .modAv img{
+  .modAv img {
     width: 100%;
     height: 250px;
     object-fit: cover;
   }
-  .inlineavhed{
+  .inlineavhed {
     display: block;
-}
-.inlineavhed .sectionHeading {
-  margin: 8px 0 0 0;
-}
+  }
+  .inlineavhed .sectionHeading {
+    margin: 8px 0 0 0;
+  }
 }
 @media (max-width: 767px) {
-  .mainContent{
+  .mainContent {
     padding: 0 24px;
   }
-  .inlineavhed{
+  .inlineavhed {
     margin: 40px 0 30px;
-}
-.sectionAvatar{
-  width: auto;
-}
-.sectionHeading .heading{
-  margin-bottom: 0;
-  padding: 0 0;
-}
-.rating{
-  margin: 10px 0 0 15px;
-}
-.rightSecbooking{
-  margin: 0 20px;
-  width: auto;
-}
-.sectionImages{
-  display: none;
-}
+  }
+  .sectionAvatar {
+    width: auto;
+  }
+  .sectionHeading .heading {
+    margin-bottom: 0;
+    padding: 0 0;
+  }
+  .rating {
+    margin: 10px 0 0 15px;
+  }
+  .rightSecbooking {
+    margin: 0 20px;
+    width: auto;
+  }
+  .sectionImages {
+    display: none;
+  }
 }
 
 @media (max-width: 575px) {
-.sociallink{
-  margin: 26px 5px 0;
-  font-size: 12px;
-}
-.qtbtn{
-  font-size: 14px;
-}
+  .sociallink {
+    margin: 26px 5px 0;
+    font-size: 12px;
+  }
+  .qtbtn {
+    font-size: 14px;
+  }
 }
