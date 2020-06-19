@@ -667,7 +667,7 @@
   "PayoutDetailsForm.firstNamePlaceholder": "John",
   "PayoutDetailsForm.firstNameRequired": "This field is required",
   "PayoutDetailsForm.individualAccount": "I'm an individual",
-  "PayoutDetailsForm.information": "Almost done! In order to send you money, we need to know a bit more about you. Next, we will guide you through verifying your account. The details can also be edited from Account Setting page on Payout details tab.",
+  "PayoutDetailsForm.information": "Almost done! In order to send you money, we need to know a bit more about you. Next, we will guide you through verifying your account. The details can also be edited from the Account Setting page on the Payout details tab.",
   "PayoutDetailsForm.lastNameLabel": "Last name",
   "PayoutDetailsForm.lastNamePlaceholder": "Doe",
   "PayoutDetailsForm.lastNameRequired": "This field is required",
