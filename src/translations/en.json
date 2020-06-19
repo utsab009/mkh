@@ -1062,7 +1062,7 @@
   "TopbarMobileMenu.signupLink": "Try a Mentor",
   "TopbarMobileMenu.mentorSignupLink": "Become a Mentor",
   "TopbarMobileMenu.signupOrLogin": "{lineBreak}{Menteesignup}{lineBreak}{lineBreak}{Mentorsignup}{lineBreak}{lineBreak}{login}",
-  "TopbarMobileMenu.unauthorizedGreeting": "Please select from:{lineBreak}{signupOrLogin}?",
+  "TopbarMobileMenu.unauthorizedGreeting": "Please select from:{lineBreak}{signupOrLogin}",
   "TopbarMobileMenu.yourListingsLink": "Your Mentor profile",
   "TopbarMobileMenu.plannerLink": "Planner",
   "TopbarMobileMenu.favourites": "My Favourites",
