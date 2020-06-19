@@ -151,9 +151,9 @@ class TopbarComponent extends Component {
       sendVerificationEmailInProgress,
       sendVerificationEmailError,
       showGenericError,
-      parentComponent= null,
+      parentComponent = null,
     } = this.props;
-    console.log("currentPage",currentPage);
+    console.log('currentPage', currentPage);
 
     const { mobilemenu, mobilesearch, address, origin, bounds } = parse(location.search, {
       latlng: ['origin'],
@@ -180,7 +180,7 @@ class TopbarComponent extends Component {
         parentComponent={parentComponent}
       />
     );
-      console.log("parentComponent in topbar",parentComponent);
+    console.log('parentComponent in topbar', parentComponent);
     // Only render current search if full place object is available in the URL params
     const locationFieldsPresent = config.sortSearchByDistance
       ? address && origin && bounds
@@ -193,19 +193,19 @@ class TopbarComponent extends Component {
           }
         : null,
     };
-    
+
     //modified by UC
-    const rootVariable = parentComponent === null ? css.root : css.rootHomePage
+    const rootVariable = parentComponent === null ? css.root : css.rootHomePage;
     const classes = classNames(rootClassName || rootVariable, className);
 
     //modified by UC
-    const menuVariable = parentComponent === null ? css.menu : css.menuHomePage
+    const menuVariable = parentComponent === null ? css.menu : css.menuHomePage;
 
     //modified by UC
-    const homeVariable = parentComponent === null ? css.home : css.homeHomePage
+    const homeVariable = parentComponent === null ? css.home : css.homeHomePage;
 
     //modified by UC
-    const searchMenuVariable = parentComponent === null ? css.searchMenu : css.searchMenuHomePage
+    const searchMenuVariable = parentComponent === null ? css.searchMenu : css.searchMenuHomePage;
 
     return (
       <div className={classes}>
@@ -234,10 +234,10 @@ class TopbarComponent extends Component {
           </NamedLink>
           <Button
             rootClassName={searchMenuVariable}
-            onClick={this.handleMobileSearchOpen}
+            // onClick={this.handleMobileSearchOpen}
             title={intl.formatMessage({ id: 'Topbar.searchIcon' })}
           >
-            <SearchIcon className={css.searchMenuIcon} />
+            {/* <SearchIcon className={css.searchMenuIcon} /> */}
           </Button>
         </div>
         <div className={css.desktop}>
