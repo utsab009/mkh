@@ -209,7 +209,7 @@ export const Civilandstructuralengineering = [
 ];
 
 export const PublicServices = [
-  // { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Generalist', label: 'All Generalists Roles (grade focus)' },
   { key: 'Academic librarian', label: 'Academic librarian' },
   { key: 'Advice worker', label: 'Advice worker' },
@@ -394,6 +394,7 @@ export const PublicServices = [
 ];
 
 export const nonPublicRoles = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Operational Level', label: 'Operational Level' },
   { key: 'Front Line Management', label: 'Front Line Management' },
   { key: 'Middle Management', label: 'Middle Management' },
