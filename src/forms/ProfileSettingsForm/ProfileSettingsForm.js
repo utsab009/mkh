@@ -381,7 +381,7 @@ class ProfileSettingsFormComponent extends Component {
               {this.state.currentTab > 1 && this.state.currentTab < 4 ? (
                 <h6>
                   It is important to Start with your most recent{' '}
-                  {this.state.currentTab == 2 ? 'Position' : 'Accreditation'} and work backwards{' '}
+                  {this.state.currentTab == 2 ? 'Position' : 'Education'} and work backwards{' '}
                 </h6>
               ) : null}
               {this.state.currentTab == 2 ? (

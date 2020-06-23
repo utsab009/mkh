@@ -497,7 +497,7 @@ export class ListingPageComponent extends Component {
                   </div>
 
                   <div className={css.casec}>
-                    <h2>Accreditation:</h2>
+                    <h2>Education:</h2>
                     <ul>
                       {education !== null
                         ? education.map((item, index) => {
