@@ -54,8 +54,8 @@ export class ProfileSettingsPageComponent extends Component {
         firstName: firstName.trim(),
         lastName: lastName.trim(),
         bio,
-        // protectedData: { ...rest }, 
-        publicData: { ...rest, fullName : firstName.trim() + ' ' + lastName.trim()}, 
+        // protectedData: { ...rest },
+        publicData: { ...rest, fullName: firstName.trim() + ' ' + lastName.trim() },
       };
       const uploadedImage = this.props.image;
 
@@ -70,7 +70,7 @@ export class ProfileSettingsPageComponent extends Component {
 
     const user = ensureCurrentUser(currentUser);
     // console.log("user in psp",user);
-    const { firstName, lastName, bio, protectedData,publicData } = user.attributes.profile;
+    const { firstName, lastName, bio, protectedData, publicData } = user.attributes.profile;
     const profileImageId = user.profileImage ? user.profileImage.id : null;
     const profileImage = image || { imageId: profileImageId };
     // console.log("protectedData",protectedData);
@@ -82,17 +82,18 @@ export class ProfileSettingsPageComponent extends Component {
         className={css.form}
         currentUser={currentUser}
         // initialValues={{ firstName, lastName, bio, profileImage: user.profileImage, workExp: protectedData && protectedData.workExp, education: protectedData && protectedData.education, dob: protectedData && protectedData.dob }}
-        initialValues={{ 
+        initialValues={{
           firstName,
           lastName,
-          bio, 
-          profileImage: user.profileImage, 
-          workExp: publicData && publicData.workExp, 
-          education: publicData && publicData.education, 
+          bio,
+          profileImage: user.profileImage,
+          workExp: publicData && publicData.workExp,
+          education: publicData && publicData.education,
           dob: publicData && publicData.dob,
           linkedinLink: publicData && publicData.linkedinLink,
-          youtubeLink: publicData && publicData.youtubeLink,
-         }}
+          // youtubeLink: publicData && publicData.youtubeLink,
+          conferenceLink: publicData && publicData.conferenceLink,
+        }}
         profileImage={profileImage}
         onImageUpload={e => onImageUploadHandler(e, onImageUpload)}
         uploadInProgress={uploadInProgress}
@@ -105,20 +106,27 @@ export class ProfileSettingsPageComponent extends Component {
 
     const title = intl.formatMessage({ id: 'ProfileSettingsPage.title' });
 
-    const profileTypeText = profileUserType === "mentor" ? "Mentor" : "Mentee";
+    const profileTypeText = profileUserType === 'mentor' ? 'Mentor' : 'Mentee';
 
     return (
       <Page className={css.root} title={title} scrollingDisabled={scrollingDisabled}>
         <LayoutSingleColumn>
           <LayoutWrapperTopbar>
             <TopbarContainer currentPage="ProfileSettingsPage" />
-            <UserNav selectedPageName="ProfileSettingsPage" listing={currentUserListing} profileUserType={profileUserType}/>
+            <UserNav
+              selectedPageName="ProfileSettingsPage"
+              listing={currentUserListing}
+              profileUserType={profileUserType}
+            />
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
             <div className={css.content}>
               <div className={css.headingContainer}>
                 <h1 className={css.heading}>
-                  <FormattedMessage id="ProfileSettingsPage.heading" values={{ userType: profileTypeText }} />
+                  <FormattedMessage
+                    id="ProfileSettingsPage.heading"
+                    values={{ userType: profileTypeText }}
+                  />
                 </h1>
                 {/*user.id ? (
                   <NamedLink

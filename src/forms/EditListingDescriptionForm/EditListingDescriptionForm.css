@@ -61,6 +61,10 @@
   @apply --EditListingDescriptionForm_formMargins;
 }
 
+.youtubeLink {
+  margin-bottom: 32px;
+}
+
 .submitButton {
   margin-top: auto;
   margin-bottom: 24px;

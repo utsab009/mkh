@@ -104,15 +104,31 @@ const EditListingDescriptionFormComponent = props => (
             autoFocus
           />
 
-          {<FieldTextInput
-            id="description"
-            name="description"
-            className={css.description}
-            type="textarea"
-            label={descriptionMessage}
-            placeholder={descriptionPlaceholderMessage}
-            validate={composeValidators(required(descriptionRequiredMessage))}
-          />}
+          {
+            <FieldTextInput
+              id="description"
+              name="description"
+              className={css.description}
+              type="textarea"
+              label={descriptionMessage}
+              placeholder={descriptionPlaceholderMessage}
+              validate={composeValidators(required(descriptionRequiredMessage))}
+            />
+          }
+
+          <FieldTextInput
+            // className={css.lastName}
+            type="text"
+            id={'youtubelink'}
+            name="youtubeLink"
+            autoComplete="youtube link"
+            label={'youtube link'}
+            placeholder={
+              'Video explaining why you are the ideal Mentor in general or for this specific role'
+            }
+            className={css.youtubeLink}
+            // validate={lastNameRequired}
+          />
 
           {/*<CustomCertificateSelectFieldMaybe
             id="certificate"
@@ -128,13 +144,15 @@ const EditListingDescriptionFormComponent = props => (
             options={profileTypes}
           />*/}
 
-          {<FieldCheckboxGroup
-            label={"What Languages can you mentor in?"}
-            className={css.profileTypes}
-            id="mentorLanguage"
-            name="mentorLanguage"
-            options={mentorLanguages}
-          />}
+          {
+            <FieldCheckboxGroup
+              label={'What Languages can you mentor in?'}
+              className={css.profileTypes}
+              id="mentorLanguage"
+              name="mentorLanguage"
+              options={mentorLanguages}
+            />
+          }
 
           {/*<CustomMentorLanguageSelectFieldMaybe
             id="mentorLanguage"

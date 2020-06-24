@@ -58,14 +58,28 @@ const EditListingDescriptionPanel = props => {
       <h1 className={css.title}>{panelTitle}</h1>
       <EditListingDescriptionForm
         className={css.form}
-        initialValues={{ title, description, certificate: publicData.certificate, mentorLanguage: publicData.mentorLanguage, profileType: publicData.profileType }}
+        initialValues={{
+          title,
+          description,
+          certificate: publicData.certificate,
+          mentorLanguage: publicData.mentorLanguage,
+          profileType: publicData.profileType,
+          youtubeLink: publicData.youtubeLink,
+        }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
-          const { title, description, certificate, mentorLanguage, profileType = []} = values;
+          const {
+            title,
+            description,
+            certificate,
+            mentorLanguage,
+            profileType = [],
+            youtubeLink,
+          } = values;
           const updateValues = {
             title: title.trim(),
             description,
-            publicData: { certificate, mentorLanguage, profileType },
+            publicData: { certificate, mentorLanguage, profileType, youtubeLink },
           };
 
           onSubmit(updateValues);

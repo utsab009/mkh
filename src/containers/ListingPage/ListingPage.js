@@ -345,9 +345,14 @@ export class ListingPageComponent extends Component {
       workExp = null,
       education = null,
       linkedinLink = null,
-      youtubeLink = null,
       fullName = ensuredAuthor.attributes.profile.displayName,
     } = authorData;
+    console.log('currentListing: ', currentListing);
+    const youtubeLink =
+      currentListing &&
+      currentListing.attributes &&
+      currentListing.attributes.publicData &&
+      currentListing.attributes.publicData.youtubeLink;
     let authorBio =
       ensuredAuthor !== null && ensuredAuthor.attributes.profile.bio
         ? ensuredAuthor.attributes.profile.bio

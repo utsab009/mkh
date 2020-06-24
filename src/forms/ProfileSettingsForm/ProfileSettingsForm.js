@@ -344,11 +344,11 @@ class ProfileSettingsFormComponent extends Component {
                     <FieldTextInput
                       // className={css.lastName}
                       type="text"
-                      id={'youtubelink'}
-                      name="youtubeLink"
-                      autoComplete="youtube link"
-                      label={'youtube link'}
-                      placeholder={'youtubelink'}
+                      id={'conferenceLink'}
+                      name="conferenceLink"
+                      autoComplete="conference link"
+                      label={'Conference Link'}
+                      placeholder={'Please enter zoom or any other video conference link here'}
                       // validate={lastNameRequired}
                     />
                   ) : null}
