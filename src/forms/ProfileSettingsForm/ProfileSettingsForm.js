@@ -334,8 +334,10 @@ class ProfileSettingsFormComponent extends Component {
                       id={'linkedin'}
                       name="linkedinLink"
                       autoComplete="linkedin"
-                      label={'linked in Link'}
-                      placeholder={'linked Link'}
+                      label={'linkedIn Link'}
+                      placeholder={
+                        'This is being requested so that the Mentee can explore your profile to verify your education and experience'
+                      }
                       // validate={firstNameRequired}
                     />
                   ) : null}
