@@ -40,7 +40,7 @@ export class SectorsFilterFormComponent extends Component {
     switch (values) {
       case 'Accountancy and Financial Management':
         return this.setState({ subSectors: config.custom.Accountancyandfinancialmanagement });
-      case 'Civil and Structural Engineering':
+      case 'Civil and structural engineering':
         return this.setState({ subSectors: config.custom.Civilandstructuralengineering });
       case 'Public Service':
         return this.setState({ subSectors: config.custom.PublicServices });
