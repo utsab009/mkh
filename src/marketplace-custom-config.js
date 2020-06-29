@@ -148,6 +148,7 @@ export const sectors = [
 ];
 
 export const Accounting = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Account Officer', label: 'Account Officer' },
   { key: 'Accounting Clerk', label: 'Accounting Clerk' },
   { key: 'Accounting Manager', label: 'Accounting Manager' },
@@ -402,6 +403,7 @@ export const nonPublicRoles = [
 ];
 
 export const publicRoles = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'AA / CO / SO / EO', label: 'AA / CO / SO / EO' },
   { key: 'AO / HEO / FS-HEO / SEO', label: 'AO / HEO / FS-HEO / SEO' },
   { key: 'Grade 5, 6 & 7 / APO / PO', label: 'Grade 5, 6 & 7 / APO / PO' },
@@ -458,6 +460,7 @@ export const mentorShifts = [
 ];
 
 export const AdministrationAndOfficeSupport = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Administrative Assistant', label: 'Administrative Assistant' },
   { key: 'Administrative Manager', label: 'Administrative Manager' },
   { key: 'Administrative Services Manager', label: 'Administrative Services Manager' },
@@ -575,6 +578,7 @@ export const AdministrationAndOfficeSupport = [
 ];
 
 export const AdvertisingArtsAndMedia = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Actor', label: 'Actor' },
   { key: 'Art Director', label: 'Art Director' },
   { key: 'Author', label: 'Author' },
@@ -640,6 +644,7 @@ export const AdvertisingArtsAndMedia = [
 ];
 
 export const BankingAndFinancialServices = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Bank Teller', label: 'Bank Teller' },
   { key: 'Collections Officer', label: 'Collections Officer' },
   { key: 'Credit Analyst', label: 'Credit Analyst' },
@@ -685,6 +690,7 @@ export const BankingAndFinancialServices = [
 ];
 
 export const CallCenterAndCustomerService = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   {
     key: 'Bilingual Customer Service Representative',
     label: 'Bilingual Customer Service Representative',
@@ -722,6 +728,7 @@ export const CallCenterAndCustomerService = [
 ];
 
 export const CommunityServicesAndDevelopment = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Activities Assistant', label: 'Activities Assistant' },
   { key: 'Caseworker', label: 'Caseworker' },
   { key: 'City Planner', label: 'City Planner' },
@@ -766,6 +773,7 @@ export const CommunityServicesAndDevelopment = [
 ];
 
 export const Construction = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Asphalt Laborer', label: 'Asphalt Laborer' },
   { key: 'Bricklayer', label: 'Bricklayer' },
   {
@@ -812,6 +820,7 @@ export const Construction = [
 ];
 
 export const ConsultingAndStrategy = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Administrative Analyst', label: 'Administrative Analyst' },
   { key: 'Business Consultant', label: 'Business Consultant' },
   { key: 'Business Development Specialist', label: 'Business Development Specialist' },
@@ -868,6 +877,7 @@ export const ConsultingAndStrategy = [
 ];
 
 export const DesignAndArchitecture = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Architect', label: 'Architect' },
   { key: 'CAD Operator', label: 'CAD Operator' },
   { key: 'Draftsman', label: 'Draftsman' },
@@ -886,6 +896,7 @@ export const DesignAndArchitecture = [
 ];
 
 export const EducationAndTraining = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Academic Advisor', label: 'Academic Advisor' },
   { key: 'Admissions Counselor', label: 'Admissions Counselor' },
   { key: 'Art Teacher', label: 'Art Teacher' },
@@ -994,6 +1005,7 @@ export const EducationAndTraining = [
 ];
 
 export const Engineering = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Aerospace Engineer', label: 'Aerospace Engineer' },
   { key: 'Biomedical Engineer', label: 'Biomedical Engineer' },
   { key: 'Civil Engineer', label: 'Civil Engineer' },
@@ -1041,6 +1053,7 @@ export const Engineering = [
 ];
 
 export const Executive = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Board Member', label: 'Board Member' },
   { key: 'CEO', label: 'CEO' },
   { key: 'Chief Administrative Officer', label: 'Chief Administrative Officer' },
@@ -1071,6 +1084,7 @@ export const Executive = [
 ];
 
 export const FarmingAnimalsAndConservation = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Agronomist', label: 'Agronomist' },
   { key: 'Associate Veterinarian', label: 'Associate Veterinarian' },
   { key: 'Dog Handler', label: 'Dog Handler' },
@@ -1103,6 +1117,7 @@ export const FarmingAnimalsAndConservation = [
 ];
 
 export const HealthcareAndMedical = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Acupuncturist', label: 'Acupuncturist' },
   { key: 'Anesthesiologist', label: 'Anesthesiologist' },
   { key: 'Art Therapist', label: 'Art Therapist' },
@@ -1405,6 +1420,7 @@ export const HealthcareAndMedical = [
 ];
 
 export const HospitalityAndTourism = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Assistant Restaurant Manager', label: 'Assistant Restaurant Manager' },
   { key: 'Bar Back', label: 'Bar Back' },
   { key: 'Bartender', label: 'Bartender' },
@@ -1490,6 +1506,7 @@ export const HospitalityAndTourism = [
 ];
 
 export const HumanResourcesAndRecruitment = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Agency Manager', label: 'Agency Manager' },
   { key: 'Benefits Coordinator', label: 'Benefits Coordinator' },
   { key: 'Club Manager', label: 'Club Manager' },
@@ -1540,6 +1557,7 @@ export const HumanResourcesAndRecruitment = [
 ];
 
 export const InformationTechnology = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: '.NET Developer', label: '.NET Developer' },
   { key: 'AngularJS Developer', label: 'AngularJS Developer' },
   { key: 'ASP.NET Developer', label: 'ASP.NET Developer' },
@@ -1697,6 +1715,7 @@ export const InformationTechnology = [
 ];
 
 export const Insurance = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Actuary', label: 'Actuary' },
   { key: 'Claims Specialist', label: 'Claims Specialist' },
   { key: 'Insurance Agent', label: 'Insurance Agent' },
@@ -1720,6 +1739,7 @@ export const Insurance = [
 ];
 
 export const Legal = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Arbitrator', label: 'Arbitrator' },
   { key: 'Barrister', label: 'Barrister' },
   { key: 'Civil Rights Attorney', label: 'Civil Rights Attorney' },
@@ -1771,6 +1791,7 @@ export const Legal = [
 ];
 
 export const ManufacturingTransportAndLogistics = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Air Traffic Controller', label: 'Air Traffic Controller' },
   { key: 'AZ Driver', label: 'AZ Driver' },
   { key: 'Bookbinder', label: 'Bookbinder' },
@@ -1886,6 +1907,7 @@ export const ManufacturingTransportAndLogistics = [
 ];
 
 export const MarketingAndCommunications = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Blogger', label: 'Blogger' },
   { key: 'Brand Strategist', label: 'Brand Strategist' },
   { key: 'Communications Coordinator', label: 'Communications Coordinator' },
@@ -1954,6 +1976,7 @@ export const MarketingAndCommunications = [
 ];
 
 export const RealEstateAndProperty = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Apartment Maintenance Technician', label: 'Apartment Maintenance Technician' },
   { key: 'Commercial Real Estate Broker', label: 'Commercial Real Estate Broker' },
   { key: 'Leasing Agent', label: 'Leasing Agent' },
@@ -1973,6 +1996,7 @@ export const RealEstateAndProperty = [
 ];
 
 export const RetailAndConsumerProducts = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Assistant Buyer', label: 'Assistant Buyer' },
   { key: 'Baker', label: 'Baker' },
   { key: 'Budtender', label: 'Budtender' },
@@ -2038,6 +2062,7 @@ export const RetailAndConsumerProducts = [
 ];
 
 export const Sales = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Account Coordinator', label: 'Account Coordinator' },
   { key: 'Account Representative', label: 'Account Representative' },
   { key: 'Area Manager', label: 'Area Manager' },
@@ -2117,6 +2142,7 @@ export const Sales = [
 ];
 
 export const ScienceAndTechnology = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Anthropologist', label: 'Anthropologist' },
   { key: 'Biochemist', label: 'Biochemist' },
   { key: 'Chemist', label: 'Chemist' },
@@ -2148,6 +2174,7 @@ export const ScienceAndTechnology = [
 ];
 
 export const SportsAndRecreation = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Activities Director', label: 'Activities Director' },
   { key: 'Athletic Trainer', label: 'Athletic Trainer' },
   { key: 'Camp Director', label: 'Camp Director' },
@@ -2177,6 +2204,7 @@ export const SportsAndRecreation = [
 ];
 
 export const TradesAndServices = [
+  { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Appliance Repair Technician', label: 'Appliance Repair Technician' },
   { key: 'Audio Video Technician', label: 'Audio Video Technician' },
   { key: 'Auto Glass Technician', label: 'Auto Glass Technician' },

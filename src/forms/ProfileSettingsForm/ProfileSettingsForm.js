@@ -349,8 +349,10 @@ class ProfileSettingsFormComponent extends Component {
                       id={'conferenceLink'}
                       name="conferenceLink"
                       autoComplete="conference link"
-                      label={'Conference Link'}
-                      placeholder={'Please enter zoom or any other video conference link here'}
+                      label={'Skype Link'}
+                      placeholder={
+                        'Please enter your Skype Address that the Mentee can use to meet with you (other apps can be used but you must first provide a Skype address)'
+                      }
                       // validate={lastNameRequired}
                     />
                   ) : null}

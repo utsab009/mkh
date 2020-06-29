@@ -151,7 +151,12 @@ export class SectorsFilterFormComponent extends Component {
                 label={sectorLabel}
               >
                 {sectors.map(m => (
-                  <option key={m.key} value={m.key}>
+                  <option
+                    key={m.key}
+                    value={!m.hideFromFilters ? m.key : ''}
+                    disabled={m.hideFromFilters}
+                    selected={m.hideFromFilters}
+                  >
                     {m.label}
                   </option>
                 ))}
@@ -165,7 +170,12 @@ export class SectorsFilterFormComponent extends Component {
                   label={subSectorLabel}
                 >
                   {this.state.subSectors.map(m => (
-                    <option key={m.key} value={m.key}>
+                    <option
+                      key={m.key}
+                      value={!m.hideFromFilters ? m.key : ''}
+                      disabled={m.hideFromFilters}
+                      selected={m.hideFromFilters}
+                    >
                       {m.label}
                     </option>
                   ))}
@@ -175,7 +185,12 @@ export class SectorsFilterFormComponent extends Component {
               {this.state.jobRoles.length > 0 ? (
                 <FieldSelect className={css.features} name={'jobroles'} id={2} label={jobRoleLabel}>
                   {this.state.jobRoles.map(m => (
-                    <option key={m.key} value={m.key}>
+                    <option
+                      key={m.key}
+                      value={!m.hideFromFilters ? m.key : ''}
+                      disabled={m.hideFromFilters}
+                      selected={m.hideFromFilters}
+                    >
                       {m.label}
                     </option>
                   ))}
