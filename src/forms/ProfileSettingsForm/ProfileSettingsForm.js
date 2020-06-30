@@ -335,11 +335,15 @@ class ProfileSettingsFormComponent extends Component {
                       name="linkedinLink"
                       autoComplete="linkedin"
                       label={'linkedIn Link'}
-                      placeholder={
-                        'This is being requested so that the Mentee can explore your profile to verify your education and experience'
-                      }
+                      placeholder="Please enter your linkedIn link"
                       // validate={firstNameRequired}
                     />
+                  ) : null}
+                  {user.attributes.profile.protectedData &&
+                  user.attributes.profile.protectedData.userType == 'mentor' ? (
+                    <div className={css.socialMedia}>
+                      <FormattedMessage id="ProfileSettingsForm.linkedinLink" />
+                    </div>
                   ) : null}
                   {user.attributes.profile.protectedData &&
                   user.attributes.profile.protectedData.userType == 'mentor' ? (
@@ -350,11 +354,15 @@ class ProfileSettingsFormComponent extends Component {
                       name="conferenceLink"
                       autoComplete="conference link"
                       label={'Skype Link'}
-                      placeholder={
-                        'Please enter your Skype Address that the Mentee can use to meet with you (other apps can be used but you must first provide a Skype address)'
-                      }
+                      placeholder="Please enter your skype address"
                       // validate={lastNameRequired}
                     />
+                  ) : null}
+                  {user.attributes.profile.protectedData &&
+                  user.attributes.profile.protectedData.userType == 'mentor' ? (
+                    <div className={css.socialMedia}>
+                      <FormattedMessage id="ProfileSettingsForm.conferenceLink" />
+                    </div>
                   ) : null}
                   {
                     <FieldTextInput

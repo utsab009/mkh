@@ -755,6 +755,8 @@
   "ProfileSettingsForm.updateProfileFailed": "Whoops, something went wrong. Please try again.",
   "ProfileSettingsForm.yourName": "Your name",
   "ProfileSettingsForm.yourProfilePicture": "Your profile picture",
+  "ProfileSettingsForm.conferenceLink": "Please enter your Skype Address that the Mentee can use to meet with you (other apps can be used but you must first provide a Skype address)",
+  "ProfileSettingsForm.linkedinLink": "This is being requested so that the Mentee can explore your profile to verify your education and experience",
   "ProfileSettingsPage.heading": "{userType} Profile",
   "ProfileSettingsPage.title": "User profile",
   "ProfileSettingsPage.viewProfileLink": "View your user profile",

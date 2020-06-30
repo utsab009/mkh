@@ -317,27 +317,32 @@
 }
 
 @media (max-width: 767px) {
-.profilepav img{
-  height: auto;
-}
-.mdBttn{
-  margin: 24px 10px 0;
-}
-
+  .profilepav img {
+    height: auto;
+  }
+  .mdBttn {
+    margin: 24px 10px 0;
+  }
 }
 @media (max-width: 575px) {
-  .nameContainer{
+  .nameContainer {
     display: block;
   }
-  .mdBttn{
-    margin:24px auto 0;
+  .mdBttn {
+    margin: 24px auto 0;
   }
   .firstName,
-  .lastName{
+  .lastName {
     width: 100%;
     margin-bottom: 10px;
+  }
+  .field {
+    margin-bottom: 15px;
+  }
 }
-.field {
-  margin-bottom: 15px;
-}
+
+.socialMedia {
+  font-size: 14px;
+  line-height: 18px;
+  color: #979797;
 }
