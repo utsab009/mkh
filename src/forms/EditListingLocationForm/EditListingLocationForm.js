@@ -116,18 +116,18 @@ export const EditListingLocationFormComponent = props => (
           </div>
 
           <div className={css.secloc}>
-          <FieldTextInput
-            className={css.building}
-            type="text"
-            name="building"
-            id="building"
-            label={buildingMessage}
-            placeholder={buildingPlaceholderMessage}
-          />
-          
-          <p>Not shared with Mentee</p>
-          </div>  
-          <div className={css.secloc}>
+            <FieldTextInput
+              className={css.building}
+              type="text"
+              name="building"
+              id="building"
+              label={buildingMessage}
+              placeholder={buildingPlaceholderMessage}
+            />
+
+            <p>Not shared with Mentee</p>
+          </div>
+          {/* <div className={css.secloc}>
           <FieldTextInput
             className={css.building}
             type="text"
@@ -138,7 +138,7 @@ export const EditListingLocationFormComponent = props => (
           />
 
           <p>Will be shared with Mentee</p>
-          </div>
+          </div> */}
 
           <Button
             className={css.submitButton}
