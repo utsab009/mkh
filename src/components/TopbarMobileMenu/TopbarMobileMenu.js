@@ -246,6 +246,7 @@ class TopbarMobileMenu extends Component {
     } = this.props;
 
     const user = ensureCurrentUser(currentUser);
+    console.log('user: ', user);
 
     if (!isAuthenticated) {
       const Menteesignup = (

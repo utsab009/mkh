@@ -292,34 +292,37 @@
   }
 }
 
-
 @media (max-width: 767px) {
   .rootHomePage {
     position: absolute;
   }
-  .rootHomePage .container{
+  .rootHomePage .container {
     background-color: transparent;
     box-shadow: none;
   }
   .menuHomePage,
-  .searchMenuHomePage{
+  .searchMenuHomePage {
     border: 0;
     cursor: pointer;
   }
-  .menuHomePage .rootMenuIcon{
+  .menuHomePage .rootMenuIcon {
     fill: #fff;
-}
-.searchMenuHomePage .rootSearchIcon {
+  }
+  .searchMenuHomePage .rootSearchIcon {
     stroke: #fff;
+  }
+  .homeHomePage svg g {
+    stroke: #fff;
+  }
+  .homeHomePage img,
+  .home img {
+    height: 50px;
+  }
+  .homeHomePage {
+    margin-top: 15px;
+  }
 }
-.homeHomePage svg g{
-  stroke: #fff;
-}
-.homeHomePage img,
-.home img{
-  height: 50px;
-}
-.homeHomePage{
-  margin-top: 15px;
-}
+
+.signupLink {
+  color: #edf0f5;
 }

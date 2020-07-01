@@ -154,6 +154,7 @@ class TopbarComponent extends Component {
       parentComponent = null,
     } = this.props;
     console.log('currentPage', currentPage);
+    console.log('props: ', this.props);
 
     const { mobilemenu, mobilesearch, address, origin, bounds } = parse(location.search, {
       latlng: ['origin'],
@@ -237,6 +238,11 @@ class TopbarComponent extends Component {
             // onClick={this.handleMobileSearchOpen}
             title={intl.formatMessage({ id: 'Topbar.searchIcon' })}
           >
+            {!isAuthenticated ? (
+              <NamedLink name="SignupPage" className={css.signupLink}>
+                <FormattedMessage id="Topbar.mentorSignupLink" />
+              </NamedLink>
+            ) : null}
             {/* <SearchIcon className={css.searchMenuIcon} /> */}
           </Button>
         </div>
