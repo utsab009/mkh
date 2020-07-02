@@ -102,6 +102,7 @@
 
 .createNewListingLink {
   @apply --marketplaceButtonStyles;
+  padding: 0;
 }
 
 .authenticationGreeting {

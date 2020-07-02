@@ -242,6 +242,10 @@ class TopbarComponent extends Component {
               <NamedLink name="SignupPage" className={css.signupLink}>
                 <FormattedMessage id="Topbar.mentorSignupLink" />
               </NamedLink>
+            ) : isMentor ? (
+              <NamedLink className={css.signupLink} name="NewListingPage">
+                <FormattedMessage id="Topbar.mentorRoleCreationLink" />
+              </NamedLink>
             ) : null}
             {/* <SearchIcon className={css.searchMenuIcon} /> */}
           </Button>

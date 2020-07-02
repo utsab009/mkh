@@ -25,9 +25,16 @@ import {
 import css from './Footer.css';
 
 const renderSocialMediaLinks = intl => {
-  const { siteFacebookPage, siteInstagramPage, siteTwitterHandle, siteLinkedinPage, siteQuoraPage, sitePinterestPage } = config;
+  const {
+    siteFacebookPage,
+    siteInstagramPage,
+    siteTwitterHandle,
+    siteLinkedinPage,
+    siteQuoraPage,
+    sitePinterestPage,
+  } = config;
   const siteTwitterPage = twitterPageURL(siteTwitterHandle);
-  console.log("siteLinkedinPage",siteLinkedinPage);
+  console.log('siteLinkedinPage', siteLinkedinPage);
   const goToFb = intl.formatMessage({ id: 'Footer.goToFacebook' });
   const goToInsta = intl.formatMessage({ id: 'Footer.goToInstagram' });
   const goToTwitter = intl.formatMessage({ id: 'Footer.goToTwitter' });
@@ -49,7 +56,6 @@ const renderSocialMediaLinks = intl => {
     </ExternalLink>
   ) : null;
 
-
   const instragramLink = siteInstagramPage ? (
     <ExternalLink
       key="linkToInstagram"
@@ -66,7 +72,7 @@ const renderSocialMediaLinks = intl => {
       key="linkToLinkedin"
       href={siteLinkedinPage}
       className={css.icon}
-      title={"go To Linked in"}
+      title={'go To Linked in'}
     >
       <IconSocialMediaLinkedin />
     </ExternalLink>
@@ -77,7 +83,7 @@ const renderSocialMediaLinks = intl => {
       key="linkToLinkedin"
       href={siteQuoraPage}
       className={css.icon}
-      title={"go To Quora"}
+      title={'go To Quora'}
     >
       <IconSocialMediaQuora />
     </ExternalLink>
@@ -88,12 +94,14 @@ const renderSocialMediaLinks = intl => {
       key="linkToLinkedin"
       href={sitePinterestPage}
       className={css.icon}
-      title={"go To Pinterest"}
+      title={'go To Pinterest'}
     >
       <IconSocialMediaPinterest />
     </ExternalLink>
   ) : null;
-  return [fbLink, twitterLink, instragramLink, linkedinLink, quoraLink, pinterestLink].filter(v => v != null);
+  return [fbLink, twitterLink, instragramLink, linkedinLink, quoraLink, pinterestLink].filter(
+    v => v != null
+  );
 };
 
 const Footer = props => {
@@ -127,11 +135,11 @@ const Footer = props => {
             </div>
             <div className={css.infoLinks}>
               <ul className={css.list}>
-                <li className={css.listItem}>
+                {/* <li className={css.listItem}>
                   <NamedLink name="NewListingPage" className={css.link}>
                     <FormattedMessage id="Footer.toNewListingPage" />
                   </NamedLink>
-                </li>
+                </li> */}
                 <li className={css.listItem}>
                   <NamedLink name="AboutPage" className={css.link}>
                     <FormattedMessage id="Footer.toAboutPage" />
@@ -156,14 +164,21 @@ const Footer = props => {
             </div>
             <div className={`${css.searches} ${css.hrmSec}`}>
               <h3>Try A Mentor is part of the Beacon HRM Group. Visit our parent website today</h3>
-              
-              <span>
-                <a href="http://www.beaconhrm.com/"><img src={HrmImg3} /></a>
-                <a href="http://www.beaconhrm.com/"><img src={HrmImg1} /></a>
-                <a href="http://www.beaconhrm.com/"><img src={HrmImg4} /></a>
-                <a href="http://www.beaconhrm.com/"><img src={HrmImg2} /></a>
-              </span>
 
+              <span>
+                <a href="http://www.beaconhrm.com/">
+                  <img src={HrmImg3} />
+                </a>
+                <a href="http://www.beaconhrm.com/">
+                  <img src={HrmImg1} />
+                </a>
+                <a href="http://www.beaconhrm.com/">
+                  <img src={HrmImg4} />
+                </a>
+                <a href="http://www.beaconhrm.com/">
+                  <img src={HrmImg2} />
+                </a>
+              </span>
 
               {/* <ul className={css.list}>
                 <li className={css.listItem}>
@@ -293,11 +308,7 @@ const Footer = props => {
               </ul>
             </div> */}
             <div className={css.extraLinks}>
-              
               <div className={css.someLinks}>{socialMediaLinks}</div>
-
-
-
 
               <div className={css.legalMatters}>
                 <ul className={css.tosAndPrivacy}>
@@ -314,16 +325,9 @@ const Footer = props => {
                 </ul>
               </div>
             </div>
-
-
           </div>
 
-
-           <div className={css.copyright}>
-            © Beacon HRM 2020. All Right Reserved.
-           </div>
-
-
+          <div className={css.copyright}>© Beacon HRM 2020. All Right Reserved.</div>
 
           <div className={css.copyrightAndTermsMobile}>
             <NamedLink name="LandingPage" className={css.organizationCopyrightMobile}>

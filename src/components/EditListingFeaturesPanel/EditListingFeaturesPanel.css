@@ -49,6 +49,7 @@
   text-align: left;
   margin: 0 0 30px;
   font-size: 16px;
+  color: #0000ff;
 
   @media (max-width: 767px) {
     margin: 0 0 2px;

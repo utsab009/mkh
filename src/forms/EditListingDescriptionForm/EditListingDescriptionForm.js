@@ -122,7 +122,7 @@ const EditListingDescriptionFormComponent = props => (
             id={'youtubelink'}
             name="youtubeLink"
             autoComplete="youtube link"
-            label={'YouTube link(Optional)'}
+            label={'YouTube link (Optional)'}
             placeholder={
               'Video explaining why you are the ideal Mentor in general or for this specific role'
             }
