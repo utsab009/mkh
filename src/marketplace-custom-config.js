@@ -203,7 +203,7 @@ export const Civilandstructuralengineering = [
   { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Civil engineer', label: 'Civil Engineer' },
   { key: 'Engineering geologist', label: 'Engineering Geologist' },
-  { key: 'Geomatics/land surveyor', label: 'Geomatics/land Surveyor' },
+  { key: 'Geomatics land surveyor', label: 'Geomatics/land Surveyor' },
   { key: 'Site engineer', label: 'Site Engineer' },
   { key: 'Structural engineer', label: 'Structural Engineer' },
   { key: 'Transportation planner', label: 'Transportation Planner' },
@@ -214,14 +214,14 @@ export const PublicServices = [
   { key: 'Generalist', label: 'All Generalists Roles (grade focus)' },
   { key: 'Academic librarian', label: 'Academic Librarian' },
   { key: 'Advice worker', label: 'Advice Worker' },
-  { key: 'Aid worker/humanitarian worker', label: 'Aid Worker/Humanitarian Worker' },
+  { key: 'Aid workerhumanitarian worker', label: 'Aid Worker/Humanitarian Worker' },
   { key: 'Amenity horticulturist', label: 'Amenity Horticulturist' },
   { key: 'Archivist', label: 'Archivist' },
   { key: 'Armed forces officer', label: 'Armed Forces Officer' },
   { key: 'Arts administrator', label: 'Arts Administrator' },
   { key: 'Border force officer', label: 'Border Force Officer' },
   {
-    key: 'Building control officer/surveyor',
+    key: 'Building control officersurveyor',
     label: 'Building Control Officer/Surveyor',
   },
   {
@@ -247,7 +247,7 @@ export const PublicServices = [
   },
   { key: 'Customs officer', label: 'Customs Officer' },
   {
-    key: 'Debt/finance adviser',
+    key: 'Debtfinance adviser',
     label: 'Debt/finance Adviser',
   },
   {
@@ -404,11 +404,11 @@ export const nonPublicRoles = [
 
 export const publicRoles = [
   { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
-  { key: 'AA / CO / SO / EO', label: 'AA / CO / SO / EO' },
-  { key: 'AO / HEO / FS-HEO / SEO', label: 'AO / HEO / FS-HEO / SEO' },
-  { key: 'Grade 5, 6 & 7 / APO / PO', label: 'Grade 5, 6 & 7 / APO / PO' },
+  { key: 'AA CO SO EO', label: 'AA / CO / SO / EO' },
+  { key: 'AO HEO FS-HEO SEO', label: 'AO / HEO / FS-HEO / SEO' },
+  { key: 'Grade 5, 6 & 7 APO PO', label: 'Grade 5, 6 & 7 / APO / PO' },
   {
-    key: 'Grade 2 / Assistant Secretary / Perm. Sec. / Sec. Gen.',
+    key: 'Grade 2 Assistant Secretary Perm Sec Sec Gen',
     label: 'Grade 2 / Assistant Secretary / Perm. Sec. / Sec. Gen.',
   },
 ];
@@ -1655,7 +1655,7 @@ export const InformationTechnology = [
   { key: 'Technical Business Analyst', label: 'Technical Business Analyst' },
   { key: 'Technical Support', label: 'Technical Support' },
   { key: 'UI Developer', label: 'UI Developer' },
-  { key: 'UI/UX Architect', label: 'UI/UX Architect' },
+  { key: 'UIUX Architect', label: 'UI/UX Architect' },
   { key: 'UX Designer', label: 'UX Designer' },
   { key: 'VoIP Network Engineer', label: 'VoIP Network Engineer' },
   { key: 'Web Designer', label: 'Web Designer' },
