@@ -47,6 +47,11 @@
   }
 }
 
+.bookingHeading {
+  margin: 15px 48px;
+  font-size: 20px;
+}
+
 .logoMobile {
   display: block;
   height: 50px;
@@ -349,14 +354,14 @@
 @media (max-width: 1023px) {
   .aspectWrapper {
     padding-bottom: 8.667%;
-}
-.avatarWrapper{
-  margin-left: 24px;
-}
+  }
+  .avatarWrapper {
+    margin-left: 24px;
+  }
 }
 
 @media (max-width: 575px) {
-.avatarWrapper{
-  margin-top: 0;
-}
+  .avatarWrapper {
+    margin-top: 0;
+  }
 }

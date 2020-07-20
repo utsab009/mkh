@@ -105,22 +105,65 @@ export class ListingPageComponent extends Component {
     const listingId = new UUID(params.id);
     const listing = getListing(listingId);
 
-    const { bookingStartTime, bookingEndTime, ...restOfValues } = values;
-    const bookingStart = timestampToDate(bookingStartTime);
-    const bookingEnd = timestampToDate(bookingEndTime);
+    // const { bookingStartTime, bookingEndTime, ...restOfValues } = values;
+    // const bookingStart = timestampToDate(bookingStartTime);
+    // const bookingEnd = timestampToDate(bookingEndTime);
+    const { bookingStartTime, bookingEndTime, bookingEndDate, bookingStartDate, seats } = values;
 
+    // const bookingData = {
+    //   quantity: calculateQuantityFromHours(bookingStart, bookingEnd),
+    //  units: calculateQuantityFromHours(bookingStart, bookingEnd),
+    //   ...restOfValues,
+    // };
     const bookingData = {
-      quantity: calculateQuantityFromHours(bookingStart, bookingEnd),
-      ...restOfValues,
+      // quantity: 1,
+      // units: 1,
+      ...values,
     };
 
+    const FormData = (...args) => {
+      let data = {
+        bookingStartTime: timestampToDate(args[0]),
+        bookingEndTime: timestampToDate(args[1]),
+        bookingEndDate: args[2],
+        bookingStartDate: args[3],
+        quantity: calculateQuantityFromHours(timestampToDate(args[0]), timestampToDate(args[1])),
+        // seats: args[4],
+        // quantity: calculateQuantityFromHours(timestampToDate(args[0]), timestampToDate(args[1])),
+        // units: calculateQuantityFromHours(timestampToDate(args[0]), timestampToDate(args[1])),
+      };
+      return data;
+    };
+
+    let bookingDates = [];
+    values &&
+      values.bookingStartDate.length &&
+      values.bookingStartDate.forEach((item, i) => {
+        // bookingDates[i].bookingStart = item.date;
+        bookingDates.push(
+          FormData(
+            bookingStartTime[i],
+            bookingEndTime[i],
+            bookingEndDate[i],
+            bookingStartDate[i]
+            // seats[i]
+          )
+        );
+      });
+
+    // const initialValues = {
+    //   listing,
+    //   bookingData,
+    //   bookingDates: {
+    //     bookingStart,
+    //     bookingEnd,
+    //   },
+    //   confirmPaymentError: null,
+    // };
     const initialValues = {
       listing,
       bookingData,
-      bookingDates: {
-        bookingStart,
-        bookingEnd,
-      },
+      bookingDates,
       confirmPaymentError: null,
     };
 
@@ -206,7 +249,7 @@ export class ListingPageComponent extends Component {
       yogaStylesConfig,
       sectorsConfig,
     } = this.props;
-
+    console.log('in list page props', this.props);
     let ratingSum = 0;
     reviews.map(r => {
       ratingSum += Number(r.attributes.rating);
@@ -489,7 +532,7 @@ export class ListingPageComponent extends Component {
                         ? workExp.map((item, index) => {
                             if (index < 4) {
                               return (
-                                <li>
+                                <li key={index}>
                                   {item.position} in {item.company} for {item.duration}{' '}
                                 </li>
                               );

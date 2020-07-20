@@ -176,31 +176,34 @@ export class CheckoutPageComponent extends Component {
       pageData.listing.id &&
       pageData.bookingData &&
       pageData.bookingDates &&
-      pageData.bookingDates.bookingStart &&
-      pageData.bookingDates.bookingEnd &&
-      pageData.bookingData.quantity &&
+      pageData.bookingDates.length &&
+      // pageData.bookingDates.bookingStart &&
+      // pageData.bookingDates.bookingEnd &&
+      // pageData.bookingData.quantity &&
       !isBookingCreated;
 
     if (shouldFetchSpeculatedTransaction) {
       const listingId = pageData.listing.id;
-      const { bookingStart, bookingEnd } = pageData.bookingDates;
-      const { quantity } = pageData.bookingData;
-
-      // Fetch speculated transaction for showing price in booking breakdown
-      // NOTE: if unit type is line-item/units, quantity needs to be added.
-      // The way to pass it to checkout page is through pageData.bookingData
-      fetchSpeculatedTransaction({
-        listingId,
-        bookingStart,
-        bookingEnd,
-        quantity,
-      });
+      if (pageData.bookingDates.length && pageData.bookingDates.length > 0)
+        pageData.bookingDates.forEach((element, i) => {
+          // Fetch speculated transaction for showing price in booking breakdown
+          // NOTE: if unit type is line-item/units, quantity needs to be added.
+          // The way to pass it to checkout page is through pageData.bookingData
+          fetchSpeculatedTransaction({
+            listingId,
+            bookingStart: element.bookingStartTime,
+            bookingEnd: element.bookingEndTime,
+            quantity: element.quantity,
+            // units: 1,
+            // seats: 1,
+          });
+        });
     }
 
     this.setState({ pageData: pageData || {}, dataLoaded: true });
   }
 
-  handlePaymentIntent(handlePaymentParams) {
+  handlePaymentIntent(handlePaymentParams, index) {
     const {
       currentUser,
       stripeCustomerFetched,
@@ -369,18 +372,25 @@ export class CheckoutPageComponent extends Component {
         ? { setupPaymentMethodForSaving: true }
         : {};
 
-    const orderParams = {
-      listingId: pageData.listing.id,
-      bookingStart: tx.booking.attributes.start,
-      bookingEnd: tx.booking.attributes.end,
-      quantity: pageData.bookingData ? pageData.bookingData.quantity : null,
-      ...optionalPaymentParams,
-    };
+    let orderParams = tx.map((item, i) => {
+      return {
+        listingId: pageData.listing.id,
+        bookingStart: item.booking.attributes.start,
+        bookingEnd: item.booking.attributes.end,
+        quantity: pageData.bookingDates
+          ? pageData.bookingDates.length > 0 && pageData.bookingDates[i].quantity
+          : null,
+        // units: 1,
+        // seats: 1,
+        ...optionalPaymentParams,
+      };
+    });
+    console.log({ orderParams });
 
-    return handlePaymentIntentCreation(orderParams);
+    return handlePaymentIntentCreation(orderParams[index]);
   }
 
-  handleSubmit(values) {
+  async handleSubmit(values) {
     if (this.state.submitting) {
       return;
     }
@@ -434,14 +444,27 @@ export class CheckoutPageComponent extends Component {
       saveAfterOnetimePayment: !!saveAfterOnetimePayment,
     };
 
-    this.handlePaymentIntent(requestPaymentParams)
+    const storedTx = ensureTransaction(this.state.pageData.transaction);
+    const tx = speculatedTransaction ? speculatedTransaction : storedTx;
+    let submitVal = [];
+    console.log('storeTx in submit', storedTx);
+    console.log({ requestPaymentParams });
+    for (let i = 0; i < tx.length; i++) {
+      submitVal.push(await this.handlePaymentIntent(requestPaymentParams, i));
+    }
+
+    console.log({ submitVal });
+    Promise.all(submitVal)
       .then(res => {
-        const { orderId, messageSuccess, paymentMethodSaved } = res;
+        const { orderId, messageSuccess, paymentMethodSaved } = res[0];
         this.setState({ submitting: false });
 
         const routes = routeConfiguration();
         const initialMessageFailedToTransaction = messageSuccess ? null : orderId;
-        const orderDetailsPath = pathByRouteName('OrderDetailsPage', routes, { id: orderId.uuid });
+        const orderDetailsPath =
+          res.length > 1
+            ? pathByRouteName('InboxPage', routes, { tab: 'orders' })
+            : pathByRouteName('OrderDetailsPage', routes, { id: orderId.uuid });
         const initialValues = {
           initialMessageFailedToTransaction,
           savePaymentMethodFailed: !paymentMethodSaved,
@@ -516,7 +539,9 @@ export class CheckoutPageComponent extends Component {
 
     const { listing, bookingDates, transaction } = this.state.pageData;
     const existingTransaction = ensureTransaction(transaction);
-    const speculatedTransaction = ensureTransaction(speculatedTransactionMaybe, {}, null);
+    const speculatedTransaction = speculatedTransactionMaybe.map((item, i) => {
+      return ensureTransaction(speculatedTransactionMaybe[i], {}, null);
+    });
     const currentListing = ensureListing(listing);
     const currentAuthor = ensureUser(currentListing.author);
 
@@ -555,8 +580,9 @@ export class CheckoutPageComponent extends Component {
     const hasListingAndAuthor = !!(currentListing.id && currentAuthor.id);
     const hasBookingDates = !!(
       bookingDates &&
-      bookingDates.bookingStart &&
-      bookingDates.bookingEnd
+      bookingDates.length > 0 &&
+      bookingDates[0].bookingEndTime &&
+      bookingDates[0].bookingStartTime
     );
     const hasRequiredData = hasListingAndAuthor && hasBookingDates;
     const canShowPage = hasRequiredData && !isOwnListing;
@@ -577,22 +603,29 @@ export class CheckoutPageComponent extends Component {
     // Show breakdown only when speculated transaction and booking are loaded
     // (i.e. have an id)
     const tx = existingTransaction.booking ? existingTransaction : speculatedTransaction;
-    const txBooking = ensureBooking(tx.booking);
+    const txBooking = tx && tx.length && tx.map((item, i) => ensureBooking(tx[i].booking));
     const timeZone = currentListing.attributes.availabilityPlan
       ? currentListing.attributes.availabilityPlan.timezone
       : 'Etc/UTC';
     const breakdown =
-      tx.id && txBooking.id ? (
-        <BookingBreakdown
-          className={css.bookingBreakdown}
-          userRole="customer"
-          unitType={config.bookingUnitType}
-          transaction={tx}
-          booking={txBooking}
-          dateType={DATE_TYPE_DATETIME}
-          timeZone={timeZone}
-        />
-      ) : null;
+      txBooking && txBooking.length && txBooking[0].id
+        ? txBooking.map((item, i) => {
+            return (
+              <div key={i}>
+                <div className={css.bookingHeading}>Booking - {i + 1}</div>
+                <BookingBreakdown
+                  className={css.bookingBreakdown}
+                  userRole="customer"
+                  unitType={config.bookingUnitType}
+                  transaction={tx[i]}
+                  booking={txBooking[i]}
+                  dateType={DATE_TYPE_DATETIME}
+                  timeZone={timeZone}
+                />
+              </div>
+            );
+          })
+        : null;
 
     const isPaymentExpired = checkIsPaymentExpired(existingTransaction);
     const hasDefaultPaymentMethod = !!(
@@ -867,17 +900,17 @@ CheckoutPageComponent.defaultProps = {
 CheckoutPageComponent.propTypes = {
   scrollingDisabled: bool.isRequired,
   listing: propTypes.listing,
-  bookingData: object,
-  bookingDates: shape({
-    bookingStart: instanceOf(Date).isRequired,
-    bookingEnd: instanceOf(Date).isRequired,
-  }),
+  // bookingData: object,
+  // bookingDates: shape({
+  //   bookingStart: instanceOf(Date).isRequired,
+  //   bookingEnd: instanceOf(Date).isRequired,
+  // }),
   fetchStripeCustomer: func.isRequired,
   stripeCustomerFetched: bool.isRequired,
   fetchSpeculatedTransaction: func.isRequired,
   speculateTransactionInProgress: bool.isRequired,
   speculateTransactionError: propTypes.error,
-  speculatedTransaction: propTypes.transaction,
+  speculatedTransaction: propTypes.array,
   transaction: propTypes.transaction,
   currentUser: propTypes.currentUser,
   params: shape({
