@@ -38,7 +38,7 @@ const initialState = {
   bookingDates: null,
   speculateTransactionInProgress: false,
   speculateTransactionError: null,
-  speculatedTransaction: null,
+  speculatedTransaction: [],
   transaction: null,
   initiateOrderError: null,
   confirmPaymentError: null,
@@ -56,13 +56,13 @@ export default function checkoutPageReducer(state = initialState, action = {}) {
         ...state,
         speculateTransactionInProgress: true,
         speculateTransactionError: null,
-        speculatedTransaction: null,
+        speculatedTransaction: [...state.speculatedTransaction],
       };
     case SPECULATE_TRANSACTION_SUCCESS:
       return {
         ...state,
         speculateTransactionInProgress: false,
-        speculatedTransaction: payload.transaction,
+        speculatedTransaction: [...state.speculatedTransaction, payload.transaction],
       };
     case SPECULATE_TRANSACTION_ERROR:
       console.error(payload); // eslint-disable-line no-console

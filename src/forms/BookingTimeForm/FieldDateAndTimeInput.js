@@ -20,6 +20,7 @@ import {
   nextMonthFn,
   prevMonthFn,
 } from '../../util/dates';
+import moment from 'moment';
 import { propTypes } from '../../util/types';
 import { bookingDateRequired } from '../../util/validators';
 import { FieldDateInput, FieldSelect } from '../../components';
@@ -115,16 +116,32 @@ const getAllTimeValues = (
   timeSlots,
   startDate,
   selectedStartTime,
-  selectedEndDate
+  selectedEndDate,
+  values
 ) => {
-  const startTimes = selectedStartTime
+  let times = getTimeSlots(timeSlots, startDate, timeZone);
+  console.log({ times });
+  let startTimes = selectedStartTime
     ? []
-    : getAvailableStartTimes(
-        intl,
-        timeZone,
-        startDate,
-        getTimeSlots(timeSlots, startDate, timeZone)
-      );
+    : getAvailableStartTimes(intl, timeZone, startDate, times);
+
+  let hasVal =
+    values && values.bookingStartTime && values.bookingStartTime.length > 0 ? true : false;
+
+  console.log('before start', startTimes, values);
+  console.log({ selectedStartTime });
+
+  if (hasVal) {
+    console.log('values in val', values.bookingStartTime);
+    startTimes =
+      startTimes.length > 0 &&
+      startTimes.filter(time => {
+        let findVal = values.bookingStartTime.includes(time.timestamp);
+        console.log('find', findVal);
+        return findVal ? false : true;
+      });
+  }
+  console.log('after start', startTimes, values);
 
   const startTime = selectedStartTime
     ? selectedStartTime
@@ -155,7 +172,7 @@ const getAllTimeValues = (
   return { startTime, endDate, endTime, selectedTimeSlot };
 };
 
-const getMonthlyTimeSlots = (monthlyTimeSlots, date, timeZone) => {
+const getMonthlyTimeSlots = (monthlyTimeSlots, date, timeZone, values) => {
   const monthId = monthIdStringInTimeZone(date, timeZone);
 
   return !monthlyTimeSlots || Object.keys(monthlyTimeSlots).length === 0
@@ -244,13 +261,15 @@ class FieldDateAndTimeInput extends Component {
     );
   }
 
-  onBookingStartDateChange = value => {
-    const { monthlyTimeSlots, timeZone, intl, form } = this.props;
+  onBookingStartDateChange = (value, formId) => {
+    console.log('start date change', value, formId, this.props);
+    const { monthlyTimeSlots, timeZone, intl, form, values } = this.props;
+
     if (!value || !value.date) {
       form.batch(() => {
-        form.change('bookingStartTime', null);
-        form.change('bookingEndDate', { date: null });
-        form.change('bookingEndTime', null);
+        form.change(`bookingStartTime.${formId}`, null);
+        form.change(`bookingEndDate.${formId}`, { date: null });
+        form.change(`bookingEndTime.${formId}`, null);
       });
       // Reset the currentMonth too if bookingStartDate is cleared
       this.setState({ currentMonth: getMonthStartInTimeZone(TODAY, timeZone) });
@@ -261,27 +280,60 @@ class FieldDateAndTimeInput extends Component {
     // This callback function (onBookingStartDateChange) is called from react-dates component.
     // It gets raw value as a param - browser's local time instead of time in listing's timezone.
     const startDate = timeOfDayFromLocalToTimeZone(value.date, timeZone);
-    const timeSlots = getMonthlyTimeSlots(monthlyTimeSlots, this.state.currentMonth, timeZone);
+    const timeSlots = getMonthlyTimeSlots(
+      monthlyTimeSlots,
+      this.state.currentMonth,
+      timeZone,
+      values
+    );
     const timeSlotsOnSelectedDate = getTimeSlots(timeSlots, startDate, timeZone);
 
     const { startTime, endDate, endTime } = getAllTimeValues(
       intl,
       timeZone,
       timeSlotsOnSelectedDate,
-      startDate
+      startDate,
+      null,
+      null,
+      values
     );
+    // console.log('vvvvv', timeSlots, value, timeSlotsOnSelectedDate);
+    // console.log('vvvvv2', startTime, endDate, endTime);
 
+    // selectedDate['Thu Jul 16 2020 12:00:00 GMT+0530 (India Standard Time)'] = {
+    //   timeslot: timeslot,
+    //   selectedTime: '',
+    // };
+    if (!startTime || !endDate || !endTime) {
+      alert('No timeslot is available in selected date, Please select another date.');
+      form.batch(() => {
+        form.change(`bookingStartTime.${formId}`, null);
+        form.change(`bookingEndDate.${formId}`, { date: null });
+        form.change(`bookingEndTime.${formId}`, null);
+      });
+      // values.bookingStartDate[formId] = null;
+      // Reset the currentMonth too if bookingStartDate is cleared
+      // this.setState({ currentMonth: getMonthStartInTimeZone(TODAY, timeZone) });
+
+      return;
+    }
     form.batch(() => {
-      form.change('bookingStartTime', startTime);
-      form.change('bookingEndDate', { date: endDate });
-      form.change('bookingEndTime', endTime);
+      form.change(`bookingStartTime.${formId}`, startTime);
+      form.change(`bookingEndDate.${formId}`, { date: endDate });
+      form.change(`bookingEndTime.${formId}`, endTime);
     });
   };
 
-  onBookingStartTimeChange = value => {
+  onBookingStartTimeChange = (value, formId) => {
+    console.log('start time change', value, formId, this.props);
     const { monthlyTimeSlots, timeZone, intl, form, values } = this.props;
-    const timeSlots = getMonthlyTimeSlots(monthlyTimeSlots, this.state.currentMonth, timeZone);
-    const startDate = values.bookingStartDate.date;
+    const timeSlots = getMonthlyTimeSlots(
+      monthlyTimeSlots,
+      this.state.currentMonth,
+      timeZone,
+      values
+    );
+    const startDate = values.bookingStartDate[formId].date;
     const timeSlotsOnSelectedDate = getTimeSlots(timeSlots, startDate, timeZone);
 
     const { endDate, endTime } = getAllTimeValues(
@@ -289,19 +341,32 @@ class FieldDateAndTimeInput extends Component {
       timeZone,
       timeSlotsOnSelectedDate,
       startDate,
-      value
+      value,
+      values
     );
 
+    console.log('vvvvvssssss', endDate.bookingEndDate[formId].date, endTime);
+
+    if (!endDate || !endTime) {
+      alert('no end time available');
+      form.batch(() => {
+        form.change(`bookingEndDate.${formId}`, { date: null });
+        form.change(`bookingEndTime.${formId}`, null);
+      });
+
+      return;
+    }
+
     form.batch(() => {
-      form.change('bookingEndDate', { date: endDate });
-      form.change('bookingEndTime', endTime);
+      form.change(`bookingEndDate.${formId}`, { date: endDate.bookingEndDate[formId].date });
+      form.change(`bookingEndTime.${formId}`, endTime);
     });
   };
 
-  onBookingEndDateChange = value => {
+  onBookingEndDateChange = (value, formId) => {
     const { monthlyTimeSlots, timeZone, intl, form, values } = this.props;
     if (!value || !value.date) {
-      form.change('bookingEndTime', null);
+      form.change(`bookingEndTime.${formId}`, null);
       return;
     }
 
@@ -311,7 +376,12 @@ class FieldDateAndTimeInput extends Component {
 
     const { bookingStartDate, bookingStartTime } = values;
     const startDate = bookingStartDate.date;
-    const timeSlots = getMonthlyTimeSlots(monthlyTimeSlots, this.state.currentMonth, timeZone);
+    const timeSlots = getMonthlyTimeSlots(
+      monthlyTimeSlots,
+      this.state.currentMonth,
+      timeZone,
+      values
+    );
     const timeSlotsOnSelectedDate = getTimeSlots(timeSlots, startDate, timeZone);
 
     const { endTime } = getAllTimeValues(
@@ -320,10 +390,11 @@ class FieldDateAndTimeInput extends Component {
       timeSlotsOnSelectedDate,
       startDate,
       bookingStartTime,
-      endDate
+      endDate,
+      values
     );
 
-    form.change('bookingEndTime', endTime);
+    form.change(`bookingEndTime.${formId}`, endTime);
   };
 
   isOutsideRange(day, bookingStartDate, selectedTimeSlot, timeZone) {
@@ -360,10 +431,23 @@ class FieldDateAndTimeInput extends Component {
     const classes = classNames(rootClassName || css.root, className);
 
     const bookingStartDate =
-      values.bookingStartDate && values.bookingStartDate.date ? values.bookingStartDate.date : null;
-    const bookingStartTime = values.bookingStartTime ? values.bookingStartTime : null;
+      values.bookingStartDate &&
+      values.bookingStartDate.length > 0 &&
+      values.bookingStartDate[formId]
+        ? values.bookingStartDate[formId].date
+        : null;
+
+    const bookingStartTime =
+      values.bookingStartTime &&
+      values.bookingStartTime.length > 0 &&
+      values.bookingStartTime[formId]
+        ? values.bookingStartTime[formId]
+        : null;
+
     const bookingEndDate =
-      values.bookingEndDate && values.bookingEndDate.date ? values.bookingEndDate.date : null;
+      values.bookingEndDate && values.bookingEndDate.length > 0 && values.bookingEndDate[formId]
+        ? values.bookingEndDate[formId].date
+        : null;
 
     const startTimeDisabled = !bookingStartDate;
     const endDateDisabled = !bookingStartDate || !bookingStartTime;
@@ -372,13 +456,16 @@ class FieldDateAndTimeInput extends Component {
     const timeSlotsOnSelectedMonth = getMonthlyTimeSlots(
       monthlyTimeSlots,
       this.state.currentMonth,
-      timeZone
+      timeZone,
+      values
     );
+
     const timeSlotsOnSelectedDate = getTimeSlots(
       timeSlotsOnSelectedMonth,
       bookingStartDate,
       timeZone
     );
+    console.log({ timeSlotsOnSelectedDate });
 
     const availableStartTimes = getAvailableStartTimes(
       intl,
@@ -398,7 +485,8 @@ class FieldDateAndTimeInput extends Component {
       timeSlotsOnSelectedDate,
       bookingStartDate,
       bookingStartTime || firstAvailableStartTime,
-      bookingEndDate || bookingStartDate
+      bookingEndDate || bookingStartDate,
+      values
     );
 
     const availableEndTimes = getAvailableEndTimes(
@@ -443,8 +531,8 @@ class FieldDateAndTimeInput extends Component {
           <div className={classNames(css.field, css.startDate)}>
             <FieldDateInput
               className={css.fieldDateInput}
-              name="bookingStartDate"
-              id={formId ? `${formId}.bookingStartDate` : 'bookingStartDate'}
+              name={formId ? `bookingStartDate.${formId}` : 'bookingStartDate'}
+              id={formId ? `bookingStartDate.${formId}` : 'bookingStartDate'}
               label={startDateInputProps.label}
               placeholderText={startDateInputProps.placeholderText}
               format={v =>
@@ -454,7 +542,7 @@ class FieldDateAndTimeInput extends Component {
                 v && v.date ? { date: timeOfDayFromLocalToTimeZone(v.date, timeZone) } : v
               }
               isDayBlocked={isDayBlocked}
-              onChange={this.onBookingStartDateChange}
+              onChange={val => this.onBookingStartDateChange(val, formId)}
               onPrevMonthClick={() => this.onMonthClick(prevMonthFn)}
               onNextMonthClick={() => this.onMonthClick(nextMonthFn)}
               navNext={<Next currentMonth={this.state.currentMonth} timeZone={timeZone} />}
@@ -469,8 +557,8 @@ class FieldDateAndTimeInput extends Component {
           <div className={classNames(css.field, css.endDateHidden)}>
             <FieldDateInput
               {...endDateInputProps}
-              name="bookingEndDate"
-              id={formId ? `${formId}.bookingEndDate` : 'bookingEndDate'}
+              name={`bookingEndDate.${formId}`}
+              id={formId ? `bookingEndDate.${formId}` : 'bookingEndDate'}
               className={css.fieldDateInput}
               label={endDateInputProps.label}
               placeholderText={endDateInputProps.placeholderText}
@@ -481,7 +569,7 @@ class FieldDateAndTimeInput extends Component {
                 v && v.date ? { date: timeOfDayFromLocalToTimeZone(v.date, timeZone) } : v
               }
               isDayBlocked={isDayBlocked}
-              onChange={this.onBookingEndDateChange}
+              onChange={val => this.onBookingEndDateChange(val, formId)}
               onPrevMonthClick={() => this.onMonthClick(prevMonthFn)}
               onNextMonthClick={() => this.onMonthClick(nextMonthFn)}
               navNext={<Next currentMonth={this.state.currentMonth} timeZone={timeZone} />}
@@ -499,13 +587,13 @@ class FieldDateAndTimeInput extends Component {
 
           <div className={css.field}>
             <FieldSelect
-              name="bookingStartTime"
-              id={formId ? `${formId}.bookingStartTime` : 'bookingStartTime'}
+              name={`bookingStartTime.${formId}`}
+              id={formId ? `bookingStartTime.${formId}` : 'bookingStartTime'}
               className={bookingStartDate ? css.fieldSelect : css.fieldSelectDisabled}
               selectClassName={bookingStartDate ? css.select : css.selectDisabled}
               label={startTimeLabel}
               disabled={startTimeDisabled}
-              onChange={this.onBookingStartTimeChange}
+              onChange={val => this.onBookingStartTimeChange(val, formId)}
             >
               {bookingStartDate ? (
                 availableStartTimes.map(p => (
@@ -523,8 +611,8 @@ class FieldDateAndTimeInput extends Component {
 
           <div className={css.field}>
             <FieldSelect
-              name="bookingEndTime"
-              id={formId ? `${formId}.bookingEndTime` : 'bookingEndTime'}
+              name={`bookingEndTime.${formId}`}
+              id={formId ? `bookingEndTime.${formId}` : 'bookingEndTime'}
               className={bookingStartDate ? css.fieldSelect : css.fieldSelectDisabled}
               selectClassName={bookingStartDate ? css.select : css.selectDisabled}
               label={endTimeLabel}
