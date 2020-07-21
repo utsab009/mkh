@@ -23,7 +23,7 @@ import {
 import moment from 'moment';
 import { propTypes } from '../../util/types';
 import { bookingDateRequired } from '../../util/validators';
-import { FieldDateInput, FieldSelect } from '../../components';
+import { FieldDateInput, FieldSelect, InlineTextButton } from '../../components';
 
 import NextMonthIcon from './NextMonthIcon';
 import PreviousMonthIcon from './PreviousMonthIcon';
@@ -136,7 +136,16 @@ const getAllTimeValues = (
     startTimes =
       startTimes.length > 0 &&
       startTimes.filter(time => {
-        let findVal = values.bookingStartTime.includes(time.timestamp);
+        let findVal = values.bookingStartTime.some((item, i) =>
+          isInRange(
+            timestampToDate(time.timestamp),
+            timestampToDate(values.bookingStartTime[i]),
+            timestampToDate(values.bookingEndTime[i]),
+            'hour',
+            timeZone
+          )
+        );
+        // let findVal = values.bookingStartTime.includes(time.timestamp);
         console.log('find', findVal);
         return findVal ? false : true;
       });
@@ -202,8 +211,8 @@ const Prev = props => {
 class FieldDateAndTimeInput extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
+      fieldError: null,
       currentMonth: getMonthStartInTimeZone(TODAY, props.timeZone),
     };
 
@@ -263,6 +272,9 @@ class FieldDateAndTimeInput extends Component {
 
   onBookingStartDateChange = (value, formId) => {
     console.log('start date change', value, formId, this.props);
+    this.setState({
+      fieldError: null,
+    });
     const { monthlyTimeSlots, timeZone, intl, form, values } = this.props;
 
     if (!value || !value.date) {
@@ -305,7 +317,9 @@ class FieldDateAndTimeInput extends Component {
     //   selectedTime: '',
     // };
     if (!startTime || !endDate || !endTime) {
-      alert('No timeslot is available in selected date, Please select another date.');
+      this.setState({
+        fieldError: 'No timeslot is available in selected date, Please select another date',
+      });
       form.batch(() => {
         form.change(`bookingStartTime.${formId}`, null);
         form.change(`bookingEndDate.${formId}`, { date: null });
@@ -553,6 +567,11 @@ class FieldDateAndTimeInput extends Component {
             />
           </div>
         </div>
+        {this.state.fieldError ? (
+          <p className={css.smallPrint} style={{ color: 'red' }}>
+            {this.state.fieldError}
+          </p>
+        ) : null}
         <div className={css.formRow}>
           <div className={classNames(css.field, css.endDateHidden)}>
             <FieldDateInput
@@ -630,6 +649,17 @@ class FieldDateAndTimeInput extends Component {
             </FieldSelect>
           </div>
         </div>
+        {formId > 0 && (
+          <InlineTextButton
+            style={{ marginTop: 10, fontSize: 16, marginBottom: 20, textAlign: 'left' }}
+            onClick={() => {
+              Object.keys(this.props.values).forEach((item, i) => delete values[item][formId]);
+              this.props.removeSelectedDate(formId);
+            }}
+          >
+            - Delete Slot
+          </InlineTextButton>
+        )}
       </div>
     );
   }

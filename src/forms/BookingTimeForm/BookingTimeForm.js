@@ -24,6 +24,7 @@ export class BookingTimeFormComponent extends Component {
     super(props);
     this.state = {
       bookingFormArray: [0],
+      fieldError: null,
     };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
@@ -79,6 +80,9 @@ export class BookingTimeFormComponent extends Component {
   }
 
   handleFormSubmit(e) {
+    this.setState({
+      fieldError: null,
+    });
     console.log(e, 'values in submit');
     console.log(this.props, 'props in submit');
     let { timeZone } = this.props;
@@ -96,13 +100,58 @@ export class BookingTimeFormComponent extends Component {
 
       if (count > 1) {
         console.log('count in if 1+ submit', count);
-        alert('Same booking hour selected in multiple occation');
+        this.setState({
+          fieldError: 'Same booking hour selected in multiple occation',
+        });
+        // alert('Same booking hour selected in multiple occation');
         return;
       }
       console.log('count in submit', count);
       this.props.onSubmit(e);
     }
   }
+
+  removeSelectedDate = index => {
+    console.log('idx', index);
+    let date = this.state.bookingFormArray.filter(item => item != index);
+    // console.log('3333 old array', this.state.bookingFormArray);
+    // console.log('3333 new array', date);
+    this.setState(
+      {
+        bookingFormArray: date,
+      },
+      () => console.log('3333 new bookingFormArray', this.state.bookingFormArray)
+    );
+  };
+
+  getEstimate = (values, index, otherProps) => {
+    const bookingData =
+      values &&
+      values.bookingStartTime &&
+      values.bookingStartTime.length > 0 &&
+      values.bookingEndTime[index] &&
+      values.bookingStartTime[index]
+        ? {
+            ...otherProps,
+            startDate: timestampToDate(values.bookingStartTime[index]),
+            endDate: timestampToDate(values.bookingEndTime[index]),
+            // Calculate the quantity as hours between the booking start and booking end
+            quantity: calculateQuantityFromHours(
+              JSON.parse(values.bookingStartTime[index]),
+              JSON.parse(values.bookingEndTime[index])
+            ),
+          }
+        : null;
+    console.log('3333 bookign data', bookingData);
+    return bookingData ? (
+      <div className={css.priceBreakdownContainer}>
+        <h3 className={css.priceBreakdownTitle}>
+          <FormattedMessage id="BookingTimeForm.priceBreakdownTitle" />
+        </h3>
+        <EstimatedBreakdownMaybe bookingData={bookingData} />
+      </div>
+    ) : null;
+  };
 
   render() {
     const { rootClassName, className, price: unitPrice, ...rest } = this.props;
@@ -150,7 +199,9 @@ export class BookingTimeFormComponent extends Component {
             onFetchTimeSlots,
             timeZone,
           } = fieldRenderProps;
-          console.log({ fieldRenderProps });
+          console.log('3333 error', fieldRenderProps.errors);
+          console.log('3333 values', fieldRenderProps);
+
           const startTime = values && values.bookingStartTime ? values.bookingStartTime : null;
           const endTime = values && values.bookingEndTime ? values.bookingEndTime : null;
 
@@ -224,7 +275,9 @@ export class BookingTimeFormComponent extends Component {
                           pristine={pristine}
                           timeZone={timeZone}
                           formId={`${item}`}
+                          removeSelectedDate={this.removeSelectedDate}
                         />
+                        {/* {this.getEstimate(values, item, { unitType, unitPrice, timeZone })} */}
                       </div>
                     );
                   })
@@ -255,6 +308,11 @@ export class BookingTimeFormComponent extends Component {
                   }
                 />
               </p>
+              {this.state.fieldError ? (
+                <p className={css.smallPrint} style={{ color: 'red' }}>
+                  {this.state.fieldError}
+                </p>
+              ) : null}
               <div className={submitButtonClasses}>
                 <PrimaryButton type="submit">
                   <FormattedMessage id="BookingTimeForm.requestToBook" />

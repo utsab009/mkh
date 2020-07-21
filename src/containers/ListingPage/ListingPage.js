@@ -123,11 +123,14 @@ export class ListingPageComponent extends Component {
 
     const FormData = (...args) => {
       let data = {
-        bookingStartTime: timestampToDate(args[0]),
-        bookingEndTime: timestampToDate(args[1]),
+        bookingStartTime: timestampToDate(JSON.parse(args[0])),
+        bookingEndTime: timestampToDate(JSON.parse(args[1])),
         bookingEndDate: args[2],
         bookingStartDate: args[3],
-        quantity: calculateQuantityFromHours(timestampToDate(args[0]), timestampToDate(args[1])),
+        quantity: calculateQuantityFromHours(
+          timestampToDate(JSON.parse(args[0])),
+          timestampToDate(JSON.parse(args[1]))
+        ),
         // seats: args[4],
         // quantity: calculateQuantityFromHours(timestampToDate(args[0]), timestampToDate(args[1])),
         // units: calculateQuantityFromHours(timestampToDate(args[0]), timestampToDate(args[1])),
