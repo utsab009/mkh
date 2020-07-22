@@ -152,7 +152,6 @@ export class BookingTimeFormComponent extends Component {
       </div>
     ) : null;
   };
-
   render() {
     const { rootClassName, className, price: unitPrice, ...rest } = this.props;
     const classes = classNames(rootClassName || css.root, className);
@@ -277,7 +276,7 @@ export class BookingTimeFormComponent extends Component {
                           formId={`${item}`}
                           removeSelectedDate={this.removeSelectedDate}
                         />
-                        {/* {this.getEstimate(values, item, { unitType, unitPrice, timeZone })} */}
+                        {this.getEstimate(values, item, { unitType, unitPrice, timeZone })}
                       </div>
                     );
                   })
