@@ -119,7 +119,7 @@ export const storedData = storageKey => {
 
     const isStoredDataValid =
       isFreshlySaved &&
-      isValidBookingDates(bookingDates) &&
+      // isValidBookingDates(bookingDates) &&
       isValidListing(listing) &&
       isTransactionValid;
 

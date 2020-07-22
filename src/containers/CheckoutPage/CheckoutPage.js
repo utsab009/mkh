@@ -148,7 +148,7 @@ export class CheckoutPageComponent extends Component {
     // Note: since there's need for data loading in "componentWillMount" function,
     //       this is added here instead of loadData static function.
     fetchStripeCustomer();
-
+    // console.log('1111 props in load initial', this.props);
     // Browser's back navigation should not rewrite data in session store.
     // Action is 'POP' on both history.back() and page refresh cases.
     // Action is 'PUSH' when user has directed through a link
@@ -156,6 +156,7 @@ export class CheckoutPageComponent extends Component {
     const hasNavigatedThroughLink = history.action === 'PUSH' || history.action === 'REPLACE';
 
     const hasDataInProps = !!(bookingData && bookingDates && listing) && hasNavigatedThroughLink;
+    // console.log('1111 has data in props', hasDataInProps);
     if (hasDataInProps) {
       // Store data only if data is passed through props and user has navigated through a link.
       storeData(bookingData, bookingDates, listing, transaction, STORAGE_KEY);
@@ -165,11 +166,10 @@ export class CheckoutPageComponent extends Component {
     const pageData = hasDataInProps
       ? { bookingData, bookingDates, listing, transaction }
       : storedData(STORAGE_KEY);
-
+    // console.log('1111 storedData(STORAGE_KEY)', storedData(STORAGE_KEY));
     // Check if a booking is already created according to stored data.
     const tx = pageData ? pageData.transaction : null;
     const isBookingCreated = tx && tx.booking && tx.booking.id;
-
     const shouldFetchSpeculatedTransaction =
       pageData &&
       pageData.listing &&
@@ -181,6 +181,8 @@ export class CheckoutPageComponent extends Component {
       // pageData.bookingDates.bookingEnd &&
       // pageData.bookingData.quantity &&
       !isBookingCreated;
+
+    // console.log('1111 data', pageData, shouldFetchSpeculatedTransaction, tx, isBookingCreated);
 
     if (shouldFetchSpeculatedTransaction) {
       const listingId = pageData.listing.id;
