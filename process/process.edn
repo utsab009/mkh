@@ -85,18 +85,20 @@
    :to :state/hold-payment-request}
 
   {:name :transition/complete
-   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["P1D"]}]}
+   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["PT10M"]}]}
+  ;;  :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["P1D"]}]}
    :actions []
    :from :state/booking-ended
    :to :state/payout-waiting}
 
   {:name :transition/payout-waiting-time
-   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["P1D"]}]}
+   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["PT10M"]}]}
+  ;;  :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["P1D"]}]}
    :actions [{:name :action/stripe-create-payout}]
    :from :state/payout-waiting
    :to :state/delivered}
 
-  {:name :transition/hold-payment-request-success
+  {:name :transition/pay-back-to-mentee
    :actor :actor.role/operator
    :actions
    [{:name :action/cancel-booking}
@@ -105,14 +107,15 @@
    :from :state/hold-payment-request
    :to :state/cancelled}
 
-  {:name :transition/hold-payment-request-fail
+  {:name :transition/pay-to-mentor
    :actor :actor.role/operator
    :actions [{:name :action/stripe-create-payout}]
    :from :state/hold-payment-request
    :to :state/delivered}
 
   {:name :transition/hold-payment-request-expired
-   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["P1D"]}]}
+   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["PT10M"]}]}
+  ;;  :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["P1D"]}]}
    :actions [{:name :action/stripe-create-payout}]
    :from :state/hold-payment-request
    :to :state/delivered}

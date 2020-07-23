@@ -53,10 +53,10 @@ export const TRANSITION_PAYOUT_WAITING_TIME = 'transition/payout-waiting-time';
 export const TRANSITION_HOLD_PAYMENT_REQ = 'transition/hold-payment-request';
 
 // Newly added: Initiate a refund when customer raise a refund request after order time over and with refund-period
-export const TRANSITION_HOLD_PAYMENT_REQ_SUCCESS = 'transition/hold-payment-request-success';
+export const TRANSITION_HOLD_PAYMENT_REQ_SUCCESS = 'transition/pay-back-to-mentee';
 
 // Newly added: ORDER COMPLETD
-export const TRANSITION_HOLD_PAYMENT_REQ_FAIL = 'transition/hold-payment-request-fail';
+export const TRANSITION_HOLD_PAYMENT_REQ_FAIL = 'transition/pay-to-mentor';
 
 // Newly added: ORDER COMPLETD
 export const TRANSITION_HOLD_PAYMENT_REQ_EXPIRED = 'transition/hold-payment-request-expired';
