@@ -463,7 +463,7 @@ class FieldDateAndTimeInput extends Component {
         ? values.bookingEndDate[formId].date
         : null;
 
-    const startTimeDisabled = !bookingStartDate;
+    const startTimeDisabled = !bookingStartDate || this.state.fieldError;
     const endDateDisabled = !bookingStartDate || !bookingStartTime;
     const endTimeDisabled = !bookingStartDate || !bookingStartTime || !bookingEndDate;
 
@@ -538,6 +538,14 @@ class FieldDateAndTimeInput extends Component {
      * 2. Remove the div containing the line between dates
      * 3. Remove the css related to hiding the booking end date from the bottom of the FieldDateAndTimeInput.css field
      */
+
+    // const showRemove =
+    //   (values &&
+    //     values.bookingStartTime &&
+    //     values.bookingStartTime.length == 1 &&
+    //     values.bookingStartTime[0]) ||
+    //   (values && values.bookingStartTime && formId > 0);
+    const showRemove = true;
 
     return (
       <div className={classes}>
@@ -649,17 +657,18 @@ class FieldDateAndTimeInput extends Component {
             </FieldSelect>
           </div>
         </div>
-        {formId > 0 && (
+        {showRemove ? (
           <InlineTextButton
             style={{ marginTop: 10, fontSize: 16, marginBottom: 20, textAlign: 'left' }}
-            onClick={() => {
+            onClick={e => {
+              e.preventDefault();
               Object.keys(this.props.values).forEach((item, i) => delete values[item][formId]);
               this.props.removeSelectedDate(formId);
             }}
           >
             - Delete Slot
           </InlineTextButton>
-        )}
+        ) : null}
       </div>
     );
   }

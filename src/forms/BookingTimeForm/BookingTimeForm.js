@@ -32,47 +32,35 @@ export class BookingTimeFormComponent extends Component {
   countInArray(array, date, timeZone) {
     console.log('test:0', array);
     console.log('test:1', date);
-    console.log('test:2', array.bookingStartTime[0]);
-    console.log('test:3', array.bookingEndTime[0]);
+    // console.log('test:2', array.bookingStartTime[0]);
+    // console.log('test:3', array.bookingEndTime[0]);
     var count = 0;
     for (var i = 0; i < array.bookingStartTime.length; i++) {
-      // console.log('test:0', timestampToDate(array))
-      // console.log('test:1', timestampToDate(date))
-      // console.log('test:2', timestampToDate(array.bookingStartTime[i]))
-      // console.log('test:3', timestampToDate(array.bookingEndTime[i])
-      // console.log('test:0', array);
-      // console.log('test:1', date);
-      // console.log('test:2', array.bookingStartTime[0]);
-      // console.log('test:3', timestampToDate(array.bookingEndTime[i]));
-      // if (array[i] == date) {
-      //   count++;
-      // }
-      console.log(
-        'range',
-        'test1:',
-        date,
-        'test2:',
-        array.bookingStartTime[0],
-        'test3:',
-        timestampToDate(array.bookingEndTime[i]),
-        isInRange(
-          timestampToDate(date),
-          timestampToDate(array.bookingStartTime[i]),
-          timestampToDate(array.bookingEndTime[i]),
-          'hour',
-          timeZone
-        )
-      );
-      if (
-        isInRange(
-          timestampToDate(date),
-          timestampToDate(array.bookingStartTime[i]),
-          timestampToDate(array.bookingEndTime[i]),
-          'hour',
-          timeZone
-        )
-      ) {
-        count++;
+      console.log('3333 i', array.bookingEndTime[i]);
+      if (array.bookingStartTime[i]) {
+        console.log(
+          'range',
+          'test3:',
+          timestampToDate(JSON.parse(array.bookingEndTime[i])),
+          isInRange(
+            timestampToDate(date),
+            timestampToDate(JSON.parse(array.bookingStartTime[i])),
+            timestampToDate(JSON.parse(array.bookingEndTime[i])),
+            'hour',
+            timeZone
+          )
+        );
+        if (
+          isInRange(
+            timestampToDate(date),
+            timestampToDate(JSON.parse(array.bookingStartTime[i])),
+            timestampToDate(JSON.parse(array.bookingEndTime[i])),
+            'hour',
+            timeZone
+          )
+        ) {
+          count++;
+        }
       }
     }
     console.log({ count });
@@ -83,7 +71,7 @@ export class BookingTimeFormComponent extends Component {
     this.setState({
       fieldError: null,
     });
-    console.log(e, 'values in submit');
+    console.log(e, e.bookingStartTime.length, 'values in submit');
     console.log(this.props, 'props in submit');
     let { timeZone } = this.props;
     if (e.bookingStartTime && e.bookingStartTime.length == 1) {
@@ -91,19 +79,16 @@ export class BookingTimeFormComponent extends Component {
       console.log('in if');
     }
     if (e.bookingStartTime && e.bookingStartTime.length > 1) {
-      let count = 0;
+      let count = [];
       e.bookingStartTime.forEach(element => {
-        // console.log('count', this.countInArray(e, element, timeZone));
-        count = this.countInArray(e, element, timeZone);
-        // count = this.countInArray(e.bookingStartTime, element);
+        count.push(this.countInArray(e, element, timeZone));
       });
 
-      if (count > 1) {
+      if (count.some(elm => elm > 1)) {
         console.log('count in if 1+ submit', count);
         this.setState({
           fieldError: 'Same booking hour selected in multiple occation',
         });
-        // alert('Same booking hour selected in multiple occation');
         return;
       }
       console.log('count in submit', count);
@@ -116,15 +101,12 @@ export class BookingTimeFormComponent extends Component {
     let date = this.state.bookingFormArray.filter(item => item != index);
     // console.log('3333 old array', this.state.bookingFormArray);
     // console.log('3333 new array', date);
-    this.setState(
-      {
-        bookingFormArray: date,
-      },
-      () => console.log('3333 new bookingFormArray', this.state.bookingFormArray)
-    );
+    this.setState({
+      bookingFormArray: date,
+    });
   };
 
-  getEstimate = (values, index, otherProps) => {
+  getEstimate = (values, index, formNumber, otherProps) => {
     const bookingData =
       values &&
       values.bookingStartTime &&
@@ -142,11 +124,11 @@ export class BookingTimeFormComponent extends Component {
             ),
           }
         : null;
-    console.log('3333 bookign data', bookingData);
+    // console.log('3333 bookign data', bookingData);
     return bookingData ? (
       <div className={css.priceBreakdownContainer}>
         <h3 className={css.priceBreakdownTitle}>
-          <FormattedMessage id="BookingTimeForm.priceBreakdownTitle" />
+          <FormattedMessage id="BookingTimeForm.priceBreakdownTitle" /> - {formNumber}
         </h3>
         <EstimatedBreakdownMaybe bookingData={bookingData} />
       </div>
@@ -199,7 +181,7 @@ export class BookingTimeFormComponent extends Component {
             timeZone,
           } = fieldRenderProps;
           console.log('3333 error', fieldRenderProps.errors);
-          console.log('3333 values', fieldRenderProps);
+          console.log('3333 values', fieldRenderProps.values);
 
           const startTime = values && values.bookingStartTime ? values.bookingStartTime : null;
           const endTime = values && values.bookingEndTime ? values.bookingEndTime : null;
@@ -258,9 +240,10 @@ export class BookingTimeFormComponent extends Component {
           return (
             <Form onSubmit={handleSubmit} className={classes}>
               {monthlyTimeSlots && timeZone
-                ? this.state.bookingFormArray.map(item => {
+                ? this.state.bookingFormArray.map((item, i) => {
                     return (
                       <div key={item}>
+                        <div className={css.bookingHeading}>Booking - {i + 1}</div>
                         <FieldDateAndTimeInput
                           {...dateInputProps}
                           className={css.bookingDates}
@@ -276,15 +259,18 @@ export class BookingTimeFormComponent extends Component {
                           formId={`${item}`}
                           removeSelectedDate={this.removeSelectedDate}
                         />
-                        {this.getEstimate(values, item, { unitType, unitPrice, timeZone })}
+                        {/* {this.getEstimate(values, item, { unitType, unitPrice, timeZone })} */}
                       </div>
                     );
                   })
                 : null}
+
               {/* {bookingInfo} */}
               <InlineTextButton
                 style={{ marginTop: 10, fontSize: 16, marginBottom: 20, textAlign: 'left' }}
-                onClick={() => {
+                onClick={e => {
+                  console.log('2222 event in click', e);
+                  e.preventDefault();
                   this.setState(
                     prevState => ({
                       bookingFormArray: [
@@ -307,6 +293,24 @@ export class BookingTimeFormComponent extends Component {
                   }
                 />
               </p>
+              {monthlyTimeSlots &&
+              timeZone &&
+              values &&
+              values.bookingStartTime &&
+              values.bookingStartTime.length > 0
+                ? this.state.bookingFormArray.map((item, i) => {
+                    if (values.bookingStartTime[item]) {
+                      return (
+                        <div key={i}>
+                          {/* <div className={css.bookingHeading}>Booking Estimate- {i + 1}</div> */}
+                          {this.getEstimate(values, item, i + 1, { unitType, unitPrice, timeZone })}
+                        </div>
+                      );
+                    } else {
+                      return null;
+                    }
+                  })
+                : null}
               {this.state.fieldError ? (
                 <p className={css.smallPrint} style={{ color: 'red' }}>
                   {this.state.fieldError}
