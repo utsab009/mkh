@@ -13,6 +13,8 @@ import {
   txHasBeenDelivered,
   txIsPaymentExpired,
   txIsPaymentPending,
+  txIsBookingEnded,
+  txIsHoldPaymentRequested,
 } from '../../util/transaction';
 import { propTypes, DATE_TYPE_DATETIME } from '../../util/types';
 import { createSlug, stringify } from '../../util/urlHelpers';
@@ -126,6 +128,28 @@ export const txState = (intl, tx, type) => {
       stateClassName: css.stateSucces,
       state: intl.formatMessage({
         id: 'InboxPage.stateAccepted',
+      }),
+    };
+  } else if (txIsBookingEnded(tx)) {
+    return {
+      holdPaymentPeriod: true,
+      nameClassName: css.nameNotEmphasized,
+      bookingClassName: css.bookingNoActionNeeded,
+      lastTransitionedAtClassName: css.lastTransitionedAtNotEmphasized,
+      stateClassName: css.stateSucces,
+      state: intl.formatMessage({
+        id: 'InboxPage.stateCompleted',
+      }),
+    };
+  } else if (txIsHoldPaymentRequested(tx)) {
+    return {
+      holdPaymentRequested: true,
+      nameClassName: css.nameNotEmphasized,
+      bookingClassName: css.bookingNoActionNeeded,
+      lastTransitionedAtClassName: css.lastTransitionedAtNotEmphasized,
+      stateClassName: css.stateSucces,
+      state: intl.formatMessage({
+        id: 'InboxPage.stateHoldPayment',
       }),
     };
   } else if (txIsCanceled(tx)) {

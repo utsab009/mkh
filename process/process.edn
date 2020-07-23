@@ -48,6 +48,7 @@
     {:name :action/stripe-capture-payment-intent}]
    :from :state/preauthorized
    :to :state/accepted}
+
   {:name :transition/decline
    :actor :actor.role/provider
    :actions
@@ -70,11 +71,52 @@
     {:name :action/stripe-refund-payment}]
    :from :state/preauthorized
    :to :state/declined}
-  {:name :transition/complete
+
+  {:name :transition/booking-period-end
    :at {:fn/timepoint [:time/booking-end]}
-   :actions [{:name :action/stripe-create-payout}]
+   :actions []
    :from :state/accepted
+   :to :state/booking-ended}
+
+  {:name :transition/hold-payment-request
+   :actor :actor.role/customer
+   :actions []
+   :from :state/booking-ended
+   :to :state/hold-payment-request}
+
+  {:name :transition/complete
+   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["P1D"]}]}
+   :actions []
+   :from :state/booking-ended
+   :to :state/payout-waiting}
+
+  {:name :transition/payout-waiting-time
+   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["P1D"]}]}
+   :actions [{:name :action/stripe-create-payout}]
+   :from :state/payout-waiting
    :to :state/delivered}
+
+  {:name :transition/hold-payment-request-success
+   :actor :actor.role/operator
+   :actions
+   [{:name :action/cancel-booking}
+    {:name :action/calculate-full-refund}
+    {:name :action/stripe-refund-payment}]
+   :from :state/hold-payment-request
+   :to :state/cancelled}
+
+  {:name :transition/hold-payment-request-fail
+   :actor :actor.role/operator
+   :actions [{:name :action/stripe-create-payout}]
+   :from :state/hold-payment-request
+   :to :state/delivered}
+
+  {:name :transition/hold-payment-request-expired
+   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["P1D"]}]}
+   :actions [{:name :action/stripe-create-payout}]
+   :from :state/hold-payment-request
+   :to :state/delivered}
+
   {:name :transition/cancel
    :actor :actor.role/operator
    :actions
@@ -83,11 +125,13 @@
     {:name :action/stripe-refund-payment}]
    :from :state/accepted
    :to :state/cancelled}
+
   {:name :transition/review-1-by-provider
    :actor :actor.role/provider
    :actions [{:name :action/post-review-by-provider}]
    :from :state/delivered
    :to :state/reviewed-by-provider}
+
   {:name :transition/review-2-by-provider
    :actor :actor.role/provider
    :actions
@@ -95,11 +139,13 @@
     {:name :action/publish-reviews}]
    :from :state/reviewed-by-customer
    :to :state/reviewed}
+
   {:name :transition/review-1-by-customer
    :actor :actor.role/customer
-   :actions [{:name :action/post-review-by-customer}]
+   :actions [{:name :action/post-review-by-customer} {:name :action/publish-reviews}]
    :from :state/delivered
    :to :state/reviewed-by-customer}
+
   {:name :transition/review-2-by-customer
    :actor :actor.role/customer
    :actions
@@ -107,6 +153,7 @@
     {:name :action/publish-reviews}]
    :from :state/reviewed-by-provider
    :to :state/reviewed}
+
   {:name :transition/expire-review-period
    :at
    {:fn/plus
@@ -114,6 +161,7 @@
    :actions []
    :from :state/delivered
    :to :state/reviewed}
+
   {:name :transition/expire-provider-review-period
    :at
    {:fn/plus
@@ -121,6 +169,7 @@
    :actions [{:name :action/publish-reviews}]
    :from :state/reviewed-by-customer
    :to :state/reviewed}
+
   {:name :transition/expire-customer-review-period
    :at
    {:fn/plus
@@ -128,6 +177,7 @@
    :actions [{:name :action/publish-reviews}]
    :from :state/reviewed-by-provider
    :to :state/reviewed}]
+
  :notifications
  [{:name :notification/new-booking-request
    :on :transition/confirm-payment

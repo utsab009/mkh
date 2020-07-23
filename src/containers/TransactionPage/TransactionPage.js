@@ -36,6 +36,7 @@ import {
   sendReview,
   fetchMoreMessages,
   fetchTimeSlots,
+  onHoldRequest,
 } from './TransactionPage.duck';
 import css from './TransactionPage.css';
 
@@ -79,6 +80,7 @@ export const TransactionPageComponent = props => {
     processTransitions,
     callSetInitialValues,
     onInitializeCardPaymentData,
+    onHoldRequest,
   } = props;
 
   const currentTransaction = ensureTransaction(transaction);
@@ -251,6 +253,7 @@ export const TransactionPageComponent = props => {
       nextTransitions={processTransitions}
       onSubmitBookingRequest={handleSubmitBookingRequest}
       monthlyTimeSlots={monthlyTimeSlots}
+      onHoldRequest={onHoldRequest}
     />
   ) : (
     loadingOrFailedFetching
@@ -392,6 +395,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onAcceptSale: transactionId => dispatch(acceptSale(transactionId)),
+    onHoldRequest: transactionId => dispatch(onHoldRequest(transactionId)),
     onDeclineSale: transactionId => dispatch(declineSale(transactionId)),
     onShowMoreMessages: txId => dispatch(fetchMoreMessages(txId)),
     onSendMessage: (txId, message) => dispatch(sendMessage(txId, message)),

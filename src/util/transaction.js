@@ -43,6 +43,24 @@ export const TRANSITION_CANCEL = 'transition/cancel';
 // The backend will mark the transaction completed.
 export const TRANSITION_COMPLETE = 'transition/complete';
 
+// Newly added: Wait till the refund period over
+export const TRANSITION_BOOKING_PERIOD_END = 'transition/booking-period-end';
+
+// Newly added: Wait till the PAYOUT waiting period over (Ex. 7days from booking end)
+export const TRANSITION_PAYOUT_WAITING_TIME = 'transition/payout-waiting-time';
+
+// Newly added: raise a payment hold and refund request to admin
+export const TRANSITION_HOLD_PAYMENT_REQ = 'transition/hold-payment-request';
+
+// Newly added: Initiate a refund when customer raise a refund request after order time over and with refund-period
+export const TRANSITION_HOLD_PAYMENT_REQ_SUCCESS = 'transition/hold-payment-request-success';
+
+// Newly added: ORDER COMPLETD
+export const TRANSITION_HOLD_PAYMENT_REQ_FAIL = 'transition/hold-payment-request-fail';
+
+// Newly added: ORDER COMPLETD
+export const TRANSITION_HOLD_PAYMENT_REQ_EXPIRED = 'transition/hold-payment-request-expired';
+
 // Reviews are given through transaction transitions. Review 1 can be
 // by provider or customer, and review 2 will be the other party of
 // the transaction.
@@ -92,6 +110,9 @@ const STATE_ACCEPTED = 'accepted';
 const STATE_CANCELED = 'canceled';
 const STATE_DELIVERED = 'delivered';
 const STATE_REVIEWED = 'reviewed';
+const STATE_BOOKING_ENDED = 'booking-ended';
+const STATE_PAYOUT_WAITING = 'payout-waiting';
+const STATE_HOLD_PAYMENT_REQUEST = 'hold-payment-request';
 const STATE_REVIEWED_BY_CUSTOMER = 'reviewed-by-customer';
 const STATE_REVIEWED_BY_PROVIDER = 'reviewed-by-provider';
 
@@ -147,7 +168,27 @@ const stateDescription = {
     [STATE_ACCEPTED]: {
       on: {
         [TRANSITION_CANCEL]: STATE_CANCELED,
+        [TRANSITION_BOOKING_PERIOD_END]: STATE_BOOKING_ENDED,
+        // [TRANSITION_COMPLETE]: STATE_DELIVERED,
+      },
+    },
+    [STATE_BOOKING_ENDED]: {
+      on: {
+        [TRANSITION_HOLD_PAYMENT_REQ]: STATE_HOLD_PAYMENT_REQUEST,
+        [TRANSITION_PAYOUT_WAITING_TIME]: STATE_PAYOUT_WAITING,
+      },
+    },
+    [STATE_PAYOUT_WAITING]: {
+      on: {
         [TRANSITION_COMPLETE]: STATE_DELIVERED,
+      },
+    },
+    [STATE_HOLD_PAYMENT_REQUEST]: {
+      //HOLD PAYMENT, DELIVERED
+      on: {
+        [TRANSITION_HOLD_PAYMENT_REQ_SUCCESS]: STATE_CANCELED,
+        [TRANSITION_HOLD_PAYMENT_REQ_FAIL]: STATE_DELIVERED,
+        [TRANSITION_HOLD_PAYMENT_REQ_EXPIRED]: STATE_DELIVERED,
       },
     },
 
@@ -246,6 +287,15 @@ export const txIsCanceled = tx =>
 export const txIsDelivered = tx =>
   getTransitionsToState(STATE_DELIVERED).includes(txLastTransition(tx));
 
+export const txIsBookingEnded = tx =>
+  getTransitionsToState(STATE_BOOKING_ENDED).includes(txLastTransition(tx));
+
+export const txIsHoldPaymentRequested = tx =>
+  getTransitionsToState(STATE_HOLD_PAYMENT_REQUEST).includes(txLastTransition(tx));
+
+export const txIsPaymentWaitingTime = tx =>
+  getTransitionsToState(STATE_PAYOUT_WAITING).includes(txLastTransition(tx));
+
 const firstReviewTransitions = [
   ...getTransitionsToState(STATE_REVIEWED_BY_CUSTOMER),
   ...getTransitionsToState(STATE_REVIEWED_BY_PROVIDER),
@@ -304,6 +354,11 @@ export const isRelevantPastTransition = transition => {
     TRANSITION_CONFIRM_PAYMENT,
     TRANSITION_DECLINE,
     TRANSITION_EXPIRE,
+    TRANSITION_BOOKING_PERIOD_END,
+    TRANSITION_HOLD_PAYMENT_REQ,
+    TRANSITION_HOLD_PAYMENT_REQ_SUCCESS,
+    TRANSITION_HOLD_PAYMENT_REQ_FAIL,
+    TRANSITION_HOLD_PAYMENT_REQ_EXPIRED,
     TRANSITION_REVIEW_1_BY_CUSTOMER,
     TRANSITION_REVIEW_1_BY_PROVIDER,
     TRANSITION_REVIEW_2_BY_CUSTOMER,

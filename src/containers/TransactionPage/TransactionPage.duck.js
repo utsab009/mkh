@@ -11,6 +11,7 @@ import {
   txIsInFirstReviewBy,
   TRANSITION_ACCEPT,
   TRANSITION_DECLINE,
+  TRANSITION_HOLD_PAYMENT_REQ,
 } from '../../util/transaction';
 import * as log from '../../util/log';
 import {
@@ -42,6 +43,13 @@ export const FETCH_TRANSITIONS_ERROR = 'app/TransactionPage/FETCH_TRANSITIONS_ER
 export const ACCEPT_SALE_REQUEST = 'app/TransactionPage/ACCEPT_SALE_REQUEST';
 export const ACCEPT_SALE_SUCCESS = 'app/TransactionPage/ACCEPT_SALE_SUCCESS';
 export const ACCEPT_SALE_ERROR = 'app/TransactionPage/ACCEPT_SALE_ERROR';
+
+export const TRANSITION_HOLD_PAYMENT_REQ_INIT =
+  'app/TransactionPage/TRANSITION_HOLD_PAYMENT_REQ_INIT';
+export const TRANSITION_HOLD_PAYMENT_REQ_INIT_SUCCESS =
+  'app/TransactionPage/TRANSITION_HOLD_PAYMENT_REQ_INIT_SUCCESS';
+export const TRANSITION_HOLD_PAYMENT_REQ_INIT_ERROR =
+  'app/TransactionPage/TRANSITION_HOLD_PAYMENT_REQ_INIT_ERROR';
 
 export const DECLINE_SALE_REQUEST = 'app/TransactionPage/DECLINE_SALE_REQUEST';
 export const DECLINE_SALE_SUCCESS = 'app/TransactionPage/DECLINE_SALE_SUCCESS';
@@ -253,6 +261,10 @@ const acceptSaleRequest = () => ({ type: ACCEPT_SALE_REQUEST });
 const acceptSaleSuccess = () => ({ type: ACCEPT_SALE_SUCCESS });
 const acceptSaleError = e => ({ type: ACCEPT_SALE_ERROR, error: true, payload: e });
 
+const onHoldRequestInit = () => ({ type: TRANSITION_HOLD_PAYMENT_REQ_INIT });
+const onHoldRequestInitSuccess = () => ({ type: TRANSITION_HOLD_PAYMENT_REQ_INIT_SUCCESS });
+const onHoldRequestInitError = () => ({ type: TRANSITION_HOLD_PAYMENT_REQ_INIT_ERROR });
+
 const declineSaleRequest = () => ({ type: DECLINE_SALE_REQUEST });
 const declineSaleSuccess = () => ({ type: DECLINE_SALE_SUCCESS });
 const declineSaleError = e => ({ type: DECLINE_SALE_ERROR, error: true, payload: e });
@@ -435,6 +447,30 @@ export const acceptSale = id => (dispatch, getState, sdk) => {
     });
 };
 
+export const onHoldRequest = id => (dispatch, getState, sdk) => {
+  if (acceptOrDeclineInProgress(getState())) {
+    return Promise.reject(new Error('Accept or decline already in progress'));
+  }
+  dispatch(onHoldRequestInit());
+
+  return sdk.transactions
+    .transition({ id, transition: TRANSITION_HOLD_PAYMENT_REQ, params: {} }, { expand: true })
+    .then(response => {
+      dispatch(addMarketplaceEntities(response));
+      dispatch(onHoldRequestInitSuccess());
+      dispatch(fetchCurrentUserNotifications());
+      return response;
+    })
+    .catch(e => {
+      dispatch(onHoldRequestInitError(storableError(e)));
+      log.error(e, 'accept-sale-failed', {
+        txId: id,
+        transition: TRANSITION_HOLD_PAYMENT_REQ,
+      });
+      throw e;
+    });
+};
+
 export const declineSale = id => (dispatch, getState, sdk) => {
   if (acceptOrDeclineInProgress(getState())) {
     return Promise.reject(new Error('Accept or decline already in progress'));
@@ -551,68 +587,66 @@ const IMAGE_VARIANTS = {
   ],
 };
 
-const updateListingAverageRating = (listingId,averageRating,ratingCounter) => {
-  console.log("averageRating in xyz2",averageRating);
-  console.log("config in xyz",config);
+const updateListingAverageRating = (listingId, averageRating, ratingCounter) => {
+  console.log('averageRating in xyz2', averageRating);
+  console.log('config in xyz', config);
   const integrationSdk = flexIntegrationSdk.createInstance({
-   
     clientId: config.integrationApiClientId,
     clientSecret: config.integrationApiSecret,
     baseUrl: config.integrationApiBaseUrl,
   });
 
-  integrationSdk.listings.update({
-    id: listingId,
-    publicData: {
-      averageRating : averageRating.toFixed(2),
-      ratingCount : ratingCounter
-    }
-  })
-  .then(res => {
-    return res;
-  })
-  .catch(e => {
-
-    // Rethrow so the page can track whether the sending failed, and
-    // keep the message in the form for a retry.
-    throw e;  
-  });
+  integrationSdk.listings
+    .update({
+      id: listingId,
+      publicData: {
+        averageRating: averageRating.toFixed(2),
+        ratingCount: ratingCounter,
+      },
+    })
+    .then(res => {
+      return res;
+    })
+    .catch(e => {
+      // Rethrow so the page can track whether the sending failed, and
+      // keep the message in the form for a retry.
+      throw e;
+    });
 };
 
 const calculateAverageRating = (sdk, listingId) => {
-  sdk.reviews.query({
-    listingId: listingId
-  }).then(res => {
-    // res.data contains the response data
-    if(res.data.data.length > 0)
-    {
-      let totalRating = 0;
-      let ratingCounter = 0;
-      res.data.data.filter(item => {
-        if(item.attributes.rating !== null)
-        {
-          totalRating += item.attributes.rating;
-          ratingCounter += 1;
-        }
-      });
-      const averageRating = totalRating/ratingCounter;
-      console.log("averageRating in xyz",averageRating);
-      updateListingAverageRating(listingId,averageRating,ratingCounter);
-    }
-    return res;
-  })
-  .catch(e => {
-
-    // Rethrow so the page can track whether the sending failed, and
-    // keep the message in the form for a retry.
-    throw e;  
-  });
+  sdk.reviews
+    .query({
+      listingId: listingId,
+    })
+    .then(res => {
+      // res.data contains the response data
+      if (res.data.data.length > 0) {
+        let totalRating = 0;
+        let ratingCounter = 0;
+        res.data.data.filter(item => {
+          if (item.attributes.rating !== null) {
+            totalRating += item.attributes.rating;
+            ratingCounter += 1;
+          }
+        });
+        const averageRating = totalRating / ratingCounter;
+        console.log('averageRating in xyz', averageRating);
+        updateListingAverageRating(listingId, averageRating, ratingCounter);
+      }
+      return res;
+    })
+    .catch(e => {
+      // Rethrow so the page can track whether the sending failed, and
+      // keep the message in the form for a retry.
+      throw e;
+    });
 };
 
 // If other party has already sent a review, we need to make transition to
 // TRANSITION_REVIEW_2_BY_<CUSTOMER/PROVIDER>
 const sendReviewAsSecond = (id, params, role, dispatch, sdk, listingId) => {
-  console.log("params in sendReviewasSecond",params);
+  console.log('params in sendReviewasSecond', params);
   const transition = getReview2Transition(role === CUSTOMER);
 
   const include = REVIEW_TX_INCLUDES;
@@ -620,7 +654,7 @@ const sendReviewAsSecond = (id, params, role, dispatch, sdk, listingId) => {
   return sdk.transactions
     .transition({ id, transition, params }, { expand: true, include, ...IMAGE_VARIANTS })
     .then(response => {
-      console.log("response in sendReviewAsFirst",response,"params:",params);
+      console.log('response in sendReviewAsFirst', response, 'params:', params);
       dispatch(addMarketplaceEntities(response));
       dispatch(sendReviewSuccess());
       calculateAverageRating(sdk, listingId);
@@ -641,14 +675,14 @@ const sendReviewAsSecond = (id, params, role, dispatch, sdk, listingId) => {
 // So, error is likely to happen and then we must try another state transition
 // by calling sendReviewAsSecond().
 const sendReviewAsFirst = (id, params, role, dispatch, sdk, listingId) => {
-  console.log("params in sendReviewasFirst",params);
+  console.log('params in sendReviewasFirst', params);
   const transition = getReview1Transition(role === CUSTOMER);
   const include = REVIEW_TX_INCLUDES;
 
   return sdk.transactions
     .transition({ id, transition, params }, { expand: true, include, ...IMAGE_VARIANTS })
     .then(response => {
-      console.log("response in sendReviewAsFirst",response,"params:",params);
+      console.log('response in sendReviewAsFirst', response, 'params:', params);
       dispatch(addMarketplaceEntities(response));
       dispatch(sendReviewSuccess());
       calculateAverageRating(sdk, listingId);
@@ -669,13 +703,23 @@ const sendReviewAsFirst = (id, params, role, dispatch, sdk, listingId) => {
 };
 
 export const sendReview = (role, tx, reviewRating, reviewContent) => (dispatch, getState, sdk) => {
-  
-  console.log("tx in sendreview:",tx,"config",config,"role:",role,"reviewrating:",reviewRating,"reviewcontent:",reviewContent);
+  console.log(
+    'tx in sendreview:',
+    tx,
+    'config',
+    config,
+    'role:',
+    role,
+    'reviewrating:',
+    reviewRating,
+    'reviewcontent:',
+    reviewContent
+  );
   const params = { reviewRating, reviewContent };
   const listingId = tx.listing.id;
   // calculateAverageRating(sdk, listingId);
   const txStateOtherPartyFirst = txIsInFirstReviewBy(tx, role !== CUSTOMER);
-  console.log("txStateOtherPartyFirst in sendreview:",txStateOtherPartyFirst);
+  console.log('txStateOtherPartyFirst in sendreview:', txStateOtherPartyFirst);
   dispatch(sendReviewRequest());
 
   return txStateOtherPartyFirst
@@ -684,7 +728,7 @@ export const sendReview = (role, tx, reviewRating, reviewContent) => (dispatch, 
 
   // const reviewSent = txStateOtherPartyFirst
   //   ? sendReviewAsSecond(tx.id, params, role, dispatch, sdk)
-  //   : sendReviewAsFirst(tx.id, params, role, dispatch, sdk);  
+  //   : sendReviewAsFirst(tx.id, params, role, dispatch, sdk);
   // console.log("reviewSent in sendreview",reviewSent);
   // return reviewSent;
 };

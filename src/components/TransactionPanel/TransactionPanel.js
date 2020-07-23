@@ -12,6 +12,9 @@ import {
   txIsPaymentPending,
   txIsRequested,
   txHasBeenDelivered,
+  txIsBookingEnded,
+  txIsHoldPaymentRequested,
+  txIsPaymentWaitingTime,
 } from '../../util/transaction';
 import { LINE_ITEM_NIGHT, LINE_ITEM_DAY, propTypes } from '../../util/types';
 import {
@@ -52,7 +55,7 @@ import PanelHeading, {
 } from './PanelHeading';
 
 import css from './TransactionPanel.css';
-
+import { PrimaryButton } from '../Button/Button';
 // Helper function to get display names for different roles
 const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
   const authorDisplayName = <UserDisplayName user={currentProvider} intl={intl} />;
@@ -192,6 +195,7 @@ export class TransactionPanelComponent extends Component {
       onSubmitBookingRequest,
       monthlyTimeSlots,
       nextTransitions,
+      onHoldRequest,
     } = this.props;
 
     const currentTransaction = ensureTransaction(transaction);
@@ -261,12 +265,25 @@ export class TransactionPanelComponent extends Component {
           showDetailCardHeadings: isCustomer,
           showAddress: isCustomer,
         };
+      } else if (txIsBookingEnded(tx)) {
+        return {
+          holdPaymentPeriod: true,
+        };
+      } else if (txIsPaymentWaitingTime(tx)) {
+        return {
+          holdPaymentPeriod: false,
+        };
+      } else if (txIsHoldPaymentRequested(tx)) {
+        return {
+          holdPaymentRequested: true,
+        };
       } else {
         return { headingState: 'unknown' };
       }
     };
     const stateData = stateDataFn(currentTransaction);
-
+    console.log({ stateData });
+    console.log({ currentTransaction });
     const deletedListingTitle = intl.formatMessage({
       id: 'TransactionPanel.deletedListingTitle',
     });
@@ -414,6 +431,16 @@ export class TransactionPanelComponent extends Component {
             {stateData.showSaleButtons ? (
               <div className={css.mobileActionButtons}>{saleButtons}</div>
             ) : null}
+            {isCustomer && stateData.holdPaymentPeriod && stateData.holdPaymentPeriod === true ? (
+              <div
+                className={css.mobileActionButtons}
+                style={{ maxWidth: '50%', margin: '50px auto' }}
+              >
+                <PrimaryButton onClick={() => onHoldRequest(currentTransaction.id)}>
+                  Hold Payment
+                </PrimaryButton>
+              </div>
+            ) : null}
           </div>
 
           <div className={css.asideDesktop}>
@@ -459,6 +486,16 @@ export class TransactionPanelComponent extends Component {
 
               {stateData.showSaleButtons ? (
                 <div className={css.desktopActionButtons}>{saleButtons}</div>
+              ) : null}
+              {isCustomer && stateData.holdPaymentPeriod && stateData.holdPaymentPeriod === true ? (
+                <div
+                  className={css.desktopActionButtons}
+                  style={{ maxWidth: '80%', margin: '50px auto' }}
+                >
+                  <PrimaryButton onClick={() => onHoldRequest(currentTransaction.id)}>
+                    Hold Payment
+                  </PrimaryButton>
+                </div>
               ) : null}
             </div>
           </div>

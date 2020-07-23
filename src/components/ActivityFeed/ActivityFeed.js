@@ -3,7 +3,13 @@ import { string, arrayOf, bool, func, number } from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import dropWhile from 'lodash/dropWhile';
 import classNames from 'classnames';
-import { Avatar, InlineTextButton, ReviewRating, UserDisplayName } from '../../components';
+import {
+  Avatar,
+  InlineTextButton,
+  ReviewRating,
+  UserDisplayName,
+  SecondaryButton,
+} from '../../components';
 import { formatDate } from '../../util/dates';
 import { ensureTransaction, ensureUser, ensureListing } from '../../util/data';
 import {
@@ -27,6 +33,11 @@ import {
   txRoleIsCustomer,
   getUserTxRole,
   isRelevantPastTransition,
+  TRANSITION_BOOKING_PERIOD_END,
+  TRANSITION_HOLD_PAYMENT_REQ,
+  TRANSITION_HOLD_PAYMENT_REQ_FAIL,
+  TRANSITION_HOLD_PAYMENT_REQ_SUCCESS,
+  TRANSITION_HOLD_PAYMENT_REQ_EXPIRED,
 } from '../../util/transaction';
 import { propTypes } from '../../util/types';
 import * as log from '../../util/log';
@@ -143,6 +154,22 @@ const resolveTransitionMessage = (
       );
     case TRANSITION_CANCEL:
       return <FormattedMessage id="ActivityFeed.transitionCancel" />;
+
+    case TRANSITION_BOOKING_PERIOD_END:
+      return <FormattedMessage id="ActivityFeed.bookingPeriodOver" />;
+
+    case TRANSITION_HOLD_PAYMENT_REQ:
+      return <FormattedMessage id="ActivityFeed.holdPaymentRequested" values={{ displayName }} />;
+
+    case TRANSITION_HOLD_PAYMENT_REQ_SUCCESS:
+      return <FormattedMessage id="ActivityFeed.holdPaymentRequestSuccess" />;
+
+    case TRANSITION_HOLD_PAYMENT_REQ_FAIL:
+      return <FormattedMessage id="ActivityFeed.holdPaymentRequestFail" />;
+
+    case TRANSITION_HOLD_PAYMENT_REQ_EXPIRED:
+      return <FormattedMessage id="ActivityFeed.holdPaymentRequestExpired" />;
+
     case TRANSITION_COMPLETE:
       // Show the leave a review link if the state is delivered and if the current user is the first to leave a review
       const reviewPeriodJustStarted = txIsDelivered(transaction);
