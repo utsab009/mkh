@@ -100,10 +100,13 @@ export class BookingTimeFormComponent extends Component {
     console.log('idx', index);
     let date = this.state.bookingFormArray.filter(item => item != index);
     // console.log('3333 old array', this.state.bookingFormArray);
-    // console.log('3333 new array', date);
-    this.setState({
-      bookingFormArray: date,
-    });
+    console.log('5555 before delete', date);
+    this.setState(
+      {
+        bookingFormArray: date,
+      },
+      () => console.log('5555 after delete', this.state.bookingFormArray)
+    );
   };
 
   getEstimate = (values, index, formNumber, otherProps) => {
@@ -137,7 +140,7 @@ export class BookingTimeFormComponent extends Component {
   render() {
     const { rootClassName, className, price: unitPrice, ...rest } = this.props;
     const classes = classNames(rootClassName || css.root, className);
-
+    console.log('5555 in render', this.state.bookingFormArray);
     if (!unitPrice) {
       return (
         <div className={classes}>
@@ -271,15 +274,21 @@ export class BookingTimeFormComponent extends Component {
                 onClick={e => {
                   console.log('2222 event in click', e);
                   e.preventDefault();
-                  this.setState(
-                    prevState => ({
-                      bookingFormArray: [
-                        ...this.state.bookingFormArray,
-                        prevState.bookingFormArray.length * 1,
-                      ],
-                    }),
-                    console.log('book array', this.state.bookingFormArray)
-                  );
+                  if (this.state.bookingFormArray.length === 0) {
+                    this.setState({
+                      bookingFormArray: [0],
+                    });
+                  } else {
+                    this.setState(
+                      prevState => ({
+                        bookingFormArray: [
+                          ...this.state.bookingFormArray,
+                          prevState.bookingFormArray[prevState.bookingFormArray.length - 1] * 1 + 1,
+                        ],
+                      }),
+                      console.log('5555 book array', this.state.bookingFormArray)
+                    );
+                  }
                 }}
               >
                 + Add Slot
