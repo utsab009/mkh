@@ -175,14 +175,15 @@ const stateDescription = {
     [STATE_BOOKING_ENDED]: {
       on: {
         [TRANSITION_HOLD_PAYMENT_REQ]: STATE_HOLD_PAYMENT_REQUEST,
-        [TRANSITION_PAYOUT_WAITING_TIME]: STATE_PAYOUT_WAITING,
-      },
-    },
-    [STATE_PAYOUT_WAITING]: {
-      on: {
         [TRANSITION_COMPLETE]: STATE_DELIVERED,
+        // [TRANSITION_PAYOUT_WAITING_TIME]: STATE_PAYOUT_WAITING,
       },
     },
+    // [STATE_PAYOUT_WAITING]: {
+    //   on: {
+    //     [TRANSITION_COMPLETE]: STATE_DELIVERED,
+    //   },
+    // },
     [STATE_HOLD_PAYMENT_REQUEST]: {
       //HOLD PAYMENT, DELIVERED
       on: {
