@@ -116,31 +116,40 @@ export class MenteeSignupPageComponent extends Component {
           to: fromState,
         },
       },
-    //   {
-    //     text: (
-    //       <h1 className={css.tab}>
-    //         <FormattedMessage id="MenteeSignupPage.loginLinkText" />
-    //       </h1>
-    //     ),
-    //     selected: isLogin,
-    //     linkProps: {
-    //       name: 'LoginPage',
-    //       to: fromState,
-    //     },
-    //   },
+      //   {
+      //     text: (
+      //       <h1 className={css.tab}>
+      //         <FormattedMessage id="MenteeSignupPage.loginLinkText" />
+      //       </h1>
+      //     ),
+      //     selected: isLogin,
+      //     linkProps: {
+      //       name: 'LoginPage',
+      //       to: fromState,
+      //     },
+      //   },
     ];
 
     const handleSubmitSignup = values => {
       const { fname, lname, ...rest } = values;
-      const params = { firstName: fname.trim(), lastName: lname.trim(), userType: "mentee", ...rest };
+      const params = {
+        firstName: fname.trim(),
+        lastName: lname.trim(),
+        userType: 'mentee',
+        ...rest,
+      };
       submitSignup(params);
     };
 
     const formContent = (
       <div className={css.content}>
         <LinkTabNavHorizontal className={css.tabs} tabs={tabs} />
+        <NamedLink name="LoginPage" className={css.link}>
+          <FormattedMessage id="MenteeSignupPage.login" />
+        </NamedLink>
         {loginOrSignupError}
-        {/*isLogin ? (
+        {
+          /*isLogin ? (
           <LoginForm className={css.form} onSubmit={submitLogin} inProgress={authInProgress} />
         ) : (*/
           <SignupForm
@@ -150,7 +159,8 @@ export class MenteeSignupPageComponent extends Component {
             onOpenTermsOfService={() => this.setState({ tosModalOpen: true })}
             signupType={'mentee'}
           />
-        /*)*/}
+          /*)*/
+        }
       </div>
     );
 
