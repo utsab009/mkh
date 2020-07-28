@@ -35,52 +35,61 @@ const AboutPage = () => {
         </LayoutWrapperTopbar>
 
         <LayoutWrapperMain className={css.staticPageWrapper}>
-          <h1 className={css.pageTitle}>Find new depths in your yoga practice</h1>
+          <h1 className={css.pageTitle}>Their Experience, Your Success …</h1>
           <img className={css.coverImage} src={image} alt="My first ice cream." />
 
           <div className={css.contentWrapper}>
-            <div className={css.contentSide}>
+            {/* <div className={css.contentSide}>
               <p>Yoga was listed by UNESCO as an intangible cultural heritage.</p>
-            </div>
+            </div> */}
 
             <div className={css.contentMain}>
-              <h2>
-                Each yoga practitioner is an individual, and each one of us needs different care.
-                Working together with an experienced yoga teacher offers the possibility to rise
-                our practise to a whole new level.
-              </h2>
+            <h3 className={css.subtitle}>
+              Welcome
+              </h3>
 
               <p>
-                Whether it is the alignment of asanas or being able to set the focus of the class,
-                we all have our own struggles and goals. Some of these cannot be addressed in a
-                regular class of twenty yogis. Working together with the experienced yoga mentors
-                from Try A Mentor, you can together create just the right class for you.
+              Tryamentor.com is a place and means for people who have a successful track record performing a
+              role to mentor people new to these roles or who hope to enter them. They can equally help a person
+              already in a role to further excel in it.
               </p>
 
-              <h3 className={css.subtitle}>Are you a yoga teacher?</h3>
+              <p>Tryamentor.com empowers people to both share and monetize their experience while simultaneously
+              empowering others to directly gain from it – hence our tagline – “Their Experience, Your Success”.</p>
+              <p>So, if you are planning your next career step, simply search the site to find a wonderful Mentor who
+              can credibly guide you on how to get and succeed in your desired Job Role. Or, if you are currently in
+              a role and would like independent and highly effective support – you have found the right place.</p>
+
+              <h3 className={css.subtitle}>Become A Mentor</h3>
 
               <p>
-                Try A Mentor offers you a platform through which you can reach thousands of yoga
-                practitioners. Offering private yoga classes through Try A Mentor offers you a
-                possibility to grow your customer base and earn some extra income on top of your
-                regular classes.
+              Once you have performed a role, you have experience. What Try A Mentor empowers you to do, is
+              find people (Mentees) who could directly gain from this experience. It is simply a question of you
+              understanding that this experience is valuable and signing up to be a Mentor on Tryamentor.com. You
+              place the details required for people to want to be mentored by you and on tryamentor.com you will
+              find lots of supports to help you build the skills of a great Mentor.
               </p>
 
               <h3 id="contact" className={css.subtitle}>
-                Create your own marketplace like Try A Mentor
+              Who we are
               </h3>
               <p>
-                Try A Mentor is brought to you by{' '}
-                <ExternalLink href="http://sharetribe.com">Sharetribe</ExternalLink>. Sharetribe
-                offers anyone a possibility to create a marketplace without restricting your own
-                creativity. Do not hesitate to reach out and learn how to best turn your
-                marketplace idea to reality.
+              Try A Mentor was started by Kenneth D. Glynn (founder). It is now a part of his overarching company,
+              the Beacon HRM Group which is in turn an international Talent Consultancy. Beacon supplies Training, Executive Coaching, eLearning, and Talent Management services across the globe through
+              its divisions of Beacon Training, Beacon Talent and eBeacon. Visit our parent website by clicking this
+              link.
               </p>
-              <p>
+              {/* <p>
                 You can also checkout our{' '}
                 <ExternalLink href={siteFacebookPage}>Facebook</ExternalLink> and{' '}
                 <ExternalLink href={siteTwitterPage}>Twitter</ExternalLink>.
-              </p>
+              </p> */}
+              <p>Checkout our Facebook and Twitter feeds to gain access to great supporting materials and
+              approaches to Role and Mentoring success.</p>
+              <p>Thank you so much for visiting</p>
+
+              <p>Kenneth D. Glynn <br/>
+              Founder</p>
             </div>
           </div>
         </LayoutWrapperMain>

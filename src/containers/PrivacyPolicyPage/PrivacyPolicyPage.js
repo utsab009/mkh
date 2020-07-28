@@ -37,6 +37,13 @@ const PrivacyPolicyPageComponent = props => {
         name: 'TermsOfServicePage',
       },
     },
+    {
+      text: intl.formatMessage({ id: 'FaqPage.faqTabTitle' }),
+      selected: false,
+      linkProps: {
+        name: 'FaqPage',
+      },
+    },
   ];
   const siteTitle = config.siteTitle;
   const schemaTitle = intl.formatMessage({ id: 'PrivacyPolicyPage.schemaTitle' }, { siteTitle });
