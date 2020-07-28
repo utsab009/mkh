@@ -26,3 +26,4 @@ export { default as TermsOfServicePage } from './TermsOfServicePage/TermsOfServi
 export { default as TopbarContainer } from './TopbarContainer/TopbarContainer';
 export { default as TransactionPage } from './TransactionPage/TransactionPage';
 export { default as MenteeSignupPage } from './MenteeSignupPage/MenteeSignupPage';
+export { default as FaqPage } from './FaqPage/FaqPage';
