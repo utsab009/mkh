@@ -697,6 +697,117 @@ const Faq = props => {
           </Accordion.Collapse>
         </Card>
       </Accordion>
+      <Accordion defaultActiveKey="0">
+        <h2>Legal & Insurance</h2>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="0">
+            Do I need insurance to be a Mentor?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="0">
+            <Card.Body className={css.faqCardBody}>
+            <p>Yes, it is always prudent to have insurance prior to listing on Try A Mentor.</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="1">
+            Does Try A Mentor offer insurance?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="1">
+            <Card.Body className={css.faqCardBody}>
+            <p>No, Try A Mentor does not offer marketplace insurance for bookings and instead suggest that all Mentors adequately ensure themselves prior to listing it on Try A Mentor.</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="2">
+            Can we require Mentees to have their own insurance to book me as a Mentor?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="2">
+            <Card.Body className={css.faqCardBody}>
+            <p>Yes, you can require that Mentees have their own insurance policy in place for them to book you as a Mentor, but it is extremely unlikely that any Mentee will then book you. If you require this, please mention this in your Role Profile descriptions, notify all booking requests of this requirement, and receive proof of insurance to verify this prior to accepting a booking.</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="3">
+            Do I need Mentees to sign an agreement, sign a waiver, or any other form of agreement?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="3">
+            <Card.Body className={css.faqCardBody}>
+            <p>Your Booking request through Try A Mentor is not a contractual agreement, but a message requesting to use your service as defined in the listing for the date, time period, and for the price requested. If you have further requirements, please be sure to message Mentees directly to inform them of this but please note – no changes to the payment process can be made.</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+      </Accordion>
+      <Accordion defaultActiveKey="0">
+        <h2>My Account </h2>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="0">
+            How do I create a Mentee account?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="0">
+            <Card.Body className={css.faqCardBody}>
+            <p>You can create a user account in seconds doing the following:</p>
+            <p>
+              Click “Try A Mentor” in the top right corner of the landing / first page <br />
+              Enter your email address and create a secure password <br />
+              Please check the email address you entered and confirm you email
+            </p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="1">
+            How do I log into my account?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="1">
+            <Card.Body className={css.faqCardBody}>
+            <p>
+              Click “Log in” in the top right corner of the landing / first page <br />
+              Enter your email address and secure password 
+            </p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="2">
+            How can I delete my account?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="2">
+            <Card.Body className={css.faqCardBody}>
+            <p>
+            If you would like to permanently delete your Mentor or Mentee account, please email us at admin@tryamentor.com
+            </p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="3">
+            How do I report suspicious account activity?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="3">
+            <Card.Body className={css.faqCardBody}>
+            <p>
+            Please report any suspicious activity or users immediately by sending us an email at admin@tryamentor.com
+            </p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="4">
+            How do I report other users for acting against “Try A Mentor” policies?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="4">
+            <Card.Body className={css.faqCardBody}>
+            <p>
+            Please report any suspicious activity or users immediately by sending us an email at admin@tryamentor.com
+            </p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+      </Accordion>
+      <p>PLEASE NOTE: THE CONTENTS OF THE FAQ IS SUPERSEDED BY THE INFORMATION FOUND IN THE TERMS OF SERVICE SECTION</p>
     </div>
   );
 };
