@@ -10,6 +10,7 @@
 
 .content {
   @media (--viewportLarge) {
-    max-width: 563px;
+    /* max-width: 563px; */
+    max-width: 100%;
   }
 }
