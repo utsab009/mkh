@@ -479,6 +479,224 @@ const Faq = props => {
           </Accordion.Collapse>
         </Card>
       </Accordion>
+      <Accordion defaultActiveKey="0">
+        <h2>Mentees</h2>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="0">
+            Once I have started working with a Mentor, can I stop using Try A Mentor and instead book and pay them directly? What if they make this suggestion to me?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="0">
+            <Card.Body className={css.faqCardBody}>
+            <p>This is against the rules of this site, but there are common sense reasons as to why you should not do this:</p>
+            <ul>
+              <li>-	You are signalling to the Mentor, or they are signalling to you, that they are willing to be unethical. So, when payment is needed you and they will need to share financial information with one another. Would you like to give such details to someone who has already shown themselves to be unethical?</li>
+              <li>-	The payment system on Try A Mentor means that all financial payments are automatic, all financial information safe and you are working with a robust booking system. Having a place to easily find and book effective Mentors who need to abide to a set of rules to remain on the site. This means your safety is a critical element of Try A Mentor </li>
+            </ul>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="1">
+            How do I request to book a Mentor?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="1">
+            <Card.Body className={css.faqCardBody}>
+            <p>It is simple. As you arrived onto the Website you saw two questions appear. The first was “I would like help with an Interview” and the other was “I would like help with a Job Role”. These are in fact buttons. By clicking them you will gain access to someone who has or had the Job Role you are interested in. To find such a mentor press on either button. First you will be asked which sector the Job is in. Then what the Job Role is called and finally the level of seniority of the role. A list of Mentors who have had this role in the sector and required seniority will appear.</p>
+            <p>Instantly you will see a snapshot of the organisations they have worked for, roles they have had and average reviews from those they have mentored. Add those of interest to your favourites or click a Mentor to discover more about them, to ask them questions and to book them to work with you. Their charges can be seen clearly and is an hourly rate.</p>
+            <p>Try A Mentor uses of the Stripe payment system (link: https://stripe.com/).Stripe is a completely independent technology platform that Try A Mentor uses to allow you to make and receive payments on Try A Mentor This is completely independent of Try A Mentor and keeps all financial information safe. Try A Mentor has no access to your financial information at all and as such only Stripe has access to it.</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="2">
+            What information is shared about me on Try A Mentor or used for other purposes (none – just your reviews)?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="2">
+            <Card.Body className={css.faqCardBody}>
+            <p>All Try A Mentor collects is your name, confirmation you are over eighteen, phone number (optional) and e-mail address. None of this is shared with any other party and is used by Try A Mentor for administration purposes only.</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="3">
+            Why do I need to be over eighteen to use Try A Mentor?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="3">
+            <Card.Body className={css.faqCardBody}>
+            <p>There are many great reasons why someone below eighteen would benefit from having a Mentor, but for Try A Mentor, safety comes first. As such all users (Mentors and Mentees) must be over eighteen)</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="4">
+            Can I cancel a Mentoring Session I booked?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="4">
+            <Card.Body className={css.faqCardBody}>
+            <p>A Mentee (you) can cancel a session with their Mentor at no charge up to 48-hours before the session they are cancelling. After this, the fee is non-refundable. All monies are automatically refunded by the Stripe system within XX period.</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="5">
+            What if am dissatisfied, can I get my money back?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="5">
+            <Card.Body className={css.faqCardBody}>
+            <p>Yes, but with the following stipulations:</p>
+            <ul>
+              <li>1.	The complaint has to be e-mailed to admin@tryamentor.com within five days of the Mentoring Session (please note: this is five calendar days).</li>
+              <li>2.	On receiving the complaint, Try A Mentor will adjudicate the issue. All information to enable Try A Mentor to adjudicate must be with Try A Mentor within Eight Days of the date of the Mentoring Session (please note: this is eight calendar days).</li>
+              <li>3.	Try A Mentor will be impartial, and utilise the information received from both parties (whatever is sent to us within this eight-day period) to reach a final decision (if the refund is to be made). After this point, if the Mentee is still unhappy with the decision, they can then pursue legal action against the Mentor (the provider of the service).</li>
+            </ul>
+            <p>Why is this address system structured in this way? One of the clear advantages of Try A Mentor is our use of the Stripe payment system (link: https://stripe.com/). This is completely independent of Try A Mentor and keeps all financial information safe (Try A Mentor never has access to it). Specifically, Try A Mentor uses it for a delayed payment feature. Once the session is booked, Stripe collects the monies due but does not deposit them into the Mentor’s account until fourteen days after the session occurs. If a Mentee does not complain within the first five days, Try A Mentor is not able to pause the payment. If a complaint has been made within the five-day time-period, then payment is paused but not cancelled. Hence Try A Mentor needs to collect all the information from both parties within eight days so that it can be carefully considered before the fourteen-day time limit expires. If Try A Mentor rules in favour of the Mentee, the monies are no longer transferred to the Mentor and instead transferred back to the Mentee. If Try A Mentor rules in favour of the Mentor, the payment goes ahead on the fourteenth day. At this point, Try A Mentor is not capable of getting a return of monies regardless of any new information presented. </p>
+            <p>At this point, to gain a refund it will revert to the Mentor deciding to make a refund or the Mentee gaining a refund through successful legal action against the Mentor. It is important to note, Try A Mentor is not the service provider, the Mentor is. </p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="6">
+            Can I have my company / organisation pay for my Mentoring? (Yes)
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="6">
+            <Card.Body className={css.faqCardBody}>
+            <p>Simply have your manager or a member of your organisation e-mail Try A Mentor at admin@tryamentor.com for a specific organisational account to be established. </p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="7">
+            Is a booking request binding?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="7">
+            <Card.Body className={css.faqCardBody}>
+            <p>A Mentee (you) can cancel a session with their Mentor at no charge up to 48-hours before the session they are cancelling. After this, the fee is non-refundable and as such seen as binding. All monies are automatically refunded by the Stripe system within XX period.</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="8">
+            How many requests can I send?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="8">
+            <Card.Body className={css.faqCardBody}>
+            <p>You can send multiple requests, but we strongly recommend that you wait to hear back from a Mentor once you send a request. If the request is urgent, you can also send them a message regarding the booking request directly from their listing.</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="9">
+            How long will it take for a Mentor to respond to my request?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="9">
+            <Card.Body className={css.faqCardBody}>
+            <p>Mentors are typically very responsive and reply as soon as they receive a booking request. If you do not hear back from a Mentor regarding your request, you can also send them a message regarding the booking request directly from their listing.</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="10">
+            Is there a minimum or maximum booking duration?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="10">
+            <Card.Body className={css.faqCardBody}>
+            <p>The minimum is one hour, but there is no maximum. We recommend that you do not go over three hours. Meetings like this can require a lot of energy. So, our advice is to do a series of short meetings rather than one long meeting.</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="11">
+            Can I modify a booking once it has been sent as a booking request?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="11">
+            <Card.Body className={css.faqCardBody}>
+            <p>Once a booking request has been sent it cannot be modified. You can however message the Mentor directly, request for them to cancel, and resubmit another booking request. If your request to cancel or modify a booking comes within a 48-hour period prior to the Mentoring session, the Mentor cannot charge you for the cancellation, but thereafter the session will be charged fully. If a mentor is refusing to cancel a session, or you notice they failed to cancel before the 48-hour period, please contact us at admin@tryamentor.com and we will make the cancellation for you.</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="12">
+            When is a booking confirmed?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="12">
+            <Card.Body className={css.faqCardBody}>
+            <p>A booking is confirmed once indicated as completed by the Mentor.</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="13">
+            How can I be safe and cautious when using Try A Mentor?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="13">
+            <Card.Body className={css.faqCardBody}>
+            <p>While we do everything that we can to build the most trusted community of Mentors to book, we rely on our community of users to help us by being proactive and always reporting any suspicious activity on our platform. We also have Community Guidelines (link) that outlines this in more detail. We ask you to read / visit these now, but please remember, this is an on-line Mentoring platform. You should not meet face to face and should not share personal contact details (if asked, remind the Mentor that they cannot be given due to the rules of Try A Mentor). All communication, including payment and booking should be done through Try A Mentor. The only exception is the actual Mentoring sessions which will be conducted through the Mentor’s video conferencing application e.g. Skype. Zoom etc. If asked to join a video conferencing application you are unsure of (never heard of), go to the website of the application to ensure it is totally legitimate and search for independent reviews of the application. </p>
+            <p>If you already have an account on the requested video conferencing application (e.g. Skype), if possible, create a new account to keep your personal account secret.</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="14">Do I have to communicate on Try A Mentor? (Short Answer: Yes)
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="14">
+            <Card.Body className={css.faqCardBody}>
+            <p>It is a rule of the site that all communication occurs on Try A Mentor with the only exception being the communication that occurs during Mentoring Sessions on the video conferencing application. You should not share personal contact details (if asked, remind the Mentor that they cannot be given due to the rules of Try A Mentor). </p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="15">I am being asked to meet my Mentor through a Video Conferencing application. How do I do this?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="15">
+            <Card.Body className={css.faqCardBody}>
+            <p>The wonderful thing about the internet is you can find videos on it explaining how to use any of the major video conferencing applications e.g. Skype, Zoom etc. Just search “how do I …” and a video will be found. If asked to join a video conferencing application you are unsure of (never heard of), go to the website of the application to ensure it is totally legitimate and search for independent reviews of the application. </p>
+            <p>If you already have an account on the requested video conferencing application (e.g. Skype), if possible, create a new account to keep your personal account secret.</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="16">
+            Should I have my Mentor sign a Non-Disclosure agreement?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="16">
+            <Card.Body className={css.faqCardBody}>
+            <p>If you are in a Role and sharing information it and about your organisation, then you and your organisation may feel it is prudent to have your Mentor sign such an agreement. Try A Mentor’s parent organisation, The Beacon HRM Group, supply Executive Coaches to organisations and employees found within them. It is rare that any Executive Coach has had to sign a Non-Disclosure but not unheard of. So, if you and your organisation think it would be prudent due to the type of information you will be sharing to have the Mentor sign a Non-Disclosure agreement, please do so. </p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="17">
+            What information is shared with the Mentor – Short answer – your Name
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="17">
+            <Card.Body className={css.faqCardBody}>
+            <p>All Try A Mentor collects is your name, confirmation you are over eighteen, phone number (optional) and e-mail address. None of this is shared with any other party and is used by Try A Mentor for administration purposes only. The Mentor only receives your Name.</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="18">
+            How do I know my payment is safe?
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="18">
+            <Card.Body className={css.faqCardBody}>
+            <p>One of the clear advantages of Try A Mentor is our use of the Stripe payment system (link: https://stripe.com/). This is completely independent of Try A Mentor and keeps all financial information and monies safe (Try A Mentor never has access to it). Specifically, Try A Mentor uses it for a delayed payment feature. Once a session is booked, Stripe collects the monies due but does not deposit them into the Mentor’s account until fourteen days after the session occurs. So if you need these funds returned due to a complaint and you do so within the first five days of having had the Mentoring Session, then Try A Mentor is able to pause the payment to the Mentor and investigate your claim. For more information on this process, please see the question “What if am dissatisfied, can I get my money back?” and its answer which is found in this section of the Try A Mentor platform.</p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+        <Card>
+            <Accordion.Toggle as={Card.Header} variant="link" eventKey="19">
+            What type of photograph should I use? – Short Answer – Photo is Optional
+            </Accordion.Toggle>
+          <Accordion.Collapse eventKey="19">
+            <Card.Body className={css.faqCardBody}>
+            <p>
+              There is no requirement to upload a photograph. If you do, just choose one that makes you happy. 
+            </p>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+      </Accordion>
     </div>
   );
 };
