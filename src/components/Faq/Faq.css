@@ -25,4 +25,20 @@
 }
 .faqCardBody {
   font-size: 0.8rem;
+
+  & ul {
+    padding-left: 20px;
+
+    & li {
+      font-size: 0.8rem;
+
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  & .largeText {
+    font-size: 25px;
+  }
 }
