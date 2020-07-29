@@ -666,7 +666,7 @@ class FieldDateAndTimeInput extends Component {
               this.props.removeSelectedDate(formId);
             }}
           >
-            - Delete Slot
+            - Delete Meeting
           </InlineTextButton>
         ) : null}
       </div>
