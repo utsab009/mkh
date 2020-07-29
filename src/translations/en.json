@@ -469,6 +469,7 @@
   "MenteeSignupPage.loginLinkText": "Log-in",
   "MenteeSignupPage.resendEmail": "Didn't get the email? {resendEmailLink}.",
   "MenteeSignupPage.resendEmailLinkText": "Resend it",
+  "MenteeSignupPage.login": "Log in",
   "MenteeSignupPage.resendFailed": "Resending verification email failed. Please try again.",
   "MenteeSignupPage.resendFailedTooManyRequests": "The maximum of 5 verification emails has been reached. Please try again tomorrow.",
   "MenteeSignupPage.schemaTitleLogin": "Log in | {siteTitle}",
