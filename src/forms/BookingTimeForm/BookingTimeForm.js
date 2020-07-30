@@ -291,7 +291,7 @@ export class BookingTimeFormComponent extends Component {
                   }
                 }}
               >
-                + Add Slot
+                + Add Meeting
               </InlineTextButton>
               <p className={css.smallPrint}>
                 <FormattedMessage
