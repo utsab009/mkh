@@ -1,0 +1,10 @@
+; This is the Calva evaluation results output window.
+; Leave it open, please. Because quirks.
+; The keyboard shortcut `ctrl+alt+c o` shows and focuses this window.
+; Please see https://calva.io/output/ for more info.
+
+; Start the REPL with the command *Start Project REPL and connect (aka Jack-in)*.
+;    Default keybinding for REPL Jack-in: `ctrl+alt+c ctrl+alt+j`
+;    Or connect to a running REPL using `ctrl+alt+c ctrl+alt+c`
+; Happy coding! ♥️
+

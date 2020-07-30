@@ -188,6 +188,7 @@ export class CheckoutPageComponent extends Component {
       const listingId = pageData.listing.id;
       if (pageData.bookingDates.length && pageData.bookingDates.length > 0)
         pageData.bookingDates.forEach((element, i) => {
+          // console.log('elm', element);
           // Fetch speculated transaction for showing price in booking breakdown
           // NOTE: if unit type is line-item/units, quantity needs to be added.
           // The way to pass it to checkout page is through pageData.bookingData
@@ -195,9 +196,12 @@ export class CheckoutPageComponent extends Component {
             listingId,
             bookingStart: element.bookingStartTime,
             bookingEnd: element.bookingEndTime,
-            quantity: element.quantity,
-            // units: 1,
-            // seats: 1,
+            // quantity: element.quantity,
+            protectedData: {
+              link: pageData.listing.author.attributes.profile.publicData.conferenceLink,
+            },
+            units: 1,
+            seats: element.quantity,
           });
         });
     }
@@ -379,11 +383,14 @@ export class CheckoutPageComponent extends Component {
         listingId: pageData.listing.id,
         bookingStart: item.booking.attributes.start,
         bookingEnd: item.booking.attributes.end,
-        quantity: pageData.bookingDates
+        // quantity: pageData.bookingDates
+        //   ? pageData.bookingDates.length > 0 && pageData.bookingDates[i].quantity
+        //   : null,
+        units: 1,
+        seats: pageData.bookingDates
           ? pageData.bookingDates.length > 0 && pageData.bookingDates[i].quantity
-          : null,
-        // units: 1,
-        // seats: 1,
+          : 1,
+        protectedData: item.attributes.protectedData,
         ...optionalPaymentParams,
       };
     });
