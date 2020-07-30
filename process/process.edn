@@ -7,7 +7,8 @@
   {:name :transition/request-payment
    :actor :actor.role/customer
    :actions
-   [{:name :action/create-booking
+   [{:name :action/update-protected-data}
+    {:name :action/create-booking
      :config {:observe-availability? true, :type :time}}
     {:name :action/calculate-tx-unit-total-price}
     {:name :action/calculate-tx-provider-commission
@@ -78,16 +79,15 @@
    :from :state/accepted
    :to :state/booking-ended}
 
-  {:name :transition/hold-payment-request
-   :actor :actor.role/customer
-   :actions []
-   :from :state/booking-ended
-   :to :state/hold-payment-request}
+  ;; {:name :transition/hold-payment-request
+  ;;  :actor :actor.role/customer
+  ;;  :actions []
+  ;;  :from :state/booking-ended
+  ;;  :to :state/hold-payment-request}
 
   {:name :transition/complete
-   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["PT1H"]}]}
-  ;;  :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["P1D"]}]}
-   :actions []
+   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["P14D"]}]}
+   :actions [{:name :action/stripe-create-payout}]
    :from :state/booking-ended
    :to :state/delivered}
 
@@ -104,21 +104,27 @@
    [{:name :action/cancel-booking}
     {:name :action/calculate-full-refund}
     {:name :action/stripe-refund-payment}]
-   :from :state/hold-payment-request
+   :from :state/booking-ended
    :to :state/cancelled}
 
   {:name :transition/pay-to-mentor
    :actor :actor.role/operator
+   :actions []
+   :from :state/booking-ended
+   :to :state/payout-waiting}
+
+  {:name :transition/payout-waiting-time
+   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["P14D"]}]}
    :actions [{:name :action/stripe-create-payout}]
-   :from :state/hold-payment-request
+   :from :state/payout-waiting
    :to :state/delivered}
 
-  {:name :transition/hold-payment-request-expired
-  ;;  :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["PT10M"]}]}
-   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["P1D"]}]}
-   :actions [{:name :action/stripe-create-payout}]
-   :from :state/hold-payment-request
-   :to :state/delivered}
+  ;; {:name :transition/hold-payment-request-expired
+  ;; ;;  :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["PT10M"]}]}
+  ;;  :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["P1D"]}]}
+  ;;  :actions [{:name :action/stripe-create-payout}]
+  ;;  :from :state/hold-payment-request
+  ;;  :to :state/delivered}
 
   {:name :transition/cancel
    :actor :actor.role/operator
@@ -190,6 +196,16 @@
    :on :transition/accept
    :to :actor.role/customer
    :template :booking-request-accepted}
+  {:name :notification/booking-start-alert-customer
+   :on :transition/accept
+   :at {:fn/minus [{:fn/timepoint [:time/booking-start]} {:fn/period ["P1D"]}]}
+   :to :actor.role/customer
+   :template :booking-start-alert-customer}
+  {:name :notification/booking-start-alert-provider
+   :on :transition/accept
+   :at {:fn/minus [{:fn/timepoint [:time/booking-start]} {:fn/period ["P1D"]}]}
+   :to :actor.role/provider
+   :template :booking-start-alert-provider}
   {:name :notification/booking-request-declined
    :on :transition/decline
    :to :actor.role/customer

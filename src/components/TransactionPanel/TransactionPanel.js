@@ -487,7 +487,7 @@ export class TransactionPanelComponent extends Component {
               {stateData.showSaleButtons ? (
                 <div className={css.desktopActionButtons}>{saleButtons}</div>
               ) : null}
-              {isCustomer && stateData.holdPaymentPeriod && stateData.holdPaymentPeriod === true ? (
+              {/* {isCustomer && stateData.holdPaymentPeriod && stateData.holdPaymentPeriod === true ? (
                 <div
                   className={css.desktopActionButtons}
                   style={{ maxWidth: '80%', margin: '50px auto' }}
@@ -496,7 +496,7 @@ export class TransactionPanelComponent extends Component {
                     Hold Payment
                   </PrimaryButton>
                 </div>
-              ) : null}
+              ) : null} */}
             </div>
           </div>
         </div>
