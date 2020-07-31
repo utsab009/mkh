@@ -3,6 +3,7 @@ import {
   AboutPage,
   AuthenticationPage,
   CheckoutPage,
+  CommunityGuidelinesPage,
   ContactDetailsPage,
   EditListingPage,
   EmailVerificationPage,
@@ -299,6 +300,11 @@ const routeConfiguration = () => {
       path: '/terms-of-service',
       name: 'TermsOfServicePage',
       component: props => <TermsOfServicePage {...props} />,
+    },
+    {
+      path: '/community-guidelines',
+      name: 'CommunityGuidelinesPage',
+      component: props => <CommunityGuidelinesPage {...props} />,
     },
     {
       path: '/privacy-policy',

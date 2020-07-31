@@ -38,7 +38,14 @@ const PrivacyPolicyPageComponent = props => {
       },
     },
     {
-      text: intl.formatMessage({ id: 'FaqPage.faqTabTitle' }),
+      text: intl.formatMessage({ id: 'PrivacyPolicyPage.cgTabTitle' }),
+      selected: false,
+      linkProps: {
+        name: 'CommunityGuidelinesPage',
+      },
+    },
+    {
+      text: intl.formatMessage({ id: 'PrivacyPolicyPage.faqTabTitle' }),
       selected: false,
       linkProps: {
         name: 'FaqPage',

@@ -13,39 +13,39 @@ import {
   LayoutWrapperTopbar,
   LayoutWrapperFooter,
   Footer,
-  TermsOfService,
+  CommunityGuidelines,
 } from '../../components';
 import config from '../../config';
 
-import css from './TermsOfServicePage.css';
+import css from './CommunityGuidelinesPage.css';
 
-const TermsOfServicePageComponent = props => {
+const CommunityGuidelinesPageComponent = props => {
   const { scrollingDisabled, intl } = props;
 
   const tabs = [
     {
-      text: intl.formatMessage({ id: 'TermsOfServicePage.privacyTabTitle' }),
+      text: intl.formatMessage({ id: 'CommunityGuidelinesPage.privacyTabTitle' }),
       selected: false,
       linkProps: {
         name: 'PrivacyPolicyPage',
       },
     },
     {
-      text: intl.formatMessage({ id: 'TermsOfServicePage.tosTabTitle' }),
-      selected: true,
+      text: intl.formatMessage({ id: 'CommunityGuidelinesPage.tosTabTitle' }),
+      selected: false,
       linkProps: {
         name: 'TermsOfServicePage',
       },
     },
     {
-      text: intl.formatMessage({ id: 'TermsOfServicePage.cgTabTitle' }),
-      selected: false,
+      text: intl.formatMessage({ id: 'CommunityGuidelinesPage.cgTabTitle' }),
+      selected: true,
       linkProps: {
         name: 'CommunityGuidelinesPage',
       },
     },
     {
-      text: intl.formatMessage({ id: 'TermsOfServicePage.faqTabTitle' }),
+      text: intl.formatMessage({ id: 'FaqPage.faqTabTitle' }),
       selected: false,
       linkProps: {
         name: 'FaqPage',
@@ -53,7 +53,10 @@ const TermsOfServicePageComponent = props => {
     },
   ];
   const siteTitle = config.siteTitle;
-  const schemaTitle = intl.formatMessage({ id: 'TermsOfServicePage.schemaTitle' }, { siteTitle });
+  const schemaTitle = intl.formatMessage(
+    { id: 'CommunityGuidelinesPage.schemaTitle' },
+    { siteTitle }
+  );
   const schema = {
     '@context': 'http://schema.org',
     '@type': 'WebPage',
@@ -63,15 +66,15 @@ const TermsOfServicePageComponent = props => {
     <Page title={schemaTitle} scrollingDisabled={scrollingDisabled} schema={schema}>
       <LayoutSideNavigation>
         <LayoutWrapperTopbar>
-          <TopbarContainer currentPage="TermsOfServicePage" />
+          <TopbarContainer currentPage="CommunityGuidelinesPage" />
         </LayoutWrapperTopbar>
         <LayoutWrapperSideNav tabs={tabs} />
         <LayoutWrapperMain>
           <div className={css.content}>
             <h1 className={css.heading}>
-              <FormattedMessage id="TermsOfServicePage.heading" />
+              <FormattedMessage id="CommunityGuidelinesPage.heading" />
             </h1>
-            <TermsOfService />
+            <CommunityGuidelines />
           </div>
         </LayoutWrapperMain>
         <LayoutWrapperFooter>
@@ -84,7 +87,7 @@ const TermsOfServicePageComponent = props => {
 
 const { bool } = PropTypes;
 
-TermsOfServicePageComponent.propTypes = {
+CommunityGuidelinesPageComponent.propTypes = {
   scrollingDisabled: bool.isRequired,
 
   // from injectIntl
@@ -97,9 +100,9 @@ const mapStateToProps = state => {
   };
 };
 
-const TermsOfServicePage = compose(
+const CommunityGuidelinesPage = compose(
   connect(mapStateToProps),
   injectIntl
-)(TermsOfServicePageComponent);
+)(CommunityGuidelinesPageComponent);
 
-export default TermsOfServicePage;
+export default CommunityGuidelinesPage;

@@ -38,6 +38,13 @@ const FaqPageComponent = props => {
       },
     },
     {
+      text: intl.formatMessage({ id: 'FaqPage.cgTabTitle' }),
+      selected: false,
+      linkProps: {
+        name: 'CommunityGuidelinesPage',
+      },
+    },
+    {
       text: intl.formatMessage({ id: 'FaqPage.faqTabTitle' }),
       selected: true,
       linkProps: {
