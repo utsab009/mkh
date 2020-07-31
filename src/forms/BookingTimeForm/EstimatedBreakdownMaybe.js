@@ -38,6 +38,7 @@ import css from './BookingTimeForm.css';
 const { Money, UUID } = sdkTypes;
 
 const estimatedTotalPrice = (unitPrice, unitCount) => {
+  console.log('11111 unitPrice', unitPrice, unitCount);
   const numericPrice = convertMoneyToNumber(unitPrice);
   const numericTotalPrice = new Decimal(numericPrice).times(unitCount).toNumber();
   return new Money(

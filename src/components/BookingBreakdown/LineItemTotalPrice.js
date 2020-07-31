@@ -29,6 +29,7 @@ const LineItemUnitPrice = props => {
     ? transaction.attributes.payoutTotal
     : transaction.attributes.payinTotal;
   const formattedTotalPrice = formatMoney(intl, totalPrice);
+  // console.log('11111 in break', totalPrice, formattedTotalPrice);
 
   return (
     <>

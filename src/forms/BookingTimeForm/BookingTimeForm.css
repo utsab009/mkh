@@ -85,3 +85,10 @@
     width: 100%;
   }
 }
+
+.finalPriceRow {
+  justify-content: space-between;
+  display: flex;
+  font-size: 0.8rem;
+  margin: 10px 0;
+}

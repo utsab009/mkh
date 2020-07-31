@@ -16,15 +16,24 @@ import { Form, PrimaryButton, FieldTextInput, InlineTextButton } from '../../com
 import EstimatedBreakdownMaybe from './EstimatedBreakdownMaybe';
 import FieldDateAndTimeInput from './FieldDateAndTimeInput';
 import moment from 'moment';
+import Decimal from 'decimal.js';
+import { types as sdkTypes } from '../../util/sdkLoader';
 import css from './BookingTimeForm.css';
 import { isEmpty } from 'lodash';
-
+import {
+  unitDivisor,
+  convertMoneyToNumber,
+  convertUnitToSubUnit,
+  formatMoney,
+} from '../../util/currency';
+const { Money } = sdkTypes;
 export class BookingTimeFormComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       bookingFormArray: [0],
       fieldError: null,
+      totalHour: 0,
     };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
@@ -137,6 +146,34 @@ export class BookingTimeFormComponent extends Component {
       </div>
     ) : null;
   };
+  getTotalHour = (values, index) => {
+    let totalHour = 0;
+    const bookingData =
+      values &&
+      values.bookingStartTime &&
+      values.bookingStartTime.length > 0 &&
+      values.bookingEndTime[index] &&
+      values.bookingStartTime[index];
+
+    if (bookingData) {
+      totalHour = calculateQuantityFromHours(
+        JSON.parse(values.bookingStartTime[index]),
+        JSON.parse(values.bookingEndTime[index])
+      );
+    }
+    return totalHour;
+  };
+
+  estimatedTotalPrice = (unitPrice, unitCount) => {
+    const numericPrice = convertMoneyToNumber(unitPrice);
+    const numericTotalPrice = new Decimal(numericPrice).times(unitCount).toNumber();
+    // console.log('11111 numericTotalPrice', numericTotalPrice, numericPrice);
+    return new Money(
+      convertUnitToSubUnit(numericTotalPrice, unitDivisor(unitPrice.currency)),
+      unitPrice.currency
+    );
+  };
+
   render() {
     const { rootClassName, className, price: unitPrice, ...rest } = this.props;
     const classes = classNames(rootClassName || css.root, className);
@@ -196,6 +233,48 @@ export class BookingTimeFormComponent extends Component {
 
           const startDate = startTime ? timestampToDate(startTime) : null;
           const endDate = endTime ? timestampToDate(endTime) : null;
+
+          const finalEstimate = () => {
+            let totalHour = 0,
+              perUnitPrice = formatMoney(intl, unitPrice),
+              totalPrice = 0;
+            // console.log('11111 units', unitType, unitPrice);
+            if (
+              monthlyTimeSlots &&
+              timeZone &&
+              values &&
+              values.bookingStartTime &&
+              values.bookingStartTime.length > 0
+            ) {
+              this.state.bookingFormArray.forEach(item => {
+                if (values.bookingStartTime[item]) {
+                  totalHour += this.getTotalHour(values, item);
+                }
+              });
+            }
+
+            totalPrice = this.estimatedTotalPrice(unitPrice, totalHour);
+            const formattedTotalPrice = formatMoney(intl, totalPrice);
+            // console.log('11111 totalPrice', totalPrice);
+
+            return (
+              <div>
+                <hr />
+                <div className={css.finalPriceRow}>
+                  <div>Price per hour</div>
+                  <div>{perUnitPrice}</div>
+                </div>
+                <div className={css.finalPriceRow}>
+                  <div>Total hours</div>
+                  <div>{totalHour}</div>
+                </div>
+                <div className={css.finalPriceRow}>
+                  <div>Total Amount</div>
+                  <div>{formattedTotalPrice}</div>
+                </div>
+              </div>
+            );
+          };
 
           // // This is the place to collect breakdown estimation data. See the
           // // EstimatedBreakdownMaybe component to change the calculations
@@ -325,6 +404,7 @@ export class BookingTimeFormComponent extends Component {
                   {this.state.fieldError}
                 </p>
               ) : null}
+              {finalEstimate()}
               <div className={submitButtonClasses}>
                 <PrimaryButton type="submit">
                   <FormattedMessage id="BookingTimeForm.requestToBook" />
