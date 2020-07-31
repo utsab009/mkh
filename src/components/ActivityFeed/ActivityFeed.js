@@ -123,6 +123,10 @@ const resolveTransitionMessage = (
   const isOwnTransition = transition.by === ownRole;
   const currentTransition = transition.transition;
   const displayName = otherUsersName;
+  const meetingLink =
+    transaction &&
+    transaction.attributes.protectedData &&
+    transaction.attributes.protectedData.link;
 
   switch (currentTransition) {
     case TRANSITION_CONFIRM_PAYMENT:
@@ -138,7 +142,16 @@ const resolveTransitionMessage = (
       return isOwnTransition ? (
         <FormattedMessage id="ActivityFeed.ownTransitionAccept" />
       ) : (
-        <FormattedMessage id="ActivityFeed.transitionAccept" values={{ displayName }} />
+        <>
+          <FormattedMessage id="ActivityFeed.transitionAccept" values={{ displayName }} />
+          {meetingLink ? (
+            <div>
+              <a style={{ color: 'blue' }} target="_blank" href={meetingLink}>
+                Meeting Link
+              </a>
+            </div>
+          ) : null}
+        </>
       );
     case TRANSITION_DECLINE:
       return isOwnTransition ? (
@@ -235,11 +248,9 @@ const reviewByAuthorId = (transaction, userId) => {
 
 const Transition = props => {
   const { transition, transaction, currentUser, intl, onOpenReviewModal } = props;
-
   const currentTransaction = ensureTransaction(transaction);
   const customer = currentTransaction.customer;
   const provider = currentTransaction.provider;
-
   const deletedListing = intl.formatMessage({
     id: 'ActivityFeed.deletedListing',
   });
