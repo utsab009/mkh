@@ -216,7 +216,7 @@ export class SignupFormComponent extends Component {
                         return (
                           <div className={css.fieldWrapper} key={name}>
                             <div>
-                              <div className={css.name}>
+                              <div className={css.workexp}>
                                 <div className={css.field}>
                                   <FieldTextInput
                                     type="text"
@@ -234,7 +234,7 @@ export class SignupFormComponent extends Component {
                                   />
                                 </div>
                               </div>
-                              <div className={css.name}>
+                              <div className={css.workexp}>
                                 <div className={css.field}>
                                   <FieldTextInput
                                     type="text"
@@ -336,7 +336,7 @@ export class SignupFormComponent extends Component {
                         return (
                           <div className={css.fieldWrapper} key={name}>
                             <div>
-                              <div className={css.name}>
+                              <div className={css.workexp}>
                                 <div className={css.field}>
                                   <FieldTextInput
                                     type="text"
@@ -354,7 +354,7 @@ export class SignupFormComponent extends Component {
                                   />
                                 </div>
                               </div>
-                              <div className={css.name}>
+                              <div className={css.workexp}>
                                 <div className={css.field}>
                                   <FieldTextInput
                                     type="text"

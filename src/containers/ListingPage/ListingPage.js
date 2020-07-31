@@ -592,7 +592,7 @@ export class ListingPageComponent extends Component {
                       </svg> */}
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="127"
+                        width="70"
                         height="27"
                         viewBox="1.786 1.783 287.865 76.248"
                       >
