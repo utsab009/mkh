@@ -24,3 +24,34 @@
     }
   }
 }
+
+.bulletList {
+  list-style: disc;
+  padding: 0 0 0 18px;
+}
+
+.bulletList > li,
+.circleList > li,
+.numberList > li,
+.alphaList > li {
+  font-size: 16px;
+}
+
+.circleList {
+  list-style: circle;
+  padding: 0 0 0 18px;
+}
+
+.cancelColor {
+  color: #ff0000d1;
+}
+
+.numberList {
+  list-style: decimal;
+  padding: 0 0 0 18px;
+}
+
+.alphaList {
+  list-style: lower-alpha;
+  padding: 0 0 0 18px;
+}
