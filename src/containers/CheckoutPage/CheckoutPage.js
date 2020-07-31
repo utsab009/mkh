@@ -200,8 +200,8 @@ export class CheckoutPageComponent extends Component {
             protectedData: {
               link: pageData.listing.author.attributes.profile.publicData.conferenceLink,
             },
-            units: 1,
-            seats: element.quantity,
+            units: element.quantity,
+            seats: 1,
           });
         });
     }
@@ -386,10 +386,10 @@ export class CheckoutPageComponent extends Component {
         // quantity: pageData.bookingDates
         //   ? pageData.bookingDates.length > 0 && pageData.bookingDates[i].quantity
         //   : null,
-        units: 1,
-        seats: pageData.bookingDates
+        units: pageData.bookingDates
           ? pageData.bookingDates.length > 0 && pageData.bookingDates[i].quantity
           : 1,
+        seats: 1,
         protectedData: item.attributes.protectedData,
         ...optionalPaymentParams,
       };
