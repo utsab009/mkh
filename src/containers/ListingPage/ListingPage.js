@@ -393,7 +393,7 @@ export class ListingPageComponent extends Component {
       linkedinLink = null,
       fullName = ensuredAuthor.attributes.profile.displayName,
     } = authorData;
-    // console.log('currentListing: ', currentListing, authorData);
+    console.log('currentListing: ', currentListing, authorData);
     const youtubeLink =
       currentListing &&
       currentListing.attributes &&
@@ -403,14 +403,12 @@ export class ListingPageComponent extends Component {
       ensuredAuthor !== null && ensuredAuthor.attributes.profile.bio
         ? ensuredAuthor.attributes.profile.bio
         : null;
-    const linkedinLinkMsg =
-      linkedinLink !== null
-        ? 'See your Mentor’s Linked-In Profile'
-        : 'Mentor is yet to share their linkedIn link';
-    const youtubeMsg =
-      youtubeLink !== null
-        ? 'Your Mentor may have created a Video on how they can help'
-        : 'Mentor has yet to post a video';
+    const linkedinLinkMsg = !!linkedinLink
+      ? 'See your Mentor’s Linked-In Profile'
+      : 'Mentor is yet to share their linkedIn link';
+    const youtubeMsg = !!youtubeLink
+      ? 'Your Mentor may have created a Video on how they can help'
+      : 'Mentor has yet to post a video';
     // When user is banned or deleted the listing is also deleted.
     // Because listing can be never showed with banned or deleted user we don't have to provide
     // banned or deleted display names for the function
