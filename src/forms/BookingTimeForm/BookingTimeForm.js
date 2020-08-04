@@ -342,17 +342,51 @@ export class BookingTimeFormComponent extends Component {
                           removeSelectedDate={this.removeSelectedDate}
                         />
                         {/* {this.getEstimate(values, item, { unitType, unitPrice, timeZone })} */}
+                        <InlineTextButton
+                          style={{
+                            marginTop: 10,
+                            fontSize: 16,
+                            marginBottom: 20,
+                            textAlign: 'left',
+                          }}
+                          onClick={e => {
+                            console.log('2222 event in click', e);
+                            e.preventDefault();
+                            if (this.state.bookingFormArray.length === 0) {
+                              this.setState({
+                                bookingFormArray: [0],
+                              });
+                            } else {
+                              this.setState(
+                                prevState => ({
+                                  bookingFormArray: [
+                                    ...this.state.bookingFormArray,
+                                    prevState.bookingFormArray[
+                                      prevState.bookingFormArray.length - 1
+                                    ] *
+                                      1 +
+                                      1,
+                                  ],
+                                }),
+                                console.log('5555 book array', this.state.bookingFormArray)
+                              );
+                            }
+                          }}
+                        >
+                          + Add Meeting
+                        </InlineTextButton>
                       </div>
                     );
                   })
                 : null}
 
               {/* {bookingInfo} */}
-              <InlineTextButton
+              {/* <InlineTextButton
                 style={{ marginTop: 10, fontSize: 16, marginBottom: 20, textAlign: 'left' }}
                 onClick={e => {
                   console.log('2222 event in click', e);
                   e.preventDefault();
+                  e.stopPropagation();
                   if (this.state.bookingFormArray.length === 0) {
                     this.setState({
                       bookingFormArray: [0],
@@ -371,7 +405,7 @@ export class BookingTimeFormComponent extends Component {
                 }}
               >
                 + Add Meeting
-              </InlineTextButton>
+              </InlineTextButton> */}
               <p className={css.smallPrint}>
                 <FormattedMessage
                   id={
