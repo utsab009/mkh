@@ -650,7 +650,7 @@
 .sociallink,
 .qtbtn {
   background: #2a364c;
-  color: #fff;
+  color: #fff !important;
   padding: 7px 21px;
   display: inline-block;
   margin: 26px 10px;

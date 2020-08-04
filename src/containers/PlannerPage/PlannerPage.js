@@ -33,7 +33,7 @@ moment.updateLocale('en', {
   week: {
     dow: 1,
   },
-})
+});
 
 const localizer = momentLocalizer(moment); // or globalizeLocalizer
 
@@ -41,62 +41,75 @@ export class PlannerPageComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    transactions: [], 
-    events: [], 
-    dailyEvents: [],
-    selectedDate: null,
-    monthStart: moment()
+      transactions: [],
+      events: [],
+      dailyEvents: [],
+      selectedDate: null,
+      monthStart: moment()
         .startOf('month')
         .format('YYYY-MM-DD HH:mm:ss'),
-    monthEnd: moment()
+      monthEnd: moment()
         .endOf('month')
         .format('YYYY-MM-DD HH:mm:ss'),
-    events: [],
-    links: [],
-    provider_id: props.provider_id,
+      events: [],
+      links: [],
+      provider_id: props.provider_id,
     };
   }
 
-  txnsToState = (txns) => {
+  txnsToState = txns => {
     let events = [];
     const transactions = txns.filter(item => {
-        events.push({
-          allday:false,
-          start: item.booking.attributes.start,
-          end : item.booking.attributes.end,
-          title: item.listing.attributes.title,
-          id: item.id.uuid
-        });
-        return item;
+      events.push({
+        allday: false,
+        start: item.booking.attributes.start,
+        end: item.booking.attributes.end,
+        title: item.customer.attributes.profile.displayName, //item.listing.attributes.title,
+        id: item.id.uuid,
+        cName: item.customer.attributes.profile.displayName,
+      });
+      return item;
     });
-    this.setState({events : events,transactions : transactions,selectedDate:moment().format('DD-MM-YYYY')});
+    this.setState({
+      events: events,
+      transactions: transactions,
+      selectedDate: moment().format('DD-MM-YYYY'),
+    });
   };
 
   onSelectSlot = (date, event = false) => {
     const dailyEvents = this.state.events.filter(item => {
-      if(moment(item.start).format('YYYY-MM-DD') === moment(date.start).format('YYYY-MM-DD'))
-      // if(moment(item.start).isAfter(date.start) && moment(item.start).isBefore(moment(date.start).add(1, 'days').format('YYYY-MM-DD HH:mm:ss')))
-      {
+      if (moment(item.start).format('YYYY-MM-DD') === moment(date.start).format('YYYY-MM-DD')) {
+        // if(moment(item.start).isAfter(date.start) && moment(item.start).isBefore(moment(date.start).add(1, 'days').format('YYYY-MM-DD HH:mm:ss')))
         return item;
       }
     });
-    this.setState({dailyEvents:dailyEvents, selectedDate: moment(date.start).format('DD-MM-YYYY')});
-    
+    this.setState({
+      dailyEvents: dailyEvents,
+      selectedDate: moment(date.start).format('DD-MM-YYYY'),
+    });
   };
 
   onNavigate = (date, view) => {
-    let monthChangeDate = {start:moment(date).startOf('day').format('YYYY-MM-DD HH:mm:ss')};
+    let monthChangeDate = {
+      start: moment(date)
+        .startOf('day')
+        .format('YYYY-MM-DD HH:mm:ss'),
+    };
     this.onSelectSlot(monthChangeDate);
-  
   };
 
   onSelectEvent = (event, e) => {
-    let eventDate = {start:moment(event.start).startOf('day').format('YYYY-MM-DD HH:mm:ss')};
-        this.onSelectSlot(eventDate, true);
-        // this.props.history.push('/sale/' + event.id + '/details');
+    let eventDate = {
+      start: moment(event.start)
+        .startOf('day')
+        .format('YYYY-MM-DD HH:mm:ss'),
+    };
+    this.onSelectSlot(eventDate, true);
+    // this.props.history.push('/sale/' + event.id + '/details');
   };
 
-  render() {    
+  render() {
     const {
       unitType,
       currentUser,
@@ -111,68 +124,72 @@ export class PlannerPageComponent extends Component {
       transactions,
     } = this.props;
 
+    console.log('props: ', this.props);
 
-    if(this.state.transactions.length == 0 && transactions.length > 0)
-    {
+    if (this.state.transactions.length == 0 && transactions.length > 0) {
       this.txnsToState(transactions);
     }
 
     const itemList = item => {
-        return (
-          <li key={item.id} className={css.listItem}>
-            <NamedLink name={'SaleDetailsPage'} params={{ id: item.id }}>
-              <span className={css.linkTitle}>{item.title}</span>
-              <span className={css.linkDate}>{moment(item.start).format('HH:mm')}</span>
-            </NamedLink>
-          </li>
-        );
+      return (
+        <li key={item.id} className={css.listItem}>
+          <NamedLink name={'SaleDetailsPage'} params={{ id: item.id }}>
+            <span className={css.linkTitle}>{item.cName}</span>
+            <span className={css.linkDate}>{moment(item.start).format('HH:mm')}</span>
+          </NamedLink>
+        </li>
+      );
     };
     return (
-      <Page className={css.root} title={"Planner"} scrollingDisabled={scrollingDisabled}>
+      <Page className={css.root} title={'Planner'} scrollingDisabled={scrollingDisabled}>
         <LayoutSingleColumn>
           <LayoutWrapperTopbar>
             <TopbarContainer currentPage="Planner" />
-            <UserNav selectedPageName="Planner" listing={currentUserListing} profileUserType="mentor" />
+            <UserNav
+              selectedPageName="Planner"
+              listing={currentUserListing}
+              profileUserType="mentor"
+            />
           </LayoutWrapperTopbar>
-          {<LayoutWrapperMain>
-            <div className={css.content}>
-              <div className={css.headingContainer}>
-                <h1 className={css.heading}>
-                  <FormattedMessage id="Planner.heading" />
-                </h1>
-              </div>
-              <div>
-                <div style={{ height: '800px' }}>
-                  <Calendar
-                    className={css.abc}
-                    events={this.state.events}
-                    startAccessor="start"
-                    endAccessor="end"
-                    defaultDate={moment().toDate()}
-                    localizer={localizer}
-                    defaultView="month"
-                    views={['month']}
-                    onNavigate={this.onNavigate}
-                    onSelectEvent={this.onSelectEvent}
-                    selectable={true}
-                    onSelectSlot={this.onSelectSlot}
-                  />
+          {
+            <LayoutWrapperMain>
+              <div className={css.content}>
+                <div className={css.headingContainer}>
+                  <h1 className={css.heading}>
+                    <FormattedMessage id="Planner.heading" />
+                  </h1>
                 </div>
-                <div id={'eventdiv'} className={css.eventDiv}>
-                  {this.state.dailyEvents.length > 0 ? (
-                    <div>
-                      <h2>Bookings for {this.state.selectedDate}</h2>
-                      <ul>
-                        {this.state.dailyEvents.map(itemList)}
-                      </ul>
-                    </div>
-                  ) : (
-                    <h2>No Bookings on {this.state.selectedDate}</h2>
-                  )}
+                <div>
+                  <div style={{ height: '800px' }}>
+                    <Calendar
+                      className={css.abc}
+                      events={this.state.events}
+                      startAccessor="start"
+                      endAccessor="end"
+                      defaultDate={moment().toDate()}
+                      localizer={localizer}
+                      defaultView="month"
+                      views={['month']}
+                      onNavigate={this.onNavigate}
+                      onSelectEvent={this.onSelectEvent}
+                      selectable={true}
+                      onSelectSlot={this.onSelectSlot}
+                    />
+                  </div>
+                  <div id={'eventdiv'} className={css.eventDiv}>
+                    {this.state.dailyEvents.length > 0 ? (
+                      <div>
+                        <h2>Bookings for {this.state.selectedDate}</h2>
+                        <ul>{this.state.dailyEvents.map(itemList)}</ul>
+                      </div>
+                    ) : (
+                      <h2>No Bookings on {this.state.selectedDate}</h2>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          </LayoutWrapperMain>}
+            </LayoutWrapperMain>
+          }
           <LayoutWrapperFooter>
             <Footer />
           </LayoutWrapperFooter>
@@ -180,7 +197,7 @@ export class PlannerPageComponent extends Component {
       </Page>
     );
   }
-};
+}
 
 PlannerPageComponent.defaultProps = {
   unitType: config.bookingUnitType,
