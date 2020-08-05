@@ -319,37 +319,15 @@ export class BookingTimeFormComponent extends Component {
             endDateInputProps,
           };
 
-          return (
-            <Form onSubmit={handleSubmit} className={classes}>
-              {monthlyTimeSlots && timeZone
-                ? this.state.bookingFormArray.map((item, i) => {
-                    return (
-                      <div key={item}>
-                        <div className={css.bookingHeading}>Booking - {i + 1}</div>
-                        <FieldDateAndTimeInput
-                          {...dateInputProps}
-                          className={css.bookingDates}
-                          listingId={listingId}
-                          bookingStartLabel={bookingStartLabel}
-                          onFetchTimeSlots={onFetchTimeSlots}
-                          monthlyTimeSlots={monthlyTimeSlots}
-                          values={values}
-                          intl={intl}
-                          form={form}
-                          pristine={pristine}
-                          timeZone={timeZone}
-                          formId={`${item}`}
-                          removeSelectedDate={this.removeSelectedDate}
-                        />
-                        {/* {this.getEstimate(values, item, { unitType, unitPrice, timeZone })} */}
-                      </div>
-                    );
-                  })
-                : null}
-
-              {/* {bookingInfo} */}
+          const renderAddButton = () => {
+            return (
               <InlineTextButton
-                style={{ marginTop: 10, fontSize: 16, marginBottom: 20, textAlign: 'left' }}
+                style={{
+                  marginTop: 10,
+                  fontSize: 16,
+                  marginBottom: 20,
+                  textAlign: 'left',
+                }}
                 onClick={e => {
                   console.log('2222 event in click', e);
                   e.preventDefault();
@@ -372,6 +350,66 @@ export class BookingTimeFormComponent extends Component {
               >
                 + Add Meeting
               </InlineTextButton>
+            );
+          };
+
+          return (
+            <Form onSubmit={handleSubmit} className={classes}>
+              {monthlyTimeSlots && timeZone
+                ? this.state.bookingFormArray.length
+                  ? this.state.bookingFormArray.map((item, i) => {
+                      let show = this.state.bookingFormArray.length - 1 == i;
+                      return (
+                        <div key={item}>
+                          <div className={css.bookingHeading}>Booking - {i + 1}</div>
+                          <FieldDateAndTimeInput
+                            {...dateInputProps}
+                            className={css.bookingDates}
+                            listingId={listingId}
+                            bookingStartLabel={bookingStartLabel}
+                            onFetchTimeSlots={onFetchTimeSlots}
+                            monthlyTimeSlots={monthlyTimeSlots}
+                            values={values}
+                            intl={intl}
+                            form={form}
+                            pristine={pristine}
+                            timeZone={timeZone}
+                            formId={`${item}`}
+                            removeSelectedDate={this.removeSelectedDate}
+                          />
+                          {/* {this.getEstimate(values, item, { unitType, unitPrice, timeZone })} */}
+                          {show && renderAddButton()}
+                        </div>
+                      );
+                    })
+                  : renderAddButton()
+                : null}
+
+              {/* {bookingInfo} */}
+              {/* <InlineTextButton
+                style={{ marginTop: 10, fontSize: 16, marginBottom: 20, textAlign: 'left' }}
+                onClick={e => {
+                  console.log('2222 event in click', e);
+                  e.preventDefault();
+                  if (this.state.bookingFormArray.length === 0) {
+                    this.setState({
+                      bookingFormArray: [0],
+                    });
+                  } else {
+                    this.setState(
+                      prevState => ({
+                        bookingFormArray: [
+                          ...this.state.bookingFormArray,
+                          prevState.bookingFormArray[prevState.bookingFormArray.length - 1] * 1 + 1,
+                        ],
+                      }),
+                      console.log('5555 book array', this.state.bookingFormArray)
+                    );
+                  }
+                }}
+              >
+                + Add Meeting
+              </InlineTextButton> */}
               <p className={css.smallPrint}>
                 <FormattedMessage
                   id={
@@ -399,12 +437,12 @@ export class BookingTimeFormComponent extends Component {
                     }
                   })
                 : null}
+              {finalEstimate()}
               {this.state.fieldError ? (
                 <p className={css.smallPrint} style={{ color: 'red' }}>
                   {this.state.fieldError}
                 </p>
               ) : null}
-              {finalEstimate()}
               <div className={submitButtonClasses}>
                 <PrimaryButton type="submit">
                   <FormattedMessage id="BookingTimeForm.requestToBook" />

@@ -140,6 +140,7 @@ const Routes = (props, context) => {
         key={route.name}
         path={route.path}
         exact={isExact}
+        // preserverScrollPosition={false}
         render={matchProps => (
           <RouteComponentRenderer
             {...renderProps}
