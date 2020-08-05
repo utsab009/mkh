@@ -345,6 +345,7 @@ export class SignupFormComponent extends Component {
                                     id={`${name}.course`}
                                     name={`${name}.course`}
                                     label={'I gained'}
+                                    className={css.spaceMargin}
                                   />
                                 </div>
                                 <div className={css.field}>
@@ -363,6 +364,7 @@ export class SignupFormComponent extends Component {
                                     id={`${name}.duration`}
                                     name={`${name}.duration`}
                                     label={'length of Time'}
+                                    className={css.spaceMargin}
                                   />
                                 </div>
                                 <div className={css.field}>
