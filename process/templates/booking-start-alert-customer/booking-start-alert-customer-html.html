@@ -5,20 +5,80 @@ format="h:mm a" tz=timezone}} on {{date date format="MMM d, YYYY" tz=timezone}} 
 <html>
   <body>
     {{#with transaction}}
-    <h1>Reminder for meeting of {{listing.title}}</h1>
-    <!-- <h1>Your booking will start within 30 minutes.</h1> -->
+    <!-- <h1>Reminder for meeting of {{listing.title}}</h1> -->
+    <h1>Reminder: Start getting ready for your Mentor meeting in 24 hours (Try A Mentor)</h1>
 
     <p>
-      Your meeting for {{listing.title}} with {{provider.display-name}} will commence from {{>
+      Your Mentoring is only 24 hours away with {{provider.display-name}}. It will commence at {{>
       format-date date=booking.start}} to {{> format-date date=booking.end}}.
     </p>
+    <!-- <p>
+      Your meeting for {{listing.title}} with {{provider.display-name}} will commence from {{>
+      format-date date=booking.start}} to {{> format-date date=booking.end}}.
+    </p> -->
     {{/with}}
+
+    <p style="font-weight: 700; color: #032264;">A Great Way to Avoid or Solve Problems</p>
+    <p>
+      Before your meeting is scheduled to start, open Try A Mentor, sign-in and go to your Inbox (if
+      you are the Mentee go to 'From Mentors' section of your inbox, if you are the Mentee go to
+      'From mentees' section of the inbox). You can type a message to your Mentor / Mentee to say
+      you are about to connect, and they can reply in real time. This way you are telling the other
+      person you are ready and waiting and if either of you run into problems, the other person can
+      offer help if you run into any problems.
+    </p>
+    <p>
+      If you are not sure how to get Skype set-up, remember your Mentor is here to help, so again,
+      through your Try A Mentor inbox, send them messages asking for help and combine the advice
+      given with the many 'how to' videos you will find on the internet (just google – how to set up
+      and use Skype). Do this well in advance of the meeting.
+    </p>
+    <p style="font-weight: 700; color: #032264;">
+      Have a wonderful and enriching Mentoring meeting!
+    </p>
 
     <hr />
 
-    <p>
+    <!-- <p>
       You have received this email notification because you are a member of {{marketplace.name}}. If
       you no longer wish to receive these emails, please contact {{marketplace.name}} team.
-    </p>
+    </p> -->
+    <footer style="font-family: sans-serif;">
+      <div
+        style=" width: 100%; margin: 0 auto; border-top: 1px solid #ddd; padding: 20px 0; font-weight: 400;"
+      >
+        <p style="font-size: 12px; margin: 0 0 20px; color: #7f7f7f; letter-spacing: 1px;">
+          You have received this email notification because you are using
+          <a target="_blank" href="http://tryamentor.com">TryAMentor.com</a>. If you do not wish to
+          receive these e-mail contact us at <a href="#">admin@tryamentor.com</a>.
+        </p>
+
+        <p
+          style="font-size: 14px; margin: 0 0 20px; color: #2a364c; line-height: 16px; letter-spacing: 1px;"
+        >
+          Try A Mentor is part of the Beacon <span style="color: #375623">H</span
+          ><span style="color: #833c0b">R</span><span style="color: #0070c0">M</span> Group
+          consisting of Beacon <span style="color: #375623">Training,</span>
+          <span style="color: #833c0b">e</span>Beacon and Beacon
+          <span style="color: #0070c0">Talent</span>. Find the Beacon HRM Group in Dublin, New York,
+          San Francisco, Auckland and Singapore
+        </p>
+
+        <p style="font-size: 12px; margin: 0 0 20px; color: #000; letter-spacing: 1px;">
+          The content of this e-mail may be confidential or legally privileged. If you are not the
+          named addressee or the intended recipient, please do not copy it or forward it to anyone.
+          If you have received this email in error, please destroy it and kindly notify the
+          <a href="#">admin@tryamentor.com</a>.
+        </p>
+
+        <p style="font-size: 12px; margin: 0 0 20px; color: #000; letter-spacing: 1px;">
+          Email cannot be guaranteed to be secure or error-free, it is your responsibility to ensure
+          that this email (including attachments) is safe and authorised for use in your
+          environment. It is the responsibility of the recipient to ensure that it is virus free and
+          no responsibility is accepted by the Beacon HRM Group for any loss or damage arising in
+          any way from its use.
+        </p>
+      </div>
+    </footer>
   </body>
 </html>
