@@ -1,4 +1,4 @@
-{{transaction.provider.display-name}} has had to unfortunately decline a Booking / Meeting Request
+{{transaction.provider.display-name}} has had to unfortunately decline a Booking / Meeting Request (Try A Mentor)
 
 
 

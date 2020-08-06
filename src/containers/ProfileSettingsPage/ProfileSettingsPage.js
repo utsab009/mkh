@@ -46,17 +46,23 @@ export class ProfileSettingsPageComponent extends Component {
     } = this.props;
 
     const handleSubmit = values => {
-      const { firstName, lastName, bio: rawBio, profileImage, ...rest } = values;
+      console.log('6666 values', values);
+      const { firstName, lastName, bio: rawBio, profileImage, conferenceLink, ...rest } = values;
       // Ensure that the optional bio is a string
       const bio = rawBio || '';
-
+      let confLink = conferenceLink ? conferenceLink : '';
       const profile = {
         firstName: firstName.trim(),
         lastName: lastName.trim(),
         bio,
         // protectedData: { ...rest },
-        publicData: { ...rest, fullName: firstName.trim() + ' ' + lastName.trim() },
+        publicData: {
+          ...rest,
+          conferenceLink: confLink,
+          fullName: firstName.trim() + ' ' + lastName.trim(),
+        },
       };
+      console.log('6666 profile', profile);
       const uploadedImage = this.props.image;
 
       // Update profileImage only if file system has been accessed
@@ -92,7 +98,7 @@ export class ProfileSettingsPageComponent extends Component {
           dob: publicData && publicData.dob,
           linkedinLink: publicData && publicData.linkedinLink,
           // youtubeLink: publicData && publicData.youtubeLink,
-          conferenceLink: publicData && publicData.conferenceLink,
+          conferenceLink: publicData && publicData.conferenceLink ? publicData.conferenceLink : '',
         }}
         profileImage={profileImage}
         onImageUpload={e => onImageUploadHandler(e, onImageUpload)}

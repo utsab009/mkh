@@ -74,13 +74,13 @@ transaction.listing.availability-plan}} {{date date format='MMM d YYYY' tz=timez
         {{#if seats}}
         <tr class="top-row">
           <td colspan="2">
-            {{> format-money money=unit-price}} &times; {{number units}} {{inflect units 'unit'
-            'units'}}
+            {{> format-money money=unit-price}} &times; {{number units}} {{inflect units 'hour'
+            'hours'}}
           </td>
         </tr>
-        <tr class="bottom-row">
+        <!-- <tr class="bottom-row">
           <td colspan="2">Seats &times; {{number seats}}</td>
-        </tr>
+        </tr> -->
         {{else}}
         <tr class="top-row bottom-row">
           <td colspan="2">
@@ -112,10 +112,10 @@ transaction.listing.availability-plan}} {{date date format='MMM d YYYY' tz=timez
     <p style="font-weight: 700; color: #032264;">Mentors Skype address to appear here</p>
     {{#if protected-data.link}}
     <a style="font-size: 30px; font-weight: 700" href="skype:{{protected-data.link}}?chat"
-      >Meeting Link</a
-    >
+      >Meeting Link: skype:{{protected-data.link}}?chat
+    </a>
     {{else}}
-    <p style="font-size:24px; color: blue;">
+    <p style="font-size:20px; color: blue;">
       Your Mentor has yet to give us their Skype address. Please contact them well before your
       meeting date to request it by signing into TryAMentor.com, clicking on the circle with your
       picture or initials in it (top right hand corner of the screen) and go to your inbox (from

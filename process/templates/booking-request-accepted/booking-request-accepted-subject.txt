@@ -1,2 +1,1 @@
-Great News! {{transaction.provider.display-name}} has accepted a booking request!
-
+Great News! {{transaction.provider.display-name}} has accepted a booking request! (Try A Mentor)
