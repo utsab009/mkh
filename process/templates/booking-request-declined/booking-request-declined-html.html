@@ -3,20 +3,37 @@ format="h:mm a" tz=timezone}} on {{date date format="MMM d, YYYY" tz=timezone}} 
 {{~/inline~}}
 
 <html>
-  <body>
-    <h1>Your booking request was declined.</h1>
+  <body style="font-family: sans-serif;">
+    <h1>
+      We are Sorry, <span style="text-decoration: underline;">a</span> booking / meeting request you
+      made has been declined
+    </h1>
 
     {{#with transaction}}
     <p>
+      Unfortunately, for <span style="text-decoration: underline;">just</span> this Mentor meeting,
+      {{provider.display-name}} had to decline your booking request due to unforeseen circumstances.
+      The meeting was to be from {{> format-date date=booking.start}} to {{> format-date
+      date=booking.end}}. You have not been billed. If you have booked other Meetings with this
+      Mentor, these are not cancelled unless you receive a specific email like this one for each
+      meeting. Look out for these messages or Meeting acceptance messages which confirm that your
+      requested Meetings are going to happen in your Try A Mentor inbox.
+    </p>
+    <p>
+      You can book a different time with this Mentor or look for an equally as good Mentor on
+      TryAMentor.com by clicking the link in blue below". Again, we are sorry and hope this has not
+      caused too much inconvenience.
+    </p>
+    <!-- <p>
       Unfortunately {{provider.display-name}} decided to decline your booking request for
       {{listing.title}} from {{> format-date date=booking.start}} to {{> format-date
       date=booking.end}}. You have not been billed.
-    </p>
+    </p> -->
     {{/with}}
 
-    <p><a href="{{marketplace.url}}">Try to book something else instead</a></p>
+    <p><a href="{{marketplace.url}}">To make a new booking click here</a></p>
 
-    <hr />
+    <!-- <hr /> -->
 
     <!-- <p>You have received this email notification because you are a member of {{marketplace.name}}. If you no longer wish to receive these emails, please contact {{marketplace.name}} team.</p> -->
     <footer style="font-family: sans-serif;">

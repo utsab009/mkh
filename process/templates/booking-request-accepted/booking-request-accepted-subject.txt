@@ -1,1 +1,2 @@
-{{transaction.provider.display-name}} accepted your booking request!
+Great News! {{transaction.provider.display-name}} has accepted a booking request!
+

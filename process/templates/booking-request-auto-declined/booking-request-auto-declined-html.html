@@ -3,7 +3,7 @@ format="h:mm a" tz=timezone}} on {{date date format="MMM d, YYYY" tz=timezone}} 
 {{~/inline~}}
 
 <html>
-  <body>
+  <body style="font-family: sans-serif;">
     <h1>
       Sorry: <span style="text-decoration: underline;">A</span> Booking request you made for
       Mentoring has expired.
@@ -12,18 +12,19 @@ format="h:mm a" tz=timezone}} on {{date date format="MMM d, YYYY" tz=timezone}} 
     {{#with transaction}}
     <p>
       Unfortunately, {{provider.display-name}} did not respond to your booking request for
-      {{listing.title}} for the role of Sales Assistant that you made for {{> format-date
-      date=booking.start}} to {{> format-date date=booking.end}}. We are sorry. There could be a
-      range of reasons as to why this has occurred, to the Mentor being currently away and not
-      checking their e-mails to a technical fault. Please know you have not been billed. You can try
-      booking this Mentor again or find a new one (if you have not already done so) through the link
-      in blue below. Sorry for any inconvenience caused.
+      {{listing.title}} for the role of Sales Assistant that you made for
+      <span style="text-decoration: underline;"
+        >{{> format-date date=booking.start}} to {{> format-date date=booking.end}}</span
+      >. We are sorry. There could be a range of reasons as to why this has occurred, to the Mentor
+      being currently away and not checking their e-mails to a technical fault. Please know you have
+      not been billed. You can try booking this Mentor again or find a new one (if you have not
+      already done so) through the link in blue below. Sorry for any inconvenience caused.
     </p>
     {{/with}}
 
     <p><a href="{{marketplace.url}}">Book again or try booking someone else</a></p>
 
-    <hr />
+    <!-- <hr /> -->
 
     <!-- <p>You have received this email notification because you are a member of {{marketplace.name}}. If you no longer wish to receive these emails, please contact {{marketplace.name}} team.</p> -->
     <footer style="font-family: sans-serif;">

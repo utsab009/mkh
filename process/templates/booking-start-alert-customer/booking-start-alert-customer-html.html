@@ -3,14 +3,15 @@ format="h:mm a" tz=timezone}} on {{date date format="MMM d, YYYY" tz=timezone}} 
 {{~/inline~}}
 
 <html>
-  <body>
+  <body style="font-family: sans-serif;">
     {{#with transaction}}
     <!-- <h1>Reminder for meeting of {{listing.title}}</h1> -->
     <h1>Reminder: Start getting ready for your Mentor meeting in 24 hours (Try A Mentor)</h1>
 
     <p>
-      Your Mentoring is only 24 hours away with {{provider.display-name}}. It will commence at {{>
-      format-date date=booking.start}} to {{> format-date date=booking.end}}.
+      Your Mentoring is only <span style="text-decoration: underline;">24 hours away</span> with
+      {{provider.display-name}}. It will commence at {{> format-date date=booking.start}} to {{>
+      format-date date=booking.end}}.
     </p>
     <!-- <p>
       Your meeting for {{listing.title}} with {{provider.display-name}} will commence from {{>
@@ -37,7 +38,7 @@ format="h:mm a" tz=timezone}} on {{date date format="MMM d, YYYY" tz=timezone}} 
       Have a wonderful and enriching Mentoring meeting!
     </p>
 
-    <hr />
+    <!-- <hr /> -->
 
     <!-- <p>
       You have received this email notification because you are a member of {{marketplace.name}}. If

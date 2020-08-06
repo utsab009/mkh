@@ -1,5 +1,5 @@
 <html>
-  <body>
+  <body style="font-family: sans-serif;">
     {{#with transaction}}
     <h1>{{other-party.display-name}} wrote you a review. Here's what they wrote.</h1>
 
@@ -13,8 +13,6 @@
       <a href="{{marketplace.url}}/u/{{url-encode recipient.id}}">View your profile.</a>
     </p>
     {{/with}}
-
-    <hr />
 
     <!-- <p>You have received this email notification because you are a member of {{marketplace.name}}. If you no longer wish to receive these emails, please contact {{marketplace.name}} team.</p> -->
     <footer style="font-family: sans-serif;">

@@ -3,18 +3,38 @@ format="h:mm a" tz=timezone}} on {{date date format="MMM d, YYYY" tz=timezone}} 
 {{~/inline~}}
 
 <html>
-  <body>
+  <body style="font-family: sans-serif;">
     {{#with transaction}}
-    <h1>Reminder for meeting of {{listing.title}}</h1>
+    <h1>Reminder: Start getting ready for your Mentor meeting in 24 hours (Try A Mentor)</h1>
     <!-- <h1>Your booking will start within 30 minutes.</h1> -->
 
     <p>
-      Your meeting for {{listing.title}} with {{customer.display-name}} will commence from {{>
-      format-date date=booking.start}} to {{> format-date date=booking.end}}.
+      Your Mentoring is only <span style="text-decoration: underline;">24 hours away</span> with
+      {{customer.display-name}}. It will commence from {{> format-date date=booking.start}} to {{>
+      format-date date=booking.end}}.
     </p>
     {{/with}}
 
-    <hr />
+    <p style="font-weight: 700; color: #032264;">A Great Way to Avoid or Solve Problems</p>
+    <p>
+      Before your meeting is scheduled to start, open Try A Mentor, sign-in and go to your Inbox (if
+      you are the Mentee go to 'From Mentors' section of your inbox, if you are the Mentee go to
+      'From mentees' section of the inbox). You can type a message to your Mentor / Mentee to say
+      you are about to connect, and they can reply in real time. This way you are telling the other
+      person you are ready and waiting and if either of you run into problems, the other person can
+      offer help if you run into any problems.
+    </p>
+    <p>
+      If you are not sure how to get Skype set-up, remember your Mentor is here to help, so again,
+      through your Try A Mentor inbox, send them messages asking for help and combine the advice
+      given with the many 'how to' videos you will find on the internet (just google – how to set up
+      and use Skype). Do this well in advance of the meeting.
+    </p>
+    <p style="font-weight: 700; color: #032264;">
+      Have a wonderful and enriching Mentoring meeting!
+    </p>
+
+    <!-- <hr /> -->
 
     <!-- <p>
       You have received this email notification because you are a member of {{marketplace.name}}. If

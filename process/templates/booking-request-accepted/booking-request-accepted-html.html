@@ -1,9 +1,9 @@
-{{~#*inline "format-money"~}} {{money-amount money}} {{money.currency}} {{~/inline~}} {{~#*inline
-"format-date"~}} {{#with transaction.listing.availability-plan}} {{date date format="h:mm a"
-tz=timezone}} on {{date date format="MMM d, YYYY" tz=timezone}} {{/with}} {{~/inline~}} {{~#*inline
-"format-day-time"~}} {{#with transaction.listing.availability-plan}} {{date date format="EE h:mm a"
-tz=timezone}} {{/with}} {{~/inline~}} {{~#*inline "format-month-date"~}} {{#with
-transaction.listing.availability-plan}} {{date date format="MMM d" tz=timezone}} {{/with}}
+{{~#*inline 'format-money'~}} {{money-amount money}} {{money.currency}} {{~/inline~}} {{~#*inline
+'format-date'~}} {{#with transaction.listing.availability-plan}} {{date date format='h:mm a'
+tz=timezone}} on {{date date format='MMM d, YYYY' tz=timezone}} {{/with}} {{~/inline~}} {{~#*inline
+'format-day-time'~}} {{#with transaction.listing.availability-plan}} {{date date format='EE h:mm a'
+tz=timezone}} {{/with}} {{~/inline~}} {{~#*inline 'format-month-date'~}} {{#with
+transaction.listing.availability-plan}} {{date date format='MMM d' tz=timezone}} {{/with}}
 {{~/inline~}}
 
 <html>
@@ -31,17 +31,26 @@ transaction.listing.availability-plan}} {{date date format="MMM d" tz=timezone}}
       }
     </style>
   </head>
-  <body>
-    <h1>Your booking request was accepted!</h1>
+  <!-- flex-cli notifications preview --template process/templates/booking-request-accepted --context process/templates/test.json  -m mentor-test -->
+  <body style="font-family: sans-serif;">
+    <h1>A Mentoring booking / meeting was accepted!</h1>
 
     {{#with transaction}}
     <p>
+      We are delighted to tell you that {{provider.display-name}} has accepted
+      <span style="text-decoration: underline;">a</span> booking / meeting from {{> format-date
+      date=booking.start}} to {{> format-date date=booking.end}}. If you have booked other Meetings
+      with this Mentor, you will receive a message just like this for each meeting or a message to
+      tell you that the Mentor is not available. Look out for these messages in your Try A Mentor
+      inbox.
+    </p>
+    <!-- <p>
       {{provider.display-name}} has accepted your booking request for {{listing.title}} from {{>
       format-date date=booking.start}} to {{> format-date date=booking.end}}.
-    </p>
+    </p> -->
 
     <p>
-      We have charged {{> format-money money=payin-total}} from your credit card. Here's your
+      We have charged {{> format-money money=payin-total}} from your credit card. Here is your
       receipt.
     </p>
 
@@ -61,12 +70,12 @@ transaction.listing.availability-plan}} {{date date format="MMM d" tz=timezone}}
         </tr>
       </thead>
       <tbody>
-        {{#each tx-line-items}} {{#contains include-for "customer"}} {{#eq "line-item/units" code}}
+        {{#each tx-line-items}} {{#contains include-for 'customer'}} {{#eq 'line-item/units' code}}
         {{#if seats}}
         <tr class="top-row">
           <td colspan="2">
-            {{> format-money money=unit-price}} &times; {{number units}} {{inflect units "unit"
-            "units"}}
+            {{> format-money money=unit-price}} &times; {{number units}} {{inflect units 'unit'
+            'units'}}
           </td>
         </tr>
         <tr class="bottom-row">
@@ -76,7 +85,7 @@ transaction.listing.availability-plan}} {{date date format="MMM d" tz=timezone}}
         <tr class="top-row bottom-row">
           <td colspan="2">
             {{> format-money money=unit-price}} &times; {{number quantity}} {{inflect quantity
-            "unit" "units"}}
+            'unit' 'units'}}
           </td>
         </tr>
         {{/if}} {{/eq}} {{/contains}} {{/each}}
@@ -88,11 +97,54 @@ transaction.listing.availability-plan}} {{date date format="MMM d" tz=timezone}}
         </tr>
       </tfoot>
     </table>
-    {{#if protected-data.link}}
-    <p>Meeting link: {{protected-data.link}}</p>
-    {{/if}} {{/with}}
+    <!-- {{#if protected-data.link}}
+    <p>Meeting link 1: {{protected-data.link}}</p>
+    {{/if}} -->
 
-    <hr />
+    <p style="font-weight: 700; color: #032264;">
+      What Happens Next / How do I meet with my Mentor?
+    </p>
+    <p>
+      You will meet your Mentor by contacting them at the above start time through the following
+      Skype address:
+    </p>
+
+    <p style="font-weight: 700; color: #032264;">Mentors Skype address to appear here</p>
+    {{#if protected-data.link}}
+    <a style="font-size: 30px; font-weight: 700" href="skype:{{protected-data.link}}?chat"
+      >Meeting Link</a
+    >
+    {{/if}} {{/with}}
+    <p>
+      Your computer, tablet or mobile phone / cell will need access to effective internet speed
+      along with having a camera, speakers, and microphone (they tend to be built into modern mobile
+      phones / cells, tablets, and computers).
+    </p>
+    <p style="font-weight: 700;  color: #032264;">
+      A Great Way to Avoid or Solve Problems
+    </p>
+    <p>
+      Before your meeting is scheduled to start, open Try A Mentor, sign-in and go to your Inbox
+      (From Mentors). You can type a message to your Mentor to say you are about to connect, and
+      they can reply in real time. This way they can offer help if you run into any problems. If you
+      are not sure how to get Skype set-up, remember your Mentor is here to help from this point
+      forward, so again, through your Try A Mentor inbox, send them messages asking for help and
+      combine the advice given with the many 'how to' videos you will find on the internet (just
+      google 'how to set up and use Skype').
+    </p>
+    <p style="font-weight: 700; color: #032264;">Need to Postpone or Cancel the Meeting</p>
+    <p>
+      Remember you can cancel at no cost up to 48 hours before the meeting but within 48 hours you
+      will be charged the full fee with one exception. The exception is, If you book the meeting
+      within the 48 hours period (e.g. you book a meeting for the next day) you can get a refund if
+      you cancel within 15 minutes of when you made the booking. You can cancel three times a year
+      and will receive a full refund but from the fourth time onwards, Try A Mentor reserves the
+      right to retain the Try A Mentor administration fee.
+    </p>
+    <p style="font-weight: 700; color: #032264;">
+      Have a wonderful and enriching Mentoring meeting!
+    </p>
+    <!-- <hr /> -->
 
     <!-- <p>
       You have received this email notification because you are a member of {{marketplace.name}}. If

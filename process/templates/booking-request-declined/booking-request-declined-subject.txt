@@ -1,1 +1,5 @@
-{{transaction.provider.display-name}} declined your booking request
+{{transaction.provider.display-name}} has had to unfortunately decline a Booking / Meeting Request
+
+
+
+
