@@ -3,7 +3,7 @@
 tz=timezone}} on {{date date format="MMM d, YYYY" tz=timezone}} {{/with}} {{~/inline~}} {{~#*inline
 "format-day-time"~}} {{#with transaction.listing.availability-plan}} {{date date format="EE h:mm a"
 tz=timezone}} {{/with}} {{~/inline~}} {{~#*inline "format-month-date"~}} {{#with
-transaction.listing.availability-plan}} {{date date format="MMM d" tz=timezone}} {{/with}}
+transaction.listing.availability-plan}} {{date date format="MMM d YYYY" tz=timezone}} {{/with}}
 {{~/inline~}}
 
 <html>
@@ -34,13 +34,19 @@ transaction.listing.availability-plan}} {{date date format="MMM d" tz=timezone}}
   <body style="font-family: sans-serif;">
     {{#with transaction}}
     <h1>You have been paid {{> format-money money=payout-total}}</h1>
-
+    <!-- <h1>SUB.txt Prev backup : You have been paid {{money-amount transaction.payout-total}} {{transaction.payout-total.currency}}</h1> -->
     <p>
+      We are delighted to tell you that you have just been paid {{> format-money
+      money=payout-total}} for Mentoring meeting / session with {{customer.display-name}} which took
+      place from {{> format-date date=booking.start}} to {{> format-date date=booking.end}}. It
+      might take up to seven working days to reach your bank account. Here is the Breakdown:
+    </p>
+    <!-- <p>
       We have sent you {{> format-money money=payout-total}} for the booking of {{listing.title}}
       from {{> format-date date=booking.start}} to {{> format-date date=booking.end}} by
       {{customer.display-name}}. It might take up to 7 days for the money to reach your bank
       account.
-    </p>
+    </p> -->
 
     <p>Here's the breakdown.</p>
 
@@ -99,6 +105,7 @@ transaction.listing.availability-plan}} {{date date format="MMM d" tz=timezone}}
     </table>
 
     {{/with}}
+    <p><b>Well Done!</b></p>
 
     <!-- <p>You have received this email notification because you are a member of {{marketplace.name}}. If you no longer wish to receive these emails, please contact {{marketplace.name}} team.</p> -->
     <footer style="font-family: sans-serif;">

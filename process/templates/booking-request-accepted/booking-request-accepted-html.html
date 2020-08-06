@@ -3,7 +3,7 @@
 tz=timezone}} on {{date date format='MMM d, YYYY' tz=timezone}} {{/with}} {{~/inline~}} {{~#*inline
 'format-day-time'~}} {{#with transaction.listing.availability-plan}} {{date date format='EE h:mm a'
 tz=timezone}} {{/with}} {{~/inline~}} {{~#*inline 'format-month-date'~}} {{#with
-transaction.listing.availability-plan}} {{date date format='MMM d' tz=timezone}} {{/with}}
+transaction.listing.availability-plan}} {{date date format='MMM d YYYY' tz=timezone}} {{/with}}
 {{~/inline~}}
 
 <html>
@@ -114,6 +114,14 @@ transaction.listing.availability-plan}} {{date date format='MMM d' tz=timezone}}
     <a style="font-size: 30px; font-weight: 700" href="skype:{{protected-data.link}}?chat"
       >Meeting Link</a
     >
+    {{else}}
+    <p style="font-size:24px; color: blue;">
+      Your Mentor has yet to give us their Skype address. Please contact them well before your
+      meeting date to request it by signing into TryAMentor.com, clicking on the circle with your
+      picture or initials in it (top right hand corner of the screen) and go to your inbox (from
+      Mentors). Here you can write messages to your Mentor and in this case ask them to provide
+      their Skype address
+    </p>
     {{/if}} {{/with}}
     <p>
       Your computer, tablet or mobile phone / cell will need access to effective internet speed

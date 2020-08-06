@@ -33,11 +33,17 @@ transaction.listing.availability-plan}} {{date date format="MMM d" tz=timezone}}
   </head>
   <body style="font-family: sans-serif;">
     {{#with transaction}}
-    <h1>Please respond to a request by {{customer.display-name}}</h1>
+    <!-- <h1>Please respond to a request by {{customer.display-name}}</h1> -->
+    <h1>Please let {{customer.display-name}} know that you are available to meet</h1>
 
-    <p>
+    <!-- <p>
       Good news! {{customer.display-name}} just requested to book {{listing.title}} from {{>
       format-date date=booking.start}} to {{> format-date date=booking.end}}. Here's the breakdown.
+    </p> -->
+    <p>
+      Great news! {{customer.display-name}} just requested to book you for Mentoring for the job
+      Role of {{listing.title}} from {{> format-date date=booking.start}} to {{> format-date
+      date=booking.end}}. Here is the Breakdown:
     </p>
 
     <table>
@@ -94,17 +100,83 @@ transaction.listing.availability-plan}} {{date date format="MMM d" tz=timezone}}
       </tfoot>
     </table>
 
-    <p>
+    <!-- <p>
       You need to accept the request by {{> format-date date=delayed-transition.run-at}}. Otherwise
       the request will be expired and you won't get paid. If the booked dates won't work for you,
       you can also choose to decline the request.
+    </p> -->
+    <p>
+      You need to accept the request by {{> format-date date=delayed-transition.run-at}}. Otherwise
+      the request will expire, and you will not get paid even if you conduct the meeting. If the
+      requested time is no longer suitable, you can choose to decline the request, but please
+      explain to the Mentee why and ask them to book at a time you are free.
     </p>
 
     <p>
-      <a href="{{marketplace.url}}/sale/{{url-encode id}}/details">Accept or decline the booking</a>
+      <a
+        style="text-align: center; display: block; font-weight: 700;"
+        href="{{marketplace.url}}/sale/{{url-encode id}}/details"
+        >Accept or decline the booking</a
+      >
     </p>
 
     {{/with}}
+
+    <p style="font-weight: 700; color: #032264;">
+      What Happens Next / How do I meet with my Mentee?
+    </p>
+    <p>
+      Your Mentee will be sent your Skype address as part of the message telling them that you have
+      accepted this meeting request. If you have not given Try A Mentor your Skype address, before
+      you accept this request, go to TryAMentor.com, sign in, and click on the circle containing
+      your photo or initials on the top right hand corner of the page. A drop-down menu will appear,
+      click 'Mentor Profile', scroll down to 'Skype Link' and place your Skype Address here and then
+      accept the meeting request. If you are not sure how to use Skype or find your Skype address,
+      simply google these questions and a host of helpful videos will aid you.
+    </p>
+    <p style="font-weight: 700; color: #032264;">
+      What Equipment will I need?
+    </p>
+    <p>
+      Your computer, tablet or mobile phone / cell will need access to effective internet speed
+      along with having a camera, speakers, and microphone (they tend to be built into modern mobile
+      phones / cells, tablets, and computers).
+    </p>
+    <p style="font-weight: 700; color: #032264;">A Great Way to Avoid or Solve Problems</p>
+    <p>
+      Before your meeting is scheduled to start, open Try A Mentor, sign-in and go to your Inbox
+      (From Mentees). You can type a message to your Mentor to say you are about to connect, and
+      they can reply in real time. This way you can offer help to each other if you run into any
+      problems.
+    </p>
+    <p style="font-weight: 700; color: #032264;">
+      Can Try A Mentor help me to Mentor?
+    </p>
+    <p>
+      Yes, indirectly. Sign into Try A Mentor and click on the circle containing your photo or
+      initials on the top right-hand corner of the page. A drop-down menu will appear, click 'Mentor
+      Resources'. Here you will find a range of resources to help you mentor including an on-line
+      training programme (free of charge) on how to Mentor.
+    </p>
+    <p style="font-weight: 700; color: #032264;">
+      What if I do not want to use Skype?
+    </p>
+
+    <p>
+      No problem. You must still provide a Skype address in the Mentor Profile (just in case). But
+      then, after you accept meeting requests, sign into Try A Mentor and go to your inbox (from
+      Mentees). Click on any messages from your Mentee (e.g. this meeting request). Here you can
+      send them additional messages. You can tell them here that you want to use a different video
+      conferencing application (you can never meet face to face) e.g. Zoom and provide them with the
+      information to use this application and provide them with the means to meet you on it
+    </p>
+    <p style="font-weight: 700; color: #032264;">
+      When will I get paid?
+    </p>
+    <p>
+      Payment is made precisely fourteen days after each Mentoring meeting you perform unless
+      disputed by the Mentee. It will then usually take up to seven days to reach your bank.
+    </p>
 
     <!-- <p>You have received this email notification because you are a member of {{marketplace.name}}. If you no longer wish to receive these emails, please contact {{marketplace.name}} team.</p> -->
     <footer style="font-family: sans-serif;">
