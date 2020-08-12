@@ -38,6 +38,10 @@ import {
   TRANSITION_HOLD_PAYMENT_REQ_FAIL,
   TRANSITION_HOLD_PAYMENT_REQ_SUCCESS,
   TRANSITION_HOLD_PAYMENT_REQ_EXPIRED,
+  TRANSITION_PREAUTH_CANCEL_REFUND_BY_CUSTOMER,
+  TRANSITION_CANCEL_REFUND_BY_CUSTOMER,
+  TRANSITION_CANCEL_NO_REFUND_BY_CUSTOMER,
+  TRANSITION_CANCEL_REFUND_BY_PROVIDER,
 } from '../../util/transaction';
 import { propTypes } from '../../util/types';
 import * as log from '../../util/log';
@@ -159,6 +163,22 @@ const resolveTransitionMessage = (
       ) : (
         <FormattedMessage id="ActivityFeed.transitionDecline" values={{ displayName }} />
       );
+    case TRANSITION_PREAUTH_CANCEL_REFUND_BY_CUSTOMER:
+      return <FormattedMessage id="ActivityFeed.customerCaneclledBeforeAccept" />;
+
+    case TRANSITION_CANCEL_REFUND_BY_CUSTOMER:
+      return <FormattedMessage id="ActivityFeed.customerCaneclledBeforeAccept" />;
+
+    case TRANSITION_CANCEL_NO_REFUND_BY_CUSTOMER:
+      return <FormattedMessage id="ActivityFeed.customerCaneclledNoRefund" />;
+
+    case TRANSITION_CANCEL_REFUND_BY_PROVIDER:
+      return isOwnTransition ? (
+        <FormattedMessage id="ActivityFeed.ownTransitionDecline" />
+      ) : (
+        <FormattedMessage id="ActivityFeed.transitionDecline" values={{ displayName }} />
+      );
+
     case TRANSITION_EXPIRE:
       return txRoleIsProvider(ownRole) ? (
         <FormattedMessage id="ActivityFeed.ownTransitionExpire" />

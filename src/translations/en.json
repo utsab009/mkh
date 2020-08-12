@@ -17,6 +17,8 @@
   "ActivityFeed.holdPaymentRequestSuccess": "Booking Canceled: Customer gets the refund by Admin",
   "ActivityFeed.holdPaymentRequestFail": "Booking Completed: Payment hold request by Customer rejected by Admin",
   "ActivityFeed.holdPaymentRequestExpired": "Booking Completed: Payment hold request expired as Admin not responded",
+  "ActivityFeed.customerCaneclledBeforeAccept": "Booking Cancelled: Customer cancelled the order, refund initiated",
+  "ActivityFeed.customerCaneclledNoRefund": "Booking Cancelled: Customer cancelled the order, no refund initiated",
   "ActivityFeed.transitionDecline": "{ displayName } declined the booking request.",
   "ActivityFeed.transitionExpire": "Booking request expired. { displayName } did not reply on time.",
   "ActivityFeed.transitionRequest": "{ displayName } requested to book a session with you.",

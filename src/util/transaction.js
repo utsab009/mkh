@@ -52,6 +52,18 @@ export const TRANSITION_PAYOUT_WAITING_TIME = 'transition/payout-waiting-time';
 // Newly added: raise a payment hold and refund request to admin
 export const TRANSITION_HOLD_PAYMENT_REQ = 'transition/hold-payment-request';
 
+// Newly added: cancel by customer at preauth and refund
+export const TRANSITION_PREAUTH_CANCEL_REFUND_BY_CUSTOMER = 'transition/decline-customer';
+
+// Newly added: cancel by customer after accept, refund
+export const TRANSITION_CANCEL_REFUND_BY_CUSTOMER = 'transition/cancel-refund-by-customer';
+
+// Newly added: cancel by Provider after accept, refund
+export const TRANSITION_CANCEL_REFUND_BY_PROVIDER = 'transition/cancel-refund-by-provider';
+
+// Newly added: cancel by customer after booking accepted and within 48hour of booking start, no refund
+export const TRANSITION_CANCEL_NO_REFUND_BY_CUSTOMER = 'transition/cancel-no-refund-by-customer';
+
 // Newly added: Initiate a refund when customer raise a refund request after order time over and with refund-period
 export const TRANSITION_HOLD_PAYMENT_REQ_SUCCESS = 'transition/pay-back-to-mentee';
 
@@ -159,6 +171,7 @@ const stateDescription = {
     [STATE_PREAUTHORIZED]: {
       on: {
         [TRANSITION_DECLINE]: STATE_DECLINED,
+        [TRANSITION_PREAUTH_CANCEL_REFUND_BY_CUSTOMER]: STATE_DECLINED,
         [TRANSITION_EXPIRE]: STATE_DECLINED,
         [TRANSITION_ACCEPT]: STATE_ACCEPTED,
       },
@@ -169,6 +182,9 @@ const stateDescription = {
       on: {
         [TRANSITION_CANCEL]: STATE_CANCELED,
         [TRANSITION_BOOKING_PERIOD_END]: STATE_BOOKING_ENDED,
+        [TRANSITION_CANCEL_REFUND_BY_CUSTOMER]: STATE_CANCELED,
+        [TRANSITION_CANCEL_NO_REFUND_BY_CUSTOMER]: STATE_CANCELED,
+        [TRANSITION_CANCEL_REFUND_BY_PROVIDER]: STATE_CANCELED,
       },
     },
     // [STATE_BOOKING_ENDED]: {
@@ -355,6 +371,10 @@ export const isRelevantPastTransition = transition => {
     TRANSITION_DECLINE,
     TRANSITION_EXPIRE,
     TRANSITION_BOOKING_PERIOD_END,
+    TRANSITION_PREAUTH_CANCEL_REFUND_BY_CUSTOMER,
+    TRANSITION_CANCEL_REFUND_BY_CUSTOMER,
+    TRANSITION_CANCEL_NO_REFUND_BY_CUSTOMER,
+    TRANSITION_CANCEL_REFUND_BY_PROVIDER,
     TRANSITION_HOLD_PAYMENT_REQ,
     TRANSITION_HOLD_PAYMENT_REQ_SUCCESS,
     TRANSITION_HOLD_PAYMENT_REQ_FAIL,

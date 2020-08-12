@@ -12,8 +12,13 @@ import {
   TRANSITION_ACCEPT,
   TRANSITION_DECLINE,
   TRANSITION_HOLD_PAYMENT_REQ,
+  TRANSITION_CANCEL_NO_REFUND_BY_CUSTOMER,
+  TRANSITION_CANCEL_REFUND_BY_CUSTOMER,
+  TRANSITION_PREAUTH_CANCEL_REFUND_BY_CUSTOMER,
+  TRANSITION_CANCEL_REFUND_BY_PROVIDER,
 } from '../../util/transaction';
 import * as log from '../../util/log';
+import moment from 'moment';
 import {
   updatedEntities,
   denormalisedEntities,
@@ -452,7 +457,7 @@ export const onHoldRequest = id => (dispatch, getState, sdk) => {
     return Promise.reject(new Error('Accept or decline already in progress'));
   }
   dispatch(onHoldRequestInit());
-
+  // const transitionType
   return sdk.transactions
     .transition({ id, transition: TRANSITION_HOLD_PAYMENT_REQ, params: {} }, { expand: true })
     .then(response => {
@@ -490,6 +495,52 @@ export const declineSale = id => (dispatch, getState, sdk) => {
       log.error(e, 'reject-sale-failed', {
         txId: id,
         transition: TRANSITION_DECLINE,
+      });
+      throw e;
+    });
+};
+export const cancelByCustomer = ({ id, preauthCancel, bookingStartTime, isCustomer }) => (
+  dispatch,
+  getState,
+  sdk
+) => {
+  console.log('6666', id, preauthCancel, bookingStartTime);
+  if (acceptOrDeclineInProgress(getState())) {
+    return Promise.reject(new Error('Accept or decline already in progress'));
+  }
+  dispatch(declineSaleRequest());
+  const dueTime = 172800000; // 48hours to milisecond
+  const currentTime = new Date();
+  const bookingRemaining = moment(bookingStartTime).diff(currentTime);
+
+  const transitionType = preauthCancel
+    ? TRANSITION_PREAUTH_CANCEL_REFUND_BY_CUSTOMER
+    : bookingRemaining > dueTime
+    ? TRANSITION_CANCEL_REFUND_BY_CUSTOMER
+    : TRANSITION_CANCEL_NO_REFUND_BY_CUSTOMER;
+
+  console.log('6666 transitionType', transitionType, TRANSITION_PREAUTH_CANCEL_REFUND_BY_CUSTOMER);
+
+  return sdk.transactions
+    .transition(
+      {
+        id,
+        transition: isCustomer ? transitionType : TRANSITION_CANCEL_REFUND_BY_PROVIDER,
+        params: {},
+      },
+      { expand: true }
+    )
+    .then(response => {
+      dispatch(addMarketplaceEntities(response));
+      dispatch(declineSaleSuccess());
+      dispatch(fetchCurrentUserNotifications());
+      return response;
+    })
+    .catch(e => {
+      dispatch(declineSaleError(storableError(e)));
+      log.error(e, 'reject-sale-failed', {
+        txId: id,
+        transition: transitionType,
       });
       throw e;
     });

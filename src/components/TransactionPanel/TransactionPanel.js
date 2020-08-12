@@ -54,8 +54,11 @@ import PanelHeading, {
   HEADING_DELIVERED,
 } from './PanelHeading';
 
+import moment from 'moment';
+
 import css from './TransactionPanel.css';
-import { PrimaryButton } from '../Button/Button';
+import { PrimaryButton, SecondaryButton } from '../Button/Button';
+import Modal from '../Modal/Modal';
 // Helper function to get display names for different roles
 const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
   const authorDisplayName = <UserDisplayName user={currentProvider} intl={intl} />;
@@ -91,6 +94,9 @@ export class TransactionPanelComponent extends Component {
       sendMessageFormFocused: false,
       isReviewModalOpen: false,
       reviewSubmitted: false,
+      showCancelModal: false,
+      currentTimePastHourCap: false,
+      preauthCancel: false,
     };
     this.isMobSaf = false;
     this.sendMessageFormName = 'TransactionPanel.SendMessageForm';
@@ -196,6 +202,7 @@ export class TransactionPanelComponent extends Component {
       monthlyTimeSlots,
       nextTransitions,
       onHoldRequest,
+      cancelByCustomer,
     } = this.props;
 
     const currentTransaction = ensureTransaction(transaction);
@@ -242,12 +249,17 @@ export class TransactionPanelComponent extends Component {
           headingState: HEADING_REQUESTED,
           showDetailCardHeadings: isCustomer,
           showSaleButtons: isProvider && !isCustomerBanned,
+          showCancel: true,
+          preauthState: true,
         };
       } else if (txIsAccepted(tx)) {
         return {
           headingState: HEADING_ACCEPTED,
           showDetailCardHeadings: isCustomer,
           showAddress: isCustomer,
+          showCancel: true,
+          preauthState: false,
+          allowProviderCancel: true,
         };
       } else if (txIsDeclined(tx)) {
         return {
@@ -431,14 +443,86 @@ export class TransactionPanelComponent extends Component {
             {stateData.showSaleButtons ? (
               <div className={css.mobileActionButtons}>{saleButtons}</div>
             ) : null}
-            {isCustomer && stateData.holdPaymentPeriod && stateData.holdPaymentPeriod === true ? (
+            {/* {isCustomer && stateData.holdPaymentPeriod && stateData.holdPaymentPeriod === true ? ( */}
+
+            {/* // Mobile view // */}
+
+            {(isCustomer && stateData.showCancel && stateData.showCancel !== false) ||
+            (!isCustomer && stateData.allowProviderCancel) ? (
               <div
                 className={css.mobileActionButtons}
                 style={{ maxWidth: '50%', margin: '50px auto' }}
               >
-                <PrimaryButton onClick={() => onHoldRequest(currentTransaction.id)}>
-                  Hold Payment
+                <PrimaryButton
+                  onClick={() => {
+                    const preauthState = stateData.preauthState ? stateData.preauthState : false;
+                    const currentTime = new Date();
+                    const bookingTime = currentTransaction.booking.attributes.start;
+                    const bookingRemaining = moment(bookingTime).diff(currentTime);
+                    this.setState({
+                      showCancelModal: true,
+                      currentTimePastHourCap: bookingRemaining > 172800000 ? false : true,
+                      preauthCancel: preauthState,
+                    });
+                  }}
+                >
+                  Cancel Order
                 </PrimaryButton>
+                {this.state.showCancelModal && (
+                  <Modal
+                    id="TransactionPanel.cancelModal"
+                    isOpen={this.state.showCancelModal}
+                    onClose={() => this.setState({ showCancelModal: false })}
+                    onManageDisableScrolling={onManageDisableScrolling}
+                  >
+                    {(!this.state.currentTimePastHourCap ||
+                      this.state.preauthCancel ||
+                      !isCustomer) && (
+                      <div>
+                        Are you sure you want to cancel this meeting – if you are sure, press yes,
+                        if you do not want to cancel, press no
+                      </div>
+                    )}
+
+                    {this.state.currentTimePastHourCap &&
+                      isCustomer &&
+                      !this.state.preauthCancel && (
+                        <div>
+                          Are you sure you want to cancel this meeting as this cancellation will see
+                          no refund (please see terms and conditions) – if you are sure, press yes,
+                          if you do not want to cancel, press no
+                        </div>
+                      )}
+                    <PrimaryButton
+                      style={{ marginBottom: 15, marginTop: 50 }}
+                      onClick={() => {
+                        const preauthState = stateData.preauthState
+                          ? stateData.preauthState
+                          : false;
+                        const currentTime = new Date();
+                        const bookingTime = currentTransaction.booking.attributes.start;
+                        const bookingRemaining = moment(bookingTime).diff(currentTime);
+
+                        // console.log('6666 start', bookingTime);
+                        // console.log('6666 now', currentTime);
+                        console.log('6666 diff', bookingRemaining > 172800000, bookingRemaining);
+                        // console.log('6666 currentTransaction', currentTransaction);
+                        cancelByCustomer({
+                          id: currentTransaction.id,
+                          preauthCancel: preauthState,
+                          bookingStartTime: currentTransaction.booking.attributes.start,
+                          isCustomer,
+                        });
+                        this.setState({ showCancelModal: false });
+                      }}
+                    >
+                      Yes
+                    </PrimaryButton>
+                    <SecondaryButton onClick={() => this.setState({ showCancelModal: false })}>
+                      No
+                    </SecondaryButton>
+                  </Modal>
+                )}
               </div>
             ) : null}
           </div>
@@ -487,16 +571,85 @@ export class TransactionPanelComponent extends Component {
               {stateData.showSaleButtons ? (
                 <div className={css.desktopActionButtons}>{saleButtons}</div>
               ) : null}
-              {/* {isCustomer && stateData.holdPaymentPeriod && stateData.holdPaymentPeriod === true ? (
+              {/* {isCustomer && stateData.holdPaymentPeriod && stateData.holdPaymentPeriod === true ? ( */}
+              {(isCustomer && stateData.showCancel && stateData.showCancel !== false) ||
+              (!isCustomer && stateData.allowProviderCancel) ? (
                 <div
                   className={css.desktopActionButtons}
                   style={{ maxWidth: '80%', margin: '50px auto' }}
                 >
-                  <PrimaryButton onClick={() => onHoldRequest(currentTransaction.id)}>
-                    Hold Payment
+                  <PrimaryButton
+                    onClick={() => {
+                      const preauthState = stateData.preauthState ? stateData.preauthState : false;
+                      const currentTime = new Date();
+                      const bookingTime = currentTransaction.booking.attributes.start;
+                      const bookingRemaining = moment(bookingTime).diff(currentTime);
+                      this.setState({
+                        showCancelModal: true,
+                        currentTimePastHourCap: bookingRemaining > 172800000 ? false : true,
+                        preauthCancel: preauthState,
+                      });
+                    }}
+                  >
+                    Cancel Order
                   </PrimaryButton>
+                  {this.state.showCancelModal && (
+                    <Modal
+                      id="TransactionPanel.cancelModal"
+                      isOpen={this.state.showCancelModal}
+                      onClose={() => this.setState({ showCancelModal: false })}
+                      onManageDisableScrolling={onManageDisableScrolling}
+                    >
+                      {(!this.state.currentTimePastHourCap ||
+                        this.state.preauthCancel ||
+                        !isCustomer) && (
+                        <div>
+                          Are you sure you want to cancel this meeting – if you are sure, press yes,
+                          if you do not want to cancel, press no
+                        </div>
+                      )}
+
+                      {this.state.currentTimePastHourCap &&
+                        isCustomer &&
+                        !this.state.preauthCancel && (
+                          <div>
+                            Are you sure you want to cancel this meeting as this cancellation will
+                            see no refund (please see terms and conditions) – if you are sure, press
+                            yes, if you do not want to cancel, press no
+                          </div>
+                        )}
+                      <PrimaryButton
+                        style={{ marginBottom: 15, marginTop: 50 }}
+                        onClick={() => {
+                          const preauthState = stateData.preauthState
+                            ? stateData.preauthState
+                            : false;
+                          const currentTime = new Date();
+                          const bookingTime = currentTransaction.booking.attributes.start;
+                          const bookingRemaining = moment(bookingTime).diff(currentTime);
+
+                          // console.log('6666 start', bookingTime);
+                          // console.log('6666 now', currentTime);
+                          console.log('6666 diff', bookingRemaining > 172800000, bookingRemaining);
+                          // console.log('6666 currentTransaction', currentTransaction);
+                          cancelByCustomer({
+                            id: currentTransaction.id,
+                            preauthCancel: preauthState,
+                            bookingStartTime: currentTransaction.booking.attributes.start,
+                            isCustomer,
+                          });
+                          this.setState({ showCancelModal: false });
+                        }}
+                      >
+                        Yes
+                      </PrimaryButton>
+                      <SecondaryButton onClick={() => this.setState({ showCancelModal: false })}>
+                        No
+                      </SecondaryButton>
+                    </Modal>
+                  )}
                 </div>
-              ) : null} */}
+              ) : null}
             </div>
           </div>
         </div>

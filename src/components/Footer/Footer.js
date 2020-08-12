@@ -79,19 +79,14 @@ const renderSocialMediaLinks = intl => {
   ) : null;
 
   const quoraLink = siteQuoraPage ? (
-    <ExternalLink
-      key="linkToLinkedin"
-      href={siteQuoraPage}
-      className={css.icon}
-      title={'go To Quora'}
-    >
+    <ExternalLink key="quoraLink" href={siteQuoraPage} className={css.icon} title={'go To Quora'}>
       <IconSocialMediaQuora />
     </ExternalLink>
   ) : null;
 
   const pinterestLink = sitePinterestPage ? (
     <ExternalLink
-      key="linkToLinkedin"
+      key="pinterestLink"
       href={sitePinterestPage}
       className={css.icon}
       title={'go To Pinterest'}
