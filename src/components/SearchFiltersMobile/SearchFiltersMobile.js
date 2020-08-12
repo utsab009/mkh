@@ -23,7 +23,6 @@ const RADIX = 10;
 class SearchFiltersMobileComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = { isFiltersOpenOnMobile: false, initialQueryParams: null };
 
     this.openFilters = this.openFilters.bind(this);
     this.cancelFilters = this.cancelFilters.bind(this);
@@ -36,6 +35,12 @@ class SearchFiltersMobileComponent extends Component {
     this.initialValue = this.initialValue.bind(this);
     this.initialValues = this.initialValues.bind(this);
     this.initialPriceRangeValue = this.initialPriceRangeValue.bind(this);
+
+    this.state = {
+      isFiltersOpenOnMobile: false,
+      initialQueryParams: null,
+      sector: props.sectorsFilter ? this.initialValue(props.sectorsFilter.paramName) : null,
+    };
   }
 
   // Open filters modal, set the initial parameters to current ones
@@ -72,9 +77,16 @@ class SearchFiltersMobileComponent extends Component {
 
     // query parameters after selecting the option
     // if no option is passed, clear the selection for the filter
-    const queryParams = option
-      ? { ...urlQueryParams, [urlParam]: option }
-      : omit(urlQueryParams, urlParam);
+    let queryParams = urlQueryParams;
+    if (urlParam === 'pub_sectors') {
+      this.setState({ sector: option });
+      queryParams = omit(queryParams, 'pub_jobroles');
+    }
+
+    queryParams = option ? { ...queryParams, [urlParam]: option } : omit(queryParams, urlParam);
+    // const queryParams = option
+    //   ? { ...urlQueryParams, [urlParam]: option }
+    //   : omit(urlQueryParams, urlParam);
 
     history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
   }
@@ -160,6 +172,7 @@ class SearchFiltersMobileComponent extends Component {
       selectedFiltersCount,
       certificateFilter,
       sectorsFilter,
+      levelFilter,
       mentorLanguageFilter,
       mentorShiftFilter,
       yogaStylesFilter,
@@ -191,8 +204,8 @@ class SearchFiltersMobileComponent extends Component {
     });
 
     const initialcertificate = certificateFilter
-    ? this.initialValue(certificateFilter.paramName)
-    : null;
+      ? this.initialValue(certificateFilter.paramName)
+      : null;
 
     const certificateFilterElement = certificateFilter ? (
       <SelectSingleFilter
@@ -218,21 +231,49 @@ class SearchFiltersMobileComponent extends Component {
       ? this.initialValues(mentorLanguageFilter.paramName)
       : null;
 
-    const initialsectors = sectorsFilter
-      ? this.initialValue(sectorsFilter.paramName)
-      : null;
-      
+    const initialsectors = sectorsFilter ? this.initialValue(sectorsFilter.paramName) : null;
+
     const sectorsFilterElement = sectorsFilter ? (
       <SelectSingleFilter
+        id={'SearchFilters.sectorsFilter'}
+        name="sector"
         urlParam={sectorsFilter.paramName}
         label={sectorsLabel}
         onSelect={this.handleSelectSingle}
-        liveEdit
+        // liveEdit
+        showAsPopup
         options={sectorsFilter.options}
         initialValue={initialsectors}
         intl={intl}
       />
-    ) : null;  
+    ) : null;
+
+    const initialLevel = levelFilter ? this.initialValue(levelFilter.paramName) : null;
+
+    const levelLabel = intl.formatMessage({
+      id: 'SearchFilters.levelLabel',
+    });
+
+    console.log('levelFilter', levelFilter, this.state);
+    const levelFilterElement =
+      levelFilter && this.state.sector ? (
+        <SelectSingleFilter
+          id={'SearchFilters.levelFilter'}
+          name="level"
+          urlParam={levelFilter.paramName}
+          label={levelLabel}
+          onSelect={this.handleSelectSingle}
+          // liveEdit
+          showAsPopup
+          options={
+            this.state.sector === 'Public Service'
+              ? levelFilter.config.public
+              : levelFilter.config.private
+          }
+          initialValue={initialLevel}
+          intl={intl}
+        />
+      ) : null;
 
     // const mentorLanguageFilterElement = mentorLanguageFilter ? (
     //   <SelectSingleFilter
@@ -254,11 +295,11 @@ class SearchFiltersMobileComponent extends Component {
         label={mentorLanguageLabel}
         onSubmit={this.handleSelectMultiple}
         liveEdit
+        // showAsPopup
         options={mentorLanguageFilter.options}
         initialValues={initialmentorLanguage}
       />
     ) : null;
-
 
     const mentorShiftLabel = intl.formatMessage({ id: 'SearchFiltersMobile.mentorShiftLabel' });
 
@@ -361,7 +402,8 @@ class SearchFiltersMobileComponent extends Component {
               {/*yogaStylesFilterElement*/}
               {/*mentorShiftFilterElement*/}
               {/*certificateFilterElement*/}
-              {/*sectorsFilterElement*/}
+              {sectorsFilterElement}
+              {levelFilterElement}
               {mentorLanguageFilterElement}
               {priceFilterElement}
             </div>

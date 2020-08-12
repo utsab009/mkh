@@ -17,7 +17,6 @@ import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck
 import { SearchMap, ModalInMobile, Page } from '../../components';
 import { TopbarContainer } from '../../containers';
 
-
 import { searchListings, searchMapListings, setActiveListing } from './SearchPage.duck';
 import {
   pickSearchParamsOnly,
@@ -63,7 +62,79 @@ export class SearchPageComponent extends Component {
       mentorLanguageConfig,
       mentorShiftConfig,
       sectorsConfig,
+      levelConfig,
     } = this.props;
+
+    let jobRolesConfig = [];
+
+    config.custom.sectors.map(sector => {
+      switch (sector.key) {
+        case 'Accountancy and Financial Management':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.Accountancyandfinancialmanagement];
+        case 'Civil and structural engineering':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.Civilandstructuralengineering];
+        case 'Public Service':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.PublicServices];
+        case 'Accounting':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.Accounting];
+        case 'Administration and Office Support':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.AdministrationAndOfficeSupport];
+        case 'Advertising Arts and Media':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.AdvertisingArtsAndMedia];
+        case 'Banking and Financial Services':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.BankingAndFinancialServices];
+        case 'Call Center and Customer Service':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.CallCenterAndCustomerService];
+        case 'Community Services and Development':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.CommunityServicesAndDevelopment];
+        case 'Construction':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.Construction];
+        case 'Consulting and Strategy':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.ConsultingAndStrategy];
+        case 'Design and Architecture':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.DesignAndArchitecture];
+        case 'Education and Training':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.EducationAndTraining];
+        case 'Engineering':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.Engineering];
+        case 'Executive':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.Executive];
+        case 'Farming Animals and Conservation':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.FarmingAnimalsAndConservation];
+        case 'Healthcare and Medical':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.HealthcareAndMedical];
+        case 'Hospitality and Tourism':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.HospitalityAndTourism];
+        case 'Human Resources and Recruitment':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.HumanResourcesAndRecruitment];
+        case 'Information Technology':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.InformationTechnology];
+        case 'Insurance':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.Insurance];
+        case 'Legal':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.Legal];
+        case 'Manufacturing Transport and Logistics':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.ManufacturingTransportAndLogistics];
+        case 'Marketing and Communications':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.MarketingAndCommunications];
+        case 'Real Estate and Property':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.RealEstateAndProperty];
+        case 'Retail and Consumer Products':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.RetailAndConsumerProducts];
+        case 'Sales':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.Sales];
+        case 'Science and Technology':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.ScienceAndTechnology];
+        case 'Sports and Recreation':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.SportsAndRecreation];
+        case 'Trades and Services':
+          jobRolesConfig = [...jobRolesConfig, ...config.custom.TradesAndServices];
+      }
+    });
+
+    jobRolesConfig = new Set(jobRolesConfig).filter(x => !x.hideFromFilters);
+
+    console.log('jobRolesConfig: ', jobRolesConfig);
 
     // const { ...searchInURL } = parse(this.props.location.search, {
     //   latlng: ['origin'],
@@ -89,9 +160,9 @@ export class SearchPageComponent extends Component {
     //   //   case "Civil and structural engineering":
     //   //     return (this.setState({subSectorsConfig : config.custom.Civilandstructuralengineering}));
     //   //   case "Public Service":
-    //   //     return (this.setState({subSectorsConfig : config.custom.PublicServices}));  
+    //   //     return (this.setState({subSectorsConfig : config.custom.PublicServices}));
     //   //   case "Default" :
-    //   //     return (this.setState({subSectorsConfig : config.custom.Accountancyandfinancialmanagement}));  
+    //   //     return (this.setState({subSectorsConfig : config.custom.Accountancyandfinancialmanagement}));
     //   // }
 
     //   switch(searchInURL.pub_sectors){
@@ -100,9 +171,9 @@ export class SearchPageComponent extends Component {
     //     case "Civil and structural engineering":
     //       return (subsectorsConfig =  config.custom.Civilandstructuralengineering);
     //     case "Public Service":
-    //       return (subsectorsConfig =  config.custom.PublicServices);  
+    //       return (subsectorsConfig =  config.custom.PublicServices);
     //     case "Default" :
-    //       return (subsectorsConfig = config.custom.Accountancyandfinancialmanagement);  
+    //       return (subsectorsConfig = config.custom.Accountancyandfinancialmanagement);
     //   }
     // }
     // Note: "certificate" and "yogaStyles" filters are not actually filtering anything by default.
@@ -122,6 +193,14 @@ export class SearchPageComponent extends Component {
       sectorsFilter: {
         paramName: 'pub_sectors',
         options: sectorsConfig.filter(c => !c.hideFromFilters),
+      },
+      levelFilter: {
+        paramName: 'pub_jobroles',
+        config: levelConfig,
+      },
+      jobRoleFilter: {
+        paramName: 'pub_subSectors',
+        options: jobRolesConfig,
       },
       // subsectorsFilter: {
       //   paramName: 'pub_subsectors',
@@ -214,7 +293,7 @@ export class SearchPageComponent extends Component {
       activeListingId,
       onActivateListing,
     } = this.props;
-    console.log("listings in searchpage",listings);
+    console.log('listings in searchpage', listings);
     // eslint-disable-next-line no-unused-vars
     const { mapSearch, page, ...searchInURL } = parse(location.search, {
       latlng: ['origin'],
@@ -290,6 +369,8 @@ export class SearchPageComponent extends Component {
               certificateFilter: filters.certificateFilter,
               mentorLanguageFilter: filters.mentorLanguageFilter,
               sectorsFilter: filters.sectorsFilter,
+              levelFilter: filters.levelFilter,
+              jobRoleFilter: filters.jobRoleFilter,
               // subsectorsFilter: filters.subsectorsFilter,
               priceFilter: filters.priceFilter,
               keywordFilter: filters.keywordFilter,
@@ -343,6 +424,10 @@ SearchPageComponent.defaultProps = {
   yogaStylesConfig: config.custom.yogaStyles,
   priceFilterConfig: config.custom.priceFilterConfig,
   keywordFilterConfig: config.custom.keywordFilterConfig,
+  levelConfig: {
+    public: config.custom.publicRoles.filter(x => !x.hideFromFilters),
+    private: config.custom.nonPublicRoles.filter(x => !x.hideFromFilters),
+  },
   activeListingId: null,
 };
 
@@ -359,10 +444,11 @@ SearchPageComponent.propTypes = {
   searchParams: object,
   tab: oneOf(['filters', 'listings', 'map']).isRequired,
   certificateConfig: array,
-  sectorsConfig : array,
+  sectorsConfig: array,
   mentorLanguageConfig: array,
   mentorShiftConfig: array,
   yogaStylesConfig: array,
+  levelConfig: object,
   priceFilterConfig: shape({
     min: number.isRequired,
     max: number.isRequired,
@@ -391,7 +477,7 @@ const mapStateToProps = state => {
     searchMapListingIds,
     activeListingId,
   } = state.SearchPage;
-  console.log("currentPageResultIds",currentPageResultIds);
+  console.log('currentPageResultIds', currentPageResultIds);
   const pageListings = getListingsById(state, currentPageResultIds);
   const mapListings = getListingsById(
     state,
