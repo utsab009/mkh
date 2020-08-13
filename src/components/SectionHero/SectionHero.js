@@ -128,6 +128,7 @@ export class SectionHeroComponent extends Component {
             <SectorsFilterForm
               // className={css.form}
               onSubmit={handleSubmit}
+              onManageDisableScrolling={onManageDisableScrolling}
               // inProgress={authInProgress}
               // onOpenTermsOfService={() => this.setState({ tosModalOpen: true })}
             />

@@ -34,11 +34,12 @@ router.get('/email_send', function(req, res) {
   });
 
   var mailOptions = {
-    from: 'abhishek.bitcanny@gmail.com',
+    // from: 'abhishek.bitcanny@gmail.com',
+    from: data.email,
     to: 'utsab@bitcanny.com',
     subject: 'Sector Requirement',
     text: data.message,
-    html: `<p> Sender's email ID : ` +data.email+`</p><p>`+data.message+`</p>`
+    html: `<p> Sender's email ID : ` + data.email + `</p><p>` + data.message + `</p>`,
   };
 
   transporter.sendMail(mailOptions, function(error, info) {

@@ -2,14 +2,23 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
-import { Form as FinalForm } from 'react-final-form';
+import { Form as FinalForm, FormSpy } from 'react-final-form';
 import classNames from 'classnames';
 import arrayMutators from 'final-form-arrays';
 import * as validators from '../../util/validators';
 import config from '../../config';
-import { Form, PrimaryButton, FieldTextInput, FieldSelect, Button } from '../../components';
+import {
+  Form,
+  PrimaryButton,
+  FieldTextInput,
+  FieldSelect,
+  Button,
+  InlineTextButton,
+  Modal,
+} from '../../components';
 
 import Select from 'react-dropdown-select';
+import Axios from 'axios';
 
 import css from './SectorsFilterForm.css';
 
@@ -22,6 +31,7 @@ export class SectorsFilterFormComponent extends Component {
       validation_error: false,
       subSectors: [],
       jobRoles: [],
+      isSectorModalOpen: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -122,6 +132,7 @@ export class SectorsFilterFormComponent extends Component {
             intl,
             onOpenTermsOfService,
             form,
+            onManageDisableScrolling,
           } = fieldRenderProps;
 
           const classes = classNames(rootClassName || css.root, className);
@@ -281,6 +292,123 @@ export class SectorsFilterFormComponent extends Component {
                 ))}
               </FieldSelect> */}
               {/* ) : null} */}
+
+              <p>
+                My sector and or job is not listed, click
+                <InlineTextButton
+                  className={css.btnModSl}
+                  onClick={e => {
+                    e.preventDefault();
+                    this.setState({ isSectorModalOpen: true });
+                  }}
+                >
+                  &nbsp;here &nbsp;
+                </InlineTextButton>
+                and tell us so we can include it for you.
+              </p>
+
+              {this.state.isSectorModalOpen ? (
+                <Modal
+                  id="EditAvailabilityPlan"
+                  isOpen={this.state.isSectorModalOpen}
+                  onClose={() => this.setState({ isSectorModalOpen: false })}
+                  onManageDisableScrolling={onManageDisableScrolling}
+                  // containerClassName={css.modalContainer}
+                  // className={css.updateModalcol}
+                >
+                  <FinalForm
+                    // {...restOfprops}
+                    onSubmit={test => {
+                      console.log('test values: ', test);
+                    }}
+                    mutators={{
+                      ...arrayMutators,
+                    }}
+                    render={fieldRenderProps => {
+                      const { hSubmit, values } = fieldRenderProps;
+
+                      const classes = classNames(rootClassName || css.root, className);
+
+                      return (
+                        <Form
+                          id={'sendmsg'}
+                          className={`${classes} ${css.updatePnl}`}
+                          onSubmit={values => {
+                            console.log('values: ', values);
+                          }}
+                        >
+                          <div className={css.formg}>
+                            <FieldTextInput
+                              id="emailId"
+                              name="emailId"
+                              type="text"
+                              label={'Email ID'}
+                              placeholder={'Enter your email ID'}
+                              // validate={composeValidators(required(descriptionRequiredMessage))}
+                            />
+                          </div>
+                          <div className={css.formg}>
+                            <FieldTextInput
+                              id="msg"
+                              name="msg"
+                              type="textarea"
+                              label={'Message'}
+                              placeholder={'Enter your message here'}
+                              // validate={composeValidators(required(descriptionRequiredMessage))}
+                            />
+                          </div>
+
+                          <div className={css.submitButtonFG}>
+                            <PrimaryButton
+                              type="button"
+                              inProgress={false}
+                              disabled={false}
+                              onClick={e => {
+                                console.log('click values: ', e, values);
+                                Axios.get(
+                                  // 'http://localhost:3001/extra/email_send?message=' +
+                                  'https://mentorkh.herokuapp.com/extra/email_send?message=' +
+                                    values.msg +
+                                    '&email=' +
+                                    values.emailId
+                                )
+                                  .then(response => {
+                                    console.log('response in submit', response);
+                                    // history.push(
+                                    //   createResourceLocatorString(
+                                    //     'LandingPage',
+                                    //     routes,
+                                    //     // { keywords: 'php' },
+                                    //     {},
+                                    //     // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+                                    //     {}
+                                    //   )
+                                    // );
+                                  })
+                                  .catch(e => {
+                                    console.log('e in submit', e);
+                                    // history.push(
+                                    //   createResourceLocatorString(
+                                    //     'LandingPage',
+                                    //     routes,
+                                    //     // { keywords: 'php' },
+                                    //     {},
+                                    //     // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+                                    //     {}
+                                    //   )
+                                    // );
+                                  });
+                              }}
+                            >
+                              Send Mail
+                            </PrimaryButton>
+                          </div>
+                        </Form>
+                      );
+                    }}
+                  />
+                </Modal>
+              ) : null}
 
               <div>
                 <div className={css.modlabel}>{subSectorLabel}</div>
