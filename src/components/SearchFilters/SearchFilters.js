@@ -387,7 +387,7 @@ class SearchFiltersComponent extends Component {
         <div className={css.filters}>
           {/*yogaStylesFilterElement*/}
           {/*certificateFilterElement*/}
-          {jobRoleFilterElement}
+          {/* {jobRoleFilterElement} */}
           {sectorsFilterElement}
           {levelFilterElement}
           {mentorLanguageFilterElement}
