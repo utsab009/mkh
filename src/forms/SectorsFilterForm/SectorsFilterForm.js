@@ -9,6 +9,8 @@ import * as validators from '../../util/validators';
 import config from '../../config';
 import { Form, PrimaryButton, FieldTextInput, FieldSelect, Button } from '../../components';
 
+import Select from 'react-dropdown-select';
+
 import css from './SectorsFilterForm.css';
 
 const KEY_CODE_ENTER = 13;
@@ -119,6 +121,7 @@ export class SectorsFilterFormComponent extends Component {
             invalid,
             intl,
             onOpenTermsOfService,
+            form,
           } = fieldRenderProps;
 
           const classes = classNames(rootClassName || css.root, className);
@@ -141,9 +144,96 @@ export class SectorsFilterFormComponent extends Component {
             id: 'SectorsFilterForm.buttonText',
           });
 
+          let jobRolesConfig = [];
+
+          config.custom.sectors.map(sector => {
+            switch (sector.key) {
+              case 'Accountancy and Financial Management':
+                jobRolesConfig = [
+                  ...jobRolesConfig,
+                  ...config.custom.Accountancyandfinancialmanagement,
+                ];
+              case 'Civil and structural engineering':
+                jobRolesConfig = [
+                  ...jobRolesConfig,
+                  ...config.custom.Civilandstructuralengineering,
+                ];
+              case 'Public Service':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.PublicServices];
+              case 'Accounting':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.Accounting];
+              case 'Administration and Office Support':
+                jobRolesConfig = [
+                  ...jobRolesConfig,
+                  ...config.custom.AdministrationAndOfficeSupport,
+                ];
+              case 'Advertising Arts and Media':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.AdvertisingArtsAndMedia];
+              case 'Banking and Financial Services':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.BankingAndFinancialServices];
+              case 'Call Center and Customer Service':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.CallCenterAndCustomerService];
+              case 'Community Services and Development':
+                jobRolesConfig = [
+                  ...jobRolesConfig,
+                  ...config.custom.CommunityServicesAndDevelopment,
+                ];
+              case 'Construction':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.Construction];
+              case 'Consulting and Strategy':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.ConsultingAndStrategy];
+              case 'Design and Architecture':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.DesignAndArchitecture];
+              case 'Education and Training':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.EducationAndTraining];
+              case 'Engineering':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.Engineering];
+              case 'Executive':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.Executive];
+              case 'Farming Animals and Conservation':
+                jobRolesConfig = [
+                  ...jobRolesConfig,
+                  ...config.custom.FarmingAnimalsAndConservation,
+                ];
+              case 'Healthcare and Medical':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.HealthcareAndMedical];
+              case 'Hospitality and Tourism':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.HospitalityAndTourism];
+              case 'Human Resources and Recruitment':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.HumanResourcesAndRecruitment];
+              case 'Information Technology':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.InformationTechnology];
+              case 'Insurance':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.Insurance];
+              case 'Legal':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.Legal];
+              case 'Manufacturing Transport and Logistics':
+                jobRolesConfig = [
+                  ...jobRolesConfig,
+                  ...config.custom.ManufacturingTransportAndLogistics,
+                ];
+              case 'Marketing and Communications':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.MarketingAndCommunications];
+              case 'Real Estate and Property':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.RealEstateAndProperty];
+              case 'Retail and Consumer Products':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.RetailAndConsumerProducts];
+              case 'Sales':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.Sales];
+              case 'Science and Technology':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.ScienceAndTechnology];
+              case 'Sports and Recreation':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.SportsAndRecreation];
+              case 'Trades and Services':
+                jobRolesConfig = [...jobRolesConfig, ...config.custom.TradesAndServices];
+            }
+          });
+
+          jobRolesConfig = new Set(jobRolesConfig).filter(x => !x.hideFromFilters);
+
           return (
             <Form className={classes} onSubmit={handleSubmit}>
-              <FieldSelect
+              {/* <FieldSelect
                 className={css.features}
                 onChange={this.handleChange}
                 name={'sectors'}
@@ -160,16 +250,16 @@ export class SectorsFilterFormComponent extends Component {
                     {m.label}
                   </option>
                 ))}
-              </FieldSelect>
+              </FieldSelect> */}
 
-              {this.state.subSectors.length > 0 ? (
-                <FieldSelect
-                  className={css.features}
-                  name={'subsectors'}
-                  id={2}
-                  label={subSectorLabel}
-                >
-                  {this.state.subSectors.map(m => (
+              {/* {this.state.subSectors.length > 0 ? ( */}
+              {/* <FieldSelect
+                className={css.features}
+                name={'subsectors'}
+                id={2}
+                label={subSectorLabel}
+              > */}
+              {/* {this.state.subSectors.map(m => (
                     <option
                       key={m.key}
                       value={!m.hideFromFilters ? m.key : ''}
@@ -178,11 +268,38 @@ export class SectorsFilterFormComponent extends Component {
                     >
                       {m.label}
                     </option>
-                  ))}
-                </FieldSelect>
-              ) : null}
+                  ))} */}
+              {/* {jobRolesConfig.map(m => (
+                  <option
+                    key={m.key}
+                    value={!m.hideFromFilters ? m.key : ''}
+                    disabled={m.hideFromFilters}
+                    selected={m.hideFromFilters}
+                  >
+                    {m.label}
+                  </option>
+                ))}
+              </FieldSelect> */}
+              {/* ) : null} */}
 
-              {this.state.jobRoles.length > 0 ? (
+              <div>
+                <div className={css.modlabel}>{subSectorLabel}</div>
+                <Select
+                  className={css.selectCss}
+                  name={'subsectors'}
+                  id={'subsectors'}
+                  options={jobRolesConfig}
+                  placeholder="Select Job Role"
+                  // values={jobRolesConfig}
+                  onChange={values => {
+                    // console.log('values: ', values);
+                    form.change('subsectors', values[0].key);
+                    // this.onChange(values);
+                  }}
+                />
+              </div>
+
+              {/* {this.state.jobRoles.length > 0 ? (
                 <FieldSelect className={css.features} name={'jobroles'} id={2} label={jobRoleLabel}>
                   {this.state.jobRoles.map(m => (
                     <option
@@ -195,7 +312,7 @@ export class SectorsFilterFormComponent extends Component {
                     </option>
                   ))}
                 </FieldSelect>
-              ) : null}
+              ) : null} */}
 
               <Button
                 // className={css.submitButton}

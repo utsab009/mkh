@@ -198,10 +198,10 @@ export class SearchPageComponent extends Component {
         paramName: 'pub_jobroles',
         config: levelConfig,
       },
-      jobRoleFilter: {
-        paramName: 'pub_subSectors',
-        options: jobRolesConfig,
-      },
+      // jobRoleFilter: {
+      //   paramName: 'pub_subSectors',
+      //   options: jobRolesConfig,
+      // },
       // subsectorsFilter: {
       //   paramName: 'pub_subsectors',
       //   options: subsectorsConfig.filter(c => !c.hideFromFilters),
@@ -370,7 +370,7 @@ export class SearchPageComponent extends Component {
               mentorLanguageFilter: filters.mentorLanguageFilter,
               sectorsFilter: filters.sectorsFilter,
               levelFilter: filters.levelFilter,
-              jobRoleFilter: filters.jobRoleFilter,
+              // jobRoleFilter: filters.jobRoleFilter,
               // subsectorsFilter: filters.subsectorsFilter,
               priceFilter: filters.priceFilter,
               keywordFilter: filters.keywordFilter,

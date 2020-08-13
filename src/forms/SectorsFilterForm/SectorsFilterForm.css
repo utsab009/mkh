@@ -52,3 +52,29 @@
     cursor: pointer;
   }
 }
+
+.selectCss {
+  /* color: #b2b2b2; */
+  border-bottom: 2px solid #ffaa00 !important;
+  padding: 4px 0 10px 0 !important;
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-left: 0 !important;
+  margin: 0 0 20px;
+}
+
+.selectCss input {
+  font-size: 18px !important;
+  line-height: 24px;
+  padding-bottom: 0;
+}
+
+.modlabel {
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 6px;
+  padding-bottom: 2px;
+  font-size: 16px;
+  line-height: 24px;
+}
