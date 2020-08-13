@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { compose } from 'redux';
 import { object, string, bool, number, func, shape } from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
@@ -43,307 +43,383 @@ const initialPriceRangeValue = (queryParams, paramName) => {
     : null;
 };
 
-const SearchFiltersComponent = props => {
-  const {
-    rootClassName,
-    className,
-    urlQueryParams,
-    listingsAreLoaded,
-    resultsCount,
-    searchInProgress,
-    certificateFilter,
-    sectorsFilter,
-    // subsectorsFilter,
-    mentorLanguageFilter,
-    mentorShiftFilter,
-    yogaStylesFilter,
-    priceFilter,
-    keywordFilter,
-    isSearchFiltersPanelOpen,
-    toggleSearchFiltersPanel,
-    searchFiltersPanelSelectedCount,
-    history,
-    intl,
-  } = props;
-  console.log('props in searchfilters', props);
+// const SearchFiltersComponent = props =>
 
-  const hasNoResult = listingsAreLoaded && resultsCount === 0;
-  const classes = classNames(rootClassName || css.root, { [css.longInfo]: hasNoResult }, className);
+class SearchFiltersComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sector: props.sectorsFilter
+        ? initialValue(props.urlQueryParams, props.sectorsFilter.paramName)
+        : null,
+    };
+  }
 
-  const certificateLabel = intl.formatMessage({
-    id: 'SearchFilters.certificateLabel',
-  });
+  render() {
+    const {
+      rootClassName,
+      className,
+      urlQueryParams,
+      listingsAreLoaded,
+      resultsCount,
+      searchInProgress,
+      certificateFilter,
+      sectorsFilter,
+      levelFilter,
+      jobRoleFilter,
+      // subsectorsFilter,
+      mentorLanguageFilter,
+      mentorShiftFilter,
+      yogaStylesFilter,
+      priceFilter,
+      keywordFilter,
+      isSearchFiltersPanelOpen,
+      toggleSearchFiltersPanel,
+      searchFiltersPanelSelectedCount,
+      history,
+      intl,
+    } = this.props;
+    console.log('props in searchfilters', this.props);
 
-  const mentorLanguageLabel = intl.formatMessage({
-    id: 'SearchFilters.mentorLanguageLabel',
-  });
-
-  const sectorsLabel = intl.formatMessage({
-    id: 'SearchFilters.sectorsLabel',
-  });
-
-  const subsectorsLabel = intl.formatMessage({
-    id: 'SearchFilters.subsectorsLabel',
-  });
-
-  const mentorShiftLabel = intl.formatMessage({
-    id: 'SearchFilters.mentorShiftLabel',
-  });
-
-  const yogaStylesLabel = intl.formatMessage({
-    id: 'SearchFilters.yogaStylesLabel',
-  });
-
-  const keywordLabel = intl.formatMessage({
-    id: 'SearchFilters.keywordLabel',
-  });
-
-  const initialyogaStyles = yogaStylesFilter
-    ? initialValues(urlQueryParams, yogaStylesFilter.paramName)
-    : null;
-
-  const initialmentorShift = mentorShiftFilter
-    ? initialValues(urlQueryParams, mentorShiftFilter.paramName)
-    : null;
-
-  const initialcertificate = certificateFilter
-    ? initialValue(urlQueryParams, certificateFilter.paramName)
-    : null;
-
-  const initialmentorLanguage = mentorLanguageFilter
-    ? initialValues(urlQueryParams, mentorLanguageFilter.paramName)
-    : null;
-
-  const initialsectors = sectorsFilter
-    ? initialValue(urlQueryParams, sectorsFilter.paramName)
-    : null;
-
-  // const initialsubsectors = subsectorsFilter
-  //   ? initialValue(urlQueryParams, subsectorsFilter.paramName)
-  //   : null;
-
-  const initialPriceRange = priceFilter
-    ? initialPriceRangeValue(urlQueryParams, priceFilter.paramName)
-    : null;
-
-  const initialKeyword = keywordFilter
-    ? initialValue(urlQueryParams, keywordFilter.paramName)
-    : null;
-
-  const handleSelectOptions = (urlParam, options) => {
-    const queryParams =
-      options && options.length > 0
-        ? { ...urlQueryParams, [urlParam]: options.join(',') }
-        : omit(urlQueryParams, urlParam);
-    console.log(
-      'test: ',
-      createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams)
+    const hasNoResult = listingsAreLoaded && resultsCount === 0;
+    const classes = classNames(
+      rootClassName || css.root,
+      { [css.longInfo]: hasNoResult },
+      className
     );
 
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
-  };
+    const certificateLabel = intl.formatMessage({
+      id: 'SearchFilters.certificateLabel',
+    });
 
-  const handleSelectOption = (urlParam, option) => {
-    // query parameters after selecting the option
-    // if no option is passed, clear the selection for the filter
-    const queryParams = option
-      ? { ...urlQueryParams, [urlParam]: option }
-      : omit(urlQueryParams, urlParam);
+    const mentorLanguageLabel = intl.formatMessage({
+      id: 'SearchFilters.mentorLanguageLabel',
+    });
 
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
-  };
+    const jobRoleLabel = intl.formatMessage({
+      id: 'SearchFilters.jobRoleLabel',
+    });
 
-  const handlePrice = (urlParam, range) => {
-    const { minPrice, maxPrice } = range || {};
-    const queryParams =
-      minPrice != null && maxPrice != null
-        ? { ...urlQueryParams, [urlParam]: `${minPrice},${maxPrice}` }
+    const sectorsLabel = intl.formatMessage({
+      id: 'SearchFilters.sectorsLabel',
+    });
+
+    const levelLabel = intl.formatMessage({
+      id: 'SearchFilters.levelLabel',
+    });
+
+    const subsectorsLabel = intl.formatMessage({
+      id: 'SearchFilters.subsectorsLabel',
+    });
+
+    const mentorShiftLabel = intl.formatMessage({
+      id: 'SearchFilters.mentorShiftLabel',
+    });
+
+    const yogaStylesLabel = intl.formatMessage({
+      id: 'SearchFilters.yogaStylesLabel',
+    });
+
+    const keywordLabel = intl.formatMessage({
+      id: 'SearchFilters.keywordLabel',
+    });
+
+    const initialyogaStyles = yogaStylesFilter
+      ? initialValues(urlQueryParams, yogaStylesFilter.paramName)
+      : null;
+
+    const initialmentorShift = mentorShiftFilter
+      ? initialValues(urlQueryParams, mentorShiftFilter.paramName)
+      : null;
+
+    const initialcertificate = certificateFilter
+      ? initialValue(urlQueryParams, certificateFilter.paramName)
+      : null;
+
+    const initialmentorLanguage = mentorLanguageFilter
+      ? initialValues(urlQueryParams, mentorLanguageFilter.paramName)
+      : null;
+
+    const initialJobRole = jobRoleFilter
+      ? initialValue(urlQueryParams, jobRoleFilter.paramName)
+      : null;
+
+    const initialsectors = sectorsFilter
+      ? initialValue(urlQueryParams, sectorsFilter.paramName)
+      : null;
+
+    const initialLevel = levelFilter ? initialValue(urlQueryParams, levelFilter.paramName) : null;
+
+    // const initialsubsectors = subsectorsFilter
+    //   ? initialValue(urlQueryParams, subsectorsFilter.paramName)
+    //   : null;
+
+    const initialPriceRange = priceFilter
+      ? initialPriceRangeValue(urlQueryParams, priceFilter.paramName)
+      : null;
+
+    const initialKeyword = keywordFilter
+      ? initialValue(urlQueryParams, keywordFilter.paramName)
+      : null;
+
+    const handleSelectOptions = (urlParam, options) => {
+      const queryParams =
+        options && options.length > 0
+          ? { ...urlQueryParams, [urlParam]: options.join(',') }
+          : omit(urlQueryParams, urlParam);
+      console.log(
+        'test: ',
+        createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams)
+      );
+
+      history.push(
+        createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams)
+      );
+    };
+
+    const handleSelectOption = (urlParam, option) => {
+      // query parameters after selecting the option
+      // if no option is passed, clear the selection for the filter
+      let queryParams = urlQueryParams;
+      if (urlParam === 'pub_sectors') {
+        this.setState({ sector: option });
+        queryParams = omit(queryParams, 'pub_jobroles');
+      }
+
+      queryParams = option ? { ...queryParams, [urlParam]: option } : omit(queryParams, urlParam);
+
+      history.push(
+        createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams)
+      );
+    };
+
+    const handlePrice = (urlParam, range) => {
+      const { minPrice, maxPrice } = range || {};
+      const queryParams =
+        minPrice != null && maxPrice != null
+          ? { ...urlQueryParams, [urlParam]: `${minPrice},${maxPrice}` }
+          : omit(urlQueryParams, urlParam);
+
+      history.push(
+        createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams)
+      );
+    };
+
+    const handleKeyword = (urlParam, values) => {
+      const queryParams = values
+        ? { ...urlQueryParams, [urlParam]: values }
         : omit(urlQueryParams, urlParam);
 
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
-  };
+      history.push(
+        createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams)
+      );
+    };
 
-  const handleKeyword = (urlParam, values) => {
-    const queryParams = values
-      ? { ...urlQueryParams, [urlParam]: values }
-      : omit(urlQueryParams, urlParam);
-
-    history.push(createResourceLocatorString('SearchPage', routeConfiguration(), {}, queryParams));
-  };
-
-  const certificateFilterElement = certificateFilter ? (
-    <SelectSingleFilter
-      urlParam={certificateFilter.paramName}
-      label={certificateLabel}
-      onSelect={handleSelectOption}
-      showAsPopup
-      options={certificateFilter.options}
-      initialValue={initialcertificate}
-      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-    />
-  ) : null;
-
-  // const mentorLanguageFilterElement = mentorLanguageFilter ? (
-  //   <SelectSingleFilter
-  //     urlParam={mentorLanguageFilter.paramName}
-  //     label={mentorLanguageLabel}
-  //     onSelect={handleSelectOption}
-  //     showAsPopup
-  //     options={mentorLanguageFilter.options}
-  //     initialValue={initialmentorLanguage}
-  //     contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-  //   />
-  // ) : null;
-  console.log(
-    'initialmentorlanguage',
-    initialmentorLanguage,
-    'initialmentorshift',
-    initialmentorShift
-  );
-  const mentorLanguageFilterElement = mentorLanguageFilter ? (
-    <SelectMultipleFilter
-      id={'SearchFilters.mentorLanguageFilter'}
-      name="mentorLanguage"
-      urlParam={mentorLanguageFilter.paramName}
-      label={mentorLanguageLabel}
-      onSubmit={handleSelectOptions}
-      showAsPopup
-      options={mentorLanguageFilter.options}
-      initialValues={initialmentorLanguage}
-      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-    />
-  ) : null;
-
-  const sectorsFilterElement = sectorsFilter ? (
-    <SelectSingleFilter
-      urlParam={sectorsFilter.paramName}
-      label={sectorsLabel}
-      onSelect={handleSelectOption}
-      showAsPopup
-      options={sectorsFilter.options}
-      initialValue={initialsectors}
-      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-    />
-  ) : null;
-
-  // const subsectorsFilterElement = subsectorsFilter ? (
-  //   <SelectSingleFilter
-  //     urlParam={subsectorsFilter.paramName}
-  //     label={subsectorsLabel}
-  //     onSelect={handleSelectOption}
-  //     showAsPopup
-  //     options={subsectorsFilter.options}
-  //     initialValue={initialsubsectors}
-  //     contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-  //   />
-  // ) : null;
-
-  const mentorShiftFilterElement = mentorShiftFilter ? (
-    <SelectMultipleFilter
-      id={'SearchFilters.mentorShiftFilter'}
-      name="mentorShift"
-      urlParam={mentorShiftFilter.paramName}
-      label={mentorShiftLabel}
-      onSubmit={handleSelectOptions}
-      showAsPopup
-      options={mentorShiftFilter.options}
-      initialValues={initialmentorShift}
-      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-    />
-  ) : null;
-
-  const yogaStylesFilterElement = yogaStylesFilter ? (
-    <SelectMultipleFilter
-      id={'SearchFilters.yogaStylesFilter'}
-      name="yogaStyles"
-      urlParam={yogaStylesFilter.paramName}
-      label={yogaStylesLabel}
-      onSubmit={handleSelectOptions}
-      showAsPopup
-      options={yogaStylesFilter.options}
-      initialValues={initialyogaStyles}
-      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-    />
-  ) : null;
-
-  const priceFilterElement = priceFilter ? (
-    <PriceFilter
-      id="SearchFilters.priceFilter"
-      urlParam={priceFilter.paramName}
-      onSubmit={handlePrice}
-      showAsPopup
-      {...priceFilter.config}
-      initialValues={initialPriceRange}
-      contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-    />
-  ) : null;
-
-  const keywordFilterElement =
-    keywordFilter && keywordFilter.config.active ? (
-      <KeywordFilter
-        id={'SearchFilters.keywordFilter'}
-        name="keyword"
-        urlParam={keywordFilter.paramName}
-        label={keywordLabel}
-        onSubmit={handleKeyword}
+    const certificateFilterElement = certificateFilter ? (
+      <SelectSingleFilter
+        urlParam={certificateFilter.paramName}
+        label={certificateLabel}
+        onSelect={handleSelectOption}
         showAsPopup
-        initialValues={initialKeyword}
+        options={certificateFilter.options}
+        initialValue={initialcertificate}
         contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
       />
     ) : null;
 
-  const toggleSearchFiltersPanelButtonClasses =
-    isSearchFiltersPanelOpen || searchFiltersPanelSelectedCount > 0
-      ? css.searchFiltersPanelOpen
-      : css.searchFiltersPanelClosed;
-  const toggleSearchFiltersPanelButton = toggleSearchFiltersPanel ? (
-    <button
-      className={toggleSearchFiltersPanelButtonClasses}
-      onClick={() => {
-        toggleSearchFiltersPanel(!isSearchFiltersPanelOpen);
-      }}
-    >
-      <FormattedMessage
-        id="SearchFilters.moreFiltersButton"
-        values={{ count: searchFiltersPanelSelectedCount }}
+    // const mentorLanguageFilterElement = mentorLanguageFilter ? (
+    //   <SelectSingleFilter
+    //     urlParam={mentorLanguageFilter.paramName}
+    //     label={mentorLanguageLabel}
+    //     onSelect={handleSelectOption}
+    //     showAsPopup
+    //     options={mentorLanguageFilter.options}
+    //     initialValue={initialmentorLanguage}
+    //     contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+    //   />
+    // ) : null;
+    console.log(
+      'initialmentorlanguage',
+      initialmentorLanguage,
+      'initialmentorshift',
+      initialmentorShift
+    );
+    const mentorLanguageFilterElement = mentorLanguageFilter ? (
+      <SelectMultipleFilter
+        id={'SearchFilters.mentorLanguageFilter'}
+        name="mentorLanguage"
+        urlParam={mentorLanguageFilter.paramName}
+        label={mentorLanguageLabel}
+        onSubmit={handleSelectOptions}
+        showAsPopup
+        options={mentorLanguageFilter.options}
+        initialValues={initialmentorLanguage}
+        contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
       />
-    </button>
-  ) : null;
-  return (
-    <div className={classes}>
-      <div className={css.filters}>
-        {/*yogaStylesFilterElement*/}
-        {/*certificateFilterElement*/}
-        {/*sectorsFilterElement*/}
-        {mentorLanguageFilterElement}
-        {/*mentorShiftFilterElement*/}
-        {priceFilterElement}
-        {/*keywordFilterElement*/}
-        {toggleSearchFiltersPanelButton}
+    ) : null;
+
+    const jobRoleFilterElement = jobRoleFilter ? (
+      <SelectSingleFilter
+        urlParam={jobRoleFilter.paramName}
+        label={jobRoleLabel}
+        onSelect={handleSelectOption}
+        showAsPopup
+        options={jobRoleFilter.options}
+        initialValue={initialJobRole}
+        contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+      />
+    ) : null;
+
+    const sectorsFilterElement = sectorsFilter ? (
+      <SelectSingleFilter
+        urlParam={sectorsFilter.paramName}
+        label={sectorsLabel}
+        onSelect={handleSelectOption}
+        showAsPopup
+        options={sectorsFilter.options}
+        initialValue={initialsectors}
+        contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+      />
+    ) : null;
+
+    const levelFilterElement =
+      levelFilter && this.state.sector ? (
+        <SelectSingleFilter
+          urlParam={levelFilter.paramName}
+          label={levelLabel}
+          onSelect={handleSelectOption}
+          showAsPopup
+          options={
+            this.state.sector === 'Public Service'
+              ? levelFilter.config.public
+              : levelFilter.config.private
+          }
+          initialValue={initialLevel}
+          contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+        />
+      ) : null;
+
+    // const subsectorsFilterElement = subsectorsFilter ? (
+    //   <SelectSingleFilter
+    //     urlParam={subsectorsFilter.paramName}
+    //     label={subsectorsLabel}
+    //     onSelect={handleSelectOption}
+    //     showAsPopup
+    //     options={subsectorsFilter.options}
+    //     initialValue={initialsubsectors}
+    //     contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+    //   />
+    // ) : null;
+
+    const mentorShiftFilterElement = mentorShiftFilter ? (
+      <SelectMultipleFilter
+        id={'SearchFilters.mentorShiftFilter'}
+        name="mentorShift"
+        urlParam={mentorShiftFilter.paramName}
+        label={mentorShiftLabel}
+        onSubmit={handleSelectOptions}
+        showAsPopup
+        options={mentorShiftFilter.options}
+        initialValues={initialmentorShift}
+        contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+      />
+    ) : null;
+
+    const yogaStylesFilterElement = yogaStylesFilter ? (
+      <SelectMultipleFilter
+        id={'SearchFilters.yogaStylesFilter'}
+        name="yogaStyles"
+        urlParam={yogaStylesFilter.paramName}
+        label={yogaStylesLabel}
+        onSubmit={handleSelectOptions}
+        showAsPopup
+        options={yogaStylesFilter.options}
+        initialValues={initialyogaStyles}
+        contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+      />
+    ) : null;
+
+    const priceFilterElement = priceFilter ? (
+      <PriceFilter
+        id="SearchFilters.priceFilter"
+        urlParam={priceFilter.paramName}
+        onSubmit={handlePrice}
+        showAsPopup
+        {...priceFilter.config}
+        initialValues={initialPriceRange}
+        contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+      />
+    ) : null;
+
+    const keywordFilterElement =
+      keywordFilter && keywordFilter.config.active ? (
+        <KeywordFilter
+          id={'SearchFilters.keywordFilter'}
+          name="keyword"
+          urlParam={keywordFilter.paramName}
+          label={keywordLabel}
+          onSubmit={handleKeyword}
+          showAsPopup
+          initialValues={initialKeyword}
+          contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+        />
+      ) : null;
+
+    const toggleSearchFiltersPanelButtonClasses =
+      isSearchFiltersPanelOpen || searchFiltersPanelSelectedCount > 0
+        ? css.searchFiltersPanelOpen
+        : css.searchFiltersPanelClosed;
+    const toggleSearchFiltersPanelButton = toggleSearchFiltersPanel ? (
+      <button
+        className={toggleSearchFiltersPanelButtonClasses}
+        onClick={() => {
+          toggleSearchFiltersPanel(!isSearchFiltersPanelOpen);
+        }}
+      >
+        <FormattedMessage
+          id="SearchFilters.moreFiltersButton"
+          values={{ count: searchFiltersPanelSelectedCount }}
+        />
+      </button>
+    ) : null;
+    return (
+      <div className={classes}>
+        <div className={css.filters}>
+          {/*yogaStylesFilterElement*/}
+          {/*certificateFilterElement*/}
+          {/* {jobRoleFilterElement} */}
+          {sectorsFilterElement}
+          {levelFilterElement}
+          {mentorLanguageFilterElement}
+          {/* {mentorShiftFilterElement} */}
+          {priceFilterElement}
+          {/*keywordFilterElement*/}
+          {toggleSearchFiltersPanelButton}
+        </div>
+
+        {listingsAreLoaded && resultsCount > 0 ? (
+          <div className={css.searchResultSummary}>
+            <span className={css.resultsFound}>
+              <FormattedMessage id="SearchFilters.foundResults" values={{ count: resultsCount }} />
+            </span>
+          </div>
+        ) : null}
+
+        {hasNoResult ? (
+          <div className={css.noSearchResults}>
+            <FormattedMessage id="SearchFilters.noResults" />
+          </div>
+        ) : null}
+
+        {searchInProgress ? (
+          <div className={css.loadingResults}>
+            <FormattedMessage id="SearchFilters.loadingResults" />
+          </div>
+        ) : null}
       </div>
-
-      {listingsAreLoaded && resultsCount > 0 ? (
-        <div className={css.searchResultSummary}>
-          <span className={css.resultsFound}>
-            <FormattedMessage id="SearchFilters.foundResults" values={{ count: resultsCount }} />
-          </span>
-        </div>
-      ) : null}
-
-      {hasNoResult ? (
-        <div className={css.noSearchResults}>
-          <FormattedMessage id="SearchFilters.noResults" />
-        </div>
-      ) : null}
-
-      {searchInProgress ? (
-        <div className={css.loadingResults}>
-          <FormattedMessage id="SearchFilters.loadingResults" />
-        </div>
-      ) : null}
-    </div>
-  );
-};
+    );
+  }
+}
 
 SearchFiltersComponent.defaultProps = {
   rootClassName: null,

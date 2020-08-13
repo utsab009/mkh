@@ -39,6 +39,8 @@ export const validURLParamForExtendedData = (paramName, paramValueRaw, filters) 
     } else if (filterConfig.config && active) {
       // Generic filter
       return paramValue.length > 0 ? { [paramName]: paramValue } : {};
+    } else if (filterConfig.config) {
+      return paramValue ? { [paramName]: paramValue } : {};
     }
   }
   return {};
