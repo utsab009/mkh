@@ -398,6 +398,7 @@ export class SectorsFilterFormComponent extends Component {
                                     //   )
                                     // );
                                   });
+                                this.setState({ isSectorModalOpen: false });
                               }}
                             >
                               Send Mail
