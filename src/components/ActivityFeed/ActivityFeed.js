@@ -164,19 +164,33 @@ const resolveTransitionMessage = (
         <FormattedMessage id="ActivityFeed.transitionDecline" values={{ displayName }} />
       );
     case TRANSITION_PREAUTH_CANCEL_REFUND_BY_CUSTOMER:
-      return <FormattedMessage id="ActivityFeed.customerCaneclledBeforeAccept" />;
+      return isOwnTransition ? (
+        <FormattedMessage id="ActivityFeed.ownTransitionCancelBeforeAccept" />
+      ) : (
+        <FormattedMessage id="ActivityFeed.TransitionCancelBeforeAccept" values={{ displayName }} />
+      );
 
     case TRANSITION_CANCEL_REFUND_BY_CUSTOMER:
-      return <FormattedMessage id="ActivityFeed.customerCaneclledBeforeAccept" />;
+      return isOwnTransition ? (
+        <FormattedMessage id="ActivityFeed.ownTransitionCancelBeforeAccept" />
+      ) : (
+        <FormattedMessage id="ActivityFeed.TransitionCancelBeforeAccept" values={{ displayName }} />
+      );
+    // return <FormattedMessage id="ActivityFeed.customerCaneclledBeforeAccept" />;
 
     case TRANSITION_CANCEL_NO_REFUND_BY_CUSTOMER:
-      return <FormattedMessage id="ActivityFeed.customerCaneclledNoRefund" />;
+      return isOwnTransition ? (
+        <FormattedMessage id="ActivityFeed.ownTransitionCancelNoRefund" />
+      ) : (
+        <FormattedMessage id="ActivityFeed.TransitionCancelNoRefund" values={{ displayName }} />
+      );
+    // return <FormattedMessage id="ActivityFeed.customerCaneclledNoRefund" />;
 
     case TRANSITION_CANCEL_REFUND_BY_PROVIDER:
       return isOwnTransition ? (
-        <FormattedMessage id="ActivityFeed.ownTransitionDecline" />
+        <FormattedMessage id="ActivityFeed.ownTransitionCancelByProvider" />
       ) : (
-        <FormattedMessage id="ActivityFeed.transitionDecline" values={{ displayName }} />
+        <FormattedMessage id="ActivityFeed.transitionCancelByProvider" values={{ displayName }} />
       );
 
     case TRANSITION_EXPIRE:

@@ -265,6 +265,7 @@ export class TransactionPanelComponent extends Component {
         return {
           headingState: HEADING_DECLINED,
           showDetailCardHeadings: isCustomer,
+          allowProviderCancel: false,
         };
       } else if (txIsCanceled(tx)) {
         return {
@@ -276,10 +277,12 @@ export class TransactionPanelComponent extends Component {
           headingState: HEADING_DELIVERED,
           showDetailCardHeadings: isCustomer,
           showAddress: isCustomer,
+          allowProviderCancel: false,
         };
       } else if (txIsBookingEnded(tx)) {
         return {
           holdPaymentPeriod: true,
+          allowProviderCancel: false,
         };
       } else if (txIsPaymentWaitingTime(tx)) {
         return {
@@ -448,7 +451,9 @@ export class TransactionPanelComponent extends Component {
             {/* // Mobile view // */}
 
             {(isCustomer && stateData.showCancel && stateData.showCancel !== false) ||
-            (!isCustomer && stateData.allowProviderCancel) ? (
+            (!isCustomer &&
+              stateData.allowProviderCancel &&
+              stateData.allowProviderCancel !== false) ? (
               <div
                 className={css.mobileActionButtons}
                 style={{ maxWidth: '50%', margin: '50px auto' }}
@@ -484,15 +489,16 @@ export class TransactionPanelComponent extends Component {
                       </div>
                     )}
 
-                    {this.state.currentTimePastHourCap &&
-                      isCustomer &&
-                      !this.state.preauthCancel && (
-                        <div>
-                          Are you sure you want to cancel this meeting as this cancellation will see
-                          no refund (please see terms and conditions) – if you are sure, press yes,
-                          if you do not want to cancel, press no
-                        </div>
-                      )}
+                    {this.state.currentTimePastHourCap && isCustomer && !this.state.preauthCancel && (
+                      <div>
+                        Are you sure you want to cancel this meeting as this cancellation will see
+                        no refund (please see{' '}
+                        <NamedLink name="TermsOfServicePage" className={css.link}>
+                          terms and conditions
+                        </NamedLink>
+                        ) – if you are sure, press yes, if you do not want to cancel, press no
+                      </div>
+                    )}
                     <PrimaryButton
                       style={{ marginBottom: 15, marginTop: 50 }}
                       onClick={() => {
@@ -614,8 +620,11 @@ export class TransactionPanelComponent extends Component {
                         !this.state.preauthCancel && (
                           <div>
                             Are you sure you want to cancel this meeting as this cancellation will
-                            see no refund (please see terms and conditions) – if you are sure, press
-                            yes, if you do not want to cancel, press no
+                            see no refund (please see{' '}
+                            <NamedLink name="TermsOfServicePage" className={css.link}>
+                              terms and conditions
+                            </NamedLink>
+                            ) – if you are sure, press yes, if you do not want to cancel, press no
                           </div>
                         )}
                       <PrimaryButton
