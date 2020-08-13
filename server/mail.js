@@ -28,8 +28,8 @@ router.get('/email_send', function(req, res) {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: 'abhishek.bitcanny@gmail.com', // generated ethereal user
-      pass: 'nzjanvqhfaeeroye', // generated ethereal password
+      user: 'ashes.naskar@bitcanny.com', // generated ethereal user
+      pass: 'oqmcemmqebkvvarm', // generated ethereal password
     },
   });
 
