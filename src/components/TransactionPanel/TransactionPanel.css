@@ -21,7 +21,9 @@
     padding: 0;
   }
 }
-
+.link {
+  color: 'blue';
+}
 .txInfo {
   margin-bottom: 210px;
 
