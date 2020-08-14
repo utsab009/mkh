@@ -258,7 +258,7 @@ export class BookingTimeFormComponent extends Component {
             // console.log('11111 totalPrice', totalPrice);
 
             return (
-              <div>
+              <div className={css.pricesec}>
                 <hr />
                 <div className={css.finalPriceRow}>
                   <div>Price per hour</div>
@@ -322,12 +322,7 @@ export class BookingTimeFormComponent extends Component {
           const renderAddButton = () => {
             return (
               <InlineTextButton
-                style={{
-                  marginTop: 10,
-                  fontSize: 16,
-                  marginBottom: 20,
-                  textAlign: 'left',
-                }}
+               className={css.adddelbtn}
                 onClick={e => {
                   console.log('2222 event in click', e);
                   e.preventDefault();

@@ -659,7 +659,8 @@ class FieldDateAndTimeInput extends Component {
         </div>
         {showRemove ? (
           <InlineTextButton
-            style={{ marginTop: 10, fontSize: 16, marginBottom: 20, textAlign: 'left' }}
+            // style={{ marginTop: 10, fontSize: 16, marginBottom: 20, textAlign: 'left' }}
+            className={css.adddelbtn}
             onClick={e => {
               e.preventDefault();
               Object.keys(this.props.values).forEach((item, i) => delete values[item][formId]);

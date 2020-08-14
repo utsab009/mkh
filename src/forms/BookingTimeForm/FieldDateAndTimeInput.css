@@ -168,3 +168,13 @@ CSS for hiding the end date above
     }
   }
 }
+
+.adddelbtn{
+  margin: 10px 0 20px;
+  font-size: 16px;
+  text-align: left;
+
+  @media (max-width: 767px) {
+    padding: 0 20px;
+  }
+}
