@@ -53,6 +53,7 @@ export class LandingPageComponent extends Component {
       onManageDisableScrolling,
       isAuthenticated,
       isNewUser,
+      isMentor,
     } = this.props;
 
     // Schema for search engines (helps them to understand what this page is about)
@@ -87,7 +88,7 @@ export class LandingPageComponent extends Component {
             <TopbarContainer parentComponent="homepage" />
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
-            {isAuthenticated && isNewUser && (
+            {isAuthenticated && isNewUser && isMentor ? (
               <Modal
                 id="LandingPage.welcomeModalMenor"
                 isOpen={this.state.welcomeModal}
@@ -102,7 +103,7 @@ export class LandingPageComponent extends Component {
                   <p>If you would like to watch a video explaining how to do this, click here</p>
                 </div>
               </Modal>
-            )}
+            ) : null}
             <div className={css.heroContainer}>
               <SectionHero
                 className={css.hero}
@@ -165,6 +166,9 @@ const mapStateToProps = state => {
     isAuthenticated,
     isNewUser:
       state.user.currentUser && state.user.currentUser.attributes.profile.publicData.newUser,
+    isMentor:
+      state.user.currentUser &&
+      state.user.currentUser.attributes.profile.protectedData.userType === 'mentor',
   };
 };
 
