@@ -411,22 +411,24 @@ export class SectorsFilterFormComponent extends Component {
                 </Modal>
               ) : null}
 
-              <div>
-                <div className={css.modlabel}>{subSectorLabel}</div>
-                <Select
-                  className={css.selectCss}
-                  name={'subsectors'}
-                  id={'subsectors'}
-                  options={jobRolesConfig}
-                  placeholder="Select Job Role"
-                  // values={jobRolesConfig}
-                  onChange={values => {
-                    // console.log('values: ', values);
-                    form.change('subsectors', values[0].key);
-                    // this.onChange(values);
-                  }}
-                />
-              </div>
+              {jobRolesConfig.length ? (
+                <div>
+                  <div className={css.modlabel}>{subSectorLabel}</div>
+                  <Select
+                    className={css.selectCss}
+                    name={'subsectors'}
+                    id={'subsectors'}
+                    options={jobRolesConfig}
+                    placeholder="Select Job Role"
+                    // values={jobRolesConfig}
+                    onChange={values => {
+                      // console.log('values: ', values);
+                      form.change('subsectors', values[0].key);
+                      // this.onChange(values);
+                    }}
+                  />
+                </div>
+              ) : null}
 
               {/* {this.state.jobRoles.length > 0 ? (
                 <FieldSelect className={css.features} name={'jobroles'} id={2} label={jobRoleLabel}>
