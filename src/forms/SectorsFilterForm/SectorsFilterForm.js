@@ -31,7 +31,7 @@ export class SectorsFilterFormComponent extends Component {
       validation_error: false,
       subSectors: [],
       jobRoles: [],
-      isSectorModalOpen: false,
+      isMailSectorModalOpen: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -299,7 +299,7 @@ export class SectorsFilterFormComponent extends Component {
                   className={css.btnModSl}
                   onClick={e => {
                     e.preventDefault();
-                    this.setState({ isSectorModalOpen: true });
+                    this.setState({ isMailSectorModalOpen: true });
                   }}
                 >
                   &nbsp;here &nbsp;
@@ -307,14 +307,14 @@ export class SectorsFilterFormComponent extends Component {
                 and tell us so we can include it for you.
               </p>
 
-              {this.state.isSectorModalOpen ? (
+              {this.state.isMailSectorModalOpen ? (
                 <Modal
                   id="EditAvailabilityPlan"
-                  isOpen={this.state.isSectorModalOpen}
-                  onClose={() => this.setState({ isSectorModalOpen: false })}
+                  isOpen={this.state.isMailSectorModalOpen}
+                  onClose={() => this.setState({ isMailSectorModalOpen: false })}
                   onManageDisableScrolling={onManageDisableScrolling}
                   // containerClassName={css.modalContainer}
-                  // className={css.updateModalcol}
+                  className={css.updateModalcol}
                 >
                   <FinalForm
                     // {...restOfprops}
@@ -398,7 +398,7 @@ export class SectorsFilterFormComponent extends Component {
                                     //   )
                                     // );
                                   });
-                                this.setState({ isSectorModalOpen: false });
+                                this.setState({ isMailSectorModalOpen: false });
                               }}
                             >
                               Send Mail
