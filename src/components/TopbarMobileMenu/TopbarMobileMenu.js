@@ -206,29 +206,40 @@ class TopbarMobileMenu extends Component {
 
     const routes = routeConfiguration();
 
-    if (sectors !== 'none') {
-      this.props.history.push(
-        createResourceLocatorString(
-          'SearchPage',
-          routes,
-          // { keywords: 'php' },
-          {},
-          // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
-          { pub_sectors: sectors, pub_subSectors: subsectors, pub_jobroles: jobroles }
-        )
-      );
-    } else {
-      this.props.history.push(
-        createResourceLocatorString(
-          'SearchPage',
-          routes,
-          // { keywords: 'php' },
-          {},
-          // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
-          {}
-        )
-      );
-    }
+    this.props.history.push(
+      createResourceLocatorString(
+        'SearchPage',
+        routes,
+        // { keywords: 'php' },
+        {},
+        // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+        { pub_subsectors: subsectors }
+      )
+    );
+
+    // if (sectors !== 'none') {
+    //   this.props.history.push(
+    //     createResourceLocatorString(
+    //       'SearchPage',
+    //       routes,
+    //       // { keywords: 'php' },
+    //       {},
+    //       // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+    //       { pub_sectors: sectors, pub_subSectors: subsectors, pub_jobroles: jobroles }
+    //     )
+    //   );
+    // } else {
+    //   this.props.history.push(
+    //     createResourceLocatorString(
+    //       'SearchPage',
+    //       routes,
+    //       // { keywords: 'php' },
+    //       {},
+    //       // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+    //       {}
+    //     )
+    //   );
+    // }
   };
 
   render() {

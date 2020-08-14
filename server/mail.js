@@ -28,17 +28,18 @@ router.get('/email_send', function(req, res) {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: 'abhishek.bitcanny@gmail.com', // generated ethereal user
-      pass: 'nzjanvqhfaeeroye', // generated ethereal password
+      user: 'ashes.naskar@bitcanny.com', // generated ethereal user
+      pass: 'oqmcemmqebkvvarm', // generated ethereal password
     },
   });
 
   var mailOptions = {
-    from: 'abhishek.bitcanny@gmail.com',
+    // from: 'abhishek.bitcanny@gmail.com',
+    from: data.email,
     to: 'utsab@bitcanny.com',
     subject: 'Sector Requirement',
     text: data.message,
-    html: `<p> Sender's email ID : ` +data.email+`</p><p>`+data.message+`</p>`
+    html: `<p> Sender's email ID : ` + data.email + `</p><p>` + data.message + `</p>`,
   };
 
   transporter.sendMail(mailOptions, function(error, info) {

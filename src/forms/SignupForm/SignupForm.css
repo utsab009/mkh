@@ -19,7 +19,13 @@
     margin-top: 32px;
   }
 }
-
+.infoMsg {
+  font-size: 0.8rem;
+  line-height: 1.1rem;
+  margin-top: 1rem;
+  display: flex;
+  color: #6c757d;
+}
 .workexp {
   display: flex;
   justify-content: space-between;
@@ -93,7 +99,12 @@
     border-bottom: solid 1px var(--matterColorNegative);
   }
 }
-
+.inputContainer {
+  margin-top: 15px;
+}
+.link {
+  color: 'blue';
+}
 .fieldWrapper {
   /* This container uses flexbox layout */
   display: flex;

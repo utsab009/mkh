@@ -15,6 +15,7 @@ import {
   InlineTextButton,
   Button,
   FieldDateInput,
+  NamedLink,
 } from '../../components';
 import {
   getStartHours,
@@ -34,7 +35,6 @@ import {
   nextMonthFn,
   prevMonthFn,
 } from '../../util/dates';
-
 import NextMonthIcon from '../BookingTimeForm/NextMonthIcon';
 import PreviousMonthIcon from '../BookingTimeForm/PreviousMonthIcon';
 
@@ -254,6 +254,7 @@ export class SignupFormComponent extends Component {
                                   />
                                 </div>
                               </div>
+
                               <button
                                 type="button"
                                 className={css.removeButton}
@@ -263,6 +264,7 @@ export class SignupFormComponent extends Component {
                                 Remove
                                 {/*<IconClose rootClassName={css.closeIcon} />*/}
                               </button>
+
                               {/*<span className={css.dashBetweenTimes}>-</span>*/}
                             </div>
                             {/*<div
@@ -275,7 +277,6 @@ export class SignupFormComponent extends Component {
                           </div>
                         );
                       })}
-
                       {fields.length === 0 ? (
                         <InlineTextButton
                           type="button"
@@ -307,6 +308,24 @@ export class SignupFormComponent extends Component {
                           <FormattedMessage id="EditListingAvailabilityPlanForm.addAnother" />
                         </InlineTextButton>
                       )}
+                      <div className={css.inputContainer}>
+                        <FieldTextInput
+                          // className={css.lastName}
+                          type="text"
+                          id={'conferenceLink'}
+                          name="conferenceLink"
+                          autoComplete="conference link"
+                          label={'Skype Address'}
+
+                          // placeholder="Please enter your skype address"
+                          // validate={lastNameRequired}
+                        />
+                      </div>
+                      <div className={css.infoMsg}>
+                        You will meet your mentee online, so we'll need a link to your skype
+                        address. If you do not have one handy, skip this now but place it in your
+                        mentor profile as soon as you can.
+                      </div>
                     </div>
                   );
                 }}
@@ -533,25 +552,55 @@ export class SignupFormComponent extends Component {
                     validate={dobRequired}
                   />
                 ) : null}
-                {this.state.currentTab == 2 && signupType == 'mentee' ? (
+
+                {(this.state.currentTab == 2 && signupType == 'mentee') ||
+                (signupType !== 'mentee' && this.state.currentTab == 4) ? (
                   <div>
                     <h1>Before You Join</h1>
                     <p>
-                      Our mission is to build a trusted community where anyone can belong anywhere.
-                      To ensure this, we're asking you to accept our terms of service and respect
-                      everyone on MKH.
+                      Our mission is to build a trusted community of Mentors and Mentees who
+                      ultimately make the world more effective. It is a community where anyone can
+                      belong, and all are welcome. To ensure this, we are asking you to accept our{' '}
+                      <NamedLink name="TermsOfServicePage" className={css.link}>
+                        Terms of Service
+                      </NamedLink>{' '}
+                      and{' '}
+                      <NamedLink name="CommunityGuidelinesPage" className={css.link}>
+                        Community Guidelines
+                      </NamedLink>{' '}
+                      as these practically ensure this is achieved.
                     </p>
-                    <h2>MKH Community Commitment</h2>
+                    <h2>Try A Mentor Community Commitment</h2>
                     <p>
-                      I agree to treat everyone in the MKH community- regardless of their
-                      race,religion, national origin,ethnicity,skin colour,disability,sex, gender
-                      identity,sexual orientation or age-- with respect, and without judgment or
-                      bias. Learn more.
+                      We will respect the dignity of everyone we interact with on Try A Mentor,
+                      regardless of Race, Religion, National Origin, Ethnicity, Skin Colour,
+                      Disability, Sex, Gender Identity, Sexual Orientation, Marriage Status, or Age.
+                      This means we will treat all with respect, and without judgement or bias. By
+                      signing up to Try A Mentor, you are agreeing to act in this way also. To learn
+                      more, please visit our{' '}
+                      <NamedLink name="CommunityGuidelinesPage" className={css.link}>
+                        Community Guidelines
+                      </NamedLink>
                     </p>
-                    <h2>MKH Terms of service</h2>
+                    <h2>Try A Mentor Terms of Service</h2>
                     <p>
-                      I also accept MKH's Terms of Tervice,Payments Terms of Service, Privacy
-                      Policy, and Nondiscrimination Policy
+                      You are also agreeing to accept Try A Mentor's{' '}
+                      <NamedLink name="TermsOfServicePage" className={css.link}>
+                        Terms of Service
+                      </NamedLink>
+                      ,{' '}
+                      <NamedLink name="FaqPage" className={css.link}>
+                        Payment Process
+                      </NamedLink>
+                      ,{' '}
+                      <NamedLink name="PrivacyPolicyPage" className={css.link}>
+                        Privacy and GDPR Policy
+                      </NamedLink>{' '}
+                      and our{' '}
+                      <NamedLink name="CommunityGuidelinesPage" className={css.link}>
+                        Community Guidelines
+                      </NamedLink>{' '}
+                      through pressing the accept button below
                     </p>
                     <Button
                       type="button"
@@ -573,7 +622,7 @@ export class SignupFormComponent extends Component {
                     />
                   </span>
                 </p>
-                {(this.state.currentTab < 3 && signupType == 'mentor') ||
+                {(this.state.currentTab < 4 && signupType == 'mentor') ||
                 (this.state.currentTab < 2 && signupType == 'mentee') ? (
                   <Button
                     type="button"
@@ -583,6 +632,7 @@ export class SignupFormComponent extends Component {
                     {this.state.currentTab == 1 ? 'Next' : 'Next/Skip for now'}
                   </Button>
                 ) : null}
+
                 {(this.state.currentTab > 1 && signupType == 'mentor') ||
                 (this.state.currentTab > 1 && signupType == 'mentee') ? (
                   <Button
@@ -592,8 +642,13 @@ export class SignupFormComponent extends Component {
                     Previous
                   </Button>
                 ) : null}
-                {this.state.currentTab == 3 ||
-                (signupType == 'mentee' && this.state.termsAccepted) ? (
+
+                {(signupType == 'mentor' &&
+                  this.state.termsAccepted &&
+                  this.state.currentTab == 4) ||
+                (signupType == 'mentee' &&
+                  this.state.termsAccepted &&
+                  this.state.currentTab == 2) ? (
                   <PrimaryButton
                     type="submit"
                     inProgress={submitInProgress}

@@ -1,79 +1,86 @@
 // import React, { useState } from 'react';
 import React, { Component } from 'react';
-import { string,func, shape, } from 'prop-types';
+import { string, func, shape } from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import classNames from 'classnames';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { NamedLink, Modal, Button} from '../../components';
+import { NamedLink, Modal, Button } from '../../components';
 import { SectorsFilterForm } from '../../forms';
 import routeConfiguration from '../../routeConfiguration';
 import { createResourceLocatorString, findRouteByRouteName } from '../../util/routes';
 
 import css from './SectionHero.css';
 
-export class  SectionHeroComponent extends Component {
+export class SectionHeroComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       validation_error: false,
       subSectors: [],
-      jobRoles:[],
+      jobRoles: [],
       isSectorModalOpen: false,
-      profileTypeSelected: true
+      profileTypeSelected: true,
     };
 
     this.profileTypeSelection = this.profileTypeSelection.bind(this);
   }
 
   profileTypeSelection(jobType) {
-    this.setState({profileTypeSelected : jobType, isSectorModalOpen : true});
+    this.setState({ profileTypeSelected: jobType, isSectorModalOpen: true });
     // setProfileTypeSelected(jobType);
     // setisSectorModalOpen(true);
   }
 
-// const SectionHero = props => {
-  render () {
+  // const SectionHero = props => {
+  render() {
     const { rootClassName, className, onManageDisableScrolling } = this.props;
     // const [isSectorModalOpen, setisSectorModalOpen] = useState(true);
     // const [profileTypeSelected, setProfileTypeSelected] = useState(null);
 
     const classes = classNames(rootClassName || css.root, className);
 
-    
-
     const handleSubmit = values => {
+      console.log('values: ', values);
       const { sectors, subsectors, jobroles } = values;
-      
+
       const routes = routeConfiguration();
-     
-      if(sectors !== 'none')
-      {
-        this.props.history.push(
-          createResourceLocatorString(
-            'SearchPage',
-            routes,
-            // { keywords: 'php' },
-            {},
-            // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
-            {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles}
-          )
-        );
-      }
-      else
-      {
-        this.props.history.push(
-          createResourceLocatorString(
-            'SearchPage',
-            routes,
-            // { keywords: 'php' },
-            {},
-            // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
-            {}
-          )
-        );
-      }
+
+      this.props.history.push(
+        createResourceLocatorString(
+          'SearchPage',
+          routes,
+          // { keywords: 'php' },
+          {},
+          // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+          { pub_subsectors: subsectors }
+        )
+      );
+
+      // if (sectors !== 'none') {
+      //   this.props.history.push(
+      //     createResourceLocatorString(
+      //       'SearchPage',
+      //       routes,
+      //       // { keywords: 'php' },
+      //       {},
+      //       // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+      //       { pub_sectors: sectors, pub_subSectors: subsectors, pub_jobroles: jobroles }
+      //     )
+      //   );
+      // } else {
+      //   this.props.history.push(
+      //     createResourceLocatorString(
+      //       'SearchPage',
+      //       routes,
+      //       // { keywords: 'php' },
+      //       {},
+      //       // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+      //       {}
+      //     )
+      //   );
+      // }
     };
 
     return (
@@ -95,27 +102,33 @@ export class  SectionHeroComponent extends Component {
           >
             <FormattedMessage id="SectionHero.browseButton" />
           </NamedLink>*/}
-          {!this.state.isSectorModalOpen ?
+          {!this.state.isSectorModalOpen ? (
             <div className={css.inlineButtons}>
-              <Button onClick={() => this.profileTypeSelection('jobrole')} className={`${css.heroButton} ${css.modBtn}`}>
+              <Button
+                onClick={() => this.profileTypeSelection('jobrole')}
+                className={`${css.heroButton} ${css.modBtn}`}
+              >
                 <FormattedMessage id="SectionHero.interviewProfileType" />
               </Button>
-              <Button onClick={() => this.profileTypeSelection('interview')} className={`${css.heroButton} ${css.modBtn}`}>
+              <Button
+                onClick={() => this.profileTypeSelection('interview')}
+                className={`${css.heroButton} ${css.modBtn}`}
+              >
                 <FormattedMessage id="SectionHero.jobroleProfileType" />
               </Button>
             </div>
-            : null
-          }    
+          ) : null}
 
           <Modal
             id="MenteeSignupPage.tos"
             isOpen={this.state.isSectorModalOpen}
-            onClose={() => this.setState({isSectorModalOpen:false})}
+            onClose={() => this.setState({ isSectorModalOpen: false })}
             onManageDisableScrolling={onManageDisableScrolling}
           >
             <SectorsFilterForm
               // className={css.form}
               onSubmit={handleSubmit}
+              onManageDisableScrolling={onManageDisableScrolling}
               // inProgress={authInProgress}
               // onOpenTermsOfService={() => this.setState({ tosModalOpen: true })}
             />
@@ -123,8 +136,8 @@ export class  SectionHeroComponent extends Component {
         </div>
       </div>
     );
-  };
-};
+  }
+}
 
 SectionHeroComponent.defaultProps = { rootClassName: null, className: null };
 
