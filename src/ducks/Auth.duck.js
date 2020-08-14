@@ -182,12 +182,21 @@ export const signup = params => (dispatch, getState, sdk) => {
   const { email, password, firstName, lastName, userType, bio = '', ...rest } = params;
 
   const createUserParams = isEmpty(rest)
-    ? { email, password, firstName, lastName, bio, userType }
-    // : { email, password, firstName, lastName, bio, protectedData: { ...rest } };
-    : { email, password, firstName, lastName, bio, protectedData: { userType }, publicData: { ...rest } };
+    ? { email, password, firstName, lastName, bio, userType, publicData: { newUser: true } }
+    : // : { email, password, firstName, lastName, bio, protectedData: { ...rest } };
+      {
+        email,
+        password,
+        firstName,
+        lastName,
+        bio,
+        protectedData: { userType },
+        publicData: { ...rest, newUser: true },
+      };
 
   // We must login the user if signup succeeds since the API doesn't
   // do that automatically.
+  console.log({ createUserParams });
   return sdk.currentUser
     .create(createUserParams)
     .then(() => dispatch(signupSuccess()))
