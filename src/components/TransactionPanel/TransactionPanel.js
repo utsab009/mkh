@@ -472,7 +472,7 @@ export class TransactionPanelComponent extends Component {
                     });
                   }}
                 >
-                  Cancel Order
+                  Cancel Meeting
                 </PrimaryButton>
                 {this.state.showCancelModal && (
                   <Modal
@@ -599,7 +599,7 @@ export class TransactionPanelComponent extends Component {
                       });
                     }}
                   >
-                    Cancel Order
+                    Cancel Meeting
                   </PrimaryButton>
                   {this.state.showCancelModal && (
                     <Modal
