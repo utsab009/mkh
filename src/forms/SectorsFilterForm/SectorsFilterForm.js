@@ -287,7 +287,7 @@ export class SectorsFilterFormComponent extends Component {
               {/* ) : null} */}
 
               <p>
-                My sector and or job is not listed, click
+                If your job role is not appearing,
                 <InlineTextButton
                   className={css.btnModSl}
                   onClick={e => {
@@ -295,7 +295,7 @@ export class SectorsFilterFormComponent extends Component {
                     this.setState({ isMailSectorModalOpen: true });
                   }}
                 >
-                  &nbsp;here &nbsp;
+                  &nbsp;click here &nbsp;
                 </InlineTextButton>
                 and tell us so we can include it for you.
               </p>
