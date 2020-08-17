@@ -87,6 +87,7 @@ export class ListingPageComponent extends Component {
       pageClassNames: [],
       imageCarouselOpen: false,
       enquiryModalOpen: enquiryModalOpenForListingId === params.id,
+      showNoVideoError: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -613,14 +614,31 @@ export class ListingPageComponent extends Component {
                     </ExternalLink>
                   </span>
                   <span>
-                    <a
-                      href={youtubeLink}
-                      target="_blank"
-                      title={youtubeMsg}
-                      className={css.sociallink}
-                    >
-                      Mentor Video
-                    </a>
+                    {!youtubeLink ? (
+                      <span onClick={() => this.setState({ showNoVideoError: true })}>
+                        <a
+                          href={youtubeLink}
+                          target="_blank"
+                          title={youtubeMsg}
+                          className={css.sociallink}
+                        >
+                          Mentor Video
+                        </a>
+                      </span>
+                    ) : (
+                      <a
+                        href={youtubeLink}
+                        target="_blank"
+                        title={youtubeMsg}
+                        className={css.sociallink}
+                      >
+                        Mentor Video
+                      </a>
+                    )}
+
+                    {this.state.showNoVideoError && (
+                      <div className={css.noVideoError}>The Mentor has yet to post a video</div>
+                    )}
                   </span>
                   <SectionReviews reviews={reviews} fetchReviewsError={fetchReviewsError} />
                 </div>

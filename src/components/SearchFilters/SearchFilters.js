@@ -382,6 +382,40 @@ class SearchFiltersComponent extends Component {
         />
       </button>
     ) : null;
+
+    const showRelatedSearchError = () => {
+      let errors = Object.keys(urlQueryParams);
+      let error = [];
+
+      if (errors.includes('pub_subsectors')) {
+        error.push(
+          'Sorry, as yet we don’t have mentors for this role but check back. We will! Maybe you could be one in the future?'
+        );
+      }
+      if (errors.includes('pub_sectors')) {
+        error.push(
+          'Sorry, as yet we don’t have mentors for this role in this specific Sector but check back. We will! Maybe you could be one in the future?'
+        );
+      }
+      if (errors.includes('pub_jobroles')) {
+        error.push(
+          'Sorry, as yet we don’t have mentors for this role at this specific level but check back. We will! Maybe you could check a different level for now?'
+        );
+      }
+      if (errors.includes('pub_mentorLanguage')) {
+        error.push(
+          'Sorry, as yet we don’t have a mentor for this role who speaks your requested language/s. Please try another language that would be suitable'
+        );
+      }
+      if (errors.includes('price')) {
+        error.push('I am sorry there is no Mentors for this role in the price range you picked');
+      }
+
+      return error;
+    };
+
+    console.log({ urlQueryParams });
+    console.log('urlQueryParams', showRelatedSearchError());
     return (
       <div className={classes}>
         <div className={css.filters}>
@@ -405,11 +439,20 @@ class SearchFiltersComponent extends Component {
           </div>
         ) : null}
 
-        {hasNoResult ? (
+        {/* {hasNoResult ? (
           <div className={css.noSearchResults}>
             <FormattedMessage id="SearchFilters.noResults" />
           </div>
-        ) : null}
+        ) : null} */}
+        {hasNoResult && showRelatedSearchError().length > 0
+          ? showRelatedSearchError().map((item, i) => (
+              <div className={css.noSearchResults} key={i}>
+                {item}
+              </div>
+            ))
+          : null}
+        {/* <ul className={css.noSearchResults}>
+        </ul> */}
 
         {searchInProgress ? (
           <div className={css.loadingResults}>

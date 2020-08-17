@@ -37,7 +37,7 @@
   line-height: 20px;
   margin-top: 16px;
   margin-bottom: 12px;
-
+  font-weight: 400 !important;
   /* parent uses flexbox: this defines minimum width for translated text "noResults" */
   flex-basis: 100%;
   flex-shrink: 0;

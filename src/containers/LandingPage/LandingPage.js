@@ -118,86 +118,65 @@ export class LandingPageComponent extends Component {
                 <SectionLocations />
               </div>
             </li>*/}
-            <li className={css.section}>
-              <div className={css.sectionContent}>
-                <SectionHowItWorks
-                  currentUserListing={currentUserListing}
-                  currentUserListingFetched={currentUserListingFetched}
-                />
-              </div>
-            </li>
+              <li className={css.section}>
+                <div className={css.sectionContent}>
+                  <SectionHowItWorks
+                    currentUserListing={currentUserListing}
+                    currentUserListingFetched={currentUserListingFetched}
+                  />
+                </div>
+              </li>
 
+              <li className={css.section}>
+                <div className={`${css.sectionContent} ${css.scdown}`} style={{ marginTop: 0 }}>
+                  {/* <div className={`${css.sectionContent} ${css.scdown}`}> */}
+                  <div className={css.scdtitle}>How Try A Mentor works For Mentors</div>
 
-            <li className={css.section}>
-              <div className={`${css.sectionContent} ${css.scdown}`}>
-                   <div className={css.scdtitle}>How Try A Mentor works For Mentors</div>
-
-                   <div className={css.scdsteps}>
-                      <div className={css.scdstep}>
-                        <h2 className={css.scdstepTitle}>
-                          1. Start Mentoring
-                        </h2>
-                        <p>
-                          You are all set. Bookings will arrive,
-                          payments will be automatic and through
-                          Skype or another Video Meeting
-                          Application you will deliver your on-line
-
-                          Mentoring. Try A Mentor will provide on-
-                          going support of key resources for you
-
-                          including a Mentee Management System
-                          and free training on how to improve
-                          your Mentoring skills (optional)
-                        </p>
-                      </div>
-
-                      <div className={css.scdstep}>
-                        <h2 className={css.scdstepTitle}>
-                          2. Create your Role Profiles
-                        </h2>
-                        <p>
-                          Your Mentor Profile makes the case as to why
-                          you will be a great Mentor, but what specific Job
-                          Roles will you help with? To define this, you
-                          create a Role Profile for each Job Role. Now in
-                          the top right-hand corner of the screen is “Roles
-                          I can Mentor”. Click this to not just define the
-                          Job Role, but when you will be available and
-                          how much you will charge
-                        </p>
-                      </div>
-
-                      <div className={css.scdstep}>
-                        <h2 className={css.scdstepTitle}>
-                          3. Create your Mentor Profile
-                        </h2>
-                        <p>
-                          Start by clicking “Become A Mentor” at
-                          the top right-hand corner of this page.
-                          Give your name, create your password
-                          and outline both your Work Experience
-                          and Education to date. If you do not
-                          have this information to hand, you can
-                          fill it in later. Then confirm your e-mail.
-                        </p>
-                      </div>
-
-                      
-
-                        
-                      </div>
+                  <div className={css.scdsteps}>
+                    <div className={css.scdstep}>
+                      <h2 className={css.scdstepTitle}>1. Start Mentoring</h2>
+                      <p>
+                        You are all set. Bookings will arrive, payments will be automatic and
+                        through Skype or another Video Meeting Application you will deliver your
+                        on-line Mentoring. Try A Mentor will provide on- going support of key
+                        resources for you including a Mentee Management System and free training on
+                        how to improve your Mentoring skills (optional)
+                      </p>
                     </div>
-            </li>
-          </ul>
-        </LayoutWrapperMain>
-        <LayoutWrapperFooter>
-          <Footer />
-        </LayoutWrapperFooter>
-      </LayoutSingleColumn>
-    </Page>
-  );
-};
+
+                    <div className={css.scdstep}>
+                      <h2 className={css.scdstepTitle}>2. Create your Role Profiles</h2>
+                      <p>
+                        Your Mentor Profile makes the case as to why you will be a great Mentor, but
+                        what specific Job Roles will you help with? To define this, you create a
+                        Role Profile for each Job Role. Now in the top right-hand corner of the
+                        screen is “Roles I can Mentor”. Click this to not just define the Job Role,
+                        but when you will be available and how much you will charge
+                      </p>
+                    </div>
+
+                    <div className={css.scdstep}>
+                      <h2 className={css.scdstepTitle}>3. Create your Mentor Profile</h2>
+                      <p>
+                        Start by clicking “Become A Mentor” at the top right-hand corner of this
+                        page. Give your name, create your password and outline both your Work
+                        Experience and Education to date. If you do not have this information to
+                        hand, you can fill it in later. Then confirm your e-mail.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </LayoutWrapperMain>
+          <LayoutWrapperFooter>
+            <Footer />
+          </LayoutWrapperFooter>
+        </LayoutSingleColumn>
+      </Page>
+    );
+  }
+}
 
 LandingPageComponent.defaultProps = {
   currentUserListing: null,
