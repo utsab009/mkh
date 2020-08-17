@@ -8,15 +8,15 @@ import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
 import { Form, Button, FieldTextInput, FieldCheckboxGroup } from '../../components';
-import CustomCertificateSelectFieldMaybe from './CustomCertificateSelectFieldMaybe';
-import CustomMentorLanguageSelectFieldMaybe from './CustomMentorLanguageSelectFieldMaybe';
-import CustomProfileTypeSelectFieldMaybe from './CustomProfileTypeSelectFieldMaybe';
+// import CustomCertificateSelectFieldMaybe from './CustomCertificateSelectFieldMaybe';
+// import CustomMentorLanguageSelectFieldMaybe from './CustomMentorLanguageSelectFieldMaybe';
+// import CustomProfileTypeSelectFieldMaybe from './CustomProfileTypeSelectFieldMaybe';
 
-import css from './EditListingDescriptionForm.css';
+import css from './EditListingLanguageYoutubeForm.css';
 
 const TITLE_MAX_LENGTH = 60;
 
-const EditListingDescriptionFormComponent = props => (
+const EditListingLanguageYoutubeFormComponent = props => (
   <FinalForm
     {...props}
     mutators={{ ...arrayMutators }}
@@ -36,87 +36,75 @@ const EditListingDescriptionFormComponent = props => (
         updated,
         updateInProgress,
         fetchErrors,
+        values,
       } = formRenderProps;
-      const titleMessage = intl.formatMessage({ id: 'EditListingDescriptionForm.title' });
+      const titleMessage = intl.formatMessage({ id: 'EditListingLanguageYoutubeForm.title' });
       const titlePlaceholderMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.titlePlaceholder',
+        id: 'EditListingLanguageYoutubeForm.titlePlaceholder',
       });
       const titleRequiredMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.titleRequired',
+        id: 'EditListingLanguageYoutubeForm.titleRequired',
       });
       const maxLengthMessage = intl.formatMessage(
-        { id: 'EditListingDescriptionForm.maxLength' },
+        { id: 'EditListingLanguageYoutubeForm.maxLength' },
         {
           maxLength: TITLE_MAX_LENGTH,
         }
       );
 
       const descriptionMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.description',
+        id: 'EditListingLanguageYoutubeForm.description',
       });
       const descriptionPlaceholderMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.descriptionPlaceholder',
+        id: 'EditListingLanguageYoutubeForm.descriptionPlaceholder',
       });
       const maxLength60Message = maxLength(maxLengthMessage, TITLE_MAX_LENGTH);
       const descriptionRequiredMessage = intl.formatMessage({
-        id: 'EditListingDescriptionForm.descriptionRequired',
+        id: 'EditListingLanguageYoutubeForm.descriptionRequired',
       });
 
       const { updateListingError, createListingDraftError, showListingsError } = fetchErrors || {};
       const errorMessageUpdateListing = updateListingError ? (
         <p className={css.error}>
-          <FormattedMessage id="EditListingDescriptionForm.updateFailed" />
+          <FormattedMessage id="EditListingLanguageYoutubeForm.updateFailed" />
         </p>
       ) : null;
 
       // This error happens only on first tab (of EditListingWizard)
       const errorMessageCreateListingDraft = createListingDraftError ? (
         <p className={css.error}>
-          <FormattedMessage id="EditListingDescriptionForm.createListingDraftError" />
+          <FormattedMessage id="EditListingLanguageYoutubeForm.createListingDraftError" />
         </p>
       ) : null;
 
       const errorMessageShowListing = showListingsError ? (
         <p className={css.error}>
-          <FormattedMessage id="EditListingDescriptionForm.showListingFailed" />
+          <FormattedMessage id="EditListingLanguageYoutubeForm.showListingFailed" />
         </p>
       ) : null;
 
       const classes = classNames(css.root, className);
       const submitReady = (updated && pristine) || ready;
       const submitInProgress = updateInProgress;
-      const submitDisabled = invalid || disabled || submitInProgress;
+      const submitDisabled =
+        invalid || disabled || submitInProgress || !values.mentorLanguage.length;
 
       return (
         <Form className={classes} onSubmit={handleSubmit}>
           {errorMessageCreateListingDraft}
           {errorMessageUpdateListing}
           {errorMessageShowListing}
-          <FieldTextInput
-            id="title"
-            name="title"
-            className={css.title}
-            type="text"
-            label={titleMessage}
-            placeholder={titlePlaceholderMessage}
-            maxLength={TITLE_MAX_LENGTH}
-            validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
-            autoFocus
+
+          <FieldCheckboxGroup
+            label={'What Languages can you mentor in?'}
+            className={css.profileTypes}
+            id="mentorLanguage"
+            name="mentorLanguage"
+            options={mentorLanguages}
+            validate={required('Please add ')}
           />
 
-          {
-            <FieldTextInput
-              id="description"
-              name="description"
-              className={css.description}
-              type="textarea"
-              label={descriptionMessage}
-              placeholder={descriptionPlaceholderMessage}
-              validate={composeValidators(required(descriptionRequiredMessage))}
-            />
-          }
-
-          {/* <FieldTextInput
+          <FieldTextInput
             // className={css.lastName}
             type="text"
             id={'youtubelink'}
@@ -128,36 +116,7 @@ const EditListingDescriptionFormComponent = props => (
             }
             className={css.youtubeLink}
             // validate={lastNameRequired}
-          /> */}
-
-          {/*<CustomCertificateSelectFieldMaybe
-            id="certificate"
-            name="certificate"
-            certificate={certificate}
-            intl={intl}
-          />*/}
-
-          {/*<FieldCheckboxGroup
-            className={css.profileTypes}
-            id="profileType"
-            name="profileType"
-            options={profileTypes}
-          />*/}
-
-          {/* <FieldCheckboxGroup
-            label={'What Languages can you mentor in?'}
-            className={css.profileTypes}
-            id="mentorLanguage"
-            name="mentorLanguage"
-            options={mentorLanguages}
-          /> */}
-
-          {/*<CustomMentorLanguageSelectFieldMaybe
-            id="mentorLanguage"
-            name="mentorLanguage"
-            mentorLanguages={mentorLanguages}
-            intl={intl}
-          />*/}
+          />
 
           <Button
             className={css.submitButton}
@@ -174,9 +133,9 @@ const EditListingDescriptionFormComponent = props => (
   />
 );
 
-EditListingDescriptionFormComponent.defaultProps = { className: null, fetchErrors: null };
+EditListingLanguageYoutubeFormComponent.defaultProps = { className: null, fetchErrors: null };
 
-EditListingDescriptionFormComponent.propTypes = {
+EditListingLanguageYoutubeFormComponent.propTypes = {
   className: string,
   intl: intlShape.isRequired,
   onSubmit: func.isRequired,
@@ -198,4 +157,4 @@ EditListingDescriptionFormComponent.propTypes = {
   ),
 };
 
-export default compose(injectIntl)(EditListingDescriptionFormComponent);
+export default compose(injectIntl)(EditListingLanguageYoutubeFormComponent);

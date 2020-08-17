@@ -26,6 +26,7 @@ import EditListingWizardTab, {
   LOCATION,
   PRICING,
   PHOTOS,
+  LANGUAGE_YOUTUBE,
 } from './EditListingWizardTab';
 import css from './EditListingWizard.css';
 
@@ -42,8 +43,8 @@ export const TABS = [
   DESCRIPTION,
   FEATURES,
   //POLICY,
+  LANGUAGE_YOUTUBE,
   LOCATION,
-  
   ...availabilityMaybe,
   PRICING,
   // PHOTOS,
@@ -96,6 +97,8 @@ const tabLabel = (intl, tab) => {
     key = 'EditListingWizard.tabLabelFeatures';
   } else if (tab === POLICY) {
     key = 'EditListingWizard.tabLabelPolicy';
+  } else if (tab === LANGUAGE_YOUTUBE) {
+    key = 'EditListingWizard.tabLanguageYoutube';
   } else if (tab === LOCATION) {
     key = 'EditListingWizard.tabLabelLocation';
   } else if (tab === PRICING) {
@@ -135,6 +138,8 @@ const tabCompleted = (tab, listing) => {
       return !!(publicData && publicData.sectors && publicData.subsectors);
     case POLICY:
       return !!(publicData && typeof publicData.rules !== 'undefined');
+    case LANGUAGE_YOUTUBE:
+      return !!(publicData && publicData.mentorLanguage && publicData.mentorLanguage.length);
     case LOCATION:
       // return !!(geolocation && publicData && publicData.location && publicData.location.address);
       // return !!(publicData && publicData.onlineAddress);

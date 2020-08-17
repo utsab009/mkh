@@ -18,6 +18,7 @@ import {
   EditListingPhotosPanel,
   EditListingPoliciesPanel,
   EditListingPricingPanel,
+  EditListingLanguageYoutubePanel,
 } from '../../components';
 
 import css from './EditListingWizard.css';
@@ -29,11 +30,13 @@ export const POLICY = 'policy';
 export const LOCATION = 'location';
 export const PRICING = 'pricing';
 export const PHOTOS = 'photos';
+export const LANGUAGE_YOUTUBE = 'language_youtube';
 
 // EditListingWizardTab component supports these tabs
 export const SUPPORTED_TABS = [
   DESCRIPTION,
   FEATURES,
+  LANGUAGE_YOUTUBE,
   POLICY,
   LOCATION,
   PRICING,
@@ -69,7 +72,7 @@ const redirectAfterDraftUpdate = (listingId, params, tab, marketplaceTabs, histo
   // Redirect to next tab
   const nextPathParams = pathParamsToNextTab(currentPathParams, tab, marketplaceTabs);
   const to = createResourceLocatorString('EditListingPage', routes, nextPathParams, {});
-  console.log("to",to);
+  console.log('to', to);
   history.push(to);
 };
 
@@ -204,6 +207,20 @@ const EditListingWizardTab = props => {
       return (
         <EditListingPoliciesPanel
           {...panelProps(POLICY)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+        />
+      );
+    }
+    case LANGUAGE_YOUTUBE: {
+      const submitButtonTranslationKey = isNewListingFlow
+        ? 'EditListingWizard.saveNewPolicies'
+        : 'EditListingWizard.saveEditPolicies';
+      return (
+        <EditListingLanguageYoutubePanel
+          {...panelProps(LANGUAGE_YOUTUBE)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
