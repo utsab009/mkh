@@ -23,12 +23,13 @@ const EditListingDescriptionPanel = props => {
     panelUpdated,
     updateInProgress,
     errors,
+    onManageDisableScrolling,
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
   const { description, title, publicData } = currentListing.attributes;
-
+  console.log('8888 publicData', currentListing.attributes);
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
     // <FormattedMessage
@@ -60,26 +61,28 @@ const EditListingDescriptionPanel = props => {
         className={css.form}
         initialValues={{
           title,
-          description,
-          certificate: publicData.certificate,
-          mentorLanguage: publicData.mentorLanguage,
-          profileType: publicData.profileType,
-          youtubeLink: publicData.youtubeLink,
+          // description,
+          // certificate: publicData.certificate,
+          // mentorLanguage: publicData.mentorLanguage,
+          // profileType: publicData.profileType,
+          subsectors: publicData.subsectors,
         }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
           const {
             title,
-            description,
-            certificate,
-            mentorLanguage,
-            profileType = [],
-            youtubeLink,
+            // description,
+            // certificate,
+            // mentorLanguage,
+            // profileType = [],
+            // youtubeLink,
+            subsectors,
           } = values;
+          console.log('test: ', values);
           const updateValues = {
             title: title.trim(),
-            description,
-            publicData: { certificate, mentorLanguage, profileType, youtubeLink },
+            // description,
+            publicData: { subsectors },
           };
 
           onSubmit(updateValues);
@@ -93,6 +96,7 @@ const EditListingDescriptionPanel = props => {
         certificate={config.custom.certificate}
         mentorLanguages={config.custom.mentorLanguages}
         profileTypes={config.custom.profileTypes}
+        onManageDisableScrolling={onManageDisableScrolling}
       />
     </div>
   );

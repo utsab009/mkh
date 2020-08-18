@@ -573,7 +573,9 @@ export const loadData = params => (dispatch, getState, sdk) => {
       // so we need to pick the first one
       if (response[0].data && response[0].data.data) {
         const listing = response[0].data.data;
-        const tz = listing.attributes.availabilityPlan.timezone;
+        console.log('8888 listing', listing);
+        const tz =
+          listing.attributes.availabilityPlan && listing.attributes.availabilityPlan.timezone;
 
         const today = new Date();
         const start = resetToStartOfDay(today, tz, 0);

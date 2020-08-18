@@ -39,6 +39,20 @@
 .error {
   color: var(--failColor);
 }
+.btnModSl {
+  text-align: left;
+  /* margin: 0 0 30px; */
+  font-size: 16px;
+  color: #0000ff;
+
+  @media (max-width: 767px) {
+    margin: 0 0 2px;
+  }
+}
+
+.updateModalcol {
+  /* padding-top: 50px; */
+}
 
 .title {
   @apply --EditListingDescriptionForm_formMargins;
@@ -75,4 +89,19 @@
     width: 241px;
     margin-top: 100px;
   }
+}
+.selectCss {
+  /* color: #b2b2b2; */
+  border-bottom: 2px solid #ffaa00 !important;
+  padding: 4px 0 10px 0 !important;
+  border-top: 0 !important;
+  border-right: 0 !important;
+  border-left: 0 !important;
+  margin: 0 0 20px;
+}
+
+.selectCss input {
+  font-size: 18px !important;
+  line-height: 24px;
+  padding-bottom: 0;
 }

@@ -87,7 +87,10 @@ const EditListingLanguageYoutubeFormComponent = props => (
       const submitReady = (updated && pristine) || ready;
       const submitInProgress = updateInProgress;
       const submitDisabled =
-        invalid || disabled || submitInProgress || !values.mentorLanguage.length;
+        invalid ||
+        disabled ||
+        submitInProgress ||
+        (values.mentorLanguage && values.mentorLanguage.length < 1);
 
       return (
         <Form className={classes} onSubmit={handleSubmit}>

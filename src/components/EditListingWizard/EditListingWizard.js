@@ -133,9 +133,9 @@ const tabCompleted = (tab, listing) => {
 
   switch (tab) {
     case DESCRIPTION:
-      return !!(publicData && title && publicData.profileType);
+      return !!(publicData && title && publicData.subsectors);
     case FEATURES:
-      return !!(publicData && publicData.sectors && publicData.subsectors);
+      return !!(publicData && publicData.sectors && publicData.jobroles);
     case POLICY:
       return !!(publicData && typeof publicData.rules !== 'undefined');
     case LANGUAGE_YOUTUBE:

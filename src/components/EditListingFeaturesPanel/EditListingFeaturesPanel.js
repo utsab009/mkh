@@ -9,19 +9,20 @@ import { createResourceLocatorString } from '../../util/routes';
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureListing } from '../../util/data';
 import { EditListingFeaturesForm } from '../../forms';
-import {  
+import {
   Form,
   PrimaryButton,
   InlineTextButton,
   ListingLink,
-  Modal, 
-  FieldTextInput
+  Modal,
+  FieldTextInput,
 } from '../../components';
 import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
 import css from './EditListingFeaturesPanel.css';
 import Axios from 'axios';
+import config from '../../config';
 
 const FEATURES_NAME = 'yogaStyles';
 
@@ -49,9 +50,8 @@ class Portal extends React.Component {
     // DOM node, or uses 'autoFocus' in a descendant, add
     // state to Modal and only render the children when Modal
     // is inserted in the DOM tree.
-    console.log("this.el",this.props.portalRoot);
+    console.log('this.el', this.props.portalRoot);
     this.props.portalRoot.appendChild(this.el);
-    
   }
 
   componentWillUnmount() {
@@ -63,7 +63,7 @@ class Portal extends React.Component {
   }
 }
 
-const submit = (history) => values => {
+const submit = history => values => {
   // const sortedValues = weekdays.reduce(
   //   (submitValues, day) => {
   //     return submitValues[day]
@@ -77,20 +77,19 @@ const submit = (history) => values => {
   // );
 
   // onSubmit(sortedValues);
-  console.log("values in submit",history);
-  const msg = "<p> Senders Email ID : " +values.emailId+ "</p><p>" +values.msg+ "</p>";
-  console.log("msg in submit",msg);
+  console.log('values in submit', history);
+  const msg = '<p> Senders Email ID : ' + values.emailId + '</p><p>' + values.msg + '</p>';
+  console.log('msg in submit', msg);
 
   Axios.get(
     // 'http://localhost:3001/extra/email_send?message=' +
     'https://mentorkh.herokuapp.com/extra/email_send?message=' +
-    values.msg +
+      values.msg +
       '&email=' +
       values.emailId
   )
     .then(response => {
-
-      console.log("response in submit",response);
+      console.log('response in submit', response);
       history.push(
         createResourceLocatorString(
           'LandingPage',
@@ -102,7 +101,8 @@ const submit = (history) => values => {
         )
       );
     })
-    .catch(e => {console.log('e in submit',e) 
+    .catch(e => {
+      console.log('e in submit', e);
       history.push(
         createResourceLocatorString(
           'LandingPage',
@@ -113,11 +113,8 @@ const submit = (history) => values => {
           {}
         )
       );
-    }
-    );
-    const routes = routeConfiguration();
-    
-
+    });
+  const routes = routeConfiguration();
 };
 
 const EditListingFeaturesPanel = props => {
@@ -136,7 +133,7 @@ const EditListingFeaturesPanel = props => {
     errors,
     history,
   } = props;
-  console.log("onManageDisableScrolling",onManageDisableScrolling);
+  console.log('onManageDisableScrolling', onManageDisableScrolling);
   const [isSendMsgModalOpen, setIsSendMsgModalOpen] = useState(false);
   const [portalRoot, setPortalRoot] = useState(null);
 
@@ -167,30 +164,31 @@ const EditListingFeaturesPanel = props => {
   //   <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
   // ); //Default code
 
-  const panelTitle = (
-      <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
-    );
+  const panelTitle = <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />;
 
   // const yogaStyles = publicData && publicData.yogaStyles;
   const sectors = publicData && publicData.sectors;
   const subsectors = publicData && publicData.subsectors;
   const jobroles = publicData && publicData.jobroles;
-  const initialValues = { sectors, subsectors, jobroles };
+  const initialValues = { sectors, jobroles };
+
+  const sectorGroupData = config.custom.sectors.filter(
+    item => item.key !== 'none' && item.key !== 'Public Service'
+  );
+  const roleGroupData = config.custom.nonPublicRoles.filter(item => item.key !== 'none');
 
   return (
     <main className={classes} ref={setPortalRootAfterInitialRender}>
-    {/*<div className={classes} ref={setPortalRootAfterInitialRender}>*/}
-     
+      {/*<div className={classes} ref={setPortalRootAfterInitialRender}>*/}
+
       <h1 className={css.title}>{panelTitle}</h1>
+      <p>Skip if you do not have experience of this sector</p>
       <p>
-      My sector and or job is not listed, click
-      <InlineTextButton
-        className={css.btnModSl}
-        onClick={() => setIsSendMsgModalOpen(true)}
-      >
-      &nbsp;here &nbsp; 
-      </InlineTextButton>
-      and tell us so we can include it for you.
+        My sector and or job is not listed, click
+        <InlineTextButton className={css.btnModSl} onClick={() => setIsSendMsgModalOpen(true)}>
+          &nbsp;here &nbsp;
+        </InlineTextButton>
+        and tell us so we can include it for you.
       </p>
 
       <EditListingFeaturesForm
@@ -199,10 +197,11 @@ const EditListingFeaturesPanel = props => {
         initialValues={initialValues}
         onSubmit={values => {
           // const { yogaStyles = [] } = values;
-          const { sectors = '', subsectors = '', jobroles = '' } = values;
+          const { sectors = [], jobroles = [] } = values;
+          console.log('test: ', values);
 
           const updatedValues = {
-            publicData: { sectors, subsectors, jobroles},
+            publicData: { sectors, jobroles },
           };
           onSubmit(updatedValues);
         }}
@@ -214,7 +213,10 @@ const EditListingFeaturesPanel = props => {
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
+        sectorGroup={sectorGroupData}
+        roleGroup={roleGroupData}
       />
+
       {portalRoot && onManageDisableScrolling ? (
         <Portal portalRoot={portalRoot}>
           <Modal
@@ -232,29 +234,30 @@ const EditListingFeaturesPanel = props => {
                 ...arrayMutators,
               }}
               render={fieldRenderProps => {
-                const {
-                  handleSubmit,
-                  values,
-                } = fieldRenderProps;
+                const { handleSubmit, values } = fieldRenderProps;
 
                 const classes = classNames(rootClassName || css.root, className);
 
                 return (
-                  <Form id={"sendmsg"} className={`${classes} ${css.updatePnl}`} onSubmit={handleSubmit}>
+                  <Form
+                    id={'sendmsg'}
+                    className={`${classes} ${css.updatePnl}`}
+                    onSubmit={handleSubmit}
+                  >
                     {/*<h2 className={css.heading}>
                       <FormattedMessage
                         id="EditListingAvailabilityPlanForm.title"
                         values={{ listingTitle }}
                       />
                     </h2>
-                */} 
+                */}
                     <div className={css.formg}>
                       <FieldTextInput
                         id="emailId"
                         name="emailId"
                         type="text"
-                        label={"Email ID"}
-                        placeholder={"Enter your email ID"}
+                        label={'Email ID'}
+                        placeholder={'Enter your email ID'}
                         // validate={composeValidators(required(descriptionRequiredMessage))}
                       />
                     </div>
@@ -263,12 +266,11 @@ const EditListingFeaturesPanel = props => {
                         id="msg"
                         name="msg"
                         type="textarea"
-                        label={"Message"}
-                        placeholder={"Enter your message here"}
+                        label={'Message'}
+                        placeholder={'Enter your message here'}
                         // validate={composeValidators(required(descriptionRequiredMessage))}
                       />
                     </div>
-                      
 
                     <div className={css.submitButtonFG}>
                       <PrimaryButton type="submit" inProgress={false} disabled={false}>
@@ -280,18 +282,17 @@ const EditListingFeaturesPanel = props => {
               }}
             />
           </Modal>
-        </Portal>)
-        :null
-      }  
+        </Portal>
+      ) : null}
+
       {/*<InlineTextButton
         className={css.editPlanButton}
         onClick={() => setIsSendMsgModalOpen(true)}
       >
       open Modal
       </InlineTextButton>*/}
-      
-      
-    {/*</div>*/}
+
+      {/*</div>*/}
     </main>
   );
 };

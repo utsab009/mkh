@@ -13,6 +13,7 @@ import { Button, FieldCheckboxGroup, Form, FieldSelect, InlineTextButton } from 
 
 import css from './EditListingFeaturesForm.css';
 import { Default } from '../../components/BookingPanel/BookingPanel.example';
+import { required } from '../../util/validators';
 
 export class EditListingFeaturesFormComponent extends Component {
   constructor(props) {
@@ -147,6 +148,8 @@ export class EditListingFeaturesFormComponent extends Component {
             updateInProgress,
             fetchErrors,
             setIsSendMsgModalOpen,
+            sectorGroup,
+            roleGroup,
           } = formRenderProps;
 
           const classes = classNames(rootClassName || css.root, className);
@@ -193,7 +196,7 @@ export class EditListingFeaturesFormComponent extends Component {
                 options={config.custom.yogaStyles}
               />*/}
 
-              <FieldSelect
+              {/* <FieldSelect
                 className={css.features}
                 onChange={this.handleChange}
                 name={'sectors'}
@@ -205,9 +208,17 @@ export class EditListingFeaturesFormComponent extends Component {
                     {m.label}
                   </option>
                 ))}
-              </FieldSelect>
+              </FieldSelect> */}
+              <FieldCheckboxGroup
+                label={sectorLabel}
+                className={css.profileTypes}
+                id="sectors"
+                name="sectors"
+                options={sectorGroup}
+                validate={required('Please add ')}
+              />
 
-              {this.state.subSectors.length > 0 ? (
+              {/* {this.state.subSectors.length > 0 ? (
                 <FieldSelect
                   className={css.features}
                   name={'subsectors'}
@@ -220,9 +231,9 @@ export class EditListingFeaturesFormComponent extends Component {
                     </option>
                   ))}
                 </FieldSelect>
-              ) : null}
+              ) : null} */}
 
-              {this.state.jobRoles.length > 0 ? (
+              {/* {this.state.jobRoles.length > 0 ? (
                 <FieldSelect className={css.features} name={'jobroles'} id={2} label={jobRoleLabel}>
                   {this.state.jobRoles.map(m => (
                     <option key={m.key} value={m.key}>
@@ -230,7 +241,15 @@ export class EditListingFeaturesFormComponent extends Component {
                     </option>
                   ))}
                 </FieldSelect>
-              ) : null}
+              ) : null} */}
+              <FieldCheckboxGroup
+                label={jobRoleLabel}
+                className={css.jobRole}
+                id="jobroles"
+                name="jobroles"
+                options={roleGroup}
+                validate={required('Please add ')}
+              />
 
               <div className={css.ffsec}>
                 <p>

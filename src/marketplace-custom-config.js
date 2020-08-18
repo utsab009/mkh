@@ -2394,3 +2394,79 @@ export const dateRangeFilterConfig = {
 export const keywordFilterConfig = {
   active: true,
 };
+
+export const rolesConfigData = () => {
+  let jobRolesConfig = [];
+  sectors.forEach(sector => {
+    switch (sector.key) {
+      case 'Accountancy and Financial Management':
+        jobRolesConfig = [...jobRolesConfig, ...Accountancyandfinancialmanagement];
+      case 'Civil and structural engineering':
+        jobRolesConfig = [...jobRolesConfig, ...Civilandstructuralengineering];
+      case 'Public Service':
+        jobRolesConfig = [...jobRolesConfig, ...PublicServices];
+      case 'Accounting':
+        jobRolesConfig = [...jobRolesConfig, ...Accounting];
+      case 'Administration and Office Support':
+        jobRolesConfig = [...jobRolesConfig, ...AdministrationAndOfficeSupport];
+      case 'Advertising Arts and Media':
+        jobRolesConfig = [...jobRolesConfig, ...AdvertisingArtsAndMedia];
+      case 'Banking and Financial Services':
+        jobRolesConfig = [...jobRolesConfig, ...BankingAndFinancialServices];
+      case 'Call Center and Customer Service':
+        jobRolesConfig = [...jobRolesConfig, ...CallCenterAndCustomerService];
+      case 'Community Services and Development':
+        jobRolesConfig = [...jobRolesConfig, ...CommunityServicesAndDevelopment];
+      case 'Construction':
+        jobRolesConfig = [...jobRolesConfig, ...Construction];
+      case 'Consulting and Strategy':
+        jobRolesConfig = [...jobRolesConfig, ...ConsultingAndStrategy];
+      case 'Design and Architecture':
+        jobRolesConfig = [...jobRolesConfig, ...DesignAndArchitecture];
+      case 'Education and Training':
+        jobRolesConfig = [...jobRolesConfig, ...EducationAndTraining];
+      case 'Engineering':
+        jobRolesConfig = [...jobRolesConfig, ...Engineering];
+      case 'Executive':
+        jobRolesConfig = [...jobRolesConfig, ...Executive];
+      case 'Farming Animals and Conservation':
+        jobRolesConfig = [...jobRolesConfig, ...FarmingAnimalsAndConservation];
+      case 'Healthcare and Medical':
+        jobRolesConfig = [...jobRolesConfig, ...HealthcareAndMedical];
+      case 'Hospitality and Tourism':
+        jobRolesConfig = [...jobRolesConfig, ...HospitalityAndTourism];
+      case 'Human Resources and Recruitment':
+        jobRolesConfig = [...jobRolesConfig, ...HumanResourcesAndRecruitment];
+      case 'Information Technology':
+        jobRolesConfig = [...jobRolesConfig, ...InformationTechnology];
+      case 'Insurance':
+        jobRolesConfig = [...jobRolesConfig, ...Insurance];
+      case 'Legal':
+        jobRolesConfig = [...jobRolesConfig, ...Legal];
+      case 'Manufacturing Transport and Logistics':
+        jobRolesConfig = [...jobRolesConfig, ...ManufacturingTransportAndLogistics];
+      case 'Marketing and Communications':
+        jobRolesConfig = [...jobRolesConfig, ...MarketingAndCommunications];
+      case 'Real Estate and Property':
+        jobRolesConfig = [...jobRolesConfig, ...RealEstateAndProperty];
+      case 'Retail and Consumer Products':
+        jobRolesConfig = [...jobRolesConfig, ...RetailAndConsumerProducts];
+      case 'Sales':
+        jobRolesConfig = [...jobRolesConfig, ...Sales];
+      case 'Science and Technology':
+        jobRolesConfig = [...jobRolesConfig, ...ScienceAndTechnology];
+      case 'Sports and Recreation':
+        jobRolesConfig = [...jobRolesConfig, ...SportsAndRecreation];
+      case 'Trades and Services':
+        jobRolesConfig = [...jobRolesConfig, ...TradesAndServices];
+    }
+  });
+
+  jobRolesConfig = new Set(jobRolesConfig).filter(x => !x.hideFromFilters);
+
+  let roles = [];
+  jobRolesConfig.map(x => roles.push(x));
+  jobRolesConfig = roles;
+
+  return roles;
+};

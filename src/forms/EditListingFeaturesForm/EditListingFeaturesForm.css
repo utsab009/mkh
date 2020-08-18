@@ -16,7 +16,10 @@
     padding-top: 1px;
   }
 }
-
+.jobRole {
+  margin: 15px 0;
+  font-size: 1rem;
+}
 .features {
   margin-bottom: 24px;
 
