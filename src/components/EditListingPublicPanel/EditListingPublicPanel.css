@@ -21,6 +21,10 @@
     padding: 1px 0 7px 0;
   }
 }
+.smallTextIns {
+  font-size: 0.6rem;
+  margin: 0 0 20px;
+}
 
 .modalContainer {
   @apply --marketplaceModalBaseStyles;
@@ -73,11 +77,4 @@
   .updatePnl {
     padding: 48px 0 !important;
   }
-}
-.underLine {
-  text-decoration: underline;
-}
-.smallTextIns {
-  font-size: 0.6rem;
-  margin: 0 0 20px;
 }

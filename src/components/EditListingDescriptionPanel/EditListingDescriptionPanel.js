@@ -57,6 +57,10 @@ const EditListingDescriptionPanel = props => {
   return (
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
+      <div className={css.titleSmall}>
+        YOU HAVE ALREADY PROVIDED YOUR EDUCATION AND EXPERIENCE TO DATE. THIS SECTION IS ABOUT
+        TELLING US ABOUT A JOB ROLE YOU WILL OFFER MENTORING IN WHICH IN TURN HELPS MENTEES FIND YOU
+      </div>
       <EditListingDescriptionForm
         className={css.form}
         initialValues={{

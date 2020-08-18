@@ -14,10 +14,14 @@
 }
 
 .title {
-  margin-bottom: 19px;
-
+  margin-bottom: 5px;
+  text-align: center;
   @media (--viewportLarge) {
-    margin-bottom: 38px;
+    margin-bottom: 0px;
     padding: 1px 0 7px 0;
   }
+}
+.titleSmall {
+  font-size: 14px;
+  margin-bottom: 25px;
 }

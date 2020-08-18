@@ -42,7 +42,6 @@
 .btnModSl {
   text-align: left;
   /* margin: 0 0 30px; */
-  font-size: 16px;
   color: #0000ff;
 
   @media (max-width: 767px) {
@@ -104,4 +103,29 @@
   font-size: 18px !important;
   line-height: 24px;
   padding-bottom: 0;
+}
+.customLable {
+}
+.underLine {
+  text-decoration: underline;
+}
+.customSubLable {
+  font-size: 0.6rem;
+}
+.smallTextIns {
+  font-size: 0.6rem;
+  margin: 0 0 20px;
+}
+.textColor {
+  color: #8e400b;
+}
+.formHelperIns > div {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+.formHelperInsli {
+  font-size: 0.7rem;
+  @media (--viewportLarge) {
+    font-size: 0.7rem;
+  }
 }

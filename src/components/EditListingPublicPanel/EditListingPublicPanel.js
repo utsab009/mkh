@@ -8,19 +8,12 @@ import { createResourceLocatorString } from '../../util/routes';
 
 import { LISTING_STATE_DRAFT } from '../../util/types';
 import { ensureListing } from '../../util/data';
-import { EditListingFeaturesForm } from '../../forms';
-import {
-  Form,
-  PrimaryButton,
-  InlineTextButton,
-  ListingLink,
-  Modal,
-  FieldTextInput,
-} from '../../components';
+import { EditListingPublicForm } from '../../forms';
+import { Form, PrimaryButton, InlineTextButton, ListingLink, Modal, FieldTextInput } from '..';
 import { Form as FinalForm } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 
-import css from './EditListingFeaturesPanel.css';
+import css from './EditListingPublicPanel.css';
 import Axios from 'axios';
 import config from '../../config';
 
@@ -117,7 +110,7 @@ const submit = history => values => {
   const routes = routeConfiguration();
 };
 
-const EditListingFeaturesPanel = props => {
+const EditListingPublicPanel = props => {
   const {
     rootClassName,
     className,
@@ -148,56 +141,57 @@ const EditListingFeaturesPanel = props => {
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   // const panelTitle = isPublished ? (
   //   // <FormattedMessage
-  //   //   id="EditListingFeaturesPanel.title"
+  //   //   id="EditListingPublicPanel.title"
   //   //   values={{
   //   //     listingTitle: (
   //   //       <ListingLink listing={listing}>
-  //   //         <FormattedMessage id="EditListingFeaturesPanel.listingTitle" />
+  //   //         <FormattedMessage id="EditListingPublicPanel.listingTitle" />
   //   //       </ListingLink>
   //   //     ),
   //   //   }}
   //   // />
   //   <FormattedMessage
-  //     id="EditListingFeaturesPanel.title"
+  //     id="EditListingPublicPanel.title"
   //   />
   // ) : (
-  //   <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
+  //   <FormattedMessage id="EditListingPublicPanel.createListingTitle" />
   // ); //Default code
 
-  const panelTitle = <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />;
+  const panelTitle = <FormattedMessage id="EditListingPublicPanel.createListingTitle" />;
 
   // const yogaStyles = publicData && publicData.yogaStyles;
   const sectors = publicData && publicData.sectors;
   const subsectors = publicData && publicData.subsectors;
-  const jobroles = publicData && publicData.jobroles;
+  const jobroles =
+    (publicData && publicData.subsectors === 'Generalist' && publicData.jobroles) || [];
   const initialValues = { sectors, jobroles };
 
-  const sectorGroupData = config.custom.sectors.filter(
-    item => item.key !== 'none' && item.key !== 'Public Service'
-  );
-  const roleGroupData = config.custom.nonPublicRoles.filter(item => item.key !== 'none');
+  // const sectorGroupData = config.custom.sectors.filter(
+  //   item => item.key !== 'none' && item.key !== 'Public Service'
+  // );
+  const roleGroupData = config.custom.publicRoles.filter(item => item.key !== 'none');
 
   return (
     <main className={classes} ref={setPortalRootAfterInitialRender}>
       {/*<div className={classes} ref={setPortalRootAfterInitialRender}>*/}
 
       <h1 className={css.title}>{panelTitle}</h1>
-      <p>
-        Only <span className={css.underLine}>Skip</span> this section if you picked the{' '}
-        <span className={css.underLine}>“Generalist Role”</span> in the previous
-      </p>
+      {/* <p>Skip if you do not have experience of this sector</p> */}
 
-      <EditListingFeaturesForm
+      <EditListingPublicForm
         className={css.form}
         name={FEATURES_NAME}
         initialValues={initialValues}
         onSubmit={values => {
           // const { yogaStyles = [] } = values;
-          const { sectors = [], jobroles = [] } = values;
-          console.log('test: ', values);
+          const { jobroles = [] } = values;
+          // console.log('test: ', values);
 
           const updatedValues = {
-            publicData: { sectors, jobroles },
+            publicData: {
+              sectors: values.jobroles.length ? ['Public Service'] : publicData.sectors,
+              jobroles: values.jobroles.length ? jobroles : publicData.jobroles,
+            },
           };
           onSubmit(updatedValues);
         }}
@@ -209,16 +203,17 @@ const EditListingFeaturesPanel = props => {
         updated={panelUpdated}
         updateInProgress={updateInProgress}
         fetchErrors={errors}
-        sectorGroup={sectorGroupData}
+        // sectorGroup={sectorGroupData}
         roleGroup={roleGroupData}
       />
       <p className={css.smallTextIns}>
-        My sector and or job is not listed, click
+        If the Seniority Level you were hoping to mentor in is missing, click
         <InlineTextButton className={css.btnModSl} onClick={() => setIsSendMsgModalOpen(true)}>
-          &nbsp;here &nbsp;
+          &nbsp;here&nbsp;
         </InlineTextButton>
-        and tell us so we can include it for you.
+        and tell us so we can include it for you{' '}
       </p>
+
       {portalRoot && onManageDisableScrolling ? (
         <Portal portalRoot={portalRoot}>
           <Modal
@@ -299,7 +294,7 @@ const EditListingFeaturesPanel = props => {
   );
 };
 
-EditListingFeaturesPanel.defaultProps = {
+EditListingPublicPanel.defaultProps = {
   rootClassName: null,
   className: null,
   listing: null,
@@ -307,7 +302,7 @@ EditListingFeaturesPanel.defaultProps = {
 
 const { bool, func, object, string } = PropTypes;
 
-EditListingFeaturesPanel.propTypes = {
+EditListingPublicPanel.propTypes = {
   rootClassName: string,
   className: string,
 
@@ -324,4 +319,4 @@ EditListingFeaturesPanel.propTypes = {
   errors: object.isRequired,
 };
 
-export default EditListingFeaturesPanel;
+export default EditListingPublicPanel;

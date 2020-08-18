@@ -125,19 +125,6 @@ class EditListingDescriptionFormComponent extends Component {
               {errorMessageCreateListingDraft}
               {errorMessageUpdateListing}
               {errorMessageShowListing}
-              <p>
-                If your job role is not appearing,
-                <InlineTextButton
-                  className={css.btnModSl}
-                  onClick={e => {
-                    e.preventDefault();
-                    this.setState({ isMailSectorModalOpen: true });
-                  }}
-                >
-                  &nbsp;click here &nbsp;
-                </InlineTextButton>
-                and tell us so we can include it for you.
-              </p>
 
               <FieldTextInput
                 id="title"
@@ -265,12 +252,19 @@ class EditListingDescriptionFormComponent extends Component {
                 </Modal>
               ) : null}
 
+              <div className={css.customLable}>
+                State the <span className={css.underLine}>Job Role</span> you can Mentor
+              </div>
+              <div className={css.customSubLable}>
+                (For each Job Role you can Mentor, you will need to return to this section, create a
+                new Profile name, and answer each of the questions again)
+              </div>
               <Select
                 className={css.selectCss}
                 id="subsectors"
                 name="subsectors"
                 options={config.custom.rolesConfigData()}
-                placeholder="Select Job Role"
+                placeholder="Type the Role You Hope to Mentor here (If Public Sector see instructions below)"
                 // itemRenderer={customItemRenderer}
                 values={config.custom.rolesConfigData().filter(x => x.key === values.subsectors)}
                 onChange={values => {
@@ -279,7 +273,53 @@ class EditListingDescriptionFormComponent extends Component {
                   // this.onChange(values);
                 }}
               />
+              <p className={css.smallTextIns}>
+                If your job role is not appearing,
+                <InlineTextButton
+                  className={css.btnModSl}
+                  onClick={e => {
+                    e.preventDefault();
+                    this.setState({ isMailSectorModalOpen: true });
+                  }}
+                >
+                  {' '}
+                  click here{' '}
+                </InlineTextButton>
+                and tell us so we can include it for you.
+              </p>
 
+              <div className={css.customLable}>
+                Hoping to Mentor people found in the
+                <span className={`${css.underLine} ${css.textColor}`}> Public Sector?</span> Read
+                Below{' '}
+              </div>
+              <div className={css.formHelperIns}>
+                <div>You can Mentor People in the Public Sector in two ways: </div>
+                <ul>
+                  <li className={css.formHelperInsli}>
+                    - Mentor them by the job role they have (this will make no difference to the
+                    process){' '}
+                  </li>
+                  <li className={css.formHelperInsli}>
+                    - Or Mentor them by their Seniority Level regardless of Job Role{' '}
+                  </li>
+                </ul>
+              </div>
+              <div className={css.formHelperIns}>
+                <div>
+                  If it is by Seniority Level only, please type “
+                  <span className={css.textColor}>Generalist (Public Sector)</span>” in Job Role
+                  above, then
+                </div>
+                <ul>
+                  <li className={css.formHelperInsli}>
+                    - Skip (leave blank) the next section (Sub-Sectors & Seniority Levels){' '}
+                  </li>
+                  <li className={css.formHelperInsli}>
+                    - Pick the Seniority level in the section “Public Sector: Levels”{' '}
+                  </li>
+                </ul>
+              </div>
               {/* <FieldTextInput
               // className={css.lastName}
               type="text"

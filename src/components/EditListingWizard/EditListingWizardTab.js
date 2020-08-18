@@ -19,6 +19,7 @@ import {
   EditListingPoliciesPanel,
   EditListingPricingPanel,
   EditListingLanguageYoutubePanel,
+  EditListingPublicPanel,
 } from '../../components';
 
 import css from './EditListingWizard.css';
@@ -26,6 +27,7 @@ import css from './EditListingWizard.css';
 export const AVAILABILITY = 'availability';
 export const DESCRIPTION = 'description';
 export const FEATURES = 'features';
+export const PUBLIC = 'public';
 export const POLICY = 'policy';
 export const LOCATION = 'location';
 export const PRICING = 'pricing';
@@ -36,8 +38,9 @@ export const LANGUAGE_YOUTUBE = 'language_youtube';
 export const SUPPORTED_TABS = [
   DESCRIPTION,
   FEATURES,
+  PUBLIC,
   LANGUAGE_YOUTUBE,
-  POLICY,
+  // POLICY,
   LOCATION,
   PRICING,
   AVAILABILITY,
@@ -192,6 +195,21 @@ const EditListingWizardTab = props => {
       return (
         <EditListingFeaturesPanel
           {...panelProps(FEATURES)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          history={history}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+        />
+      );
+    }
+    case PUBLIC: {
+      const submitButtonTranslationKey = isNewListingFlow
+        ? 'EditListingWizard.saveNewPublic'
+        : 'EditListingWizard.saveEditPublic';
+      return (
+        <EditListingPublicPanel
+          {...panelProps(PUBLIC)}
           submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
           history={history}
           onSubmit={values => {

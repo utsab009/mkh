@@ -27,6 +27,7 @@ import EditListingWizardTab, {
   PRICING,
   PHOTOS,
   LANGUAGE_YOUTUBE,
+  PUBLIC,
 } from './EditListingWizardTab';
 import css from './EditListingWizard.css';
 
@@ -42,7 +43,8 @@ const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 export const TABS = [
   DESCRIPTION,
   FEATURES,
-  //POLICY,
+  PUBLIC,
+  // POLICY,
   LANGUAGE_YOUTUBE,
   LOCATION,
   ...availabilityMaybe,
@@ -95,6 +97,8 @@ const tabLabel = (intl, tab) => {
     key = 'EditListingWizard.tabLabelDescription';
   } else if (tab === FEATURES) {
     key = 'EditListingWizard.tabLabelFeatures';
+  } else if (tab === PUBLIC) {
+    key = 'EditListingWizard.tabLabelPublic';
   } else if (tab === POLICY) {
     key = 'EditListingWizard.tabLabelPolicy';
   } else if (tab === LANGUAGE_YOUTUBE) {
@@ -135,6 +139,8 @@ const tabCompleted = (tab, listing) => {
     case DESCRIPTION:
       return !!(publicData && title && publicData.subsectors);
     case FEATURES:
+      return !!(publicData && publicData.sectors && publicData.jobroles);
+    case PUBLIC:
       return !!(publicData && publicData.sectors && publicData.jobroles);
     case POLICY:
       return !!(publicData && typeof publicData.rules !== 'undefined');
