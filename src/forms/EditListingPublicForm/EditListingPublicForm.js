@@ -9,8 +9,17 @@ import { FormattedMessage } from '../../util/reactIntl';
 
 import { propTypes } from '../../util/types';
 import config from '../../config';
-import { Button, FieldCheckboxGroup, Form, FieldSelect, InlineTextButton } from '../../components';
-
+import {
+  Button,
+  FieldCheckboxGroup,
+  Form,
+  FieldSelect,
+  InlineTextButton,
+  Modal,
+  PrimaryButton,
+  FieldTextInput,
+} from '../../components';
+import Axios from 'axios';
 import css from './EditListingPublicForm.css';
 import { Default } from '../../components/BookingPanel/BookingPanel.example';
 import { required } from '../../util/validators';
@@ -22,6 +31,7 @@ export class EditListingPublicFormComponent extends Component {
       validation_error: false,
       subSectors: [],
       jobRoles: [],
+      isSendMsgModalOpen: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -150,6 +160,7 @@ export class EditListingPublicFormComponent extends Component {
             setIsSendMsgModalOpen,
             // sectorGroup,
             roleGroup,
+            onManageDisableScrolling,
           } = formRenderProps;
 
           const classes = classNames(rootClassName || css.root, className);
@@ -248,15 +259,131 @@ export class EditListingPublicFormComponent extends Component {
                 id="jobroles"
                 name="jobroles"
                 options={roleGroup}
-                validate={required('Please add ')}
+                // validate={required('Please add ')}
               />
+              <p className={css.smallTextIns}>
+                My sector and or job is not listed, click
+                <InlineTextButton
+                  className={css.btnModSl}
+                  onClick={e => {
+                    e.preventDefault();
+                    this.setState({ isMailSectorModalOpen: true });
+                  }}
+                >
+                  &nbsp;here &nbsp;
+                </InlineTextButton>
+                and tell us so we can include it for you.
+              </p>
 
-              <div className={css.ffsec}>
+              {this.state.isMailSectorModalOpen ? (
+                <Modal
+                  id="EditAvailabilityPlan"
+                  isOpen={this.state.isMailSectorModalOpen}
+                  onClose={() => this.setState({ isMailSectorModalOpen: false })}
+                  onManageDisableScrolling={onManageDisableScrolling}
+                  // containerClassName={css.modalContainer}
+                  className={css.updateModalcol}
+                >
+                  <FinalForm
+                    // {...restOfprops}
+                    onSubmit={test => {
+                      console.log('test values: ', test);
+                    }}
+                    mutators={{
+                      ...arrayMutators,
+                    }}
+                    render={fieldRenderProps => {
+                      const { hSubmit, values } = fieldRenderProps;
+
+                      const classes = classNames(rootClassName || css.root, className);
+
+                      return (
+                        <Form
+                          id={'sendmsg'}
+                          className={`${classes} ${css.updatePnl}`}
+                          onSubmit={values => {
+                            console.log('values: ', values);
+                          }}
+                        >
+                          <div className={css.formg}>
+                            <FieldTextInput
+                              id="emailId"
+                              name="emailId"
+                              type="text"
+                              label={'Email ID'}
+                              placeholder={'Enter your email ID'}
+                              // validate={composeValidators(required(descriptionRequiredMessage))}
+                            />
+                          </div>
+                          <div className={css.formg}>
+                            <FieldTextInput
+                              id="msg"
+                              name="msg"
+                              type="textarea"
+                              label={'Message'}
+                              placeholder={'Enter your message here'}
+                              // validate={composeValidators(required(descriptionRequiredMessage))}
+                            />
+                          </div>
+
+                          <div className={css.submitButtonFG}>
+                            <PrimaryButton
+                              type="button"
+                              inProgress={false}
+                              disabled={false}
+                              onClick={e => {
+                                console.log('click values: ', e, values);
+                                Axios.get(
+                                  // 'http://localhost:3001/extra/email_send?message=' +
+                                  'https://mentorkh.herokuapp.com/extra/email_send?message=' +
+                                    values.msg +
+                                    '&email=' +
+                                    values.emailId
+                                )
+                                  .then(response => {
+                                    console.log('response in submit', response);
+                                    // history.push(
+                                    //   createResourceLocatorString(
+                                    //     'LandingPage',
+                                    //     routes,
+                                    //     // { keywords: 'php' },
+                                    //     {},
+                                    //     // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+                                    //     {}
+                                    //   )
+                                    // );
+                                  })
+                                  .catch(e => {
+                                    console.log('e in submit', e);
+                                    // history.push(
+                                    //   createResourceLocatorString(
+                                    //     'LandingPage',
+                                    //     routes,
+                                    //     // { keywords: 'php' },
+                                    //     {},
+                                    //     // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+                                    //     {}
+                                    //   )
+                                    // );
+                                  });
+                                this.setState({ isMailSectorModalOpen: false });
+                              }}
+                            >
+                              Send Mail
+                            </PrimaryButton>
+                          </div>
+                        </Form>
+                      );
+                    }}
+                  />
+                </Modal>
+              ) : null}
+              {/* <div className={css.ffsec}>
                 <p>
                   Remember, for each job / role you will need to create a new Role Profile for each
                   level of seniority you can Mentor at{' '}
                 </p>
-              </div>
+              </div> */}
 
               <Button
                 className={css.submitButton}
