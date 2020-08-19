@@ -211,15 +211,16 @@ const EditListingFeaturesPanel = props => {
         fetchErrors={errors}
         sectorGroup={sectorGroupData}
         roleGroup={roleGroupData}
+        onManageDisableScrolling={onManageDisableScrolling}
       />
-      <p className={css.smallTextIns}>
+      {/* <p className={css.smallTextIns}>
         My sector and or job is not listed, click
         <InlineTextButton className={css.btnModSl} onClick={() => setIsSendMsgModalOpen(true)}>
           &nbsp;here &nbsp;
         </InlineTextButton>
         and tell us so we can include it for you.
-      </p>
-      {portalRoot && onManageDisableScrolling ? (
+      </p> */}
+      {/* {portalRoot && onManageDisableScrolling ? (
         <Portal portalRoot={portalRoot}>
           <Modal
             id="EditAvailabilityPlan"
@@ -246,13 +247,7 @@ const EditListingFeaturesPanel = props => {
                     className={`${classes} ${css.updatePnl}`}
                     onSubmit={handleSubmit}
                   >
-                    {/*<h2 className={css.heading}>
-                      <FormattedMessage
-                        id="EditListingAvailabilityPlanForm.title"
-                        values={{ listingTitle }}
-                      />
-                    </h2>
-                */}
+                   
                     <div className={css.formg}>
                       <FieldTextInput
                         id="emailId"
@@ -285,7 +280,7 @@ const EditListingFeaturesPanel = props => {
             />
           </Modal>
         </Portal>
-      ) : null}
+      ) : null} */}
 
       {/*<InlineTextButton
         className={css.editPlanButton}

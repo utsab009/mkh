@@ -29,7 +29,7 @@ const TITLE_MAX_LENGTH = 60;
 class EditListingDescriptionFormComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = { isMailSectorModalOpen: false };
+    this.state = { isMailSectorModalOpen: false, roleData: config.custom.rolesConfigData() };
   }
 
   render() {
@@ -263,10 +263,12 @@ class EditListingDescriptionFormComponent extends Component {
                 className={css.selectCss}
                 id="subsectors"
                 name="subsectors"
-                options={config.custom.rolesConfigData()}
+                // multi
+                options={this.state.roleData}
                 placeholder="Type the Role You Hope to Mentor here (If Public Sector see instructions below)"
                 // itemRenderer={customItemRenderer}
-                values={config.custom.rolesConfigData().filter(x => x.key === values.subsectors)}
+                // values={[values.subsectors]}
+                values={this.state.roleData.filter(x => x.key == values.subsectors)}
                 onChange={values => {
                   console.log('values: ', values);
                   form.change('subsectors', values[0].key);
@@ -274,7 +276,7 @@ class EditListingDescriptionFormComponent extends Component {
                 }}
               />
               <p className={css.smallTextIns}>
-                If your job role is not appearing,
+                If your job role is not appearing,{' '}
                 <InlineTextButton
                   className={css.btnModSl}
                   onClick={e => {
@@ -282,15 +284,14 @@ class EditListingDescriptionFormComponent extends Component {
                     this.setState({ isMailSectorModalOpen: true });
                   }}
                 >
-                  {' '}
-                  click here{' '}
-                </InlineTextButton>
+                  click here
+                </InlineTextButton>{' '}
                 and tell us so we can include it for you.
               </p>
 
               <div className={css.customLable}>
-                Hoping to Mentor people found in the
-                <span className={`${css.underLine} ${css.textColor}`}> Public Sector?</span> Read
+                Hoping to Mentor people found in the{' '}
+                <span className={`${css.underLine} ${css.textColor}`}>Public Sector?</span> Read
                 Below{' '}
               </div>
               <div className={css.formHelperIns}>
@@ -308,8 +309,10 @@ class EditListingDescriptionFormComponent extends Component {
               <div className={css.formHelperIns}>
                 <div>
                   If it is by Seniority Level only, please type “
-                  <span className={css.textColor}>Generalist (Public Sector)</span>” in Job Role
-                  above, then
+                  <span className={`${css.underLine} ${css.textColor}`}>
+                    Generalist (Public Sector)
+                  </span>
+                  ” in Job Role above, then
                 </div>
                 <ul>
                   <li className={css.formHelperInsli}>
