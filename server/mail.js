@@ -28,15 +28,15 @@ router.get('/email_send', function(req, res) {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: 'ashes.naskar@bitcanny.com', // generated ethereal user
-      pass: 'oqmcemmqebkvvarm', // generated ethereal password
+      user: 'kglynn@beaconcampus.com', // generated ethereal user
+      pass: 'skzingfevybeykix', // generated ethereal password
     },
   });
 
   var mailOptions = {
     // from: 'abhishek.bitcanny@gmail.com',
     from: data.email,
-    to: 'utsab@bitcanny.com',
+    to: 'admin@tryamentor.com',
     subject: 'Sector Requirement',
     text: data.message,
     html: `<p> Sender's email ID : ` + data.email + `</p><p>` + data.message + `</p>`,
