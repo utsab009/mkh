@@ -49,9 +49,7 @@ class SearchFiltersComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sector: props.sectorsFilter
-        ? initialValue(props.urlQueryParams, props.sectorsFilter.paramName)
-        : null,
+      subsectors: initialValue(props.urlQueryParams, 'pub_subsectors') || null,
     };
   }
 
@@ -145,10 +143,10 @@ class SearchFiltersComponent extends Component {
       : null;
 
     const initialsectors = sectorsFilter
-      ? initialValue(urlQueryParams, sectorsFilter.paramName)
+      ? initialValues(urlQueryParams, sectorsFilter.paramName)
       : null;
 
-    const initialLevel = levelFilter ? initialValue(urlQueryParams, levelFilter.paramName) : null;
+    const initialLevel = levelFilter ? initialValues(urlQueryParams, levelFilter.paramName) : null;
 
     // const initialsubsectors = subsectorsFilter
     //   ? initialValue(urlQueryParams, subsectorsFilter.paramName)
@@ -181,10 +179,10 @@ class SearchFiltersComponent extends Component {
       // query parameters after selecting the option
       // if no option is passed, clear the selection for the filter
       let queryParams = urlQueryParams;
-      if (urlParam === 'pub_sectors') {
-        this.setState({ sector: option });
-        queryParams = omit(queryParams, 'pub_jobroles');
-      }
+      // if (urlParam === 'pub_sectors') {
+      //   this.setState({ sector: option });
+      //   queryParams = omit(queryParams, 'pub_jobroles');
+      // }
 
       queryParams = option ? { ...queryParams, [urlParam]: option } : omit(queryParams, urlParam);
 
@@ -258,46 +256,49 @@ class SearchFiltersComponent extends Component {
       />
     ) : null;
 
-    const jobRoleFilterElement = jobRoleFilter ? (
-      <SelectSingleFilter
-        urlParam={jobRoleFilter.paramName}
-        label={jobRoleLabel}
-        onSelect={handleSelectOption}
-        showAsPopup
-        options={jobRoleFilter.options}
-        initialValue={initialJobRole}
-        contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-      />
-    ) : null;
+    // const jobRoleFilterElement = jobRoleFilter ? (
+    //   <SelectSingleFilter
+    //     urlParam={jobRoleFilter.paramName}
+    //     label={jobRoleLabel}
+    //     onSelect={handleSelectOption}
+    //     showAsPopup
+    //     options={jobRoleFilter.options}
+    //     initialValue={initialJobRole}
+    //     contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+    //   />
+    // ) : null;
 
     const sectorsFilterElement = sectorsFilter ? (
-      <SelectSingleFilter
+      <SelectMultipleFilter
+        id={'SearchFilters.sectors'}
+        name="sectors"
         urlParam={sectorsFilter.paramName}
         label={sectorsLabel}
-        onSelect={handleSelectOption}
+        onSubmit={handleSelectOptions}
         showAsPopup
         options={sectorsFilter.options}
-        initialValue={initialsectors}
+        initialValues={initialsectors}
         contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
       />
     ) : null;
 
-    const levelFilterElement =
-      levelFilter && this.state.sector ? (
-        <SelectSingleFilter
-          urlParam={levelFilter.paramName}
-          label={levelLabel}
-          onSelect={handleSelectOption}
-          showAsPopup
-          options={
-            this.state.sector === 'Public Service'
-              ? levelFilter.config.public
-              : levelFilter.config.private
-          }
-          initialValue={initialLevel}
-          contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-        />
-      ) : null;
+    const levelFilterElement = levelFilter ? (
+      <SelectMultipleFilter
+        id={'SearchFilters.jobRoles'}
+        name="jobRoles"
+        urlParam={levelFilter.paramName}
+        label={levelLabel}
+        onSubmit={handleSelectOptions}
+        showAsPopup
+        options={
+          this.state.subsectors === 'Generalist'
+            ? levelFilter.config.public
+            : levelFilter.config.private
+        }
+        initialValues={initialLevel}
+        contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+      />
+    ) : null;
 
     // const subsectorsFilterElement = subsectorsFilter ? (
     //   <SelectSingleFilter

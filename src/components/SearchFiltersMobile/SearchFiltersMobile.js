@@ -17,6 +17,7 @@ import {
 } from '../../components';
 import { propTypes } from '../../util/types';
 import css from './SearchFiltersMobile.css';
+import Select from 'react-dropdown-select';
 
 const RADIX = 10;
 
@@ -39,7 +40,7 @@ class SearchFiltersMobileComponent extends Component {
     this.state = {
       isFiltersOpenOnMobile: false,
       initialQueryParams: null,
-      sector: props.sectorsFilter ? this.initialValue(props.sectorsFilter.paramName) : null,
+      subsectors: this.initialValue('pub_subsectors') || null,
     };
   }
 
@@ -78,10 +79,10 @@ class SearchFiltersMobileComponent extends Component {
     // query parameters after selecting the option
     // if no option is passed, clear the selection for the filter
     let queryParams = urlQueryParams;
-    if (urlParam === 'pub_sectors') {
-      this.setState({ sector: option });
-      queryParams = omit(queryParams, 'pub_jobroles');
-    }
+    // if (urlParam === 'pub_sectors') {
+    //   this.setState({ sector: option });
+    //   queryParams = omit(queryParams, 'pub_jobroles');
+    // }
 
     queryParams = option ? { ...queryParams, [urlParam]: option } : omit(queryParams, urlParam);
     // const queryParams = option
@@ -231,49 +232,48 @@ class SearchFiltersMobileComponent extends Component {
       ? this.initialValues(mentorLanguageFilter.paramName)
       : null;
 
-    const initialsectors = sectorsFilter ? this.initialValue(sectorsFilter.paramName) : null;
+    const initialsectors = sectorsFilter ? this.initialValues(sectorsFilter.paramName) : null;
 
     const sectorsFilterElement = sectorsFilter ? (
-      <SelectSingleFilter
+      <SelectMultipleFilter
         id={'SearchFilters.sectorsFilter'}
         name="sector"
         urlParam={sectorsFilter.paramName}
         label={sectorsLabel}
-        onSelect={this.handleSelectSingle}
+        onSubmit={this.handleSelectMultiple}
         // liveEdit
         showAsPopup
         options={sectorsFilter.options}
-        initialValue={initialsectors}
+        initialValues={initialsectors}
         intl={intl}
       />
     ) : null;
 
-    const initialLevel = levelFilter ? this.initialValue(levelFilter.paramName) : null;
+    const initialLevel = levelFilter ? this.initialValues(levelFilter.paramName) : null;
 
     const levelLabel = intl.formatMessage({
       id: 'SearchFilters.levelLabel',
     });
 
     console.log('levelFilter', levelFilter, this.state);
-    const levelFilterElement =
-      levelFilter && this.state.sector ? (
-        <SelectSingleFilter
-          id={'SearchFilters.levelFilter'}
-          name="level"
-          urlParam={levelFilter.paramName}
-          label={levelLabel}
-          onSelect={this.handleSelectSingle}
-          // liveEdit
-          showAsPopup
-          options={
-            this.state.sector === 'Public Service'
-              ? levelFilter.config.public
-              : levelFilter.config.private
-          }
-          initialValue={initialLevel}
-          intl={intl}
-        />
-      ) : null;
+    const levelFilterElement = levelFilter ? (
+      <SelectMultipleFilter
+        id={'SearchFilters.levelFilter'}
+        name="level"
+        urlParam={levelFilter.paramName}
+        label={levelLabel}
+        onSubmit={this.handleSelectMultiple}
+        liveEdit
+        // showAsPopup
+        options={
+          this.state.subsectors === 'Generalist'
+            ? levelFilter.config.public
+            : levelFilter.config.private
+        }
+        initialValues={initialLevel}
+        intl={intl}
+      />
+    ) : null;
 
     // const mentorLanguageFilterElement = mentorLanguageFilter ? (
     //   <SelectSingleFilter
