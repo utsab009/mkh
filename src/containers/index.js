@@ -28,3 +28,5 @@ export { default as TopbarContainer } from './TopbarContainer/TopbarContainer';
 export { default as TransactionPage } from './TransactionPage/TransactionPage';
 export { default as MenteeSignupPage } from './MenteeSignupPage/MenteeSignupPage';
 export { default as FaqPage } from './FaqPage/FaqPage';
+export { default as MentorResourcePage } from './MentorResourcePage/MentorResourcePage';
+export { default as MenteeResourcePage } from './MenteeResourcePage/MenteeResourcePage';
