@@ -291,8 +291,8 @@ class EditListingDescriptionFormComponent extends Component {
 
               <div className={css.customLable}>
                 Hoping to Mentor people found in the{' '}
-                <span className={`${css.underLine} ${css.textColor}`}>Public Sector?</span> Read
-                Below{' '}
+                <span className={`${css.underLine} ${css.textColor}`}>Public Sector</span>
+                <span className={css.textColor}>?</span> Read Below{' '}
               </div>
               <div className={css.formHelperIns}>
                 <div>You can Mentor People in the Public Sector in two ways: </div>
@@ -309,10 +309,8 @@ class EditListingDescriptionFormComponent extends Component {
               <div className={css.formHelperIns}>
                 <div>
                   If it is by Seniority Level only, please type “
-                  <span className={`${css.underLine} ${css.textColor}`}>
-                    Generalist (Public Sector)
-                  </span>
-                  ” in Job Role above, then
+                  <span className={`${css.textColor}`}>Generalist (Public Sector)</span>” in Job
+                  Role above, then
                 </div>
                 <ul>
                   <li className={css.formHelperInsli}>
