@@ -238,6 +238,18 @@
    :on :transition/decline
    :to :actor.role/customer
    :template :booking-request-declined}
+  {:name :notification/booking-request-declined-by-customer-to-customer
+   :on :transition/decline-customer
+   :to :actor.role/customer
+   :template :booking-request-declined-by-customer-to-customer}
+  {:name :notification/booking-request-declined-by-customer-to-provider
+   :on :transition/decline-customer
+   :to :actor.role/provider
+   :template :booking-request-declined-by-customer-to-provider}
+  {:name :notification/booking-request-cancelled-by-provider-to-provider
+   :on :transition/cancel-refund-by-provider
+   :to :actor.role/provider
+   :template :booking-request-cancelled-by-provider-to-provider}
   {:name :notification/booking-request-auto-declined
    :on :transition/expire
    :to :actor.role/customer

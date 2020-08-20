@@ -27,6 +27,8 @@ import {
   TermsOfServicePage,
   TransactionPage,
   FaqPage,
+  MenteeResourcePage,
+  MentorResourcePage,
 } from './containers';
 
 // routeConfiguration needs to initialize containers first
@@ -67,6 +69,16 @@ const routeConfiguration = () => {
       path: '/about',
       name: 'AboutPage',
       component: AboutPage,
+    },
+    {
+      path: '/menteeResource',
+      name: 'MenteeResourcePage',
+      component: MenteeResourcePage,
+    },
+    {
+      path: '/mentorResource',
+      name: 'MentorResourcePage',
+      component: MentorResourcePage,
     },
     {
       path: '/faq',

@@ -381,6 +381,32 @@ class TopbarMobileMenu extends Component {
           ) : null}
           {isMentor ? (
             <NamedLink
+              className={classNames(css.navigationLink, currentPageClass('MentorResourcePage'))}
+              name="MentorResourcePage"
+            >
+              <span className={css.menuItemBorder} />
+              <FormattedMessage
+                id="TopbarDesktop.resourceLink"
+                values={{ userType: isMentor ? 'Mentor' : 'Mentee' }}
+              />
+            </NamedLink>
+          ) : null}
+
+          {!isMentor ? (
+            <NamedLink
+              className={classNames(css.navigationLink, currentPageClass('MenteeResourcePage'))}
+              name="MenteeResourcePage"
+            >
+              <span className={css.menuItemBorder} />
+              <FormattedMessage
+                id="TopbarDesktop.resourceLink"
+                values={{ userType: isMentor ? 'Mentor' : 'Mentee' }}
+              />
+            </NamedLink>
+          ) : null}
+
+          {isMentor ? (
+            <NamedLink
               className={classNames(css.navigationLink, currentPageClass('PlannerPage'))}
               name="PlannerPage"
             >

@@ -40,9 +40,12 @@ const TopbarDesktop = props => {
     parentComponent = null,
   } = props;
   const [mounted, setMounted] = useState(false);
-  console.log("currentUser:",currentUser);
-  const userType = currentUser && currentUser.attributes.profile.protectedData ? currentUser.attributes.profile.protectedData.userType : null;
-  const userTypeText = userType !== null && userType === 'mentor' ? "Mentor" : "Mentee";
+  console.log('currentUser:', currentUser);
+  const userType =
+    currentUser && currentUser.attributes.profile.protectedData
+      ? currentUser.attributes.profile.protectedData.userType
+      : null;
+  const userTypeText = userType !== null && userType === 'mentor' ? 'Mentor' : 'Mentee';
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -51,11 +54,11 @@ const TopbarDesktop = props => {
   const isAuthenticatedOrJustHydrated = isAuthenticated || !mounted;
 
   //modified by UC
-  const rootVariable = parentComponent === null ? css.root : css.rootHomePage
+  const rootVariable = parentComponent === null ? css.root : css.rootHomePage;
   const classes = classNames(rootClassName || rootVariable, className);
 
   //modified by UC
-  const searchLinkVariable = parentComponent === null ? css.searchLink : css.searchLinkHomePage
+  const searchLinkVariable = parentComponent === null ? css.searchLink : css.searchLinkHomePage;
   const search = (
     <TopbarSearchForm
       className={searchLinkVariable}
@@ -67,8 +70,8 @@ const TopbarDesktop = props => {
   );
 
   const notificationDot = notificationCount > 0 ? <div className={css.notificationDot} /> : null;
-  
-  const inboxLinkVariable =  parentComponent === null ? css.inboxLink : css.inboxLinkHomePage;
+
+  const inboxLinkVariable = parentComponent === null ? css.inboxLink : css.inboxLinkHomePage;
 
   const inboxLink = authenticatedOnClientSide ? (
     <NamedLink
@@ -94,7 +97,7 @@ const TopbarDesktop = props => {
       <MenuLabel className={css.profileMenuLabel} isOpenClassName={css.profileMenuIsOpen}>
         <Avatar className={css.avatar} user={currentUser} disableProfileLink />
       </MenuLabel>
-      {isMentor ?
+      {isMentor ? (
         <MenuContent className={css.profileMenuContent}>
           {/*<MenuItem key="EditListingPage">
             <OwnListingLink
@@ -113,7 +116,10 @@ const TopbarDesktop = props => {
             </OwnListingLink>
                 </MenuItem>*/}
           <MenuItem key="ManageListingsPage">
-            <NamedLink className={classNames(css.yourListingsLink, currentPageClass('ManageListingsPage'))} name="ManageListingsPage">
+            <NamedLink
+              className={classNames(css.yourListingsLink, currentPageClass('ManageListingsPage'))}
+              name="ManageListingsPage"
+            >
               <span className={css.menuItemBorder} />
               <FormattedMessage id="TopbarDesktop.listingLink" />
             </NamedLink>
@@ -128,18 +134,42 @@ const TopbarDesktop = props => {
             </NamedLink>
           </MenuItem>
           <MenuItem key="FavouritesPage">
-            <NamedLink className={classNames(css.yourListingsLink, currentPageClass('FavouritesPage'))} name="FavouritesPage">
+            <NamedLink
+              className={classNames(css.yourListingsLink, currentPageClass('FavouritesPage'))}
+              name="FavouritesPage"
+            >
               <span className={css.menuItemBorder} />
               <FormattedMessage id="TopbarDesktop.favourites" />
             </NamedLink>
           </MenuItem>
           <MenuItem key="ProfileSettingsPage">
             <NamedLink
-              className={classNames(css.profileSettingsLink, currentPageClass('ProfileSettingsPage'))}
+              className={classNames(
+                css.profileSettingsLink,
+                currentPageClass('ProfileSettingsPage')
+              )}
               name="ProfileSettingsPage"
             >
               <span className={css.menuItemBorder} />
-              <FormattedMessage id="TopbarDesktop.profileSettingsLink" values={{ userType : userTypeText }} />
+              <FormattedMessage
+                id="TopbarDesktop.profileSettingsLink"
+                values={{ userType: userTypeText }}
+              />
+            </NamedLink>
+          </MenuItem>
+          <MenuItem key="MentorResourcePage">
+            <NamedLink
+              className={classNames(
+                css.profileSettingsLink,
+                currentPageClass('MentorResourcePage')
+              )}
+              name="MentorResourcePage"
+            >
+              <span className={css.menuItemBorder} />
+              <FormattedMessage
+                id="TopbarDesktop.resourceLink"
+                values={{ userType: userTypeText }}
+              />
             </NamedLink>
           </MenuItem>
           <MenuItem key="AccountSettingsPage">
@@ -158,21 +188,45 @@ const TopbarDesktop = props => {
             </InlineTextButton>
           </MenuItem>
         </MenuContent>
-        :
+      ) : (
         <MenuContent className={css.profileMenuContent}>
           <MenuItem key="FavouritesPage">
-            <NamedLink className={classNames(css.yourListingsLink, currentPageClass('FavouritesPage'))} name="FavouritesPage">
+            <NamedLink
+              className={classNames(css.yourListingsLink, currentPageClass('FavouritesPage'))}
+              name="FavouritesPage"
+            >
               <span className={css.menuItemBorder} />
               <FormattedMessage id="TopbarDesktop.favourites" />
             </NamedLink>
           </MenuItem>
           <MenuItem key="ProfileSettingsPage">
             <NamedLink
-              className={classNames(css.profileSettingsLink, currentPageClass('ProfileSettingsPage'))}
+              className={classNames(
+                css.profileSettingsLink,
+                currentPageClass('ProfileSettingsPage')
+              )}
               name="ProfileSettingsPage"
             >
               <span className={css.menuItemBorder} />
-              <FormattedMessage id="TopbarDesktop.profileSettingsLink" values={{ userType : userTypeText }} />
+              <FormattedMessage
+                id="TopbarDesktop.profileSettingsLink"
+                values={{ userType: userTypeText }}
+              />
+            </NamedLink>
+          </MenuItem>
+          <MenuItem key="MenteeResourcePage">
+            <NamedLink
+              className={classNames(
+                css.profileSettingsLink,
+                currentPageClass('MenteeResourcePage')
+              )}
+              name="MenteeResourcePage"
+            >
+              <span className={css.menuItemBorder} />
+              <FormattedMessage
+                id="TopbarDesktop.resourceLink"
+                values={{ userType: userTypeText }}
+              />
             </NamedLink>
           </MenuItem>
           <MenuItem key="AccountSettingsPage">
@@ -191,13 +245,13 @@ const TopbarDesktop = props => {
             </InlineTextButton>
           </MenuItem>
         </MenuContent>
-      }
+      )}
     </Menu>
   ) : null;
 
   //modified by SD
-  const signupLinkVariable = parentComponent === null ? css.signupLink : css.signupLinkHomePage    
-  const menteeSignupLink = isAuthenticatedOrJustHydrated ? null :  (
+  const signupLinkVariable = parentComponent === null ? css.signupLink : css.signupLinkHomePage;
+  const menteeSignupLink = isAuthenticatedOrJustHydrated ? null : (
     <NamedLink name="MenteeSignupPage" className={signupLinkVariable}>
       <span className={css.signup}>
         <FormattedMessage id="TopbarDesktop.menteeSignup" />
@@ -213,9 +267,9 @@ const TopbarDesktop = props => {
       </span>
     </NamedLink>
   );
-  
+
   //modified by SD
-  const loginLinkVariable = parentComponent === null ? css.loginLink : css.loginLinkHomePage
+  const loginLinkVariable = parentComponent === null ? css.loginLink : css.loginLinkHomePage;
   const loginLink = isAuthenticatedOrJustHydrated ? null : (
     <NamedLink name="LoginPage" className={loginLinkVariable}>
       <span className={css.login}>
@@ -224,7 +278,8 @@ const TopbarDesktop = props => {
     </NamedLink>
   );
   //modified by UC
-    const createListingLinkVariable = parentComponent === null ? css.createListingLink : css.createListingLinkHomePage
+  const createListingLinkVariable =
+    parentComponent === null ? css.createListingLink : css.createListingLinkHomePage;
   const listingLink =
     authenticatedOnClientSide && currentUserListingFetched && currentUserListing ? (
       <ListingLink
@@ -237,19 +292,18 @@ const TopbarDesktop = props => {
         }
       />
     ) : null;
-  //modified by UC      
-  const createListingLink =
-    // isAuthenticatedOrJustHydrated && !(currentUserListingFetched && !currentUserListing) ? null : // to generate new listing link
-    (
-      <NamedLink className={createListingLinkVariable} name="NewListingPage">
-        <span className={css.createListing}>
-          <FormattedMessage id="TopbarDesktop.createListing" />
-        </span>
-      </NamedLink>
-    );
-  
   //modified by UC
-  const logoLinkVariable = parentComponent === null ? css.logoLink : css.logoLinkHomePage  
+  const createListingLink = (
+    // isAuthenticatedOrJustHydrated && !(currentUserListingFetched && !currentUserListing) ? null : // to generate new listing link
+    <NamedLink className={createListingLinkVariable} name="NewListingPage">
+      <span className={css.createListing}>
+        <FormattedMessage id="TopbarDesktop.createListing" />
+      </span>
+    </NamedLink>
+  );
+
+  //modified by UC
+  const logoLinkVariable = parentComponent === null ? css.logoLink : css.logoLinkHomePage;
   return (
     <nav className={classes}>
       <NamedLink className={logoLinkVariable} name="LandingPage">
@@ -280,7 +334,6 @@ TopbarDesktop.defaultProps = {
   initialSearchFormValues: {},
   currentUserListing: null,
   currentUserListingFetched: false,
-
 };
 
 TopbarDesktop.propTypes = {
