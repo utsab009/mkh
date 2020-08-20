@@ -1,0 +1,77 @@
+{{~#*inline "format-date"~}} {{#with transaction.listing.availability-plan}} {{date date
+format="h:mm a" tz=timezone}} on {{date date format="MMM d, YYYY" tz=timezone}} {{/with}}
+{{~/inline~}}
+
+<html>
+  <body style="font-family: sans-serif;">
+    <h1>
+      Sorry: <span style="text-decoration: underline;">A</span> booking request made to you has been
+      cancelled by a Mentee on Try A Mentor
+    </h1>
+
+    {{#with transaction}}
+    <p>
+      Unfortunately, {{provider.display-name}} decided to cancel the booking request made for {{>
+      format-date date=booking.start}} to {{> format-date date=booking.end}}. We are sorry. As you
+      had not confirmed this meeting, the Mentee is free to cancel the meeting at no charge. Sorry
+      for any inconvenience caused.
+    </p>
+    <p>
+      It might be worth your time to contact this person to see if they might be open to booking you
+      for another time (if they have not already done so). To do this, sign into TryaMentor.com,
+      click on the circle with your picture or initials in it, scroll down to your inbox (from
+      Mentees), click on your last message from this person. You will be able to write them a new
+      message asking them to book you again on TryAMentor.com. Good luck!
+    </p>
+
+    <!-- <p>
+          Unfortunately {{provider.display-name}} decided to decline your booking request for
+          {{listing.title}} from {{> format-date date=booking.start}} to {{> format-date
+          date=booking.end}}. You have not been billed.
+        </p> -->
+    {{/with}}
+
+    <!-- <p><a href="{{marketplace.url}}">To make a new booking click here</a></p> -->
+
+    <!-- <hr /> -->
+
+    <!-- <p>You have received this email notification because you are a member of {{marketplace.name}}. If you no longer wish to receive these emails, please contact {{marketplace.name}} team.</p> -->
+    <footer style="font-family: sans-serif;">
+      <div
+        style=" width: 100%; margin: 0 auto; border-top: 1px solid #ddd; padding: 20px 0; font-weight: 400;"
+      >
+        <p style="font-size: 12px; margin: 0 0 20px; color: #7f7f7f; letter-spacing: 1px;">
+          You have received this email notification because you are using
+          <a target="_blank" href="http://tryamentor.com">TryAMentor.com</a>. If you do not wish to
+          receive these e-mail contact us at <a href="#">admin@tryamentor.com</a>.
+        </p>
+
+        <p
+          style="font-size: 14px; margin: 0 0 20px; color: #2a364c; line-height: 16px; letter-spacing: 1px;"
+        >
+          Try A Mentor is part of the Beacon <span style="color: #375623">H</span
+          ><span style="color: #833c0b">R</span><span style="color: #0070c0">M</span> Group
+          consisting of Beacon <span style="color: #375623">Training,</span>
+          <span style="color: #833c0b">e</span>Beacon and Beacon
+          <span style="color: #0070c0">Talent</span>. Find the Beacon HRM Group in Dublin, New York,
+          San Francisco, Auckland and Singapore
+        </p>
+
+        <p style="font-size: 12px; margin: 0 0 20px; color: #000; letter-spacing: 1px;">
+          The content of this e-mail may be confidential or legally privileged. If you are not the
+          named addressee or the intended recipient, please do not copy it or forward it to anyone.
+          If you have received this email in error, please destroy it and kindly notify the
+          <a href="#">admin@tryamentor.com</a>.
+        </p>
+
+        <p style="font-size: 12px; margin: 0 0 20px; color: #000; letter-spacing: 1px;">
+          Email cannot be guaranteed to be secure or error-free, it is your responsibility to ensure
+          that this email (including attachments) is safe and authorised for use in your
+          environment. It is the responsibility of the recipient to ensure that it is virus free and
+          no responsibility is accepted by the Beacon HRM Group for any loss or damage arising in
+          any way from its use.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
