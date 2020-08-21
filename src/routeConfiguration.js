@@ -73,11 +73,15 @@ const routeConfiguration = () => {
     {
       path: '/menteeResource',
       name: 'MenteeResourcePage',
+      auth: true,
+      authPage: 'LoginPage',
       component: MenteeResourcePage,
     },
     {
       path: '/mentorResource',
       name: 'MentorResourcePage',
+      auth: true,
+      authPage: 'LoginPage',
       component: MentorResourcePage,
     },
     {

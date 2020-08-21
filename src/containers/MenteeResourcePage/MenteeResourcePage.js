@@ -177,59 +177,44 @@ class MenteeResourcePage extends React.Component {
                 <Tabs defaultActiveKey="gsm" id="uncontrolled-tab-example">
                   <Tab eventKey="gsm" title="Getting Started as a Mentee ">
                     <div className={css.tabtxt}>
-                      <p>
-                        <span>Watch:</span> “How to get the most from Mentoring” training created by
-                        our sister company Beacon Training
-                      </p>
-                      <a href="#" className={css.watcgbttn}>
-                        Open
-                      </a>
+                      <p>Content Coming soon.</p>
                     </div>
-
-                    <div className={css.tabtxt}>
-                      <p>
-                        <span>Watch:</span>“How to succeed in a Competency Based Interview” training
-                        created by our sister company Beacon Training. After watching it your Mentee
-                        will gain from you not just how to answer the questions asked effectively
-                        but also how to conduct themselves in their interview
-                      </p>
-                      <a href="#" className={css.watcgbttn}>
-                        Open
-                      </a>
-                    </div>
-
-                    <div className={css.tabtxt}>
-                      <p>
-                        <span>Read: </span> “How to create a brilliant Bio” by XXX
-                      </p>
-                      <a href="#" className={css.watcgbttn}>
-                        Open
-                      </a>
-                    </div>
-
-                    <div className={css.tabtxt}>
-                      <p>
-                        <span>Blog:</span> Join Try A Mentor’s Mentee blog and get talking to our
-                        community, get answers and share resources and know-how
-                      </p>
-                      <a href="#" className={css.watcgbttn}>
-                        Open
-                      </a>
-                    </div>
-
-                    <p className={css.etctxt}>Etc.</p>
-                    <p className={css.etctxt}>
-                      We would have the ability to add more links with descriptions
-                    </p>
                   </Tab>
                   <Tab eventKey="htt" title="How To / Training">
                     <div className={css.tabtxt}>
-                      <p>Content Goes here</p>
+                      <p>
+                        <span>Watch:</span> If you are you are about to do an interview, watch this
+                        first.
+                        <p>
+                          Don Georgevich does a brilliant job explaining how to Sell Yourself in a
+                          Job Interview. He does this by providing a clear insight into precisely
+                          what Job Recruiters are looking for by exploring the top answers to the
+                          top 30 type of interview questions asked.
+                        </p>
+                      </p>
+                      <a
+                        href="https://www.youtube.com/watch?v=B_LmCruLjis"
+                        className={css.watcgbttn}
+                        target="_blank"
+                      >
+                        Open
+                      </a>
                     </div>
                   </Tab>
                   <Tab eventKey="anp" title="Articles and Papers">
                     <div className={css.tabtxt}>
-                      <p>Content Goes here</p>
+                      <p>
+                        <span>Read:</span> Writing your Resume and want tips? Erin Greenawald
+                        provides not one tip, not two tips, but forty three tips to get you that
+                        interview
+                      </p>
+                      <a
+                        href="https://www.themuse.com/advice/43-resume-tips-that-will-help-you-get-hired"
+                        className={css.watcgbttn}
+                        target="_blank"
+                      >
+                        Open
+                      </a>
                     </div>
                   </Tab>
                   <Tab eventKey="as" title="Mentee Stories">

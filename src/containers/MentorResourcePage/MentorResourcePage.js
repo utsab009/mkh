@@ -179,77 +179,66 @@ class MentorResourcePage extends React.Component {
                   <Tab eventKey="gsm" title="Getting Started as a Mentor ">
                     <div className={css.tabtxt}>
                       <p>
-                        <span>Watch:</span> “How to Mentor Successfully” training created by our
-                        sister company Beacon Training
+                        <span>Watch:</span> Video tutorial on how to set up as a Mentor on Try A
+                        Mentor
                       </p>
                       <a href="#" className={css.watcgbttn}>
                         Open
                       </a>
                     </div>
-
-                    <div className={css.tabtxt}>
-                      <p>
-                        <span>Watch:</span>If your Mentee wants help with an Interview watch
-                        “Interviewing Skills” training created by our sister company Beacon
-                        Training. After watching it your Mentee will gain from you not just how to
-                        answer the questions asked effectively but also how to conduct themselves in
-                        their interview
-                      </p>
-                      <a href="#" className={css.watcgbttn}>
-                        Open
-                      </a>
-                    </div>
-
-                    <div className={css.tabtxt}>
-                      <p>
-                        <span>Read: </span> “How to Be an Amazing Mentor: 12 Ways to Make a Positive
-                        Impact on Others” by Lindsay Kolowich
-                      </p>
-                      <a href="#" className={css.watcgbttn}>
-                        Open
-                      </a>
-                    </div>
-
-                    <div className={css.tabtxt}>
-                      <p>
-                        <span>Blog:</span> Join Try A Mentor’s Mentor blog and get talking to our
-                        community, get answers and share resources and know-how
-                      </p>
-                      <a href="#" className={css.watcgbttn}>
-                        Open
-                      </a>
-                    </div>
-
-                    <p className={css.etctxt}>Etc.</p>
-                    <p className={css.etctxt}>
-                      We would have the ability to add more links with descriptions
-                    </p>
                   </Tab>
                   <Tab eventKey="htt" title="How To / Training">
                     <div className={css.tabtxt}>
-                      <p>Content Goes here</p>
+                      <p>
+                        <span>Watch:</span> If you are helping your Mentee to get a job or succeed
+                        in an interview, this video will guide you on some critical advice to offer.
+                        <p>
+                          Don Georgevich does a brilliant job explaining how to Sell Yourself in a
+                          Job Interview. He does this by providing a clear insight into precisely
+                          what Job Recruiters are looking for by exploring the top answers to the
+                          top 30 type of interview questions asked.{' '}
+                        </p>
+                      </p>
+                      <a
+                        href="https://www.youtube.com/watch?v=B_LmCruLjis"
+                        className={css.watcgbttn}
+                        target="_blank"
+                      >
+                        Open
+                      </a>
                     </div>
                   </Tab>
-                  <Tab eventKey="anp" title="Articles and Papers">
+                  <Tab eventKey="anp" title="Useful Articles and Papers">
                     <div className={css.tabtxt}>
-                      <p>Content Goes here</p>
+                      <p>
+                        <span>Read:</span> Want some quick practical tips on how to Mentor? Lindsay
+                        Solowich provide twelve practical and powerful tips on how to Mentor with
+                        impact
+                      </p>
+                      <a
+                        href="https://blog.hubspot.com/marketing/mentor-tips-positive-impact"
+                        className={css.watcgbttn}
+                        target="_blank"
+                      >
+                        Open
+                      </a>
                     </div>
                   </Tab>
                   <Tab eventKey="as" title="Mentor Stories">
                     <div className={css.tabtxt}>
-                      <p>Content Goes here</p>
+                      <p>Content Coming soon.</p>
                     </div>
                   </Tab>
                   <Tab eventKey="bs" title="Blog & Social">
                     <div className={css.tabtxt}>
-                      <p>Content Goes here</p>
+                      <p>Content Coming soon.</p>
                     </div>
                   </Tab>
-                  <Tab eventKey="all" title="All">
+                  {/* <Tab eventKey="all" title="All">
                     <div className={css.tabtxt}>
                       <p>Content Goes here</p>
                     </div>
-                  </Tab>
+                  </Tab> */}
                 </Tabs>
               </div>
             </div>
