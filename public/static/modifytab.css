@@ -32,12 +32,28 @@
 }
 
 @media  (max-width: 767px) {
-.modtab .nav-tabs {
-  flex-direction: column;
+  .modtab .nav-tabs {
+    flex: 0 0 60%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    text-align: center;
+}
+.modtab .nav-tabs .nav-link {
+  border-bottom: 5px solid transparent !important;
+  flex: 0 0 32%;
+  text-align: center;
 }
 .modtab .nav-tabs .nav-link {
   padding: .7rem 1rem;
 border-bottom: 5px solid transparent !important;
 }
+
+}
+
+@media  (max-width: 575px) {
+  .modtab .nav-tabs .nav-link {
+    flex: 0 0 75%;
+  }
 
 }

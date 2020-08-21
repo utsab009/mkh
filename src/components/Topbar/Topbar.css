@@ -54,6 +54,17 @@
 .home {
   display: flex;
   padding: calc((var(--topbarHeight) - var(--Topbar_logoHeight)) / 2) 24px;
+
+
+  @media (max-width: 767px) {
+    display: table;
+    padding: calc((60px - 26px) / 2) 5px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 0;
+  }
 }
 
 .homeHomePage {
@@ -104,6 +115,11 @@
 }
 .searchMenu {
   padding: 12px 24px;
+
+  @media (max-width: 767px) {
+    padding: 0 10px 0 0;
+    width: auto;
+  }
 }
 
 .searchMenuHomePage {
@@ -325,4 +341,12 @@
 
 .signupLink {
   color: #edf0f5;
+
+  @media (max-width: 767px) {
+    color: #2a364c;
+  }
+
+  @media (max-width: 575px) {
+    font-size: 12px;
+  }
 }
