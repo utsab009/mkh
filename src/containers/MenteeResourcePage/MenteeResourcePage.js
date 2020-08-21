@@ -227,11 +227,11 @@ class MenteeResourcePage extends React.Component {
                       <p>Content Goes here</p>
                     </div>
                   </Tab>
-                  <Tab eventKey="all" title="All">
+                  {/* <Tab eventKey="all" title="All">
                     <div className={css.tabtxt}>
                       <p>Content Goes here</p>
                     </div>
-                  </Tab>
+                  </Tab> */}
                 </Tabs>
               </div>
             </div>
