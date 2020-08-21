@@ -265,7 +265,7 @@ class EditListingDescriptionFormComponent extends Component {
                 name="subsectors"
                 // multi
                 options={this.state.roleData}
-                placeholder="Type the Role You Hope to Mentor here (If Public Sector see instructions below)"
+                // placeholder="Type the Role You Hope to Mentor here (If Public Sector see instructions below)"
                 // itemRenderer={customItemRenderer}
                 // values={[values.subsectors]}
                 values={this.state.roleData.filter(x => x.key == values.subsectors)}
