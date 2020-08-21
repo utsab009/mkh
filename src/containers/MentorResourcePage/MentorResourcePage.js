@@ -32,7 +32,7 @@ class MentorResourcePage extends React.Component {
     return (
       <StaticPage
         className={css.root}
-        title="About"
+        title="Mentor Resource"
         schema={{
           '@context': 'http://schema.org',
           '@type': 'MentorResourcePage',

@@ -31,7 +31,7 @@ class MenteeResourcePage extends React.Component {
     return (
       <StaticPage
         className={css.root}
-        title="About"
+        title="Mentee Resource"
         schema={{
           '@context': 'http://schema.org',
           '@type': 'MenteeResourcePage',
