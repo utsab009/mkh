@@ -1,0 +1,43 @@
+.modtab .nav-tabs {
+  border-bottom: 0;
+  background: #4472c4;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.modtab .nav-tabs .nav-link {
+  font-size: 14px;
+  color: #fff;
+  border-radius: 0 !important;
+  border: 0 !important;
+  padding: .7rem 1rem;
+}
+
+.modtab .nav-tabs .nav-link:hover,
+.modtab .nav-tabs .nav-link.active {
+  color: #f4b183;
+  background-color: transparent;
+  border-bottom: 5px solid #f4b183 !important;
+}
+.modtab .tab-content {
+  padding: 20px;
+  background: #eee;
+}
+
+
+@media  (max-width: 991px) {
+.modtab .nav-tabs .nav-link {
+    padding: .7rem .2rem;
+}
+}
+
+@media  (max-width: 767px) {
+.modtab .nav-tabs {
+  flex-direction: column;
+}
+.modtab .nav-tabs .nav-link {
+  padding: .7rem 1rem;
+border-bottom: 5px solid transparent !important;
+}
+
+}
