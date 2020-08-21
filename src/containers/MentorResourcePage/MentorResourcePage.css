@@ -63,6 +63,10 @@
   font-size: 28px;
   color: #032c75;
   margin: 0 0 60px;
+
+  @media (max-width: 991px) {
+    margin: 0 0 30px;
+  }
 }
 .mrhed h3 span {
   display: block;
