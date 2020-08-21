@@ -201,7 +201,7 @@ class MenteeResourcePage extends React.Component {
                       </a>
                     </div>
                   </Tab>
-                  <Tab eventKey="anp" title="Articles and Papers">
+                  <Tab eventKey="anp" title="Useful Articles and Papers">
                     <div className={css.tabtxt}>
                       <p>
                         <span>Read:</span> Writing your Resume and want tips? Erin Greenawald
