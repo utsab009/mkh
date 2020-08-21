@@ -18,6 +18,7 @@ import {
   LayoutWrapperFooter,
   Footer,
   Modal,
+  NamedLink,
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
@@ -31,15 +32,19 @@ export class LandingPageComponent extends Component {
     welcomeModal: true,
   };
 
-  toggleWelcomeModal = () => {
+  toggleWelcomeModal = cb => {
+    console.log('modal', cb);
     this.props.onUpdateProfile({
       publicData: {
         newUser: false,
       },
     });
-    this.setState({
-      welcomeModal: false,
-    });
+    this.setState(
+      {
+        welcomeModal: false,
+      },
+      () => cb
+    );
   };
 
   render() {
@@ -54,6 +59,7 @@ export class LandingPageComponent extends Component {
       isAuthenticated,
       isNewUser,
       isMentor,
+      currentUser,
     } = this.props;
 
     // Schema for search engines (helps them to understand what this page is about)
@@ -63,7 +69,7 @@ export class LandingPageComponent extends Component {
     const schemaTitle = intl.formatMessage({ id: 'LandingPage.schemaTitle' }, { siteTitle });
     const schemaDescription = intl.formatMessage({ id: 'LandingPage.schemaDescription' });
     const schemaImage = `${config.canonicalRootURL}${facebookImage}`;
-    console.log('7777 newUser', isNewUser);
+    console.log('7777 newUser', currentUser);
     return (
       <Page
         className={css.root}
@@ -92,15 +98,32 @@ export class LandingPageComponent extends Component {
               <Modal
                 id="LandingPage.welcomeModalMenor"
                 isOpen={this.state.welcomeModal}
-                onClose={this.toggleWelcomeModal}
+                onClose={() => this.toggleWelcomeModal()}
                 onManageDisableScrolling={onManageDisableScrolling}
                 // containerClassName={css.modalContainer}
               >
-                <div>Name, this is now time to decide which job roles you can mentor.</div>
+                <div className={css.modalHeader}>
+                  {currentUser.attributes.profile.displayName}, this is now time to decide which job
+                  roles you can mentor.
+                </div>
                 <div className={css.welcomeModal}>
-                  <p>To capture these just click, Role I an Mentor to create a Role Profile</p>
+                  <p>
+                    To capture these just click,{' '}
+                    <span
+                      className={css.internalLink}
+                      onClick={() => {
+                        this.toggleWelcomeModal(history.push('/l/new'));
+                      }}
+                    >
+                      Role I can Mentor
+                    </span>{' '}
+                    to create a Role Profile
+                  </p>
                   <p>Create new Role Profiles for each Job Role you can mentor.</p>
-                  <p>If you would like to watch a video explaining how to do this, click here</p>
+                  <p>
+                    If you would like to watch a video explaining how to do this,{' '}
+                    <a href="#">click here</a>
+                  </p>
                 </div>
               </Modal>
             ) : null}
@@ -198,13 +221,14 @@ LandingPageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { currentUserListing, currentUserListingFetched } = state.user;
+  const { currentUserListing, currentUserListingFetched, currentUser } = state.user;
   const { isAuthenticated } = state.Auth;
   return {
     scrollingDisabled: isScrollingDisabled(state),
     currentUserListing,
     currentUserListingFetched,
     isAuthenticated,
+    currentUser,
     isNewUser:
       state.user.currentUser && state.user.currentUser.attributes.profile.publicData.newUser,
     isMentor:

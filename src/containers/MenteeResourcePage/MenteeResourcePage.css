@@ -1,8 +1,80 @@
 @import '../../marketplace.css';
-
-.root {
+/* .root {
   padding: 24px;
-
-  /* Use CSS variable imported from marketplace.css */
   background-color: var(--marketplaceColor);
+} */
+
+.contentContainer{
+  max-width: 1128px;
+  padding: 0 36px;
+  margin: 50px auto 100px;
+  width: 100%;
+  @media (max-width: 575px) {
+    padding: 0 15px;
+  }
 }
+
+.tabtxt{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 575px) {
+    flex-direction: column;
+    align-items: start;
+    margin: 0 0 20px;
+  }
+}
+.tabtxt p,
+.etctxt {
+  font-size: 14px;
+  color: #032c75;
+  line-height: 16px;
+  padding: 0 20px 0 0;
+
+  @media (max-width: 575px) {
+    padding: 0;
+  }
+}
+.tabtxt p span{
+  color: #f4b183;
+}
+.watcgbttn {
+  font-size: 14px;
+  border: 1px solid #4472c4;
+  padding: 5px 15px;
+  border-radius: 3px;
+  color: #4472c4;
+  min-width: 80px;
+  text-align: center;
+
+  &:hover{
+    text-decoration: none;
+  }
+}
+.etctxt{
+  margin: 8px 0 0;
+  padding: 0;
+}
+
+.mrhed h3 {
+  text-align: center;
+  font-size: 28px;
+  color: #032c75;
+  margin: 0 0 60px;
+}
+.mrhed h3 span{
+  display: block;
+  font-size: 14px;
+  font-weight: normal;
+  margin: 5px 0 auto;
+}
+.tbletctxt{
+  margin: 0 0 30px;
+  text-align: center;
+  padding: 0;
+}
+.tbletctxt a{
+color: #4472c4
+} 
