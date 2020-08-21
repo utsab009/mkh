@@ -19,7 +19,7 @@ import {
 import { TopbarSearchForm } from '../../forms';
 
 import css from './TopbarDesktop.css';
-import { is } from 'date-fns/locale';
+// import { is } from 'date-fns/locale';
 
 const TopbarDesktop = props => {
   const {

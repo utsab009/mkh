@@ -67,72 +67,72 @@ export class SearchPageComponent extends Component {
 
     let jobRolesConfig = [];
 
-    config.custom.sectors.map(sector => {
-      switch (sector.key) {
-        case 'Accountancy and Financial Management':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.Accountancyandfinancialmanagement];
-        case 'Civil and structural engineering':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.Civilandstructuralengineering];
-        case 'Public Service':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.PublicServices];
-        case 'Accounting':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.Accounting];
-        case 'Administration and Office Support':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.AdministrationAndOfficeSupport];
-        case 'Advertising Arts and Media':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.AdvertisingArtsAndMedia];
-        case 'Banking and Financial Services':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.BankingAndFinancialServices];
-        case 'Call Center and Customer Service':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.CallCenterAndCustomerService];
-        case 'Community Services and Development':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.CommunityServicesAndDevelopment];
-        case 'Construction':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.Construction];
-        case 'Consulting and Strategy':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.ConsultingAndStrategy];
-        case 'Design and Architecture':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.DesignAndArchitecture];
-        case 'Education and Training':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.EducationAndTraining];
-        case 'Engineering':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.Engineering];
-        case 'Executive':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.Executive];
-        case 'Farming Animals and Conservation':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.FarmingAnimalsAndConservation];
-        case 'Healthcare and Medical':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.HealthcareAndMedical];
-        case 'Hospitality and Tourism':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.HospitalityAndTourism];
-        case 'Human Resources and Recruitment':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.HumanResourcesAndRecruitment];
-        case 'Information Technology':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.InformationTechnology];
-        case 'Insurance':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.Insurance];
-        case 'Legal':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.Legal];
-        case 'Manufacturing Transport and Logistics':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.ManufacturingTransportAndLogistics];
-        case 'Marketing and Communications':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.MarketingAndCommunications];
-        case 'Real Estate and Property':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.RealEstateAndProperty];
-        case 'Retail and Consumer Products':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.RetailAndConsumerProducts];
-        case 'Sales':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.Sales];
-        case 'Science and Technology':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.ScienceAndTechnology];
-        case 'Sports and Recreation':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.SportsAndRecreation];
-        case 'Trades and Services':
-          jobRolesConfig = [...jobRolesConfig, ...config.custom.TradesAndServices];
-      }
-    });
+    // config.custom.sectors.map(sector => {
+    //   switch (sector.key) {
+    //     case 'Accountancy and Financial Management':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.Accountancyandfinancialmanagement];
+    //     case 'Civil and structural engineering':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.Civilandstructuralengineering];
+    //     case 'Public Service':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.PublicServices];
+    //     case 'Accounting':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.Accounting];
+    //     case 'Administration and Office Support':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.AdministrationAndOfficeSupport];
+    //     case 'Advertising Arts and Media':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.AdvertisingArtsAndMedia];
+    //     case 'Banking and Financial Services':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.BankingAndFinancialServices];
+    //     case 'Call Center and Customer Service':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.CallCenterAndCustomerService];
+    //     case 'Community Services and Development':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.CommunityServicesAndDevelopment];
+    //     case 'Construction':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.Construction];
+    //     case 'Consulting and Strategy':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.ConsultingAndStrategy];
+    //     case 'Design and Architecture':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.DesignAndArchitecture];
+    //     case 'Education and Training':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.EducationAndTraining];
+    //     case 'Engineering':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.Engineering];
+    //     case 'Executive':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.Executive];
+    //     case 'Farming Animals and Conservation':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.FarmingAnimalsAndConservation];
+    //     case 'Healthcare and Medical':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.HealthcareAndMedical];
+    //     case 'Hospitality and Tourism':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.HospitalityAndTourism];
+    //     case 'Human Resources and Recruitment':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.HumanResourcesAndRecruitment];
+    //     case 'Information Technology':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.InformationTechnology];
+    //     case 'Insurance':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.Insurance];
+    //     case 'Legal':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.Legal];
+    //     case 'Manufacturing Transport and Logistics':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.ManufacturingTransportAndLogistics];
+    //     case 'Marketing and Communications':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.MarketingAndCommunications];
+    //     case 'Real Estate and Property':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.RealEstateAndProperty];
+    //     case 'Retail and Consumer Products':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.RetailAndConsumerProducts];
+    //     case 'Sales':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.Sales];
+    //     case 'Science and Technology':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.ScienceAndTechnology];
+    //     case 'Sports and Recreation':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.SportsAndRecreation];
+    //     case 'Trades and Services':
+    //       jobRolesConfig = [...jobRolesConfig, ...config.custom.TradesAndServices];
+    //   }
+    // });
 
-    jobRolesConfig = new Set(jobRolesConfig).filter(x => !x.hideFromFilters);
+    // jobRolesConfig = new Set(jobRolesConfig).filter(x => !x.hideFromFilters);
 
     console.log('jobRolesConfig: ', jobRolesConfig);
 
