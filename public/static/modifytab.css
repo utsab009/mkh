@@ -53,7 +53,9 @@ border-bottom: 5px solid transparent !important;
 
 @media  (max-width: 575px) {
   .modtab .nav-tabs .nav-link {
-    flex: 0 0 75%;
+    flex: 0 0 51%;
+    text-align: left;
+    line-height: 15px;
   }
 
 }
