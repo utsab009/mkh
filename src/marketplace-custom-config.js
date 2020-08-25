@@ -211,7 +211,7 @@ export const Civilandstructuralengineering = [
 
 export const PublicServices = [
   { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
-  { key: 'Generalist', label: 'Generalist roles (grade focus/public sector)' },
+  { key: 'Generalist', label: 'Generalist (Public Sector)' },
   { key: 'Academic librarian', label: 'Academic Librarian' },
   { key: 'Advice worker', label: 'Advice Worker' },
   { key: 'Aid workerhumanitarian worker', label: 'Aid Worker/Humanitarian Worker' },
