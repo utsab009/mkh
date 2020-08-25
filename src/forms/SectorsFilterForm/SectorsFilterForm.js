@@ -284,9 +284,10 @@ export class SectorsFilterFormComponent extends Component {
                 ))}
               </FieldSelect> */}
               {/* ) : null} */}
-              <p>
+
+              <p className={css.smallText}>
                 If your job role is not appearing,
-                <InlineTextButton
+                <span
                   className={css.btnModSl}
                   onClick={e => {
                     e.preventDefault();
@@ -294,7 +295,7 @@ export class SectorsFilterFormComponent extends Component {
                   }}
                 >
                   &nbsp;click here &nbsp;
-                </InlineTextButton>
+                </span>
                 and tell us so we can include it for you.
               </p>
               {this.state.isMailSectorModalOpen ? (
@@ -443,7 +444,7 @@ export class SectorsFilterFormComponent extends Component {
               </Button>
               <span className={css.normalText}>
                 IF YOU ARE IN THE PUBLIC SECTOR AND WANT GRADE BASED RATHER THAN ROLE BASED
-                MENTORING, PLEASE PLACE “GENERALIST ROLES (GRADE FOCUS/PUBLIC SECTOR)” ABOVE
+                MENTORING, PLEASE PLACE “GENERALIST (PUBLIC SECTOR)” ABOVE
               </span>
             </Form>
           );

@@ -389,29 +389,33 @@ class SearchFiltersComponent extends Component {
       let errors = Object.keys(urlQueryParams);
       let error = [];
 
-      if (errors.includes('pub_subsectors')) {
+      if (errors.includes('pub_subsectors') && errors.length === 1) {
         error.push(
           'Sorry, as yet we don’t have mentors for this role but check back. We will! Maybe you could be one in the future?'
         );
-      }
-      if (errors.includes('pub_sectors')) {
+      } else {
         error.push(
-          'Sorry, as yet we don’t have mentors for this role in this specific Sector but check back. We will! Maybe you could be one in the future?'
+          'Sorry, as yet we don’t have mentors under this criteria but check back. We will! Maybe you could be one in the future?'
         );
       }
-      if (errors.includes('pub_jobroles')) {
-        error.push(
-          'Sorry, as yet we don’t have mentors for this role at this specific level but check back. We will! Maybe you could check a different level for now?'
-        );
-      }
-      if (errors.includes('pub_mentorLanguage')) {
-        error.push(
-          'Sorry, as yet we don’t have a mentor for this role who speaks your requested language/s. Please try another language that would be suitable'
-        );
-      }
-      if (errors.includes('price')) {
-        error.push('I am sorry there is no Mentors for this role in the price range you picked');
-      }
+      // if (errors.includes('pub_sectors')) {
+      //   error.push(
+      //     'Sorry, as yet we don’t have mentors for this role in this specific Sector but check back. We will! Maybe you could be one in the future?'
+      //   );
+      // }
+      // if (errors.includes('pub_jobroles')) {
+      //   error.push(
+      //     'Sorry, as yet we don’t have mentors for this role at this specific level but check back. We will! Maybe you could check a different level for now?'
+      //   );
+      // }
+      // if (errors.includes('pub_mentorLanguage')) {
+      //   error.push(
+      //     'Sorry, as yet we don’t have a mentor for this role who speaks your requested language/s. Please try another language that would be suitable'
+      //   );
+      // }
+      // if (errors.includes('price')) {
+      //   error.push('I am sorry there is no Mentors for this role in the price range you picked');
+      // }
 
       return error;
     };

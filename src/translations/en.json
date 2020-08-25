@@ -867,7 +867,7 @@
   "SectionLocations.listingsInLocation": "Yogis in {location}",
   "SectionLocations.title": "Find mentors in your city",
   "SectorsFilterForm.sectorLabel": "Do you hope to do this Job in a Specific Sector ?",
-  "SectorsFilterForm.subSectorLabel": "What is the Job Role you are focusing on?",
+  "SectorsFilterForm.subSectorLabel": "What Job Role would you like Mentoring on?",
   "SectorsFilterForm.jobRoleLabel": "Is the Job at a Specific Organisational Level ?",
   "SectorsFilterForm.buttonText": "Submit",
   "SelectMultipleFilter.labelSelected": "{labelText} • {count}",
