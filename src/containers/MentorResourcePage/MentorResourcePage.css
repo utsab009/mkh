@@ -42,10 +42,10 @@
 }
 .watcgbttn {
   font-size: 14px;
-  border: 1px solid #4472c4;
+  border: 1px solid #2a364c;
   padding: 5px 15px;
   border-radius: 3px;
-  color: #4472c4;
+  color: #2a364c;
   min-width: 80px;
   text-align: center;
 
@@ -80,7 +80,7 @@
   padding: 0;
 }
 .tbletctxt a {
-  color: #4472c4;
+  color: #2a364c;
 }
 .link {
   color: #032c75;

@@ -93,3 +93,12 @@
 .updateModalcol {
   padding-top: 50px;
 }
+
+.normalText {
+  font-size: 20px;
+  line-height: 32px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  font-family: 'sofiapro', Helvetica, Arial, sans-serif;
+  font-weight: 500;
+}

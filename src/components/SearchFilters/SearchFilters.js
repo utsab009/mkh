@@ -268,19 +268,20 @@ class SearchFiltersComponent extends Component {
     //   />
     // ) : null;
 
-    const sectorsFilterElement = sectorsFilter ? (
-      <SelectMultipleFilter
-        id={'SearchFilters.sectors'}
-        name="sectors"
-        urlParam={sectorsFilter.paramName}
-        label={sectorsLabel}
-        onSubmit={handleSelectOptions}
-        showAsPopup
-        options={sectorsFilter.options}
-        initialValues={initialsectors}
-        contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-      />
-    ) : null;
+    const sectorsFilterElement =
+      sectorsFilter && this.state.subsectors !== 'Generalist' ? (
+        <SelectMultipleFilter
+          id={'SearchFilters.sectors'}
+          name="sectors"
+          urlParam={sectorsFilter.paramName}
+          label={sectorsLabel}
+          onSubmit={handleSelectOptions}
+          showAsPopup
+          options={sectorsFilter.options}
+          initialValues={initialsectors}
+          contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+        />
+      ) : null;
 
     const levelFilterElement = levelFilter ? (
       <SelectMultipleFilter

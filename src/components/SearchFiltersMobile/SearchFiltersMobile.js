@@ -234,20 +234,21 @@ class SearchFiltersMobileComponent extends Component {
 
     const initialsectors = sectorsFilter ? this.initialValues(sectorsFilter.paramName) : null;
 
-    const sectorsFilterElement = sectorsFilter ? (
-      <SelectMultipleFilter
-        id={'SearchFilters.sectorsFilter'}
-        name="sector"
-        urlParam={sectorsFilter.paramName}
-        label={sectorsLabel}
-        onSubmit={this.handleSelectMultiple}
-        // liveEdit
-        showAsPopup
-        options={sectorsFilter.options}
-        initialValues={initialsectors}
-        intl={intl}
-      />
-    ) : null;
+    const sectorsFilterElement =
+      sectorsFilter && this.state.subsectors !== 'Generalist' ? (
+        <SelectMultipleFilter
+          id={'SearchFilters.sectorsFilter'}
+          name="sector"
+          urlParam={sectorsFilter.paramName}
+          label={sectorsLabel}
+          onSubmit={this.handleSelectMultiple}
+          // liveEdit
+          showAsPopup
+          options={sectorsFilter.options}
+          initialValues={initialsectors}
+          intl={intl}
+        />
+      ) : null;
 
     const initialLevel = levelFilter ? this.initialValues(levelFilter.paramName) : null;
 

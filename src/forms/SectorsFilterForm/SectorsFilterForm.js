@@ -255,7 +255,6 @@ export class SectorsFilterFormComponent extends Component {
                   </option>
                 ))}
               </FieldSelect> */}
-
               {/* {this.state.subSectors.length > 0 ? ( */}
               {/* <FieldSelect
                 className={css.features}
@@ -285,7 +284,6 @@ export class SectorsFilterFormComponent extends Component {
                 ))}
               </FieldSelect> */}
               {/* ) : null} */}
-
               <p>
                 If your job role is not appearing,
                 <InlineTextButton
@@ -299,7 +297,6 @@ export class SectorsFilterFormComponent extends Component {
                 </InlineTextButton>
                 and tell us so we can include it for you.
               </p>
-
               {this.state.isMailSectorModalOpen ? (
                 <Modal
                   id="EditAvailabilityPlan"
@@ -403,7 +400,6 @@ export class SectorsFilterFormComponent extends Component {
                   />
                 </Modal>
               ) : null}
-
               {this.state.jobRolesConfig.length ? (
                 <div>
                   <div className={css.modlabel}>{subSectorLabel}</div>
@@ -422,7 +418,6 @@ export class SectorsFilterFormComponent extends Component {
                   />
                 </div>
               ) : null}
-
               {/* {this.state.jobRoles.length > 0 ? (
                 <FieldSelect className={css.features} name={'jobroles'} id={2} label={jobRoleLabel}>
                   {this.state.jobRoles.map(m => (
@@ -437,7 +432,6 @@ export class SectorsFilterFormComponent extends Component {
                   ))}
                 </FieldSelect>
               ) : null} */}
-
               <Button
                 // className={css.submitButton}
                 type="submit"
@@ -447,6 +441,10 @@ export class SectorsFilterFormComponent extends Component {
               >
                 {buttonText}
               </Button>
+              <span className={css.normalText}>
+                IF YOU ARE IN THE PUBLIC SECTOR AND WANT GRADE BASED RATHER THAN ROLE BASED
+                MENTORING, PLEASE PLACE “GENERALIST ROLES (GRADE FOCUS/PUBLIC SECTOR)” ABOVE
+              </span>
             </Form>
           );
         }}
