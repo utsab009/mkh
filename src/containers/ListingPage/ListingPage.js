@@ -579,7 +579,11 @@ export class ListingPageComponent extends Component {
                       Linked-in Link
                     </a> */}
                     {!linkedinLink ? (
-                      <span onClick={() => this.setState({ showNoLinkError: true })}>
+                      <span
+                        onClick={() =>
+                          this.setState({ showNoLinkError: true, showNoVideoError: false })
+                        }
+                      >
                         <ExternalLink
                           href={linkedinLink}
                           target="_blank"
@@ -656,7 +660,11 @@ export class ListingPageComponent extends Component {
                   </span>
                   <span>
                     {!youtubeLink ? (
-                      <span onClick={() => this.setState({ showNoVideoError: true })}>
+                      <span
+                        onClick={() =>
+                          this.setState({ showNoVideoError: true, showNoLinkError: false })
+                        }
+                      >
                         <a
                           href={youtubeLink}
                           target="_blank"
