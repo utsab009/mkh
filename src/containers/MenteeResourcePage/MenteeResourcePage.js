@@ -177,7 +177,7 @@ class MenteeResourcePage extends React.Component {
                 <Tabs defaultActiveKey="gsm" id="uncontrolled-tab-example">
                   <Tab eventKey="gsm" title="Getting Started as a Mentee ">
                     <div className={css.tabtxt}>
-                      <p>Content Coming soon.</p>
+                      <p>Stories to come</p>
                     </div>
                   </Tab>
                   <Tab eventKey="htt" title="How To / Training">

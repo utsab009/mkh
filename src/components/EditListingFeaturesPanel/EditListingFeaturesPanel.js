@@ -167,15 +167,20 @@ const EditListingFeaturesPanel = props => {
   const panelTitle = <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />;
 
   // const yogaStyles = publicData && publicData.yogaStyles;
-  const sectors = publicData && publicData.sectors;
-  const subsectors = publicData && publicData.subsectors;
-  const jobroles = publicData && publicData.jobroles;
-  const initialValues = { sectors, jobroles };
-
+  let sectors = publicData && publicData.sectors;
+  // const subsectors = publicData && publicData.subsectors;
   const sectorGroupData = config.custom.sectors.filter(
     item => item.key !== 'none' && item.key !== 'Public Service'
   );
+  const staticSectorLength = sectorGroupData.filter(item => item.key !== 'All');
+  sectors && sectors.length === staticSectorLength.length && sectors.push('All');
+
   const roleGroupData = config.custom.nonPublicRoles.filter(item => item.key !== 'none');
+  const staticJobRoleLength = roleGroupData.filter(item => item.key !== 'All');
+  let jobroles = publicData && publicData.jobroles;
+  // console.log('fetched role', jobroles);
+  jobroles && jobroles.length === staticJobRoleLength.length && jobroles.push('All');
+  const initialValues = { sectors, jobroles };
 
   return (
     <main className={classes} ref={setPortalRootAfterInitialRender}>
@@ -193,9 +198,11 @@ const EditListingFeaturesPanel = props => {
         initialValues={initialValues}
         onSubmit={values => {
           // const { yogaStyles = [] } = values;
-          const { sectors = [], jobroles = [] } = values;
+          let { sectors = [], jobroles = [] } = values;
           console.log('test: ', values);
-
+          jobroles = jobroles.filter(item => item !== 'All');
+          sectors = sectors.filter(item => item !== 'All');
+          console.log('1212', sectors);
           const updatedValues = {
             publicData: { sectors, jobroles },
           };

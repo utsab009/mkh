@@ -226,12 +226,12 @@ class MentorResourcePage extends React.Component {
                   </Tab>
                   <Tab eventKey="as" title="Mentor Stories">
                     <div className={css.tabtxt}>
-                      <p>Content Coming soon.</p>
+                      <p>Stories to come</p>
                     </div>
                   </Tab>
                   <Tab eventKey="bs" title="Blog & Social">
                     <div className={css.tabtxt}>
-                      <p>Content Coming soon.</p>
+                      <p>Stories to come</p>
                     </div>
                   </Tab>
                   {/* <Tab eventKey="all" title="All">

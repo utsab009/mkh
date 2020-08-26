@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bool, func, shape, string } from 'prop-types';
 import { compose } from 'redux';
 import classNames from 'classnames';
-import { Form as FinalForm } from 'react-final-form';
+import { Form as FinalForm, FormSpy } from 'react-final-form';
 import { intlShape, injectIntl } from '../../util/reactIntl';
 import arrayMutators from 'final-form-arrays';
 import { FormattedMessage } from '../../util/reactIntl';
@@ -18,6 +18,7 @@ import {
   Modal,
   PrimaryButton,
   FieldTextInput,
+  FieldCheckbox,
 } from '../../components';
 import Axios from 'axios';
 import css from './EditListingFeaturesForm.css';
@@ -33,96 +34,7 @@ export class EditListingFeaturesFormComponent extends Component {
       jobRoles: [],
       isSendMsgModalOpen: false,
     };
-
-    this.handleChange = this.handleChange.bind(this);
   }
-
-  componentDidMount() {
-    if (this.props.initialValues && this.props.initialValues.sectors) {
-      this.handleChange(this.props.initialValues.sectors);
-    }
-  }
-
-  handleChange = values => {
-    // const subSectors = values.split(' ').join('');
-
-    if (values == 'Public Service') {
-      this.setState({ jobRoles: config.custom.publicRoles });
-    } else if (values == 'none') {
-      this.setState({ jobRoles: [] });
-    } else {
-      this.setState({ jobRoles: config.custom.nonPublicRoles });
-    }
-    // const subSectors = config.custom.Civilandstructuralengineering;
-    // this.setState({subSectors : subSectors})
-    // console.log("subsector using scope",$[subSectors]);
-    switch (values) {
-      case 'Accountancy and Financial Management':
-        return this.setState({ subSectors: config.custom.Accountancyandfinancialmanagement });
-      case 'Civil and structural engineering':
-        return this.setState({ subSectors: config.custom.Civilandstructuralengineering });
-      case 'Public Service':
-        return this.setState({ subSectors: config.custom.PublicServices });
-      case 'none':
-        return this.setState({ subSectors: [] });
-      case 'Accounting':
-        return this.setState({ subSectors: config.custom.Accounting });
-      case 'Administration and Office Support':
-        return this.setState({ subSectors: config.custom.AdministrationAndOfficeSupport });
-      case 'Advertising Arts and Media':
-        return this.setState({ subSectors: config.custom.AdvertisingArtsAndMedia });
-      case 'Banking and Financial Services':
-        return this.setState({ subSectors: config.custom.BankingAndFinancialServices });
-      case 'Call Center and Customer Service':
-        return this.setState({ subSectors: config.custom.CallCenterAndCustomerService });
-      case 'Community Services and Development':
-        return this.setState({ subSectors: config.custom.CommunityServicesAndDevelopment });
-      case 'Construction':
-        return this.setState({ subSectors: config.custom.Construction });
-      case 'Consulting and Strategy':
-        return this.setState({ subSectors: config.custom.ConsultingAndStrategy });
-      case 'Design and Architecture':
-        return this.setState({ subSectors: config.custom.DesignAndArchitecture });
-      case 'Education and Training':
-        return this.setState({ subSectors: config.custom.EducationAndTraining });
-      case 'Engineering':
-        return this.setState({ subSectors: config.custom.Engineering });
-      case 'Executive':
-        return this.setState({ subSectors: config.custom.Executive });
-      case 'Farming Animals and Conservation':
-        return this.setState({ subSectors: config.custom.FarmingAnimalsAndConservation });
-      case 'Healthcare and Medical':
-        return this.setState({ subSectors: config.custom.HealthcareAndMedical });
-      case 'Hospitality and Tourism':
-        return this.setState({ subSectors: config.custom.HospitalityAndTourism });
-      case 'Human Resources and Recruitment':
-        return this.setState({ subSectors: config.custom.HumanResourcesAndRecruitment });
-      case 'Information Technology':
-        return this.setState({ subSectors: config.custom.InformationTechnology });
-      case 'Insurance':
-        return this.setState({ subSectors: config.custom.Insurance });
-      case 'Legal':
-        return this.setState({ subSectors: config.custom.Legal });
-      case 'Manufacturing Transport and Logistics':
-        return this.setState({ subSectors: config.custom.ManufacturingTransportAndLogistics });
-      case 'Marketing and Communications':
-        return this.setState({ subSectors: config.custom.MarketingAndCommunications });
-      case 'Real Estate and Property':
-        return this.setState({ subSectors: config.custom.RealEstateAndProperty });
-      case 'Retail and Consumer Products':
-        return this.setState({ subSectors: config.custom.RetailAndConsumerProducts });
-      case 'Sales':
-        return this.setState({ subSectors: config.custom.Sales });
-      case 'Science and Technology':
-        return this.setState({ subSectors: config.custom.ScienceAndTechnology });
-      case 'Sports and Recreation':
-        return this.setState({ subSectors: config.custom.SportsAndRecreation });
-      case 'Trades and Services':
-        return this.setState({ subSectors: config.custom.TradesAndServices });
-      case Default:
-        return this.setState({ subSectors: config.custom.Accountancyandfinancialmanagement });
-    }
-  };
 
   render() {
     // const submit = (onSubmit) => values => {
@@ -161,8 +73,21 @@ export class EditListingFeaturesFormComponent extends Component {
             sectorGroup,
             roleGroup,
             onManageDisableScrolling,
+            values,
+            form,
           } = formRenderProps;
-          console.log('1111', onManageDisableScrolling);
+          console.log('8888', values);
+
+          // if (values.jobroles && values.jobroles.includes('All')) {
+          //   // values.jobroles = [
+          //   //   ...values.jobroles,
+          //   //   ...roleGroup.map(x => !x.hide && x.key).filter(x => x),
+          //   // ];
+          //   values.jobroles = roleGroup.map(item => item.key);
+          // } else if (values.jobroles && roleGroup.length - values.jobroles.length <= 1) {
+          //   values.jobroles = roleGroup.map(item => item.key);
+          // }
+
           const classes = classNames(rootClassName || css.root, className);
           const submitReady = (updated && pristine) || ready;
           const submitInProgress = updateInProgress;
@@ -200,33 +125,44 @@ export class EditListingFeaturesFormComponent extends Component {
               {errorMessage}
               {errorMessageShowListing}
 
-              {/*<FieldCheckboxGroup
-                className={css.features}
-                id={name}
-                name={name}
-                options={config.custom.yogaStyles}
-              />*/}
-
-              {/* <FieldSelect
-                className={css.features}
-                onChange={this.handleChange}
-                name={'sectors'}
-                id={2}
-                label={sectorLabel}
-              >
-                {sectors.map(m => (
-                  <option key={m.key} value={m.key}>
-                    {m.label}
-                  </option>
-                ))}
-              </FieldSelect> */}
               <FieldCheckboxGroup
                 label={sectorLabel}
                 className={css.profileTypes}
                 id="sectors"
                 name="sectors"
                 options={sectorGroup}
-                // validate={required('Please add ')}
+                onChange={e => {
+                  let selectedValue = e.target.value;
+                  let isAllSelected = selectedValue === 'All';
+                  let changeValues = [];
+                  if (!isAllSelected) {
+                    if (
+                      values.sectors &&
+                      values.sectors.length &&
+                      values.sectors.includes(selectedValue)
+                    ) {
+                      changeValues = values.sectors.filter(
+                        item => item !== selectedValue && item !== 'All'
+                      );
+                    } else {
+                      changeValues = values.sectors
+                        ? [...values.sectors, selectedValue]
+                        : [selectedValue];
+                      changeValues.length === sectorGroup.length - 1 && changeValues.push('All');
+                    }
+                  } else {
+                    if (values.sectors && values.sectors.length && values.sectors.includes('All')) {
+                      changeValues = [];
+                    } else {
+                      changeValues = sectorGroup
+                        .filter(item => item !== 'All')
+                        .map(item => item.key);
+                    }
+                  }
+
+                  console.log('9999', selectedValue, values, changeValues);
+                  form.change('sectors', changeValues);
+                }}
               />
               <p className={css.smallTextIns}>
                 My sector and or job is not listed, click
@@ -375,9 +311,61 @@ export class EditListingFeaturesFormComponent extends Component {
                 id="jobroles"
                 name="jobroles"
                 options={roleGroup}
+                onChange={e => {
+                  let selectedValue = e.target.value;
+                  let isAllSelected = selectedValue === 'All';
+                  let changeValues = [];
+                  if (!isAllSelected) {
+                    if (
+                      values.jobroles &&
+                      values.jobroles.length &&
+                      values.jobroles.includes(selectedValue)
+                    ) {
+                      changeValues = values.jobroles.filter(
+                        item => item !== selectedValue && item !== 'All'
+                      );
+                    } else {
+                      changeValues = values.jobroles
+                        ? [...values.jobroles, selectedValue]
+                        : [selectedValue];
+                      changeValues.length === roleGroup.length - 1 && changeValues.push('All');
+                    }
+                  } else {
+                    if (
+                      values.jobroles &&
+                      values.jobroles.length &&
+                      values.jobroles.includes('All')
+                    ) {
+                      changeValues = [];
+                    } else {
+                      changeValues = roleGroup.filter(item => item !== 'All').map(item => item.key);
+                    }
+                  }
+
+                  console.log('9999', selectedValue, values, changeValues);
+                  form.change('jobroles', changeValues);
+                }}
                 // validate={required('Please add ')}
               />
-
+              {/* <FormSpy
+                onChange={item => {
+                  console.log('5555', item);
+                }}
+              />
+              {roleGroup.length &&
+                roleGroup.map(item => {
+                  return (
+                    <FieldCheckbox
+                      id={item.key}
+                      name="jobroles"
+                      value={item.key}
+                      label={item.label}
+                      // onSelect={item => {
+                      //   console.log('item in', item);
+                      // }}
+                    />
+                  );
+                })} */}
               <div className={css.ffsec}>
                 <p>
                   Remember, for each job / role you will need to create a new Role Profile for each

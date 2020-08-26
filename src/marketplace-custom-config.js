@@ -22,6 +22,7 @@ export const certificate = [
 ];
 
 export const sectors = [
+  { key: 'All', label: 'All', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   {
     key: 'Accountancy and Financial Management',
@@ -395,6 +396,7 @@ export const PublicServices = [
 ];
 
 export const nonPublicRoles = [
+  { key: 'All', label: 'All', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'none', label: 'None', hideFromFilters: true, hideFromListingInfo: true },
   { key: 'Operational Level', label: 'Operational Level' },
   { key: 'Front Line Management', label: 'Front Line Management' },
