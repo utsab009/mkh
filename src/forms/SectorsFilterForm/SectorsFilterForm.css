@@ -8,6 +8,8 @@
   @media (--viewportMedium) {
     justify-content: space-between;
   }
+
+  margin-top: 20px;
 }
 
 .name {
@@ -72,10 +74,10 @@
 .modlabel {
   font-weight: 400;
   margin-top: 0;
-  margin-bottom: 0;
+  margin-bottom: 10px;
   padding-top: 6px;
   padding-bottom: 2px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   line-height: 24px;
 }
 
@@ -92,6 +94,7 @@
 .smallText {
   font-size: 12px;
   line-height: 1.2;
+  margin-bottom: 20px;
 }
 .updateModalcol {
   padding-top: 50px;
@@ -104,4 +107,7 @@
   margin-bottom: 16px;
   font-family: 'sofiapro', Helvetica, Arial, sans-serif;
   font-weight: 500;
+}
+.submitButton {
+  margin: 10px 0;
 }

@@ -213,6 +213,7 @@ export class SectorsFilterFormComponent extends Component {
             onOpenTermsOfService,
             form,
             onManageDisableScrolling,
+            values,
           } = fieldRenderProps;
 
           const classes = classNames(rootClassName || css.root, className);
@@ -237,54 +238,6 @@ export class SectorsFilterFormComponent extends Component {
 
           return (
             <Form className={classes} onSubmit={handleSubmit}>
-              {/* <FieldSelect
-                className={css.features}
-                onChange={this.handleChange}
-                name={'sectors'}
-                id={2}
-                label={sectorLabel}
-              >
-                {sectors.map(m => (
-                  <option
-                    key={m.key}
-                    value={!m.hideFromFilters ? m.key : ''}
-                    disabled={m.hideFromFilters}
-                    selected={m.hideFromFilters}
-                  >
-                    {m.label}
-                  </option>
-                ))}
-              </FieldSelect> */}
-              {/* {this.state.subSectors.length > 0 ? ( */}
-              {/* <FieldSelect
-                className={css.features}
-                name={'subsectors'}
-                id={2}
-                label={subSectorLabel}
-              > */}
-              {/* {this.state.subSectors.map(m => (
-                    <option
-                      key={m.key}
-                      value={!m.hideFromFilters ? m.key : ''}
-                      disabled={m.hideFromFilters}
-                      selected={m.hideFromFilters}
-                    >
-                      {m.label}
-                    </option>
-                  ))} */}
-              {/* {jobRolesConfig.map(m => (
-                  <option
-                    key={m.key}
-                    value={!m.hideFromFilters ? m.key : ''}
-                    disabled={m.hideFromFilters}
-                    selected={m.hideFromFilters}
-                  >
-                    {m.label}
-                  </option>
-                ))}
-              </FieldSelect> */}
-              {/* ) : null} */}
-
               <p className={css.smallText}>
                 If your job role is not appearing,
                 <span
@@ -404,16 +357,27 @@ export class SectorsFilterFormComponent extends Component {
               {this.state.jobRolesConfig.length ? (
                 <div>
                   <div className={css.modlabel}>{subSectorLabel}</div>
+                  {console.log(
+                    'test: ',
+                    this.state.jobRolesConfig.map(item => item.key === values.subsectors)
+                  )}
                   <Select
                     className={css.selectCss}
                     name={'subsectors'}
                     id={'subsectors'}
+                    clearable
                     options={this.state.jobRolesConfig}
-                    placeholder="Select Job Role"
-                    // values={jobRolesConfig}
+                    placeholder="Type and Select Job Role Here"
+                    sortBy="label"
+                    backspaceDelete={true}
+                    // values={
+                    //   values.subsectors
+                    //     ? this.state.jobRolesConfig.map(item => item.key === values.subsectors)
+                    //     : [{ key: 'none', label: 'none' }]
+                    // }
                     onChange={values => {
                       // console.log('values: ', values);
-                      form.change('subsectors', values[0].key);
+                      values.length && values[0].key && form.change('subsectors', values[0].key);
                       // this.onChange(values);
                     }}
                   />
@@ -434,7 +398,7 @@ export class SectorsFilterFormComponent extends Component {
                 </FieldSelect>
               ) : null} */}
               <Button
-                // className={css.submitButton}
+                className={css.submitButton}
                 type="submit"
                 // inProgress={submitInProgress}
                 // disabled={submitDisabled}

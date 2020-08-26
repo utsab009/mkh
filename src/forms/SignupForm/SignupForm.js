@@ -16,6 +16,7 @@ import {
   Button,
   FieldDateInput,
   NamedLink,
+  ExternalLink,
 } from '../../components';
 import {
   getStartHours,
@@ -322,9 +323,9 @@ export class SignupFormComponent extends Component {
                         />
                       </div>
                       <div className={css.infoMsg}>
-                        You will meet your mentee online, so we'll need a link to your skype
-                        address. If you do not have one handy, skip this now but place it in your
-                        mentor profile as soon as you can.
+                        You will meet your Mentee online, so we will need a link to you Skype
+                        account. If you do not have one handy (or do not have one at all), skip this
+                        for now but place it on your Mentor Profile as soon as you can.
                       </div>
                     </div>
                   );
@@ -561,11 +562,15 @@ export class SignupFormComponent extends Component {
                       Our mission is to build a trusted community of Mentors and Mentees who
                       ultimately make the world more effective. It is a community where anyone can
                       belong, and all are welcome. To ensure this, we are asking you to accept our{' '}
-                      <NamedLink name="TermsOfServicePage" className={css.link}>
+                      <NamedLink target="_blank" name="TermsOfServicePage" className={css.link}>
                         Terms of Service
                       </NamedLink>{' '}
                       and{' '}
-                      <NamedLink name="CommunityGuidelinesPage" className={css.link}>
+                      <NamedLink
+                        target="_blank"
+                        name="CommunityGuidelinesPage"
+                        className={css.link}
+                      >
                         Community Guidelines
                       </NamedLink>{' '}
                       as these practically ensure this is achieved.
@@ -578,26 +583,34 @@ export class SignupFormComponent extends Component {
                       This means we will treat all with respect, and without judgement or bias. By
                       signing up to Try A Mentor, you are agreeing to act in this way also. To learn
                       more, please visit our{' '}
-                      <NamedLink name="CommunityGuidelinesPage" className={css.link}>
+                      <NamedLink
+                        target="_blank"
+                        name="CommunityGuidelinesPage"
+                        className={css.link}
+                      >
                         Community Guidelines
                       </NamedLink>
                     </p>
                     <h2>Try A Mentor Terms of Service</h2>
                     <p>
                       You are also agreeing to accept Try A Mentor's{' '}
-                      <NamedLink name="TermsOfServicePage" className={css.link}>
+                      <NamedLink target="_blank" name="TermsOfServicePage" className={css.link}>
                         Terms of Service
                       </NamedLink>
                       ,{' '}
-                      <NamedLink name="FaqPage" className={css.link}>
+                      <NamedLink target="_blank" name="FaqPage" className={css.link}>
                         Payment Process
                       </NamedLink>
                       ,{' '}
-                      <NamedLink name="PrivacyPolicyPage" className={css.link}>
+                      <NamedLink target="_blank" name="PrivacyPolicyPage" className={css.link}>
                         Privacy and GDPR Policy
                       </NamedLink>{' '}
                       and our{' '}
-                      <NamedLink name="CommunityGuidelinesPage" className={css.link}>
+                      <NamedLink
+                        target="_blank"
+                        name="CommunityGuidelinesPage"
+                        className={css.link}
+                      >
                         Community Guidelines
                       </NamedLink>{' '}
                       through pressing the accept button below

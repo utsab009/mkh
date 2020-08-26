@@ -450,7 +450,9 @@ export class TransactionPanelComponent extends Component {
 
             {/* // Mobile view // */}
 
-            {moment(currentTransaction.booking.attributes.start).diff(new Date()) > 0 &&
+            {currentTransaction &&
+            currentTransaction.booking &&
+            moment(currentTransaction.booking.attributes.start).diff(new Date()) > 0 &&
             ((isCustomer && stateData.showCancel && stateData.showCancel !== false) ||
               (!isCustomer &&
                 stateData.allowProviderCancel &&
@@ -579,7 +581,9 @@ export class TransactionPanelComponent extends Component {
                 <div className={css.desktopActionButtons}>{saleButtons}</div>
               ) : null}
               {/* {isCustomer && stateData.holdPaymentPeriod && stateData.holdPaymentPeriod === true ? ( */}
-              {moment(currentTransaction.booking.attributes.start).diff(new Date()) > 0 &&
+              {currentTransaction &&
+              currentTransaction.booking &&
+              moment(currentTransaction.booking.attributes.start).diff(new Date()) > 0 &&
               ((isCustomer && stateData.showCancel && stateData.showCancel !== false) ||
                 (!isCustomer && stateData.allowProviderCancel)) ? (
                 <div
