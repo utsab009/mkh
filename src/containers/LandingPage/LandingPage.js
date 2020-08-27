@@ -103,26 +103,53 @@ export class LandingPageComponent extends Component {
                 // containerClassName={css.modalContainer}
               >
                 <div className={css.modalHeader}>
-                  {currentUser.attributes.profile.displayName}, this is now time to decide which job
-                  roles you can mentor.
+                  {currentUser.attributes.profile.displayName}, it is now time for you to decide
+                  which Job Roles you can offer Mentoring in.
                 </div>
                 <div className={css.welcomeModal}>
                   <p>
-                    To capture these just click,{' '}
+                    To capture this just click this{' '}
                     <span
                       className={css.internalLink}
                       onClick={() => {
                         this.toggleWelcomeModal(history.push('/l/new'));
                       }}
                     >
-                      Role I can Mentor
+                      link
                     </span>{' '}
-                    to create a Role Profile
+                    or on{' '}
+                    <span
+                      className={css.internalLink}
+                      onClick={() => {
+                        this.toggleWelcomeModal(history.push('/l/new'));
+                      }}
+                    >
+                      Roles I can Mentor
+                    </span>{' '}
+                    which is located on the top of each page once you have signed in.
                   </p>
-                  <p>Create new Role Profiles for each Job Role you can mentor.</p>
                   <p>
-                    If you would like to watch a video explaining how to do this,{' '}
-                    <a href="#">click here</a>
+                    Filling this in is critical. Through this prople will be able to find you and
+                    see how you can help them specifically. As your experience grows keep returning
+                    to this Role Profile to update it.
+                  </p>
+                  <p>
+                    Remember, for each Role you are capable of offering Mentoring in, you'll need to
+                    return to the{' '}
+                    <span
+                      className={css.internalLink}
+                      onClick={() => {
+                        this.toggleWelcomeModal(history.push('/l/new'));
+                      }}
+                    >
+                      Roles I can Mentor
+                    </span>{' '}
+                    section of this website and create a new Role Profile, each of which then saved
+                    in this section.
+                  </p>
+                  <p>
+                    If you would like to watch a video explaining how to do this, click{' '}
+                    <span className={css.internalLink}>here</span>
                   </p>
                 </div>
               </Modal>

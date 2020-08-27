@@ -14,11 +14,17 @@ import {
   PriceFilter,
   SelectSingleFilter,
   SelectMultipleFilter,
+  FieldTextInput,
+  Form,
+  PrimaryButton,
 } from '../../components';
 import { propTypes } from '../../util/types';
 import css from './SearchFiltersMobile.css';
 import Select from 'react-dropdown-select';
-
+import Modal from '../Modal/Modal';
+import { Form as FinalForm } from 'react-final-form';
+import Axios from 'axios';
+import arrayMutators from 'final-form-arrays';
 const RADIX = 10;
 
 class SearchFiltersMobileComponent extends Component {
@@ -41,6 +47,7 @@ class SearchFiltersMobileComponent extends Component {
       isFiltersOpenOnMobile: false,
       initialQueryParams: null,
       subsectors: this.initialValue('pub_subsectors') || null,
+      isMailSectorModalOpen: false,
     };
   }
 
@@ -180,6 +187,7 @@ class SearchFiltersMobileComponent extends Component {
       priceFilter,
       keywordFilter,
       intl,
+      urlQueryParams,
     } = this.props;
 
     const classes = classNames(rootClassName || css.root, className);
@@ -366,51 +374,53 @@ class SearchFiltersMobileComponent extends Component {
           initialValues={initialKeyword}
         />
       ) : null;
+    const hasNoResult = listingsAreLoaded && resultsCount === 0;
 
     const showRelatedSearchError = () => {
-      let errors = Object.keys(this.props.urlQueryParams);
+      let errors = Object.keys(urlQueryParams);
       let error = [];
 
-      if (errors.includes('pub_subsectors')) {
+      if (errors.includes('pub_subsectors') && errors.length === 1) {
         error.push(
           'Sorry, as yet we don’t have mentors for this role but check back. We will! Maybe you could be one in the future?'
         );
-      }
-      if (errors.includes('pub_sectors')) {
+      } else {
         error.push(
-          'Sorry, as yet we don’t have mentors for this role in this specific Sector but check back. We will! Maybe you could be one in the future?'
+          'Sorry, as yet we don’t have mentors under this criteria but check back. We will! Maybe you could be one in the future?'
         );
       }
-      if (errors.includes('pub_jobroles')) {
-        error.push(
-          'Sorry, as yet we don’t have mentors for this role at this specific level but check back. We will! Maybe you could check a different level for now?'
-        );
-      }
-      if (errors.includes('pub_mentorLanguage')) {
-        error.push(
-          'Sorry, as yet we don’t have a mentor for this role who speaks your requested language/s. Please try another language that would be suitable'
-        );
-      }
-      if (errors.includes('price')) {
-        error.push('I am sorry there is no Mentors for this role in the price range you picked');
-      }
+      // let errors = Object.keys(this.props.urlQueryParams);
+      // let error = [];
+
+      // if (errors.includes('pub_subsectors')) {
+      //   error.push(
+      //     'Sorry, as yet we don’t have mentors for this role but check back. We will! Maybe you could be one in the future?'
+      //   );
+      // }
+      // if (errors.includes('pub_sectors')) {
+      //   error.push(
+      //     'Sorry, as yet we don’t have mentors for this role in this specific Sector but check back. We will! Maybe you could be one in the future?'
+      //   );
+      // }
+      // if (errors.includes('pub_jobroles')) {
+      //   error.push(
+      //     'Sorry, as yet we don’t have mentors for this role at this specific level but check back. We will! Maybe you could check a different level for now?'
+      //   );
+      // }
+      // if (errors.includes('pub_mentorLanguage')) {
+      //   error.push(
+      //     'Sorry, as yet we don’t have a mentor for this role who speaks your requested language/s. Please try another language that would be suitable'
+      //   );
+      // }
+      // if (errors.includes('price')) {
+      //   error.push('I am sorry there is no Mentors for this role in the price range you picked');
+      // }
 
       return error;
     };
 
     return (
       <div className={classes}>
-        <div className={css.searchResultSummary}>
-          {listingsAreLoaded && resultsCount > 0 ? resultsFound : null}
-          {listingsAreLoaded && resultsCount === 0
-            ? showRelatedSearchError().map((item, i) => (
-                <div className={css.noSearchResults} key={i}>
-                  {item}
-                </div>
-              ))
-            : null}
-          {searchInProgress ? loadingResults : null}
-        </div>
         <div className={css.buttons}>
           <Button rootClassName={filtersButtonClasses} onClick={this.openFilters}>
             <FormattedMessage id="SearchFilters.filtersButtonLabel" className={css.mapIconText} />
@@ -419,6 +429,136 @@ class SearchFiltersMobileComponent extends Component {
             <FormattedMessage id="SearchFilters.openMapView" className={css.mapIconText} />
           </div> */}
         </div>
+        <div className={css.searchResultSummary}>
+          {hasNoResult && urlQueryParams.pub_sectors && (
+            <p className={css.smallText}>
+              If your sector is not listed,{' '}
+              <span
+                className={css.btnModSl}
+                onClick={e => {
+                  e.preventDefault();
+                  this.setState({ isMailSectorModalOpen: true });
+                }}
+              >
+                click here
+              </span>{' '}
+              and tell us so we can include it for you.
+            </p>
+          )}
+          {this.state.isMailSectorModalOpen ? (
+            <Modal
+              id="SearchFilters"
+              isOpen={this.state.isMailSectorModalOpen}
+              onClose={() => this.setState({ isMailSectorModalOpen: false })}
+              onManageDisableScrolling={() => {}}
+              // containerClassName={css.modalContainer}
+              className={css.updateModalcol}
+            >
+              <FinalForm
+                // {...restOfprops}
+                onSubmit={test => {
+                  console.log('test values: ', test);
+                }}
+                mutators={{
+                  ...arrayMutators,
+                }}
+                render={fieldRenderProps => {
+                  const { hSubmit, values } = fieldRenderProps;
+
+                  const classes = classNames(rootClassName || css.root, className);
+
+                  return (
+                    <Form
+                      id={'sendmsg'}
+                      className={`${classes} ${css.updatePnl}`}
+                      onSubmit={values => {
+                        console.log('values: ', values);
+                      }}
+                    >
+                      <div className={css.formg}>
+                        <FieldTextInput
+                          id="emailId"
+                          name="emailId"
+                          type="text"
+                          label={'Email ID'}
+                          placeholder={'Enter your email ID'}
+                          // validate={composeValidators(required(descriptionRequiredMessage))}
+                        />
+                      </div>
+                      <div className={css.formg}>
+                        <FieldTextInput
+                          id="msg"
+                          name="msg"
+                          type="textarea"
+                          label={'Message'}
+                          placeholder={'Enter your message here'}
+                          // validate={composeValidators(required(descriptionRequiredMessage))}
+                        />
+                      </div>
+
+                      <div className={css.submitButtonFG}>
+                        <PrimaryButton
+                          type="button"
+                          inProgress={false}
+                          disabled={false}
+                          onClick={e => {
+                            console.log('click values: ', e, values);
+                            Axios.get(
+                              // 'http://localhost:3001/extra/email_send?message=' +
+                              'https://mentorkh.herokuapp.com/extra/email_send?message=' +
+                                values.msg +
+                                '&email=' +
+                                values.emailId
+                            )
+                              .then(response => {
+                                console.log('response in submit', response);
+                                // history.push(
+                                //   createResourceLocatorString(
+                                //     'LandingPage',
+                                //     routes,
+                                //     // { keywords: 'php' },
+                                //     {},
+                                //     // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+                                //     {}
+                                //   )
+                                // );
+                              })
+                              .catch(e => {
+                                console.log('e in submit', e);
+                                // history.push(
+                                //   createResourceLocatorString(
+                                //     'LandingPage',
+                                //     routes,
+                                //     // { keywords: 'php' },
+                                //     {},
+                                //     // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
+                                //     {}
+                                //   )
+                                // );
+                              });
+                            this.setState({ isMailSectorModalOpen: false });
+                          }}
+                        >
+                          Send Mail
+                        </PrimaryButton>
+                      </div>
+                    </Form>
+                  );
+                }}
+              />
+            </Modal>
+          ) : null}
+          {listingsAreLoaded && resultsCount > 0 ? resultsFound : null}
+          {hasNoResult
+            ? showRelatedSearchError().map((item, i) => (
+                <div className={css.noSearchResults} key={i}>
+                  {item}
+                </div>
+              ))
+            : null}
+          {searchInProgress ? loadingResults : null}
+        </div>
+
         <ModalInMobile
           id="SearchFiltersMobile.filters"
           isModalOpenOnMobile={this.state.isFiltersOpenOnMobile}

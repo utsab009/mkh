@@ -9,6 +9,7 @@
   position: sticky;
   top: 0;
   z-index: 1;
+  flex-direction: column;
 }
 
 .searchResultSummary {
@@ -17,12 +18,15 @@
 
   display: flex;
   justify-content: space-between;
-
+  flex-direction: column;
   background-color: var(--matterColorBright);
 
   @media (--viewportMedium) {
     margin-top: 8px;
   }
+}
+.updateModalcol {
+  margin-top: 55px;
 }
 .noSearchResults {
   @apply --marketplaceH4FontStyles;
@@ -38,6 +42,15 @@
 }
 .buttons {
   display: flex;
+}
+.smallText {
+  font-size: 12px;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+.btnModSl {
+  color: blue;
+  cursor: pointer;
 }
 
 .filtersButton {

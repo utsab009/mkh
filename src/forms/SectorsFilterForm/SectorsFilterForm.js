@@ -386,6 +386,7 @@ export class SectorsFilterFormComponent extends Component {
                   <Select
                     options={this.state.jobRolesConfig}
                     name="subsectors"
+                    placeholder="Type and Select Job Role Here"
                     value={this.state.jobRolesConfig.filter(
                       item => item.value === values.subsectors
                     )}
