@@ -42,7 +42,7 @@ export class SectionHeroComponent extends Component {
     const classes = classNames(rootClassName || css.root, className);
 
     const handleSubmit = values => {
-      console.log('values: ', values);
+      console.log('vvvv in submit', values);
       const { sectors, subsectors, jobroles } = values;
 
       const routes = routeConfiguration();
@@ -118,21 +118,22 @@ export class SectionHeroComponent extends Component {
               </Button>
             </div>
           ) : null}
-
-          <Modal
-            id="MenteeSignupPage.tos"
-            isOpen={this.state.isSectorModalOpen}
-            onClose={() => this.setState({ isSectorModalOpen: false })}
-            onManageDisableScrolling={onManageDisableScrolling}
-          >
-            <SectorsFilterForm
-              // className={css.form}
-              onSubmit={handleSubmit}
+          {this.state.isSectorModalOpen && (
+            <Modal
+              id="MenteeSignupPage.tos"
+              isOpen={this.state.isSectorModalOpen}
+              onClose={() => this.setState({ isSectorModalOpen: false })}
               onManageDisableScrolling={onManageDisableScrolling}
-              // inProgress={authInProgress}
-              // onOpenTermsOfService={() => this.setState({ tosModalOpen: true })}
-            />
-          </Modal>
+            >
+              <SectorsFilterForm
+                // className={css.form}
+                onSubmit={handleSubmit}
+                onManageDisableScrolling={onManageDisableScrolling}
+                // inProgress={authInProgress}
+                // onOpenTermsOfService={() => this.setState({ tosModalOpen: true })}
+              />
+            </Modal>
+          )}
         </div>
       </div>
     );
