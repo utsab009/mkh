@@ -562,17 +562,17 @@ export class SignupFormComponent extends Component {
                       Our mission is to build a trusted community of Mentors and Mentees who
                       ultimately make the world more effective. It is a community where anyone can
                       belong, and all are welcome. To ensure this, we are asking you to accept our{' '}
-                      <NamedLink target="_blank" name="TermsOfServicePage" className={css.link}>
+                      <ExternalLink target="_blank" href="/terms-of-service" className={css.link}>
                         Terms of Service
-                      </NamedLink>{' '}
+                      </ExternalLink>{' '}
                       and{' '}
-                      <NamedLink
+                      <ExternalLink
                         target="_blank"
-                        name="CommunityGuidelinesPage"
+                        href="/community-guidelines"
                         className={css.link}
                       >
                         Community Guidelines
-                      </NamedLink>{' '}
+                      </ExternalLink>{' '}
                       as these practically ensure this is achieved.
                     </p>
                     <h2>Try A Mentor Community Commitment</h2>
@@ -583,36 +583,36 @@ export class SignupFormComponent extends Component {
                       This means we will treat all with respect, and without judgement or bias. By
                       signing up to Try A Mentor, you are agreeing to act in this way also. To learn
                       more, please visit our{' '}
-                      <NamedLink
+                      <ExternalLink
                         target="_blank"
-                        name="CommunityGuidelinesPage"
+                        href="/community-guidelines"
                         className={css.link}
                       >
                         Community Guidelines
-                      </NamedLink>
+                      </ExternalLink>
                     </p>
                     <h2>Try A Mentor Terms of Service</h2>
                     <p>
                       You are also agreeing to accept Try A Mentor's{' '}
-                      <NamedLink target="_blank" name="TermsOfServicePage" className={css.link}>
+                      <ExternalLink target="_blank" href="/terms-of-service" className={css.link}>
                         Terms of Service
-                      </NamedLink>
+                      </ExternalLink>
                       ,{' '}
-                      <NamedLink target="_blank" name="FaqPage" className={css.link}>
+                      <ExternalLink target="_blank" href="/faq" className={css.link}>
                         Payment Process
-                      </NamedLink>
+                      </ExternalLink>
                       ,{' '}
-                      <NamedLink target="_blank" name="PrivacyPolicyPage" className={css.link}>
+                      <ExternalLink target="_blank" href="/privacy-policy" className={css.link}>
                         Privacy and GDPR Policy
-                      </NamedLink>{' '}
+                      </ExternalLink>{' '}
                       and our{' '}
-                      <NamedLink
+                      <ExternalLink
                         target="_blank"
-                        name="CommunityGuidelinesPage"
+                        href="/community-guidelines"
                         className={css.link}
                       >
                         Community Guidelines
-                      </NamedLink>{' '}
+                      </ExternalLink>{' '}
                       through pressing the accept button below
                     </p>
                     <Button

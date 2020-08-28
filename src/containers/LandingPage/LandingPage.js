@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bool, func, object } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { injectIntl, intlShape } from '../../util/reactIntl';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
 import { propTypes } from '../../util/types';
@@ -19,6 +19,7 @@ import {
   Footer,
   Modal,
   NamedLink,
+  ExternalLink,
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
@@ -100,6 +101,7 @@ export class LandingPageComponent extends Component {
                 isOpen={this.state.welcomeModal}
                 onClose={() => this.toggleWelcomeModal()}
                 onManageDisableScrolling={onManageDisableScrolling}
+                // className={css.landingModal}
                 // containerClassName={css.modalContainer}
               >
                 <div className={css.modalHeader}>
@@ -176,7 +178,6 @@ export class LandingPageComponent extends Component {
                   />
                 </div>
               </li>
-
               <li className={css.section}>
                 <div className={`${css.sectionContent} ${css.scdown}`} style={{ marginTop: 0 }}>
                   {/* <div className={`${css.sectionContent} ${css.scdown}`}> */}
