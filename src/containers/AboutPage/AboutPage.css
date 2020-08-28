@@ -16,11 +16,11 @@
 }
 
 .coverImage {
-  width: 100%;
+  width: 50%;
   height: 528px;
   border-radius: 4px;
   object-fit: cover;
-  margin: 32px 0 40px;
+  margin: 32px auto 40px;
 }
 
 .contentWrapper {

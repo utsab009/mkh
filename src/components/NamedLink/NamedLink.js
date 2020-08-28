@@ -34,7 +34,7 @@ export const NamedLinkComponent = props => {
   const active = match.url && match.url === pathname;
 
   // <a> element props
-  const { className, style, activeClassName, ...rest } = props;
+  const { className, style, activeClassName } = props;
   const aElemProps = {
     className: classNames(className, { [activeClassName]: active }),
     style,
@@ -42,7 +42,7 @@ export const NamedLinkComponent = props => {
   };
 
   return (
-    <Link to={{ pathname, ...to }} {...aElemProps} {...rest}>
+    <Link to={{ pathname, ...to }} {...aElemProps}>
       {children}
     </Link>
   );
