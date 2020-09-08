@@ -179,10 +179,18 @@ export const signup = params => (dispatch, getState, sdk) => {
     return Promise.reject(new Error('Login or logout already in progress'));
   }
   dispatch(signupRequest());
-  const { email, password, firstName, lastName, userType, bio = '', ...rest } = params;
+  const { email, password, firstName, lastName, userType, isMentor, bio = '', ...rest } = params;
 
   const createUserParams = isEmpty(rest)
-    ? { email, password, firstName, lastName, bio, userType, publicData: { newUser: true } }
+    ? {
+        email,
+        password,
+        firstName,
+        lastName,
+        bio,
+        protectedData: { userType, isMentor },
+        publicData: { newUser: true },
+      }
     : // : { email, password, firstName, lastName, bio, protectedData: { ...rest } };
       {
         email,
@@ -190,7 +198,7 @@ export const signup = params => (dispatch, getState, sdk) => {
         firstName,
         lastName,
         bio,
-        protectedData: { userType },
+        protectedData: { userType, isMentor },
         publicData: { ...rest, newUser: true },
       };
 

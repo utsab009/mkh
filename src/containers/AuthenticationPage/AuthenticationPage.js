@@ -102,43 +102,49 @@ export class AuthenticationPageComponent extends Component {
       : errorMessage(signupError, signupErrorMessage);
 
     const fromState = { state: from ? { from } : null };
-    
-    const tabs = isLogin ? 
-    [
-      {
-        text: (
-          <h1 className={css.tab}>
-            <FormattedMessage id="AuthenticationPage.loginLinkText" />
-          </h1>
-        ),
-        selected: isLogin,
-        linkProps: {
-          name: 'LoginPage',
-          to: fromState,
-        },
-      },
-    ]
-    :
-    [
-      {
-        text: (
-          <h1 className={css.tab}>
-            <FormattedMessage id="AuthenticationPage.signupLinkText" />
-          </h1>
-        ),
-        selected: !isLogin,
-        linkProps: {
-          name: 'SignupPage',
-          to: fromState,
-        },
-      }
-    ];
+
+    const tabs = isLogin
+      ? [
+          {
+            text: (
+              <h1 className={css.tab}>
+                <FormattedMessage id="AuthenticationPage.loginLinkText" />
+              </h1>
+            ),
+            selected: isLogin,
+            linkProps: {
+              name: 'LoginPage',
+              to: fromState,
+            },
+          },
+        ]
+      : [
+          {
+            text: (
+              <h1 className={css.tab}>
+                <FormattedMessage id="AuthenticationPage.signupLinkText" />
+              </h1>
+            ),
+            selected: !isLogin,
+            linkProps: {
+              name: 'SignupPage',
+              to: fromState,
+            },
+          },
+        ];
 
     const handleSubmitSignup = values => {
-      console.log("values in handle submit signup",values);
+      console.log('values in handle submit signup', values);
       const { fname, lname, ...rest } = values;
       const fullName = fname + ' ' + lname;
-      const params = { firstName: fname.trim(), lastName: lname.trim(), userType: "mentor",  fullName : fullName, ...rest };
+      const params = {
+        firstName: fname.trim(),
+        lastName: lname.trim(),
+        userType: 'mentor',
+        isMentor: true,
+        fullName: fullName,
+        ...rest,
+      };
       submitSignup(params);
     };
 

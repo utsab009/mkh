@@ -1,14 +1,28 @@
 <html>
   <body style="font-family: sans-serif;">
     {{#with transaction}}
-    <h1>How was your experience with {{listing.title}}? Write a review!</h1>
-
+    <h1>How was the Mentoring Experience - Please write a review</h1>
+    <p>Hi {{customer.display-name}},</p>
+    <!-- <p>Hi {{recipient.protected-data.userType}},</p> -->
     <p>
+      You recently received Mentoring from {{provider.display-name}} and we would love to capture
+      your experience of what it was like working with this person. This information is critical as
+      it will allow future Mentees to decide if they should work with this person but also to allow
+      you to put into context any feedback you received from them.
+    </p>
+    <p>
+      Thanks for trying a Mentor on Try A Mentor. We hope it was a real success and the investment
+      you have made in your career is paying off
+    </p>
+    <p>The Try A Mentor team</p>
+    <!-- <h1>How was your experience with {{listing.title}}? Write a review!</h1> -->
+
+    <!-- <p>
       You recently booked {{listing.title}} from {{provider.display-name}}. Please write a review to
       describe your experience. Reviews are important part of the {{marketplace.name}} community.
     </p>
 
-    <p><a href="{{marketplace.url}}/order/{{url-encode id}}/details">Leave a review</a></p>
+    <p><a href="{{marketplace.url}}/order/{{url-encode id}}/details">Leave a review</a></p> -->
     {{/with}}
 
     <!-- <p>You have received this email notification because you are a member of {{marketplace.name}}. If you no longer wish to receive these emails, please contact {{marketplace.name}} team.</p> -->

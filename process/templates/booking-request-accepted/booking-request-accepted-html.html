@@ -71,24 +71,31 @@ transaction.listing.availability-plan}} {{date date format='MMM d YYYY' tz=timez
       </thead>
       <tbody>
         {{#each tx-line-items}} {{#contains include-for 'customer'}} {{#eq 'line-item/units' code}}
-        {{#if seats}}
+        <!-- {{#if seats}}
         <tr class="top-row">
           <td colspan="2">
             {{> format-money money=unit-price}} &times; {{number units}} {{inflect units 'hour'
             'hours'}}
           </td>
         </tr>
-        <!-- <tr class="bottom-row">
+        <tr class="bottom-row">
           <td colspan="2">Seats &times; {{number seats}}</td>
-        </tr> -->
+        </tr>
         {{else}}
         <tr class="top-row bottom-row">
           <td colspan="2">
             {{> format-money money=unit-price}} &times; {{number quantity}} {{inflect quantity
-            'unit' 'units'}}
+            'hour' 'hours'}}
           </td>
         </tr>
-        {{/if}} {{/eq}} {{/contains}} {{/each}}
+        {{/if}}  -->
+        <tr class="top-row">
+          <td colspan="2">
+            {{> format-money money=unit-price}} &times; {{number units}} {{inflect units "hour"
+            "hours"}}
+          </td>
+        </tr>
+        {{/eq}} {{/contains}} {{/each}}
       </tbody>
       <tfoot>
         <tr class="top-row">

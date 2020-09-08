@@ -35,6 +35,7 @@ transaction.listing.availability-plan}} {{date date format="MMM d" tz=timezone}}
     {{#with transaction}}
     <!-- <h1>Please respond to a request by {{customer.display-name}}</h1> -->
     <h1>Please let {{customer.display-name}} know that you are available to meet</h1>
+    <!-- <h1>Hi {{recipient.protected-data.userType}},</h1> -->
 
     <!-- <p>
       Good news! {{customer.display-name}} just requested to book {{listing.title}} from {{>
@@ -63,7 +64,7 @@ transaction.listing.availability-plan}} {{date date format="MMM d" tz=timezone}}
       </thead>
       <tbody>
         {{#each tx-line-items}} {{#contains include-for "provider"}} {{#eq "line-item/units" code}}
-        {{#if seats}}
+        <!-- {{#if seats}}
         <tr class="top-row">
           <td colspan="2">
             {{> format-money money=unit-price}} &times; {{number units}} {{inflect units "unit"
@@ -80,7 +81,13 @@ transaction.listing.availability-plan}} {{date date format="MMM d" tz=timezone}}
             "unit" "units"}}
           </td>
         </tr>
-        {{/if}}
+        {{/if}} -->
+        <tr class="top-row">
+          <td colspan="2">
+            {{> format-money money=unit-price}} &times; {{number units}} {{inflect units "hour"
+            "hours"}}
+          </td>
+        </tr>
         <tr class="top-row">
           <th class="left">Subtotal</th>
           <th class="right">{{> format-money money=line-total}}</th>

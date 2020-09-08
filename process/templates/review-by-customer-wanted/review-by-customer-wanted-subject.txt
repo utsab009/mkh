@@ -1,1 +1,1 @@
-Write a review for {{transaction.listing.title}} (Try A Mentor)
+How was the Mentoring Experience – Please write a review (Try A Mentor)

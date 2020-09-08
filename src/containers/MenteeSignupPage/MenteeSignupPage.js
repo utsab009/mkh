@@ -136,6 +136,7 @@ export class MenteeSignupPageComponent extends Component {
         firstName: fname.trim(),
         lastName: lname.trim(),
         userType: 'mentee',
+        isMentor: false,
         ...rest,
       };
       submitSignup(params);

@@ -49,7 +49,6 @@ transaction.listing.availability-plan}} {{date date format="MMM d YYYY" tz=timez
     </p> -->
 
     <p>Here's the breakdown.</p>
-
     <table>
       <thead>
         <tr>
@@ -67,7 +66,7 @@ transaction.listing.availability-plan}} {{date date format="MMM d YYYY" tz=timez
       </thead>
       <tbody>
         {{#each tx-line-items}} {{#contains include-for "provider"}} {{#eq "line-item/units" code}}
-        {{#if seats}}
+        <!-- {{#if seats}}
         <tr class="top-row">
           <td colspan="2">
             {{> format-money money=unit-price}} &times; {{number units}} {{inflect units "unit"
@@ -84,7 +83,16 @@ transaction.listing.availability-plan}} {{date date format="MMM d YYYY" tz=timez
             "unit" "units"}}
           </td>
         </tr>
-        {{/if}}
+        {{/if}} -->
+        <tr class="top-row">
+          <td colspan="2">
+            {{> format-money money=unit-price}} &times; {{number units}} {{inflect units "hour"
+            "hours"}}
+          </td>
+        </tr>
+        <!-- <tr class="bottom-row">
+          <td colspan="2">Seats &times; {{number seats}}</td>
+        </tr> -->
         <tr class="top-row">
           <th class="left">Subtotal</th>
           <th class="right">{{> format-money money=line-total}}</th>
