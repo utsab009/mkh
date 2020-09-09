@@ -99,7 +99,14 @@ export const EditListingPricingFormComponent = props => (
             currencyConfig={config.currencyConfig}
             validate={priceValidators}
           />
-          <div><h5>Pick a price from 1€ to any value</h5></div>
+          <div>
+            <h5>Pick a price from 1€ to any value</h5>
+          </div>
+
+          <div className={css.customLable}>
+            FOR EACH JOB ROLE OR GRADE, YOU CAN MENTOR YOU WILL NEED TO RETURN TO THIS SECTION AND
+            FOLLOW THIS PROCESS
+          </div>
 
           <Button
             className={css.submitButton}

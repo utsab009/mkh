@@ -111,3 +111,9 @@
 .submitButton {
   margin: 10px 0;
 }
+
+.customLable {
+  font-size: 14px;
+  margin-bottom: 25px;
+  text-align: -webkit-center;
+}

@@ -23,6 +23,7 @@ import Modal from '../Modal/Modal';
 import { Form as FinalForm } from 'react-final-form';
 import Axios from 'axios';
 import arrayMutators from 'final-form-arrays';
+import config from '../../config';
 // Dropdown container can have a positional offset (in pixels)
 const FILTER_DROPDOWN_OFFSET = -14;
 const RADIX = 10;
@@ -155,6 +156,15 @@ class SearchFiltersComponent extends Component {
 
     const initialLevel = levelFilter ? initialValues(urlQueryParams, levelFilter.paramName) : null;
 
+    const isGrade = this.state.subsectors
+      ? config.custom
+          .rolesConfigData()
+          .map(item => item.key === this.state.subsectors && item.isGrade)
+          .filter(item => !!item)[0]
+      : null;
+
+    // console.log('isGrade: ', isGrade);
+
     // const initialsubsectors = subsectorsFilter
     //   ? initialValue(urlQueryParams, subsectorsFilter.paramName)
     //   : null;
@@ -276,7 +286,7 @@ class SearchFiltersComponent extends Component {
     // ) : null;
 
     const sectorsFilterElement =
-      sectorsFilter && this.state.subsectors !== 'Generalist' ? (
+      !isGrade && sectorsFilter && this.state.subsectors !== 'Generalist' ? (
         <SelectMultipleFilter
           id={'SearchFilters.sectors'}
           name="sectors"
@@ -290,23 +300,24 @@ class SearchFiltersComponent extends Component {
         />
       ) : null;
 
-    const levelFilterElement = levelFilter ? (
-      <SelectMultipleFilter
-        id={'SearchFilters.jobRoles'}
-        name="jobRoles"
-        urlParam={levelFilter.paramName}
-        label={levelLabel}
-        onSubmit={handleSelectOptions}
-        showAsPopup
-        options={
-          this.state.subsectors === 'Generalist'
-            ? levelFilter.config.public
-            : levelFilter.config.private
-        }
-        initialValues={initialLevel}
-        contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
-      />
-    ) : null;
+    const levelFilterElement =
+      !isGrade && levelFilter ? (
+        <SelectMultipleFilter
+          id={'SearchFilters.jobRoles'}
+          name="jobRoles"
+          urlParam={levelFilter.paramName}
+          label={levelLabel}
+          onSubmit={handleSelectOptions}
+          showAsPopup
+          options={
+            this.state.subsectors === 'Generalist'
+              ? levelFilter.config.public
+              : levelFilter.config.private
+          }
+          initialValues={initialLevel}
+          contentPlacementOffset={FILTER_DROPDOWN_OFFSET}
+        />
+      ) : null;
 
     // const subsectorsFilterElement = subsectorsFilter ? (
     //   <SelectSingleFilter

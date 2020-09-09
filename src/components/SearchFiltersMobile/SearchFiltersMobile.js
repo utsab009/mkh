@@ -25,6 +25,8 @@ import Modal from '../Modal/Modal';
 import { Form as FinalForm } from 'react-final-form';
 import Axios from 'axios';
 import arrayMutators from 'final-form-arrays';
+import config from '../../config';
+
 const RADIX = 10;
 
 class SearchFiltersMobileComponent extends Component {
@@ -242,8 +244,15 @@ class SearchFiltersMobileComponent extends Component {
 
     const initialsectors = sectorsFilter ? this.initialValues(sectorsFilter.paramName) : null;
 
+    const isGrade = this.state.subsectors
+      ? config.custom
+          .rolesConfigData()
+          .map(item => item.key === this.state.subsectors && item.isGrade)
+          .filter(item => !!item)[0]
+      : null;
+
     const sectorsFilterElement =
-      sectorsFilter && this.state.subsectors !== 'Generalist' ? (
+      !isGrade && sectorsFilter && this.state.subsectors !== 'Generalist' ? (
         <SelectMultipleFilter
           id={'SearchFilters.sectorsFilter'}
           name="sector"
@@ -265,24 +274,25 @@ class SearchFiltersMobileComponent extends Component {
     });
 
     console.log('levelFilter', levelFilter, this.state);
-    const levelFilterElement = levelFilter ? (
-      <SelectMultipleFilter
-        id={'SearchFilters.levelFilter'}
-        name="level"
-        urlParam={levelFilter.paramName}
-        label={levelLabel}
-        onSubmit={this.handleSelectMultiple}
-        liveEdit
-        // showAsPopup
-        options={
-          this.state.subsectors === 'Generalist'
-            ? levelFilter.config.public
-            : levelFilter.config.private
-        }
-        initialValues={initialLevel}
-        intl={intl}
-      />
-    ) : null;
+    const levelFilterElement =
+      !isGrade && levelFilter ? (
+        <SelectMultipleFilter
+          id={'SearchFilters.levelFilter'}
+          name="level"
+          urlParam={levelFilter.paramName}
+          label={levelLabel}
+          onSubmit={this.handleSelectMultiple}
+          liveEdit
+          // showAsPopup
+          options={
+            this.state.subsectors === 'Generalist'
+              ? levelFilter.config.public
+              : levelFilter.config.private
+          }
+          initialValues={initialLevel}
+          intl={intl}
+        />
+      ) : null;
 
     // const mentorLanguageFilterElement = mentorLanguageFilter ? (
     //   <SelectSingleFilter

@@ -188,8 +188,10 @@ const EditListingFeaturesPanel = props => {
 
       <h1 className={css.title}>{panelTitle}</h1>
       <p>
-        Only <span className={css.underLine}>Skip</span> this section if you picked the{' '}
-        <span className={css.underLine}>“Generalist Role”</span> in the previous
+        {/* Only <span className={css.underLine}>Skip</span> this section if you picked the{' '}
+        <span className={css.underLine}>“Generalist Role”</span> in the previous */}
+        IF YOU PICKED A JOB GRADE IN THE PREVIOUS SECTION, THEN THE SECTOR IS AUTOMATICALLY THE
+        PUBLIC SECTOR, SO PLEASE SKIP THIS SECTION
       </p>
 
       <EditListingFeaturesForm
@@ -254,7 +256,7 @@ const EditListingFeaturesPanel = props => {
                     className={`${classes} ${css.updatePnl}`}
                     onSubmit={handleSubmit}
                   >
-                   
+
                     <div className={css.formg}>
                       <FieldTextInput
                         id="emailId"

@@ -296,7 +296,7 @@ export class EditListingPublicFormComponent extends Component {
                 }}
                 // validate={required('Please add ')}
               />
-              <p className={css.smallTextIns}>
+              {/* <p className={css.smallTextIns}>
                 My sector and or job is not listed, click
                 <InlineTextButton
                   className={css.btnModSl}
@@ -308,6 +308,15 @@ export class EditListingPublicFormComponent extends Component {
                   &nbsp;here &nbsp;
                 </InlineTextButton>
                 and tell us so we can include it for you.
+              </p> */}
+
+              <p className={css.customLable}>
+                Clicking more than one Seniority Level will mean that Mentees requiring Mentoring at
+                each of the levels clicked will find you. This said, if you intend to charge
+                different rates for different levels of seniority, then only click the levels that
+                you will be charging the same price for. For those other price levels, you will need
+                to return to this process and create a new listing for that Job at that level or
+                levels.
               </p>
 
               {this.state.isMailSectorModalOpen ? (

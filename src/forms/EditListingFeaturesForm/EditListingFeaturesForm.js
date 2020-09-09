@@ -125,6 +125,20 @@ export class EditListingFeaturesFormComponent extends Component {
               {errorMessage}
               {errorMessageShowListing}
 
+              <p className={css.smallTextIns}>
+                If your Job Role or Sector are not present,
+                <InlineTextButton
+                  className={css.btnModSl}
+                  onClick={e => {
+                    e.preventDefault();
+                    this.setState({ isMailSectorModalOpen: true });
+                  }}
+                >
+                  &nbsp;click here &nbsp;
+                </InlineTextButton>
+                and tell us so we can include it for you.
+              </p>
+
               <FieldCheckboxGroup
                 label={sectorLabel}
                 className={css.profileTypes}
@@ -164,19 +178,6 @@ export class EditListingFeaturesFormComponent extends Component {
                   form.change('sectors', changeValues);
                 }}
               />
-              <p className={css.smallTextIns}>
-                My sector and or job is not listed, click
-                <InlineTextButton
-                  className={css.btnModSl}
-                  onClick={e => {
-                    e.preventDefault();
-                    this.setState({ isMailSectorModalOpen: true });
-                  }}
-                >
-                  &nbsp;here &nbsp;
-                </InlineTextButton>
-                and tell us so we can include it for you.
-              </p>
 
               {this.state.isMailSectorModalOpen ? (
                 <Modal

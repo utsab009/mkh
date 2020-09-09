@@ -263,7 +263,7 @@ export class SectorsFilterFormComponent extends Component {
           return (
             <Form className={classes} onSubmit={handleSubmit}>
               <p className={css.smallText}>
-                If your job role is not appearing,
+                If your Job Role or Grade is not appearing,
                 <span
                   className={css.btnModSl}
                   onClick={e => {
@@ -452,10 +452,16 @@ export class SectorsFilterFormComponent extends Component {
               >
                 {buttonText}
               </Button>
-              <span className={css.normalText}>
+              {/* <span className={css.normalText}>
                 IF YOU ARE IN THE PUBLIC SECTOR AND WANT GRADE BASED RATHER THAN ROLE BASED
                 MENTORING, PLEASE PLACE “GENERALIST (PUBLIC SECTOR)” ABOVE
-              </span>
+              </span> */}
+              <p className={css.customLable}>
+                A JOB GRADE IS SPECIFIC TO A PUBLIC SECTOR TYPE ROLE E.G. FEDERAL GOVERNMENT GRADE,
+                PUBLIC SECTOR GRADE, HIGHER EDUCATION ETC. INTERNATIONAL GRADES ARE UTILISED SO PICK
+                FROM THIS THE EQUIVALENT GRADE
+              </p>
+              <p className={css.customLable}>JOB ROLES CAN BE EITHER PUBLIC OR PRIVATE SECTOR</p>
             </Form>
           );
         }}

@@ -272,7 +272,7 @@ class EditListingDescriptionFormComponent extends Component {
                 </Modal>
               ) : null}
 
-              <div className={css.customLable}>
+              <div className={css.customTitle}>
                 {/* State the <span className={css.underLine}>Job Role</span> you can Mentor */}
                 Second Step. Now select the Job Role or Job Grade you can offer Mentoring
               </div>
@@ -307,6 +307,15 @@ class EditListingDescriptionFormComponent extends Component {
               </p>
 
               <div className={css.customLable}>
+                A JOB GRADE IS SPECIFIC TO A PUBLIC SECTOR TYPE ROLE E.G. FEDERAL GOVERNMENT GRADE,
+                PUBLIC SECTOR GRADE, HIGHER EDUCATION ETC. INTERNATIONAL GRADES ARE UTILISED SO PICK
+                FROM THIS THE EQUIVALENT GRADE
+              </div>
+              <div className={css.customLable}>
+                JOB ROLES CAN BE EITHER PUBLIC OR PRIVATE SECTOR
+              </div>
+
+              {/* <div className={css.customLable}>
                 Hoping to Mentor people found in the{' '}
                 <span className={`${css.underLine} ${css.textColor}`}>Public Sector</span>
                 <span className={css.textColor}>?</span> Read Below{' '}
@@ -337,7 +346,7 @@ class EditListingDescriptionFormComponent extends Component {
                     - Pick the Seniority level in the section “Public Sector: Levels”{' '}
                   </li>
                 </ul>
-              </div>
+              </div> */}
               {/* <FieldTextInput
               // className={css.lastName}
               type="text"

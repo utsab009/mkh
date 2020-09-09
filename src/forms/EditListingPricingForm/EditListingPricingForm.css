@@ -35,7 +35,13 @@
 }
 
 @media (max-width: 1024px) {
-  .submitButton{
+  .submitButton {
     margin-top: 30px;
   }
+}
+
+.customLable {
+  font-size: 14px;
+  margin-bottom: 25px;
+  text-align: -webkit-center;
 }
