@@ -20,7 +20,7 @@ import {
 import CustomCertificateSelectFieldMaybe from './CustomCertificateSelectFieldMaybe';
 import CustomMentorLanguageSelectFieldMaybe from './CustomMentorLanguageSelectFieldMaybe';
 import CustomProfileTypeSelectFieldMaybe from './CustomProfileTypeSelectFieldMaybe';
-import Select from 'react-dropdown-select';
+import Select from 'react-select';
 import css from './EditListingDescriptionForm.css';
 import config from '../../config';
 import Axios from 'axios';
@@ -29,8 +29,28 @@ const TITLE_MAX_LENGTH = 60;
 class EditListingDescriptionFormComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = { isMailSectorModalOpen: false, roleData: config.custom.rolesConfigData() };
+    this.state = {
+      isMailSectorModalOpen: false,
+      roleData: config.custom
+        .rolesConfigData()
+        .map(item => ({ value: item.key, label: item.label, isGrade: item.isGrade || null }))
+        .sort(this.compare),
+    };
   }
+
+  compare = (a, b) => {
+    // Use toUpperCase() to ignore character casing
+    const bandA = a.label.toUpperCase();
+    const bandB = b.label.toUpperCase();
+
+    let comparison = 0;
+    if (bandA > bandB) {
+      comparison = 1;
+    } else if (bandA < bandB) {
+      comparison = -1;
+    }
+    return comparison;
+  };
 
   render() {
     // const [jobRolesConfigNew, setJobRolesConfig] = useState([]);
@@ -253,30 +273,27 @@ class EditListingDescriptionFormComponent extends Component {
               ) : null}
 
               <div className={css.customLable}>
-                State the <span className={css.underLine}>Job Role</span> you can Mentor
+                {/* State the <span className={css.underLine}>Job Role</span> you can Mentor */}
+                Second Step. Now select the Job Role or Job Grade you can offer Mentoring
               </div>
               <div className={css.customSubLable}>
-                (For each Job Role you can Mentor, you will need to return to this section, create a
-                new Profile name, and answer each of the questions again)
+                {/* (For each Job Role you can Mentor, you will need to return to this section, create a
+                new Profile name, and answer each of the questions again) */}
               </div>
               <Select
-                className={css.selectCss}
-                id="subsectors"
-                name="subsectors"
-                // multi
                 options={this.state.roleData}
-                // placeholder="Type the Role You Hope to Mentor here (If Public Sector see instructions below)"
-                // itemRenderer={customItemRenderer}
-                // values={[values.subsectors]}
-                values={this.state.roleData.filter(x => x.key == values.subsectors)}
+                name="subsectors"
+                placeholder="Type and Select Job Role Here"
+                value={this.state.roleData.filter(item => item.value === values.subsectors)}
+                // id="subsectors"
                 onChange={values => {
-                  console.log('values: ', values);
-                  form.change('subsectors', values[0].key);
-                  // this.onChange(values);
+                  console.log('test: ', values);
+                  values && values.value && form.change('subsectors', values.value);
+                  values && form.change('isGrade', values.isGrade || null);
                 }}
               />
               <p className={css.smallTextIns}>
-                If your job role is not appearing,{' '}
+                If your Job Role or Sector are not present,{' '}
                 <InlineTextButton
                   className={css.btnModSl}
                   onClick={e => {

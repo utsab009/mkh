@@ -305,7 +305,7 @@ export class EditListingFeaturesFormComponent extends Component {
                   ))}
                 </FieldSelect>
               ) : null} */}
-              <FieldCheckboxGroup
+              {/* <FieldCheckboxGroup
                 label={jobRoleLabel}
                 className={css.jobRole}
                 id="jobroles"
@@ -346,7 +346,7 @@ export class EditListingFeaturesFormComponent extends Component {
                   form.change('jobroles', changeValues);
                 }}
                 // validate={required('Please add ')}
-              />
+              /> */}
               {/* <FormSpy
                 onChange={item => {
                   console.log('5555', item);
@@ -366,12 +366,12 @@ export class EditListingFeaturesFormComponent extends Component {
                     />
                   );
                 })} */}
-              <div className={css.ffsec}>
+              {/* <div className={css.ffsec}>
                 <p>
                   Remember, for each job / role you will need to create a new Role Profile for each
                   level of seniority you can Mentor at{' '}
                 </p>
-              </div>
+              </div> */}
 
               <Button
                 className={css.submitButton}

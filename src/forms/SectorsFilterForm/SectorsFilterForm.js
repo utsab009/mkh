@@ -195,7 +195,9 @@ export class SectorsFilterFormComponent extends Component {
     jobRolesConfig = new Set(jobRolesConfig).filter(x => !x.hideFromFilters);
 
     let roles = [];
-    jobRolesConfig.forEach(item => roles.push({ value: item.key, label: item.label }));
+    jobRolesConfig.forEach(item =>
+      roles.push({ value: item.key, label: item.label, isGrade: item.isGrade || null })
+    );
     // jobRolesConfig = roles;
     roles.sort(this.compare);
     this.setState({ jobRolesConfig: roles });

@@ -40,7 +40,7 @@ const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 // and listing publishing happens after last panel.
 // Note 3: in FTW-hourly template we don't use the POLICY tab so it's commented out.
 // If you want to add a free text field to your listings you can enable the POLICY tab
-export const TABS = [
+export let TABS = [
   DESCRIPTION,
   FEATURES,
   PUBLIC,
@@ -329,6 +329,33 @@ class EditListingWizard extends Component {
     const classes = classNames(rootClasses, className);
     const currentListing = ensureListing(listing);
     const tabsStatus = tabsActive(isNewListingFlow, currentListing);
+    console.log('test listing: ', currentListing);
+
+    if (currentListing.attributes.publicData.isGrade) {
+      TABS = [
+        DESCRIPTION,
+        // FEATURES,
+        // PUBLIC,
+        // POLICY,
+        LANGUAGE_YOUTUBE,
+        LOCATION,
+        ...availabilityMaybe,
+        PRICING,
+        // PHOTOS,
+      ];
+    } else {
+      TABS = [
+        DESCRIPTION,
+        FEATURES,
+        PUBLIC,
+        // POLICY,
+        LANGUAGE_YOUTUBE,
+        LOCATION,
+        ...availabilityMaybe,
+        PRICING,
+        // PHOTOS,
+      ];
+    }
 
     // If selectedTab is not active, redirect to the beginning of wizard
     if (!tabsStatus[selectedTab]) {

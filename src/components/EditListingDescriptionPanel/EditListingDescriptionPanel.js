@@ -58,8 +58,9 @@ const EditListingDescriptionPanel = props => {
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
       <div className={css.titleSmall}>
-        YOU HAVE ALREADY PROVIDED YOUR EDUCATION AND EXPERIENCE TO DATE. THIS SECTION IS ABOUT
-        TELLING US ABOUT A JOB ROLE YOU WILL OFFER MENTORING IN WHICH IN TURN HELPS MENTEES FIND YOU
+        THE FIRST STEP IS TO GIVE THIS LISTING A NAME. LIKE WHEN YOU SAVE A FILE ON YOUR COMPUTER SO
+        THAT YOU CAN FIND AND UPDATE IT LATER. THEN, THROUGH STEP TWO, FIND THE PRECISE JOB ROLE OR
+        JOB GRADE YOU WANT TO OFFER MENTORING IN.
       </div>
       <EditListingDescriptionForm
         className={css.form}
@@ -81,12 +82,13 @@ const EditListingDescriptionPanel = props => {
             // profileType = [],
             // youtubeLink,
             subsectors,
+            isGrade,
           } = values;
           console.log('test: ', values);
           const updateValues = {
             title: title.trim(),
             // description,
-            publicData: { subsectors },
+            publicData: { subsectors, isGrade },
           };
 
           onSubmit(updateValues);

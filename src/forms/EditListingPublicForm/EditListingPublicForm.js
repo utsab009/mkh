@@ -161,6 +161,8 @@ export class EditListingPublicFormComponent extends Component {
             // sectorGroup,
             roleGroup,
             onManageDisableScrolling,
+            values,
+            form,
           } = formRenderProps;
 
           const classes = classNames(rootClassName || css.root, className);
@@ -259,6 +261,39 @@ export class EditListingPublicFormComponent extends Component {
                 id="jobroles"
                 name="jobroles"
                 options={roleGroup}
+                onChange={e => {
+                  let selectedValue = e.target.value;
+                  let isAllSelected = selectedValue === 'All';
+                  let changeValues = [];
+                  if (!isAllSelected) {
+                    if (
+                      values.jobroles &&
+                      values.jobroles.length &&
+                      values.jobroles.includes(selectedValue)
+                    ) {
+                      changeValues = values.jobroles.filter(
+                        item => item !== selectedValue && item !== 'All'
+                      );
+                    } else {
+                      changeValues = values.jobroles
+                        ? [...values.jobroles, selectedValue]
+                        : [selectedValue];
+                      changeValues.length === roleGroup.length - 1 && changeValues.push('All');
+                    }
+                  } else {
+                    if (
+                      values.jobroles &&
+                      values.jobroles.length &&
+                      values.jobroles.includes('All')
+                    ) {
+                      changeValues = [];
+                    } else {
+                      changeValues = roleGroup.filter(item => item !== 'All').map(item => item.key);
+                    }
+                  }
+
+                  form.change('jobroles', changeValues);
+                }}
                 // validate={required('Please add ')}
               />
               <p className={css.smallTextIns}>

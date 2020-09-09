@@ -162,14 +162,13 @@ const EditListingPublicPanel = props => {
   // const yogaStyles = publicData && publicData.yogaStyles;
   const sectors = publicData && publicData.sectors;
   const subsectors = publicData && publicData.subsectors;
-  const jobroles =
-    (publicData && publicData.subsectors === 'Generalist' && publicData.jobroles) || [];
+  const jobroles = (publicData && publicData.jobroles) || [];
   const initialValues = { sectors, jobroles };
 
   // const sectorGroupData = config.custom.sectors.filter(
   //   item => item.key !== 'none' && item.key !== 'Public Service'
   // );
-  const roleGroupData = config.custom.publicRoles.filter(item => item.key !== 'none');
+  const roleGroupData = config.custom.nonPublicRoles.filter(item => item.key !== 'none');
 
   return (
     <main className={classes} ref={setPortalRootAfterInitialRender}>
@@ -185,12 +184,11 @@ const EditListingPublicPanel = props => {
         onSubmit={values => {
           // const { yogaStyles = [] } = values;
           const { jobroles = [] } = values;
-          // console.log('test: ', values);
 
           const updatedValues = {
             publicData: {
-              sectors: values.jobroles.length ? ['Public Service'] : publicData.sectors,
-              jobroles: values.jobroles.length ? jobroles : publicData.jobroles,
+              // sectors: values.jobroles.length ? ['Public Service'] : publicData.sectors,
+              jobroles,
             },
           };
           onSubmit(updatedValues);

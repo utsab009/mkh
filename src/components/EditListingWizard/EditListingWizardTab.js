@@ -118,6 +118,8 @@ const EditListingWizardTab = props => {
     return images ? images.map(img => img.imageId || img.id) : null;
   };
 
+  console.log('listing: ', currentListing);
+
   const onCompleteEditListingWizardTab = (tab, updateValues, passThrownErrors = false) => {
     // Normalize images for API call
     const { images: updatedImages, ...otherValues } = updateValues;
