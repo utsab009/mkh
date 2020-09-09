@@ -169,7 +169,7 @@ export const Accounting = [
   { key: 'Staff Accountant', label: 'Staff Accountant' },
   { key: 'Tax Manager', label: 'Tax Manager' },
   { key: 'Treasury Assistant', label: 'Treasury Assistant' },
-  { key: 'Accountant', label: 'Accountant' },
+  // { key: 'Accountant', label: 'Accountant' },
   { key: 'Accounting Coordinator', label: 'Accounting Coordinator' },
   { key: 'Accounting Officer', label: 'Accounting Officer' },
   { key: 'Accounts Assistant', label: 'Accounts Assistant' },
