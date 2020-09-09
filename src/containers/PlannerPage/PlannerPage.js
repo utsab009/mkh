@@ -62,8 +62,8 @@ export class PlannerPageComponent extends Component {
     const transactions = txns.filter(item => {
       events.push({
         allday: false,
-        start: item.booking.attributes.start,
-        end: item.booking.attributes.end,
+        start: item.booking && item.booking.attributes.start,
+        end: item.booking && item.booking.attributes.end,
         title: item.customer.attributes.profile.displayName, //item.listing.attributes.title,
         id: item.id.uuid,
         cName: item.customer.attributes.profile.displayName,
