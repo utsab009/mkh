@@ -39,13 +39,22 @@ const FieldCheckboxRenderer = props => {
           const fieldId = `${id}.${option.key}`;
           return (
             <li key={fieldId} className={css.item}>
-              <FieldCheckbox
-                id={fieldId}
-                name={fields.name}
-                label={option.label}
-                value={option.key}
-                onChange={onChange}
-              />
+              {onChange ? (
+                <FieldCheckbox
+                  id={fieldId}
+                  name={fields.name}
+                  label={option.label}
+                  value={option.key}
+                  onChange={onChange}
+                />
+              ) : (
+                <FieldCheckbox
+                  id={fieldId}
+                  name={fields.name}
+                  label={option.label}
+                  value={option.key}
+                />
+              )}
             </li>
           );
         })}
