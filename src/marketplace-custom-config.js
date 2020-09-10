@@ -409,7 +409,7 @@ export const PublicServices = [
   { key: 'Chief Inspector', label: 'Chief Inspector', isGrade: true },
   { key: 'Superintendent', label: 'Superintendent', isGrade: true },
   { key: 'Chief Superintendent', label: 'Chief Superintendent', isGrade: true },
-  { key: 'Office Cadet', label: 'Office Cadet', isGrade: true },
+  { key: 'Office Cadet', label: 'Officer Cadet', isGrade: true },
   { key: 'Second Lieutenant', label: 'Second Lieutenant', isGrade: true },
   { key: 'Lieutenant', label: 'Lieutenant', isGrade: true },
   { key: 'Captain', label: 'Captain', isGrade: true },

@@ -229,6 +229,7 @@
   "EditListingFeaturesForm.jobRoleLabel": "At which Seniority levels could you offer Mentoring for the Role?",
   "EditListingFeaturesPanel.createListingTitle": "Which of these Sectors can you offer Mentoring for the Job Role in?",
   "EditListingLanguageYoutubePanel.createListingTitle": "Now define the Language and youtube link",
+  "EditListingLanguageYoutubePanel.title": "Now define the Language and youtube link",
   "EditListingFeaturesPanel.listingTitle": "your sessions",
   "EditListingFeaturesPanel.title": "Edit the Sector of {listingTitle}",
   "EditListingLocationForm.address": "Address",
