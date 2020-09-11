@@ -442,6 +442,9 @@ class SearchFiltersComponent extends Component {
     console.log('urlQueryParams', showRelatedSearchError());
     return (
       <div className={classes}>
+        <div className={css.filterLabel}>
+          <FormattedMessage id="SearchFilters.filterlabel" />
+        </div>
         <div className={css.filters}>
           {/*yogaStylesFilterElement*/}
           {/*certificateFilterElement*/}
@@ -454,7 +457,6 @@ class SearchFiltersComponent extends Component {
           {/*keywordFilterElement*/}
           {toggleSearchFiltersPanelButton}
         </div>
-
         {listingsAreLoaded && resultsCount > 0 ? (
           <div className={css.searchResultSummary}>
             <span className={css.resultsFound}>
@@ -462,13 +464,11 @@ class SearchFiltersComponent extends Component {
             </span>
           </div>
         ) : null}
-
         {/* {hasNoResult ? (
           <div className={css.noSearchResults}>
             <FormattedMessage id="SearchFilters.noResults" />
           </div>
         ) : null} */}
-
         {hasNoResult && urlQueryParams.pub_sectors && (
           <p className={css.smallText}>
             If your sector is not listed,{' '}
@@ -596,7 +596,6 @@ class SearchFiltersComponent extends Component {
         ) : null}
         {/* <ul className={css.noSearchResults}>
         </ul> */}
-
         {searchInProgress ? (
           <div className={css.loadingResults}>
             <FormattedMessage id="SearchFilters.loadingResults" />

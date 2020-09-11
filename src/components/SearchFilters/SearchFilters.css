@@ -114,3 +114,8 @@
     border: 1px solid var(--marketplaceColorDark);
   }
 }
+
+.filterLabel {
+  font-size: 0.7rem;
+  margin-bottom: 1rem;
+}

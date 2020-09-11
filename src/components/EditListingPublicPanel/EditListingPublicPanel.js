@@ -174,7 +174,7 @@ const EditListingPublicPanel = props => {
     <main className={classes} ref={setPortalRootAfterInitialRender}>
       {/*<div className={classes} ref={setPortalRootAfterInitialRender}>*/}
 
-      <h1 className={css.title}>{panelTitle}</h1>
+      {/* <h1 className={css.title}>{panelTitle}</h1> */}
       {/* <p>Skip if you do not have experience of this sector</p> */}
 
       <EditListingPublicForm

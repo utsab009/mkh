@@ -311,12 +311,9 @@ export class EditListingPublicFormComponent extends Component {
               </p> */}
 
               <p className={css.customLable}>
-                Clicking more than one Seniority Level will mean that Mentees requiring Mentoring at
-                each of the levels clicked will find you. This said, if you intend to charge
-                different rates for different levels of seniority, then only click the levels that
-                you will be charging the same price for. For those other price levels, you will need
-                to return to this process and create a new listing for that Job at that level or
-                levels.
+                If you intend to charge different rates for different levels of seniority, then only
+                click thelevels that you will be charging the same price for, now. For those other
+                price levels, youwill need to create a new listing or listings.
               </p>
 
               {this.state.isMailSectorModalOpen ? (

@@ -106,7 +106,7 @@ export class LandingPageComponent extends Component {
               >
                 <div className={css.modalHeader}>
                   {currentUser.attributes.profile.displayName}, it is now time for you to decide
-                  which Job Roles you can offer Mentoring in.
+                  which JobRoles and / or Grades you can offer Mentoring in.
                 </div>
                 <div className={css.welcomeModal}>
                   <p>
@@ -128,14 +128,14 @@ export class LandingPageComponent extends Component {
                     >
                       Roles I can Mentor
                     </span>{' '}
-                    which is located on the top of each page once you have signed in.
+                    which will be located on the top of each page. Look up and to the right now.
+                    Return to it for each Job or Grade you can Mentor.
                   </p>
                   <p>
-                    Filling this in is critical. Through this prople will be able to find you and
-                    see how you can help them specifically. As your experience grows keep returning
-                    to this Role Profile to update it.
+                    Filling this section in is critical as without doing so, Mentees will not find
+                    you.
                   </p>
-                  <p>
+                  {/* <p>
                     Remember, for each Role you are capable of offering Mentoring in, you'll need to
                     return to the{' '}
                     <span
@@ -148,7 +148,7 @@ export class LandingPageComponent extends Component {
                     </span>{' '}
                     section of this website and create a new Role Profile, each of which then saved
                     in this section.
-                  </p>
+                  </p> */}
                   <p>
                     If you would like to watch a video explaining how to do this, click{' '}
                     <span className={css.internalLink}>here</span>

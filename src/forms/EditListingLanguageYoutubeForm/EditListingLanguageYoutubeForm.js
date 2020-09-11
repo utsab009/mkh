@@ -114,12 +114,15 @@ const EditListingLanguageYoutubeFormComponent = props => (
             name="youtubeLink"
             autoComplete="youtube link"
             label={'YouTube link (Optional)'}
-            placeholder={
-              'Video explaining why you are the ideal Mentor in general or for this specific role'
-            }
+            placeholder={'Type Link Here'}
             className={css.youtubeLink}
             // validate={lastNameRequired}
           />
+          <p className={css.customLable}>
+            IF YOU LIKE YOU CAN CREATE A SHORT VIDEO EXPLAINING WHY YOU ARE AN IDEALMENTOR IN
+            GENERAL OR FOR THIS SPECIFIC JOB ROLE OR GRADE. JUST POST IT ON TO YOUTUBE AND PLACE THE
+            LINK FOR IT HERE, OR RETURN WHEN YOU HAVE ONE(OPTIONAL)
+          </p>
 
           <Button
             className={css.submitButton}

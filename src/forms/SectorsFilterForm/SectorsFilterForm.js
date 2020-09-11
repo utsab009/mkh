@@ -388,7 +388,7 @@ export class SectorsFilterFormComponent extends Component {
                   <Select
                     options={this.state.jobRolesConfig}
                     name="subsectors"
-                    placeholder="Type and Select Job Role Here"
+                    placeholder="Type and Select Job or Grade Here"
                     value={this.state.jobRolesConfig.filter(
                       item => item.value === values.subsectors
                     )}
@@ -456,12 +456,10 @@ export class SectorsFilterFormComponent extends Component {
                 IF YOU ARE IN THE PUBLIC SECTOR AND WANT GRADE BASED RATHER THAN ROLE BASED
                 MENTORING, PLEASE PLACE “GENERALIST (PUBLIC SECTOR)” ABOVE
               </span> */}
+              <p className={css.customLable}>PICK A JOB ROLE OR A GRADE SPECIFIC TO YOUR SECTOR</p>
               <p className={css.customLable}>
-                A JOB GRADE IS SPECIFIC TO A PUBLIC SECTOR TYPE ROLE E.G. FEDERAL GOVERNMENT GRADE,
-                PUBLIC SECTOR GRADE, HIGHER EDUCATION ETC. INTERNATIONAL GRADES ARE UTILISED SO PICK
-                FROM THIS THE EQUIVALENT GRADE
+                INTERNATIONAL GRADES ARE UTILISED, SO PLEASE PICKYOUR EQUIVALENT OR SIMLAR GRADE
               </p>
-              <p className={css.customLable}>JOB ROLES CAN BE EITHER PUBLIC OR PRIVATE SECTOR</p>
             </Form>
           );
         }}

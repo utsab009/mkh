@@ -274,7 +274,7 @@ class EditListingDescriptionFormComponent extends Component {
 
               <div className={css.customTitle}>
                 {/* State the <span className={css.underLine}>Job Role</span> you can Mentor */}
-                Second Step. Now select the Job Role or Job Grade you can offer Mentoring
+                Second Step. Now select the Job Role or Job Grade you can offer Mentoring in
               </div>
               <div className={css.customSubLable}>
                 {/* (For each Job Role you can Mentor, you will need to return to this section, create a
@@ -283,7 +283,7 @@ class EditListingDescriptionFormComponent extends Component {
               <Select
                 options={this.state.roleData}
                 name="subsectors"
-                placeholder="Type and Select Job Role Here"
+                placeholder="Now type the Job Role or Job Grade Here"
                 value={this.state.roleData.filter(item => item.value === values.subsectors)}
                 // id="subsectors"
                 onChange={values => {
@@ -293,7 +293,7 @@ class EditListingDescriptionFormComponent extends Component {
                 }}
               />
               <p className={css.smallTextIns}>
-                If your Job Role or Sector are not present,{' '}
+                If the Job Role or Grade are not present,{' '}
                 <InlineTextButton
                   className={css.btnModSl}
                   onClick={e => {
@@ -307,12 +307,7 @@ class EditListingDescriptionFormComponent extends Component {
               </p>
 
               <div className={css.customLable}>
-                A JOB GRADE IS SPECIFIC TO A PUBLIC SECTOR TYPE ROLE E.G. FEDERAL GOVERNMENT GRADE,
-                PUBLIC SECTOR GRADE, HIGHER EDUCATION ETC. INTERNATIONAL GRADES ARE UTILISED SO PICK
-                FROM THIS THE EQUIVALENT GRADE
-              </div>
-              <div className={css.customLable}>
-                JOB ROLES CAN BE EITHER PUBLIC OR PRIVATE SECTOR
+                INTERNATIONAL GRADES ARE UTILISED, SO PLEASE PICK YOUR EQUIVALENT OR SIMLAR GRADE
               </div>
 
               {/* <div className={css.customLable}>

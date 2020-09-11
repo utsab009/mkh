@@ -323,9 +323,9 @@ export class SignupFormComponent extends Component {
                         />
                       </div>
                       <div className={css.infoMsg}>
-                        You will meet your Mentee online, so we will need a link to you Skype
-                        account. If you do not have one handy (or do not have one at all), skip this
-                        for now but place it on your Mentor Profile as soon as you can.
+                        You will meet your Mentee online, so we will needa link to you Skype
+                        account. If you do not have one now, skip this for now but place it on your
+                        Mentor Profile as soon as you can.
                       </div>
                     </div>
                   );
@@ -573,7 +573,7 @@ export class SignupFormComponent extends Component {
                       >
                         Community Guidelines
                       </ExternalLink>{' '}
-                      as these practically ensure this is achieved.
+                      as these ensure this is achieved.
                     </p>
                     <h2>Try A Mentor Community Commitment</h2>
                     <p>
