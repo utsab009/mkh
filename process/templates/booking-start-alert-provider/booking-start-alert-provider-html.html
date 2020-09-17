@@ -5,14 +5,21 @@ format="h:mm a" tz=timezone}} on {{date date format="MMM d, YYYY" tz=timezone}} 
 <html>
   <body style="font-family: sans-serif;">
     {{#with transaction}}
-    <h1>Reminder: Start getting ready for your Mentor meeting in 24 hours (Try A Mentor)</h1>
+    <!-- <h1>Reminder: Start getting ready for your Mentor meeting in 24 hours (Try A Mentor)</h1> -->
     <!-- <h1>Your booking will start within 30 minutes.</h1> -->
-
+    <h1>Mentor Meeting - Start Reminder: {{listing.title}}</h1>
+    <p>Hi {{provider.display-name}},</p>
     <p>
+      This is a gentle and hopefully useful reminder that your Mentor Meeting with Andy T will
+      commence from {{> format-date date=booking.start}} to {{> format-date date=booking.end}}.
+    </p>
+    <p>We hope it is a great success</p>
+    <p>The Try A Mentor team</p>
+    <!-- <p>
       Your Mentoring is only <span style="text-decoration: underline;">24 hours away</span> with
       {{customer.display-name}}. It will commence from {{> format-date date=booking.start}} to {{>
       format-date date=booking.end}}.
-    </p>
+    </p> -->
     {{/with}}
 
     <p style="font-weight: 700; color: #032264;">A Great Way to Avoid or Solve Problems</p>
@@ -22,7 +29,7 @@ format="h:mm a" tz=timezone}} on {{date date format="MMM d, YYYY" tz=timezone}} 
       'From mentees' section of the inbox). You can type a message to your Mentor / Mentee to say
       you are about to connect, and they can reply in real time. This way you are telling the other
       person you are ready and waiting and if either of you run into problems, the other person can
-      offer help if you run into any problems.
+      offer help.
     </p>
     <p>
       If you are not sure how to get Skype set-up, remember your Mentor is here to help, so again,
@@ -47,7 +54,7 @@ format="h:mm a" tz=timezone}} on {{date date format="MMM d, YYYY" tz=timezone}} 
         <p style="font-size: 12px; margin: 0 0 20px; color: #7f7f7f; letter-spacing: 1px;">
           You have received this email notification because you are using
           <a target="_blank" href="http://tryamentor.com">TryAMentor.com</a>. If you do not wish to
-          receive these e-mail contact us at <a href="#">admin@tryamentor.com</a>.
+          receive these emails contact us at <a href="#">admin@tryamentor.com</a>.
         </p>
 
         <p

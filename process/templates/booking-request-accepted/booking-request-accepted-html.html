@@ -50,7 +50,7 @@ transaction.listing.availability-plan}} {{date date format='MMM d YYYY' tz=timez
     </p> -->
 
     <p>
-      We have charged {{> format-money money=payin-total}} from your credit card. Here is your
+      You have been charged {{> format-money money=payin-total}} from your credit card. Here is your
       receipt.
     </p>
 
@@ -116,18 +116,20 @@ transaction.listing.availability-plan}} {{date date format='MMM d YYYY' tz=timez
       Skype address:
     </p>
 
-    <p style="font-weight: 700; color: #032264;">Mentors Skype address to appear here</p>
+    <!-- <p style="font-weight: 700; color: #032264;">Mentors Skype address to appear here</p> -->
     {{#if protected-data.link}}
     <a style="font-size: 30px; font-weight: 700" href="skype:{{protected-data.link}}?chat"
       >Meeting Link: skype:{{protected-data.link}}?chat
     </a>
     {{else}}
-    <p style="font-size:20px; color: blue;">
-      Your Mentor has yet to give us their Skype address. Please contact them well before your
-      meeting date to request it by signing into TryAMentor.com, clicking on the circle with your
-      picture or initials in it (top right hand corner of the screen) and go to your inbox (from
-      Mentors). Here you can write messages to your Mentor and in this case ask them to provide
-      their Skype address
+    <p style="font-weight: 700; color: #032264;">No Skype Address?</p>
+    <p>
+      If you cannot see the Mentor's Skype address above, they have failed to supply it. You will
+      need it so please get if from them by typing a message to your Mentor. To do this, log into
+      your account on TryaMentor.com, right beside the circle in the top right-hand corner of your
+      screen is a link called Bookings / Inbox. Click this and then click the message from the
+      Mentor in which they accepted your Mentoring request. Here you can send the mentor a message
+      asking for their Skype address
     </p>
     {{/if}} {{/with}}
     <p>
@@ -150,11 +152,9 @@ transaction.listing.availability-plan}} {{date date format='MMM d YYYY' tz=timez
     <p style="font-weight: 700; color: #032264;">Need to Postpone or Cancel the Meeting</p>
     <p>
       Remember you can cancel at no cost up to 48 hours before the meeting but within 48 hours you
-      will be charged the full fee with one exception. The exception is, If you book the meeting
-      within the 48 hours period (e.g. you book a meeting for the next day) you can get a refund if
-      you cancel within 15 minutes of when you made the booking. You can cancel three times a year
-      and will receive a full refund but from the fourth time onwards, Try A Mentor reserves the
-      right to retain the Try A Mentor administration fee.
+      will be charged the full fee with one exception. The exception is if the Mentor has not
+      confirmed your booking. You will know a booking has been confirmed by a Mentor through
+      receiving this precise message (this is a confirmation of booking message).
     </p>
     <p style="font-weight: 700; color: #032264;">
       Have a wonderful and enriching Mentoring meeting!
@@ -172,7 +172,7 @@ transaction.listing.availability-plan}} {{date date format='MMM d YYYY' tz=timez
         <p style="font-size: 12px; margin: 0 0 20px; color: #7f7f7f; letter-spacing: 1px;">
           You have received this email notification because you are using
           <a target="_blank" href="http://tryamentor.com">TryAMentor.com</a>. If you do not wish to
-          receive these e-mail contact us at <a href="#">admin@tryamentor.com</a>.
+          receive these emails contact us at <a href="#">admin@tryamentor.com</a>.
         </p>
 
         <p

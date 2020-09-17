@@ -41,6 +41,7 @@ import {
   Footer,
   BookingPanel,
   ExternalLink,
+  Button,
 } from '../../components';
 import { EnquiryForm } from '../../forms';
 import { TopbarContainer, NotFoundPage } from '../../containers';
@@ -55,6 +56,8 @@ import SectionReviews from './SectionReviews';
 import SectionMapMaybe from './SectionMapMaybe';
 import css from './ListingPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-regular-svg-icons';
+
 import {
   faCoffee,
   faHeart as solidHeart,
@@ -62,8 +65,8 @@ import {
   faHeartbeat,
   faStar as solidStar,
 } from '@fortawesome/free-solid-svg-icons';
+import { updateProfile } from '../ProfileSettingsPage/ProfileSettingsPage.duck';
 const MIN_LENGTH_FOR_LONG_WORDS_IN_TITLE = 16;
-
 const { UUID } = sdkTypes;
 
 const priceData = (price, intl) => {
@@ -122,7 +125,6 @@ export class ListingPageComponent extends Component {
       // units: 1,
       ...values,
     };
-
     const FormData = (...args) => {
       let data = {
         bookingStartTime: timestampToDate(JSON.parse(args[0])),
@@ -230,7 +232,49 @@ export class ListingPageComponent extends Component {
         // Ignore, error handling in duck file
       });
   }
+  addToFav = id => {
+    let { profile } = this.props.currentUser.attributes;
+    let newFavourites =
+      profile.protectedData.favourites &&
+      Array.isArray(JSON.parse(profile.protectedData.favourites))
+        ? JSON.parse(profile.protectedData.favourites)
+        : [];
+    newFavourites.push({
+      id: id,
+      listing: this.props.listing,
+      renderSizes: this.props.renderSizes,
+    });
+    // profile.protectedData = {favourites : JSON.stringify(favourites)};
+    profile.protectedData.favourites = JSON.stringify(newFavourites);
+    const profileToSaved = {
+      firstName: profile.firstName.trim(),
+      lastName: profile.lastName.trim(),
+      bio: profile.bio,
+      protectedData: profile.protectedData,
+    };
+    this.props.onupdateProfile(profileToSaved);
+  };
 
+  removeFromFav = id => {
+    let { profile } = this.props.currentUser.attributes;
+    let newFavourites =
+      profile.protectedData.favourites &&
+      Array.isArray(JSON.parse(profile.protectedData.favourites))
+        ? JSON.parse(profile.protectedData.favourites)
+        : [];
+    if (newFavourites.length == 0) {
+      return false;
+    }
+    const removedArr = newFavourites.filter(c => c.id !== id);
+    profile.protectedData.favourites = JSON.stringify(removedArr);
+    const profileToSaved = {
+      firstName: profile.firstName.trim(),
+      lastName: profile.lastName.trim(),
+      bio: profile.bio,
+      protectedData: profile.protectedData,
+    };
+    this.props.onupdateProfile(profileToSaved);
+  };
   render() {
     const {
       unitType,
@@ -461,6 +505,26 @@ export class ListingPageComponent extends Component {
         {authorDisplayName}
       </NamedLink>
     );
+    const id = currentListing.id.uuid;
+    let favouritesArr =
+      currentUser &&
+      currentUser.attributes.profile.protectedData.favourites &&
+      Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites))
+        ? JSON.parse(currentUser.attributes.profile.protectedData.favourites)
+        : [];
+    let isFavourite = false;
+    if (favouritesArr.length > 0) {
+      // isFavourite = favouritesArr.filter(c => c.id !== id).length > 0 ? true : false;
+      isFavourite = favouritesArr.filter(c => {
+        if (c.id == id) {
+          return true;
+        }
+        // else
+        // {
+        //   return false;
+        // }
+      });
+    }
     return (
       <Page
         title={schemaTitle}
@@ -503,22 +567,70 @@ export class ListingPageComponent extends Component {
                     <SectionAvatar user={currentAuthor} params={params} />
 
                     <div className={css.hedRating}>
-                      {
-                        <SectionHeading
-                          priceTitle={priceTitle}
-                          formattedPrice={formattedPrice}
-                          richTitle={richTitle(fullName)}
-                          listingCertificate={publicData ? publicData.certificate : null}
-                          certificateConfig={certificateConfig}
-                          hostLink={hostLink}
-                          showContactUser={showContactUser}
-                          onContactUser={this.onContactUser}
-                        />
-                      }
+                      <div>
+                        {
+                          <SectionHeading
+                            priceTitle={priceTitle}
+                            formattedPrice={formattedPrice}
+                            richTitle={richTitle(fullName)}
+                            listingCertificate={publicData ? publicData.certificate : null}
+                            certificateConfig={certificateConfig}
+                            hostLink={hostLink}
+                            showContactUser={showContactUser}
+                            onContactUser={this.onContactUser}
+                          />
+                        }
 
-                      <div className={css.rating}>
-                        <FontAwesomeIcon icon={solidStar} />{' '}
-                        {isNaN(averageRating) ? 0 : averageRating} <span>({reviews.length})</span>
+                        <div className={css.rating}>
+                          <FontAwesomeIcon icon={solidStar} />{' '}
+                          {isNaN(averageRating) ? 0 : averageRating} <span>({reviews.length})</span>
+                        </div>
+                      </div>
+                      <div className={css.fevVidContainer}>
+                        {currentUser !== null ? (
+                          <div className={css.favSec}>
+                            {isFavourite.length > 0 ? (
+                              <Button onClick={() => this.removeFromFav(id)} className={css.favBtn}>
+                                <FontAwesomeIcon icon={solidHeart} />
+                              </Button>
+                            ) : (
+                              <Button onClick={() => this.addToFav(id)} className={css.favBtn}>
+                                <FontAwesomeIcon icon={faHeart} />{' '}
+                              </Button>
+                            )}
+                          </div>
+                        ) : null}
+                        {!youtubeLink ? (
+                          <div
+                            onClick={() =>
+                              this.setState({ showNoVideoError: true, showNoLinkError: false })
+                            }
+                          >
+                            <a
+                              href={youtubeLink}
+                              target="_blank"
+                              title={youtubeMsg}
+                              className={css.sociallink}
+                            >
+                              Mentor Video
+                            </a>
+                          </div>
+                        ) : (
+                          <div>
+                            <a
+                              href={youtubeLink}
+                              target="_blank"
+                              title={youtubeMsg}
+                              className={css.sociallink}
+                            >
+                              Mentor Video
+                            </a>
+                          </div>
+                        )}
+
+                        {this.state.showNoVideoError && (
+                          <div className={css.noVideoError}>The Mentor has yet to post a video</div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -659,7 +771,7 @@ export class ListingPageComponent extends Component {
                     )}
                   </span>
                   <span>
-                    {!youtubeLink ? (
+                    {/* {!youtubeLink ? (
                       <span
                         onClick={() =>
                           this.setState({ showNoVideoError: true, showNoLinkError: false })
@@ -683,13 +795,13 @@ export class ListingPageComponent extends Component {
                       >
                         Mentor Video
                       </a>
-                    )}
+                    )} */}
 
-                    {this.state.showNoVideoError && (
+                    {/* {this.state.showNoVideoError && (
                       <div className={css.noVideoError}>The Mentor has yet to post a video</div>
-                    )}
+                    )} */}
                     {this.state.showNoLinkError && (
-                      <div className={css.noVideoError}>
+                      <div className={css.noLinkedInError}>
                         Mentor is yet to share their LinkedIn link
                       </div>
                     )}
@@ -855,6 +967,7 @@ const mapDispatchToProps = dispatch => ({
   onInitializeCardPaymentData: () => dispatch(initializeCardPaymentData()),
   onFetchTimeSlots: (listingId, start, end, timeZone) =>
     dispatch(fetchTimeSlots(listingId, start, end, timeZone)),
+  onupdateProfile: data => dispatch(updateProfile(data)),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

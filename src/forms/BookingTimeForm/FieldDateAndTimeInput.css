@@ -76,7 +76,7 @@
 
     &::after {
       left: 0;
-      bottom: 40px;
+      bottom: 20px;
     }
   }
 }
@@ -169,7 +169,7 @@ CSS for hiding the end date above
   }
 }
 
-.adddelbtn{
+.adddelbtn {
   margin: 10px 0 20px;
   font-size: 16px;
   text-align: left;

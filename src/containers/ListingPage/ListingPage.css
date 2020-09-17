@@ -25,11 +25,21 @@
 }
 
 .noVideoError {
-  color: 'red';
+  color: red;
+  font-size: 14px;
+  /* margin-left: 25px; */
+  text-align: center;
+}
+.noLinkedInError {
+  color: red;
   font-size: 14px;
   margin-left: 25px;
 }
-
+.fevVidContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
 .threeToTwoWrapper {
   /* Layout */
   display: block;
@@ -758,5 +768,31 @@
   }
   .qtbtn {
     font-size: 14px;
+  }
+}
+.hedRating {
+  justify-content: space-between;
+  display: flex;
+  width: 100%;
+}
+.favBtn {
+  padding: 11px;
+  background-color: transparent;
+  color: #cd2553;
+  min-height: auto !important;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 25px;
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    box-shadow: none;
+  }
+  @media (max-width: 1199px) {
+    padding: 15px;
+    justify-content: center;
+    margin: 0 auto;
+    display: flex;
+    font-size: 30px;
   }
 }

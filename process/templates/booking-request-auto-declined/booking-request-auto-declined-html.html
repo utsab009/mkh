@@ -12,12 +12,13 @@ format="h:mm a" tz=timezone}} on {{date date format="MMM d, YYYY" tz=timezone}} 
     {{#with transaction}}
     <p>
       Unfortunately, {{provider.display-name}} did not respond to your booking request for
-      {{listing.title}} for the role of Sales Assistant that you made for
+      {{listing.title}} that you made for.
       <span style="text-decoration: underline;"
         >{{> format-date date=booking.start}} to {{> format-date date=booking.end}}</span
-      >. We are sorry. There could be a range of reasons as to why this has occurred, to the Mentor
-      being currently away and not checking their e-mails to a technical fault. Please know you have
-      not been billed. You can try booking this Mentor again or find a new one (if you have not
+      >. On behalf of the Mentor we apologise for any inconvenience caused. There could be a range
+      of reasons as to why this has occurred, for example the Mentor is currently away and not
+      checking their e-mails to a technical fault that the Mentor is having etc. Please know you
+      have not been billed. You can try booking this Mentor again or find a new one (if you have not
       already done so) through the link in blue below. Sorry for any inconvenience caused.
     </p>
     {{/with}}
@@ -34,7 +35,7 @@ format="h:mm a" tz=timezone}} on {{date date format="MMM d, YYYY" tz=timezone}} 
         <p style="font-size: 12px; margin: 0 0 20px; color: #7f7f7f; letter-spacing: 1px;">
           You have received this email notification because you are using
           <a target="_blank" href="http://tryamentor.com">TryAMentor.com</a>. If you do not wish to
-          receive these e-mail contact us at <a href="#">admin@tryamentor.com</a>.
+          receive these emails contact us at <a href="#">admin@tryamentor.com</a>.
         </p>
 
         <p
