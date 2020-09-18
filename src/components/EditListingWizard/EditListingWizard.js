@@ -473,8 +473,8 @@ class EditListingWizard extends Component {
             >
               <div className={css.modalPayoutDetailsWrapper}>
                 <h1 className={css.modalTitle}>
-                  <FormattedMessage id="EditListingPhotosPanel.payoutModalTitleOneMoreThing" />
-                  <br />
+                  <FormattedMessage id="EditListingPhotosPanel.payoutModalTitleOneMoreThing" />{' '}
+                  {/* <br /> */}
                   <FormattedMessage id="EditListingPhotosPanel.payoutModalTitlePayoutPreferences" />
                 </h1>
                 {/* <p className={css.modalMessage}>

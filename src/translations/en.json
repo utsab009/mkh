@@ -280,7 +280,7 @@
   "EditListingPricingForm.priceTooLow": "Price should be at least {minPrice}.",
   "EditListingPricingForm.showListingFailed": "Fetching listing data failed",
   "EditListingPricingForm.updateFailed": "Failed to update listing. Please try again.",
-  "EditListingPricingPanel.createListingTitle": "How much do your sessions cost?",
+  "EditListingPricingPanel.createListingTitle": "How much will your Mentoring sessions cost?",
   "EditListingPricingPanel.listingPriceCurrencyInvalid": "Currency in Mentor profile is different from the marketplace currency. You cannot edit the price.",
   "EditListingPricingPanel.listingTitle": "your sessions",
   "EditListingPricingPanel.title": "Edit the pricing of {listingTitle}",

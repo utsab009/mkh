@@ -119,7 +119,7 @@ const EditListingLanguageYoutubeFormComponent = props => (
             // validate={lastNameRequired}
           />
           <p className={css.customLable}>
-            IF YOU LIKE YOU CAN CREATE A SHORT VIDEO EXPLAINING WHY YOU ARE AN IDEALMENTOR IN
+            IF YOU LIKE YOU CAN CREATE A SHORT VIDEO EXPLAINING WHY YOU ARE AN IDEAL MENTOR IN
             GENERAL OR FOR THIS SPECIFIC JOB ROLE OR GRADE. JUST POST IT ONTO YOUTUBE AND PLACE THE
             LINK FOR IT HERE, OR RETURN WHEN YOU HAVE ONE (OPTIONAL)
           </p>

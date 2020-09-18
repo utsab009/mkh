@@ -323,7 +323,7 @@ export class SignupFormComponent extends Component {
                         />
                       </div>
                       <div className={css.infoMsg}>
-                        You will meet your Mentee online, so we will needa link to your Skype
+                        You will meet your Mentee online, so we will need a link to your Skype
                         account. If you do not have one now, skip this for now but place it on your
                         Mentor Profile as soon as you can.
                       </div>
