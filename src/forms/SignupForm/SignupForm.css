@@ -151,10 +151,10 @@
 .spaceMargin {
   margin-right: 15px;
 }
-label {
+/* label {
   height: 60px;
 
   @media screen (min-width: 768px) {
     height: 60px;
   }
-}
+} */
