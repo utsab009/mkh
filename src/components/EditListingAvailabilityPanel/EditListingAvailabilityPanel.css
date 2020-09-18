@@ -212,8 +212,11 @@
     margin-top: 21px;
     margin-bottom: 17px;
     padding: 0;
+    line-height: 1.5;
   }
-
+  .marginLeft {
+    margin-left: 15px;
+  }
   .weekDay {
     padding-top: 22px;
     padding-bottom: 25px;

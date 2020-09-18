@@ -30,6 +30,7 @@ import EditListingWizardTab, {
   PUBLIC,
 } from './EditListingWizardTab';
 import css from './EditListingWizard.css';
+import ExternalLink from '../ExternalLink/ExternalLink';
 
 // Show availability calendar only if environment variable availabilityEnabled is true
 const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
@@ -476,8 +477,22 @@ class EditListingWizard extends Component {
                   <br />
                   <FormattedMessage id="EditListingPhotosPanel.payoutModalTitlePayoutPreferences" />
                 </h1>
-                <p className={css.modalMessage}>
+                {/* <p className={css.modalMessage}>
                   <FormattedMessage id="EditListingPhotosPanel.payoutModalInfo" />
+                </p> */}
+                <p className={css.modalMessage}>
+                  Almost done! To pay you for your Mentoring Sessions, you will need to verify your
+                  account details to a totally independent and highly trusted payment system called{' '}
+                  <ExternalLink className={css.link} href="https://stripe.com">
+                    Stripe
+                  </ExternalLink>
+                  . Stripe will guide you through their verification process (started by clicking
+                  the button below). The details can be edited in the future through accessing
+                  Stripe via the Try A Mentor Account Setting page (payment details tab).
+                </p>
+                <p className={css.modalMessage}>
+                  Stripe asks for a website address as part of their process. If you do not have
+                  one, simply use TryaMentor.com
                 </p>
                 {!currentUserLoaded ? (
                   <FormattedMessage id="StripePayoutPage.loadingData" />

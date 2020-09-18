@@ -255,8 +255,9 @@ export class EditListingPublicFormComponent extends Component {
                   ))}
                 </FieldSelect>
               ) : null} */}
+              {/* <h1>{jobRoleLabel}</h1> */}
               <FieldCheckboxGroup
-                label={jobRoleLabel}
+                // label={jobRoleLabel}
                 className={css.jobRole}
                 id="jobroles"
                 name="jobroles"
@@ -312,8 +313,8 @@ export class EditListingPublicFormComponent extends Component {
 
               <p className={css.customLable}>
                 If you intend to charge different rates for different levels of seniority, then only
-                click thelevels that you will be charging the same price for, now. For those other
-                price levels, youwill need to create a new listing or listings.
+                click the levels that you will be charging the same price for, now. For those other
+                price levels, you will need to create a new listing or listings.
               </p>
 
               {this.state.isMailSectorModalOpen ? (
@@ -351,8 +352,8 @@ export class EditListingPublicFormComponent extends Component {
                               id="emailId"
                               name="emailId"
                               type="text"
-                              label={'Email ID'}
-                              placeholder={'Enter your email ID'}
+                              label={'E-mail Address'}
+                              placeholder={'Enter your E-mail Address'}
                               // validate={composeValidators(required(descriptionRequiredMessage))}
                             />
                           </div>

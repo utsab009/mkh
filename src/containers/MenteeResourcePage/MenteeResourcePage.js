@@ -82,8 +82,8 @@ class MenteeResourcePage extends React.Component {
                               id="emailId"
                               name="emailId"
                               type="text"
-                              label={'Email ID'}
-                              placeholder={'Enter your email ID'}
+                              label={'E-mail Address'}
+                              placeholder={'Enter your E-mail Address'}
                               // validate={composeValidators(required(descriptionRequiredMessage))}
                             />
                           </div>

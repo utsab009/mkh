@@ -1,6 +1,7 @@
 @import '../../marketplace.css';
 
 .root {
-  stroke: var(--matterColor);
+  stroke: white;
+  /* stroke: var(--matterColor); */
   fill: var(--matterColor);
 }

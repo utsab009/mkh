@@ -106,7 +106,7 @@ export class LandingPageComponent extends Component {
               >
                 <div className={css.modalHeader}>
                   {currentUser.attributes.profile.displayName}, it is now time for you to decide
-                  which JobRoles and / or Grades you can offer Mentoring in.
+                  which Job Roles and / or Grades you can offer Mentoring in.
                 </div>
                 <div className={css.welcomeModal}>
                   <p>
@@ -189,19 +189,19 @@ export class LandingPageComponent extends Component {
                       <p>
                         Start by clicking “Become A Mentor” at the top right-hand corner of this
                         page. Give your name, create your password and outline both your Work
-                        Experience and Education to date. If you do not have this information to
-                        hand, you can fill it in later. Then confirm your e-mail.
+                        Experience, Education to date and Skype Address. If you do not have this
+                        information to hand, you can fill it in later. Then confirm your e-mail.
                       </p>
                     </div>
 
                     <div className={css.scdstep}>
                       <h2 className={css.scdstepTitle}>2. Create your Role Profiles</h2>
                       <p>
-                        Your Mentor Profile makes the case as to why you will be a great Mentor, but
-                        what specific Job Roles will you help with? To define this, click “Roles I
-                        can Mentor” which is in the top right-hand corner. Here you will define the
-                        specific Job Role, when you will be available, and how much you will charge
-                        and so on
+                        You have provided the information as to why you will be a great Mentor, but
+                        what specific Job or Grade based Roles will you help with? To define this,
+                        click “Roles I can Mentor” which is in the top right-hand corner. Here you
+                        will define the specific Jobs or Grades you can Mentor, when you will be
+                        available, and how much you will charge and so on
                       </p>
                     </div>
 
@@ -211,7 +211,7 @@ export class LandingPageComponent extends Component {
                         You are all set. Bookings will arrive, payments will be automatic and
                         through Skype or another Video Meeting Application you will deliver your
                         on-line Mentoring. Try A Mentor will provide on-going support of key
-                        resources for you including a Mentee Management System and free training on
+                        resources for you including a Mentee Management System and free Training on
                         how to improve your Mentoring skills (optional)
                       </p>
                     </div>

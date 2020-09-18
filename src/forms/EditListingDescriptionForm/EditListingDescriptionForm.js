@@ -203,8 +203,8 @@ class EditListingDescriptionFormComponent extends Component {
                               id="emailId"
                               name="emailId"
                               type="text"
-                              label={'Email ID'}
-                              placeholder={'Enter your email ID'}
+                              label={'E-mail Address'}
+                              placeholder={'Enter your E-mail Address'}
                               // validate={composeValidators(required(descriptionRequiredMessage))}
                             />
                           </div>
@@ -305,6 +305,17 @@ class EditListingDescriptionFormComponent extends Component {
                 </InlineTextButton>{' '}
                 and tell us so we can include it for you.
               </p>
+              <FieldTextInput
+                id="experience"
+                name="experience"
+                className={css.title}
+                type="text"
+                label="Third Step. Tell Mentees about your experience of the Role or Grade"
+                placeholder="How will your experience help? What did you achieve while in the role? Etc."
+                // maxLength={TITLE_MAX_LENGTH}
+                // validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
+                autoFocus
+              />
 
               <div className={css.customLable}>
                 INTERNATIONAL GRADES ARE UTILISED, SO PLEASE PICK YOUR EQUIVALENT OR SIMLAR GRADE

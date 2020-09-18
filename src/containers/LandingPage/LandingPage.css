@@ -106,6 +106,7 @@
 .welcomeModal p {
   font-size: 0.8rem;
   line-height: 1.1rem;
+  margin-top: 30px;
 }
 
 /* Square corners for the last section if it's even */
@@ -186,6 +187,7 @@
 .modalHeader {
   font-style: italic;
   font-size: 1.2rem;
+  margin-bottom: 1.5rem;
 }
 .scdtitle {
   margin-top: 0;

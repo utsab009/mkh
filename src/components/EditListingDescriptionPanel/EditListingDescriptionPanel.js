@@ -71,6 +71,7 @@ const EditListingDescriptionPanel = props => {
           // mentorLanguage: publicData.mentorLanguage,
           // profileType: publicData.profileType,
           subsectors: publicData.subsectors,
+          experience: publicData.experience,
         }}
         saveActionMsg={submitButtonText}
         onSubmit={values => {
@@ -83,12 +84,13 @@ const EditListingDescriptionPanel = props => {
             // youtubeLink,
             subsectors,
             isGrade,
+            experience,
           } = values;
           console.log('test: ', values);
           const updateValues = {
             title: title.trim(),
             // description,
-            publicData: { subsectors, isGrade },
+            publicData: { subsectors, isGrade, experience },
           };
 
           onSubmit(updateValues);

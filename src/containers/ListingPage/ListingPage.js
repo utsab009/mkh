@@ -347,7 +347,7 @@ export class ListingPageComponent extends Component {
       title = '',
       publicData,
     } = currentListing.attributes;
-
+    const experience = publicData.experience || '';
     const richTitle = fullName => (
       <span>
         {richText(fullName, {
@@ -636,6 +636,7 @@ export class ListingPageComponent extends Component {
                   </div>
 
                   <p className={css.avtardec}>{description}</p>
+                  {experience ? <p className={css.avtardec}>{experience}</p> : null}
 
                   {/*<SectionDescriptionMaybe description={description} />
                   <SectionFeaturesMaybe options={sectorsConfig} publicData={publicData} />*/}

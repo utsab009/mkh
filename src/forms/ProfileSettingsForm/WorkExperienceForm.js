@@ -11,13 +11,22 @@ import { ensureCurrentUser } from '../../util/data';
 import { propTypes } from '../../util/types';
 import * as validators from '../../util/validators';
 import { isUploadImageOverLimitError } from '../../util/errors';
-import { Form, Avatar, Button, ImageFromFile, IconSpinner, FieldTextInput, IconClose, InlineTextButton } from '../../components';
+import {
+  Form,
+  Avatar,
+  Button,
+  ImageFromFile,
+  IconSpinner,
+  FieldTextInput,
+  IconClose,
+  InlineTextButton,
+} from '../../components';
 
 import css from './ProfileSettingsForm.css';
 
 const WorkExperienceFormComponent = props => {
-  const {workExp} = props;
-  
+  const { workExp } = props;
+
   return (
     <div className={classNames(css.weekDay, null)}>
       {/*<div className={css.dayOfWeek}>
@@ -28,12 +37,11 @@ const WorkExperienceFormComponent = props => {
       <FieldArray name={workExp}>
         {({ fields }) => {
           // console.log("fields in fieldarray",values);
-          console.log("fields in fieldarray",fields);
-          if(fields.length === 0)
-          {
+          console.log('fields in fieldarray', fields);
+          if (fields.length === 0) {
             fields.pop();
-            fields.push({company:null,position:null,duration:null,dates:null})
-          //   fields.remove(1);
+            fields.push({ company: null, position: null, duration: null, dates: null });
+            //   fields.remove(1);
           }
 
           return (
@@ -41,7 +49,7 @@ const WorkExperienceFormComponent = props => {
               {fields.map((name, index) => {
                 return (
                   <div className={css.fieldWrapper} key={name}>
-                    <div >
+                    <div>
                       <div className={css.nameContainer}>
                         <div className={css.field}>
                           <FieldTextInput
@@ -49,25 +57,25 @@ const WorkExperienceFormComponent = props => {
                             id={`${name}.company`}
                             name={`${name}.company`}
                             label={'I worked for'}
-                          />    
+                          />
                         </div>
                         <div className={css.field}>
                           <FieldTextInput
                             type="text"
                             id={`${name}.position`}
                             name={`${name}.position`}
-                            label={'In the Position of'}
-                          />    
+                            label={'In the Position and or Grade of'}
+                          />
                         </div>
                       </div>
-                      <div className={css.nameContainer}>  
+                      <div className={css.nameContainer}>
                         <div className={css.field}>
                           <FieldTextInput
                             type="text"
                             id={`${name}.duration`}
                             name={`${name}.duration`}
                             label={'Length of Time'}
-                          />    
+                          />
                         </div>
                         <div className={css.field}>
                           <FieldTextInput
@@ -75,9 +83,9 @@ const WorkExperienceFormComponent = props => {
                             id={`${name}.startEndDate`}
                             name={`${name}.startEndDate`}
                             label={'From / to'}
-                          />    
+                          />
                         </div>
-                      </div>  
+                      </div>
                       {/*<span className={css.dashBetweenTimes}>-</span>*/}
                     </div>
                     <button
@@ -97,7 +105,9 @@ const WorkExperienceFormComponent = props => {
                 <InlineTextButton
                   type="button"
                   className={css.buttonSetHours}
-                  onClick={() => fields.push({company:null,position:null,duration:null,dates:null})}
+                  onClick={() =>
+                    fields.push({ company: null, position: null, duration: null, dates: null })
+                  }
                 >
                   <FormattedMessage id="EditListingAvailabilityPlanForm.setHours" />
                 </InlineTextButton>
@@ -105,7 +115,9 @@ const WorkExperienceFormComponent = props => {
                 <InlineTextButton
                   type="button"
                   className={css.buttonAddNew}
-                  onClick={() => fields.push({company:null,position:null,duration:null,dates:null})}
+                  onClick={() =>
+                    fields.push({ company: null, position: null, duration: null, dates: null })
+                  }
                 >
                   <FormattedMessage id="EditListingAvailabilityPlanForm.addAnother" />
                 </InlineTextButton>
@@ -117,7 +129,7 @@ const WorkExperienceFormComponent = props => {
     </div>
   );
 };
-  
-  const WorkExperienceForm = WorkExperienceFormComponent;
-  
-  export default WorkExperienceForm;  
+
+const WorkExperienceForm = WorkExperienceFormComponent;
+
+export default WorkExperienceForm;

@@ -232,7 +232,7 @@ export class SignupFormComponent extends Component {
                                     type="text"
                                     id={`${name}.position`}
                                     name={`${name}.position`}
-                                    label={'In the Position of'}
+                                    label={'In the Position and or Grade of'}
                                   />
                                 </div>
                               </div>

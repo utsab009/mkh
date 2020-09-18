@@ -80,9 +80,7 @@ class EditListingLocationPanel extends Component {
     //   <FormattedMessage id="EditListingLocationPanel.createListingTitle" />
     // );
 
-    const panelTitle = (
-      <FormattedMessage id="EditListingLocationPanel.createListingTitle" />
-    );
+    const panelTitle = <FormattedMessage id="EditListingLocationPanel.createListingTitle" />;
     return (
       <div className={classes}>
         <h1 className={css.title}>{panelTitle}</h1>
@@ -91,15 +89,15 @@ class EditListingLocationPanel extends Component {
           initialValues={this.state.initialValues}
           onSubmit={values => {
             const { building = '', location, onlineAddress = '' } = values;
-            if(location !== null)
-            {
+            console.log({ values });
+            if (location !== null && location.selectedPlace !== null) {
               const {
                 selectedPlace: { address, origin },
               } = location;
               const updateValues = {
                 geolocation: origin,
                 publicData: {
-                  onlineAddress, 
+                  onlineAddress,
                   location: { address, building },
                 },
               };
@@ -111,13 +109,10 @@ class EditListingLocationPanel extends Component {
                 },
               });
               onSubmit(updateValues);
-            }
-            else 
-            {
-              
+            } else {
               const updateValues = {
                 publicData: {
-                  onlineAddress
+                  onlineAddress,
                 },
               };
               this.setState({

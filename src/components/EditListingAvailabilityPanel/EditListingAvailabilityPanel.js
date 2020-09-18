@@ -53,7 +53,7 @@ class Portal extends React.Component {
     // DOM node, or uses 'autoFocus' in a descendant, add
     // state to Modal and only render the children when Modal
     // is inserted in the DOM tree.
-    console.log("this.el",this.props.portalRoot);
+    console.log('this.el', this.props.portalRoot);
     this.props.portalRoot.appendChild(this.el);
   }
 
@@ -193,7 +193,6 @@ const EditListingAvailabilityPanel = props => {
     errors,
   } = props;
 
-  
   // Hooks
   const [isEditPlanModalOpen, setIsEditPlanModalOpen] = useState(false);
   const [isEditExceptionsModalOpen, setIsEditExceptionsModalOpen] = useState(false);
@@ -226,15 +225,14 @@ const EditListingAvailabilityPanel = props => {
   let initialValues = valuesFromLastSubmit
     ? valuesFromLastSubmit
     : createInitialValues(availabilityPlan);
-  
-  initialValues.mentorShift = mentorShift;  
+
+  initialValues.mentorShift = mentorShift;
 
   const handleSubmit = values => {
     setValuesFromLastSubmit(values);
-    
 
     let updatedValues = createAvailabilityPlan(values);
-    updatedValues.publicData = {"mentorShift":values.mentorShift};
+    updatedValues.publicData = { mentorShift: values.mentorShift };
     // Final Form can wait for Promises to return.
     // return onSubmit(createAvailabilityPlan(values))
     return onSubmit(updatedValues)
@@ -324,6 +322,7 @@ const EditListingAvailabilityPanel = props => {
                 values={{ count: exceptionCount }}
               />
             )}
+            <span className={css.marginLeft}>(Exceptions {exceptionCount})</span>
           </h2>
         </header>
         {fetchExceptionsInProgress ? (

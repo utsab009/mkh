@@ -157,7 +157,7 @@ const EditListingPublicPanel = props => {
   //   <FormattedMessage id="EditListingPublicPanel.createListingTitle" />
   // ); //Default code
 
-  const panelTitle = <FormattedMessage id="EditListingPublicPanel.createListingTitle" />;
+  const panelTitle = <FormattedMessage id="EditListingPublicForm.jobRoleLabel" />;
 
   // const yogaStyles = publicData && publicData.yogaStyles;
   const sectors = publicData && publicData.sectors;
@@ -174,7 +174,7 @@ const EditListingPublicPanel = props => {
     <main className={classes} ref={setPortalRootAfterInitialRender}>
       {/*<div className={classes} ref={setPortalRootAfterInitialRender}>*/}
 
-      {/* <h1 className={css.title}>{panelTitle}</h1> */}
+      <h1 className={css.title}>{panelTitle}</h1>
       {/* <p>Skip if you do not have experience of this sector</p> */}
 
       <EditListingPublicForm
@@ -245,8 +245,8 @@ const EditListingPublicPanel = props => {
                         id="emailId"
                         name="emailId"
                         type="text"
-                        label={'Email ID'}
-                        placeholder={'Enter your email ID'}
+                        label={'E-mail Address'}
+                        placeholder={'Enter your E-mail Address'}
                         // validate={composeValidators(required(descriptionRequiredMessage))}
                       />
                     </div>

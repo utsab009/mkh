@@ -76,7 +76,7 @@
   margin-top: 0;
   margin-bottom: 10px;
   padding-top: 6px;
-  padding-bottom: 2px;
+  padding-bottom: 12px;
   font-size: 0.9rem;
   line-height: 24px;
 }
@@ -109,7 +109,7 @@
   font-weight: 500;
 }
 .submitButton {
-  margin: 10px 0;
+  margin: 35px 0 10px;
 }
 
 .customLable {
