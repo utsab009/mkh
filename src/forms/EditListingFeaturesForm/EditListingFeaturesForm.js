@@ -126,7 +126,7 @@ export class EditListingFeaturesFormComponent extends Component {
               {errorMessageShowListing}
 
               <p className={css.smallTextIns}>
-                If your Sector are not present,
+                If your Sector is not present,
                 <InlineTextButton
                   className={css.btnModSl}
                   onClick={e => {
@@ -140,7 +140,7 @@ export class EditListingFeaturesFormComponent extends Component {
               </p>
 
               <FieldCheckboxGroup
-                label={sectorLabel}
+                label="" //{sectorLabel}
                 className={css.profileTypes}
                 id="sectors"
                 name="sectors"
