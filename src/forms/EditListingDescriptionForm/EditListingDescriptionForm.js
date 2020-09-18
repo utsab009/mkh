@@ -305,6 +305,11 @@ class EditListingDescriptionFormComponent extends Component {
                 </InlineTextButton>{' '}
                 and tell us so we can include it for you.
               </p>
+
+              <div className={css.customLable}>
+                INTERNATIONAL GRADES ARE UTILISED, SO PLEASE PICK YOUR EQUIVALENT OR SIMLAR GRADE
+              </div>
+
               <FieldTextInput
                 id="experience"
                 name="experience"
@@ -316,10 +321,6 @@ class EditListingDescriptionFormComponent extends Component {
                 // validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
                 autoFocus
               />
-
-              <div className={css.customLable}>
-                INTERNATIONAL GRADES ARE UTILISED, SO PLEASE PICK YOUR EQUIVALENT OR SIMLAR GRADE
-              </div>
 
               {/* <div className={css.customLable}>
                 Hoping to Mentor people found in the{' '}
