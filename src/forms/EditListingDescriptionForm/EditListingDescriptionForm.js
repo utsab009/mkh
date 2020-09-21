@@ -25,6 +25,7 @@ import css from './EditListingDescriptionForm.css';
 import config from '../../config';
 import Axios from 'axios';
 const TITLE_MAX_LENGTH = 60;
+const TITLE_MAX_LENGTH_EXPERIENCE = 140;
 
 class EditListingDescriptionFormComponent extends Component {
   constructor(props) {
@@ -309,10 +310,10 @@ class EditListingDescriptionFormComponent extends Component {
                 id="experience"
                 name="experience"
                 className={css.title}
-                type="text"
+                type="textarea"
                 label="Third Step. Tell Mentees about your experience of the Role or Grade"
                 placeholder="How will your experience help? What did you achieve while in the role? Etc."
-                // maxLength={TITLE_MAX_LENGTH}
+                maxLength={TITLE_MAX_LENGTH_EXPERIENCE}
                 // validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
                 autoFocus
               />
