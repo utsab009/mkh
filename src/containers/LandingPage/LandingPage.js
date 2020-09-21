@@ -188,7 +188,7 @@ export class LandingPageComponent extends Component {
                       <h2 className={css.scdstepTitle}>1. Create your Mentor Profile</h2>
                       <p>
                         Start by clicking “Become A Mentor” at the top right-hand corner of this
-                        page. Give your name, create your password and outline both your Work
+                        page. Give your name, create your password, and outline your Work
                         Experience, Education to date and Skype Address. If you do not have this
                         information to hand, you can fill it in later. Then confirm your e-mail.
                       </p>
@@ -199,9 +199,9 @@ export class LandingPageComponent extends Component {
                       <p>
                         You have provided the information as to why you will be a great Mentor, but
                         what specific Job or Grade based Roles will you help with? To define this,
-                        click “Roles I can Mentor” which is in the top right-hand corner. Here you
-                        will define the specific Jobs or Grades you can Mentor, when you will be
-                        available, and how much you will charge and so on
+                        click “Roles I can Mentor” which oncesigned up will be in the top right-hand
+                        corner. Here you will define the specific Jobs or Grades you can Mentor,
+                        when you will be available, and how much you will charge and so on
                       </p>
                     </div>
 

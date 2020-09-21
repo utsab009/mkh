@@ -104,7 +104,7 @@ export const EditListingPricingFormComponent = props => (
           </div>
 
           <div className={css.customLable}>
-            FOR EACH JOB ROLE OR GRADE, YOU CAN MENTOR YOU WILL NEED TO RETURN TO THIS SECTION AND
+            FOR EACH JOB ROLE OR GRADE YOU CAN MENTOR YOU WILL NEED TO RETURN TO THIS SECTION AND
             FOLLOW THIS PROCESS
           </div>
 
