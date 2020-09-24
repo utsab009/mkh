@@ -342,29 +342,9 @@ export class SectorsFilterFormComponent extends Component {
                                 )
                                   .then(response => {
                                     console.log('response in submit', response);
-                                    // history.push(
-                                    //   createResourceLocatorString(
-                                    //     'LandingPage',
-                                    //     routes,
-                                    //     // { keywords: 'php' },
-                                    //     {},
-                                    //     // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
-                                    //     {}
-                                    //   )
-                                    // );
                                   })
                                   .catch(e => {
                                     console.log('e in submit', e);
-                                    // history.push(
-                                    //   createResourceLocatorString(
-                                    //     'LandingPage',
-                                    //     routes,
-                                    //     // { keywords: 'php' },
-                                    //     {},
-                                    //     // {pub_sectors : sectors, pub_subSectors : subsectors, pub_jobroles: jobroles,pub_profileType : this.state.profileTypeSelected}
-                                    //     {}
-                                    //   )
-                                    // );
                                   });
                                 this.setState({ isMailSectorModalOpen: false });
                               }}
@@ -458,7 +438,7 @@ export class SectorsFilterFormComponent extends Component {
               </span> */}
               <p className={css.customLable}>PICK A JOB ROLE OR A GRADE SPECIFIC TO YOUR SECTOR</p>
               <p className={css.customLable}>
-                INTERNATIONAL GRADES ARE UTILISED, SO PLEASE PICKYOUR EQUIVALENT OR SIMLAR GRADE
+                INTERNATIONAL GRADES ARE UTILISED, SO PLEASE PICK YOUR EQUIVALENT OR SIMLAR GRADE
               </p>
             </Form>
           );

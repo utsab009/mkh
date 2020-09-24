@@ -448,7 +448,7 @@ const EditListingAvailabilityExceptionForm = props => {
           exceptionStartDay,
           timeZone
         );
-
+        console.log('222 ', exceptionStartDay, timeRangesOnSelectedDate);
         const availableStartTimes = getAvailableStartTimes(
           exceptionStartDay,
           timeRangesOnSelectedDate,
@@ -472,7 +472,7 @@ const EditListingAvailabilityExceptionForm = props => {
           intl,
           timeZone
         );
-
+        console.log('222 availableStartTimes', availableStartTimes);
         // Returns a function that changes the current month
         // Currently, used for hiding next&prev month arrow icons.
         const handleMonthClick = onMonthClick(

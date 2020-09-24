@@ -318,7 +318,7 @@ class EditListingDescriptionFormComponent extends Component {
                 type="textarea"
                 label="Third Step. Tell Mentees about your experience of the Role or Grade"
                 placeholder="How will your experience help? What did you achieve while in the role? Etc."
-                maxLength={TITLE_MAX_LENGTH_EXPERIENCE}
+                // maxLength={TITLE_MAX_LENGTH_EXPERIENCE}
                 // validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
                 autoFocus
               />
