@@ -217,6 +217,9 @@ export class AuthenticationPageComponent extends Component {
             )}
           </p>
           <p className={css.modalHelperText}>
+            <FormattedMessage id="AuthenticationPage.checkJunctext" />
+          </p>
+          <p className={css.modalHelperText}>
             <FormattedMessage id="AuthenticationPage.fixEmail" values={{ fixEmailLink }} />
           </p>
         </div>

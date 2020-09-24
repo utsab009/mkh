@@ -29,6 +29,7 @@
   "ActivityFeed.transitionReview": "{ displayName } left a review for you. { reviewLink }",
   "AuthenticationPage.emailAlreadyInUse": "An account with this email address already exists. You may be attempting to be both a Mentor and Mentee and if so you need two different e-mail addresses. ",
   "AuthenticationPage.fixEmail": "Whoops, typo in your email? {fixEmailLink}.",
+  "AuthenticationPage.checkJunctext": "Check your Junk Folder?",
   "AuthenticationPage.fixEmailLinkText": "Fix it",
   "AuthenticationPage.loginFailed": "The email and password you entered did not match our records. Please double-check and try again.",
   "AuthenticationPage.loginLinkText": "Log-in",
