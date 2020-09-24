@@ -35,6 +35,7 @@ import {
   IconArrowHead,
   PrimaryButton,
 } from '../../components';
+import moment from 'moment';
 
 import css from './EditListingAvailabilityExceptionForm.css';
 
@@ -563,6 +564,14 @@ const EditListingAvailabilityExceptionForm = props => {
                     useMobileMargins
                     showErrorMessage={false}
                     validate={bookingDateRequired('Required')}
+                    // isOutsideRange={day => {
+                    //   const endOfRange = config.dayCountAvailableForBooking - 1;
+                    //   return (
+                    //     !isInclusivelyAfterDay(day, moment()) ||
+                    //     !isInclusivelyBeforeDay(day, moment().add(endOfRange, 'days'))
+                    //   );
+                    // }}
+                    isOutsideRange={isDayBlocked(availableTimeRanges, timeZone)}
                   />
                 </div>
                 <div className={css.field}>
