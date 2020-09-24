@@ -53,7 +53,7 @@ const enableAvailability = process.env.REACT_APP_AVAILABILITY_ENABLED === 'true'
 // This is limited due to Stripe holding funds up to 90 days from the
 // moment they are charged. Also note that available time slots can only
 // be fetched for 180 days in the future.
-const dayCountAvailableForBooking = 90;
+const dayCountAvailableForBooking = 76;
 
 // To pass environment variables to the client app in the build
 // script, react-scripts (and the sharetribe-scripts fork of
