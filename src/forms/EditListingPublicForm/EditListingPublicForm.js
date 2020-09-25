@@ -168,7 +168,8 @@ export class EditListingPublicFormComponent extends Component {
           const classes = classNames(rootClassName || css.root, className);
           const submitReady = (updated && pristine) || ready;
           const submitInProgress = updateInProgress;
-          const submitDisabled = disabled || submitInProgress;
+          const submitDisabled =
+            disabled || submitInProgress || !(values.jobroles && values.jobroles.length);
 
           const { updateListingError, showListingsError } = fetchErrors || {};
           const errorMessage = updateListingError ? (

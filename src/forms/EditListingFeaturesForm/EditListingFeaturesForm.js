@@ -23,7 +23,7 @@ import {
 import Axios from 'axios';
 import css from './EditListingFeaturesForm.css';
 import { Default } from '../../components/BookingPanel/BookingPanel.example';
-import { required } from '../../util/validators';
+import { required, composeValidators } from '../../util/validators';
 
 export class EditListingFeaturesFormComponent extends Component {
   constructor(props) {
@@ -91,7 +91,8 @@ export class EditListingFeaturesFormComponent extends Component {
           const classes = classNames(rootClassName || css.root, className);
           const submitReady = (updated && pristine) || ready;
           const submitInProgress = updateInProgress;
-          const submitDisabled = disabled || submitInProgress;
+          const submitDisabled =
+            disabled || submitInProgress || !(values.sectors && values.sectors.length);
 
           const { updateListingError, showListingsError } = fetchErrors || {};
           const errorMessage = updateListingError ? (
@@ -177,6 +178,7 @@ export class EditListingFeaturesFormComponent extends Component {
                   console.log('9999', selectedValue, values, changeValues);
                   form.change('sectors', changeValues);
                 }}
+                validate={composeValidators(required('Please insert sector'))}
               />
 
               {this.state.isMailSectorModalOpen ? (

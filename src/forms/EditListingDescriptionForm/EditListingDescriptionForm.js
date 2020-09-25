@@ -139,7 +139,7 @@ class EditListingDescriptionFormComponent extends Component {
           const classes = classNames(css.root, className);
           const submitReady = (updated && pristine) || ready;
           const submitInProgress = updateInProgress;
-          const submitDisabled = invalid || disabled || submitInProgress;
+          const submitDisabled = invalid || disabled || submitInProgress || !values.subsectors;
           console.log({ values });
           return (
             <Form className={classes} onSubmit={handleSubmit}>
@@ -320,7 +320,7 @@ class EditListingDescriptionFormComponent extends Component {
                 placeholder="How will your experience help? What did you achieve while in the role? Etc."
                 // maxLength={TITLE_MAX_LENGTH_EXPERIENCE}
                 // validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
-                autoFocus
+                // autoFocus
               />
 
               {/* <div className={css.customLable}>
