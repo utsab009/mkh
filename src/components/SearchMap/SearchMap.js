@@ -134,6 +134,7 @@ export class SearchMapComponent extends Component {
       mapsConfig,
       activeListingId,
       messages,
+      mapRootClassName,
     } = this.props;
     const classes = classNames(rootClassName || css.root, className);
 
@@ -202,7 +203,7 @@ export class SearchMapComponent extends Component {
           containerElement={
             <div id="search-map-container" className={classes} onClick={this.onMapClicked} />
           }
-          mapElement={<div className={css.mapRoot} />}
+          mapElement={<div className={mapRootClassName || css.mapRoot} />}
           bounds={bounds}
           center={center}
           location={location}
