@@ -31,6 +31,9 @@ import EditListingWizardTab, {
 } from './EditListingWizardTab';
 import css from './EditListingWizard.css';
 import ExternalLink from '../ExternalLink/ExternalLink';
+import { types as sdkTypes } from '../../util/sdkLoader';
+
+const { UUID } = sdkTypes;
 
 // Show availability calendar only if environment variable availabilityEnabled is true
 const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
@@ -321,6 +324,8 @@ class EditListingWizard extends Component {
       currentUser,
       ...rest
     } = this.props;
+
+    console.log('test: ', currentUser, new UUID(1));
 
     const selectedTab = params.tab;
     const isNewListingFlow = [LISTING_PAGE_PARAM_TYPE_NEW, LISTING_PAGE_PARAM_TYPE_DRAFT].includes(
