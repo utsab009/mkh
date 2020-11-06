@@ -46,7 +46,9 @@
   width: 100%;
   height: 100%;
   /* Text positioning is done with paddings */
-  background: linear-gradient(-45deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url(/static/media/background-1440.e7a801de.jpg);
+  background: linear-gradient(-45deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)),
+    /* url(/static/media/background-1440.e7a801de.jpg); */ url('../../assets/MaleMentor_online.gif');
+
   background-color: #4a4a4a;
   background-size: cover;
   background-position: center center;
@@ -69,16 +71,15 @@
   }
 } */
 .heroMainTitle {
-    max-width: none;
-    background: #2a364c;
-    font-size: 35px;
-    text-align: right;
-    padding: 18px 40px 25px;
-    line-height: 35px;
-    font-weight: normal;
-    color: #fff;
-    margin-bottom: 100px;
-
+  max-width: none;
+  background: #2a364c;
+  font-size: 35px;
+  text-align: right;
+  padding: 18px 40px 25px;
+  line-height: 35px;
+  font-weight: normal;
+  color: #fff;
+  margin-bottom: 100px;
 }
 
 .heroSubTitle {
@@ -118,63 +119,76 @@
   padding: 10px 20px;
   min-width: 35%;
 }
-.modBtn{
+.modBtn {
   background-color: #cc814b;
 
   &:hover,
-  &:focus{
+  &:focus {
     background-color: #bb7746;
   }
 }
 
 @media (max-width: 1199px) {
-.inlineButtons button {
-  padding: 10px ;
-  min-width: 40%;
-}
+  .inlineButtons button {
+    padding: 10px;
+    min-width: 40%;
+  }
 }
 @media (max-width: 991px) {
   .inlineButtons {
     margin: 10px 0 0;
     padding: 0 50px;
-}
-  .inlineButtons button{
+  }
+  .inlineButtons button {
     font-size: 16px;
     min-height: auto;
   }
-  .heroMainTitle{
+  .heroMainTitle {
     text-align: center;
-}
-.heroContainer{
-  min-height: 430px;
-}
+  }
+  .heroContainer {
+    min-height: 430px;
+  }
 }
 @media (max-width: 767px) {
   .inlineButtons button {
     margin: 0 5px 0;
   }
-  .inlineButtons{
+  .inlineButtons {
     padding: 0 10px;
-}
-.heroMainTitle{
-  font-size: 30px;
-  line-height: 18px;
-  margin-bottom: 40px;
-}
+  }
+  .heroMainTitle {
+    font-size: 30px;
+    line-height: 18px;
+    margin-bottom: 40px;
+  }
 }
 @media (max-width: 575px) {
-.heroMainTitle{
-  font-size: 21px;
+  .heroMainTitle {
+    font-size: 21px;
+  }
+
+  .inlineButtons button {
+    margin: 0 0 10px;
+  }
+  .inlineButtons {
+    flex-direction: column;
+    margin: 0 0 15px;
+  }
+  .root {
+    background-position: center right;
+  }
 }
 
-.inlineButtons button{
-  margin: 0 0 10px;
-}
-.inlineButtons{
+.video {
+  display: flex;
   flex-direction: column;
-  margin: 0 0 15px;
+  width: 100%;
+  height: inherit;
+  position: absolute;
+  top: 0px;
 }
-.root{
-  background-position: center right;
-}
+
+.videoAlign {
+  position: relative;
 }

@@ -10,6 +10,7 @@ import { NamedLink, Modal, Button } from '../../components';
 import { SectorsFilterForm } from '../../forms';
 import routeConfiguration from '../../routeConfiguration';
 import { createResourceLocatorString, findRouteByRouteName } from '../../util/routes';
+import backgroundVideo from '../../assets/MaleMentor_online.mp4';
 
 import css from './SectionHero.css';
 
@@ -89,19 +90,6 @@ export class SectionHeroComponent extends Component {
           <h1 className={css.heroMainTitle}>
             <FormattedMessage id="SectionHero.title" />
           </h1>
-          {/* <h2 className={css.heroSubTitle}>
-            <FormattedMessage id="SectionHero.subTitle" />
-          </h2> */}
-          {/*<NamedLink
-            name="SearchPage"
-            to={{
-              search:
-                'address=United%20States%20of%20America&bounds=71.540724%2C-66.885444%2C18.765563%2C-179.9',
-            }}
-            className={css.heroButton}
-          >
-            <FormattedMessage id="SectionHero.browseButton" />
-          </NamedLink>*/}
           {!this.state.isSectorModalOpen ? (
             <div className={css.inlineButtons}>
               <Button
