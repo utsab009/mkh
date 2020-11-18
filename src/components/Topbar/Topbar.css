@@ -55,7 +55,6 @@
   display: flex;
   padding: calc((var(--topbarHeight) - var(--Topbar_logoHeight)) / 2) 24px;
 
-
   @media (max-width: 767px) {
     display: table;
     padding: calc((60px - 26px) / 2) 5px;
@@ -343,7 +342,7 @@
   color: #edf0f5;
 
   @media (max-width: 767px) {
-    color: #2a364c;
+    /* color: #2a364c; */
   }
 
   @media (max-width: 575px) {

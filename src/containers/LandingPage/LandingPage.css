@@ -48,7 +48,7 @@
   padding-bottom: 32px;
 
   @media (--viewportMedium) {
-    padding-bottom: 50px;
+    padding-bottom: 0;
   }
 
   @media (--viewportLarge) {

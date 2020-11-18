@@ -10,7 +10,8 @@ import { NamedLink, Modal, Button } from '../../components';
 import { SectorsFilterForm } from '../../forms';
 import routeConfiguration from '../../routeConfiguration';
 import { createResourceLocatorString, findRouteByRouteName } from '../../util/routes';
-import backgroundVideo from '../../assets/MaleMentor_online.mp4';
+
+import vidback from '../../assets/MaleMentor_online.mp4';
 
 import css from './SectionHero.css';
 
@@ -86,6 +87,7 @@ export class SectionHeroComponent extends Component {
 
     return (
       <div className={classes}>
+        
         <div className={css.heroContent}>
           <h1 className={css.heroMainTitle}>
             <FormattedMessage id="SectionHero.title" />
@@ -123,6 +125,11 @@ export class SectionHeroComponent extends Component {
             </Modal>
           )}
         </div>
+      
+      <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" 
+        className={css.backvid}>
+                <source src={vidback} type="video/mp4" />
+              </video>
       </div>
     );
   }
