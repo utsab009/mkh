@@ -147,3 +147,14 @@
 .error {
   @apply --marketplaceModalErrorStyles;
 }
+.autovideo {
+  position: relative;
+}
+.backvid {
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  top: 0;
+}

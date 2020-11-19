@@ -36,7 +36,7 @@ import { sendVerificationEmail } from '../../ducks/user.duck';
 import { manageDisableScrolling } from '../../ducks/UI.duck';
 
 import css from './MenteeSignupPage.css';
-
+import vidback from '../../assets/MaleMentor_online.mp4';
 export class MenteeSignupPageComponent extends Component {
   constructor(props) {
     super(props);
@@ -249,7 +249,11 @@ export class MenteeSignupPageComponent extends Component {
             <TopbarContainer className={topbarClasses} />
           </LayoutWrapperTopbar>
           <LayoutWrapperMain className={css.layoutWrapperMain}>
-            <div className={css.root}>
+            <div className={`${css.root} ${css.autovideo}`}>
+              <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" 
+        className={css.backvid}>
+                <source src={vidback} type="video/mp4" />
+              </video>
               {showEmailVerification ? emailVerificationContent : formContent}
             </div>
             <Modal
