@@ -554,8 +554,15 @@ export class CheckoutPageComponent extends Component {
     const currentListing = ensureListing(listing);
     const currentAuthor = ensureUser(currentListing.author);
 
+    const fullName =
+      currentAuthor &&
+      currentAuthor.attributes &&
+      currentAuthor.attributes.profile &&
+      currentAuthor.attributes.profile.publicData &&
+      currentAuthor.attributes.profile.publicData.fullName;
+
     const listingTitle = currentListing.attributes.title;
-    const title = intl.formatMessage({ id: 'CheckoutPage.title' }, { listingTitle });
+    const title = intl.formatMessage({ id: 'CheckoutPage.title' }, { fullName });
 
     const pageProps = { title, scrollingDisabled };
     const topbar = (

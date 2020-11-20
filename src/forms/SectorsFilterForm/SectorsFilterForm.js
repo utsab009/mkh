@@ -263,7 +263,7 @@ export class SectorsFilterFormComponent extends Component {
           return (
             <Form className={classes} onSubmit={handleSubmit}>
               <p className={css.smallText}>
-                If your Job Role or Grade is not appearing,
+                If your Job Role or Government Position Classification is not appearing,
                 <span
                   className={css.btnModSl}
                   onClick={e => {
@@ -368,7 +368,7 @@ export class SectorsFilterFormComponent extends Component {
                   <Select
                     options={this.state.jobRolesConfig}
                     name="subsectors"
-                    placeholder="Type and Select Job or Grade Here"
+                    placeholder="Type and Select Job or Government Position Classification Here"
                     value={this.state.jobRolesConfig.filter(
                       item => item.value === values.subsectors
                     )}
@@ -436,9 +436,13 @@ export class SectorsFilterFormComponent extends Component {
                 IF YOU ARE IN THE PUBLIC SECTOR AND WANT GRADE BASED RATHER THAN ROLE BASED
                 MENTORING, PLEASE PLACE “GENERALIST (PUBLIC SECTOR)” ABOVE
               </span> */}
-              <p className={css.customLable}>PICK A JOB ROLE OR A GRADE SPECIFIC TO YOUR SECTOR</p>
               <p className={css.customLable}>
-                INTERNATIONAL GRADES ARE UTILISED, SO PLEASE PICK YOUR EQUIVALENT OR SIMLAR GRADE
+                Pick a Job Role e.g. Accountant, Lawyer, HR Manager etc. or Government Position
+                Classification E.g. Police Officer, Staff Nurse, Principle Officer etc.
+              </p>
+              <p className={css.customLable}>
+                INTERNATIONAL GOVERNMENT POSITION CLASSIFICATION ARE UTILISED, SO PLEASE PICK YOUR
+                EQUIVALENT OR SIMLAR GRADE
               </p>
             </Form>
           );

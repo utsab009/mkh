@@ -23,8 +23,6 @@ import {
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
-
-
 import facebookImage from '../../assets/yogatimeFacebook-1200x630.jpg';
 import twitterImage from '../../assets/yogatimeTwitter-600x314.jpg';
 import css from './LandingPage.css';
@@ -131,7 +129,7 @@ export class LandingPageComponent extends Component {
                       Roles I can Mentor
                     </span>{' '}
                     which will be located on the top of each page. Look up and to the right now.
-                    Return to it for each Job or Grade you can Mentor.
+                    Return to it for each Job or Government Position Classification you can Mentor.
                   </p>
                   <p>
                     Filling this section in is critical as without doing so, Mentees will not find
@@ -187,34 +185,37 @@ export class LandingPageComponent extends Component {
 
                   <div className={css.scdsteps}>
                     <div className={css.scdstep}>
-                      <h2 className={css.scdstepTitle}>1. Create your Mentor Profile</h2>
+                      <h2 className={css.scdstepTitle}>1. Create a Mentor Account</h2>
                       <p>
                         Start by clicking “Become A Mentor” at the top right-hand corner of this
-                        page. Give your name, create your password, and outline your Work
-                        Experience, Education to date and Skype Address. If you do not have this
-                        information to hand, you can fill it in later. Then confirm your e-mail.
+                        page. Enter identity information and your e-mail.
                       </p>
                     </div>
 
                     <div className={css.scdstep}>
-                      <h2 className={css.scdstepTitle}>2. Create your Role Profiles</h2>
+                      <h2 className={css.scdstepTitle}>2. Start Building your Mentor Profile</h2>
                       <p>
-                        You have provided the information as to why you will be a great Mentor, but
-                        what specific Job or Grade based Roles will you help with? To define this,
-                        click “Roles I can Mentor” which once signed up will be in the top
-                        right-hand corner. Here you will define the specific Jobs or Grades you can
-                        Mentor, when you will be available, and how much you will charge and so on
+                        Tell potential Mentees about your work and educational history. Once you
+                        confirm your email you will be given the opportunity to select the specific
+                        Job Roles you can help with. To define this, click “Roles I can Mentor”
+                        which once you are signed up will appear in the top right-hand corner of
+                        each page. Here you will also define when you will be available, how much
+                        you will charge, and so on.
                       </p>
                     </div>
 
                     <div className={css.scdstep}>
                       <h2 className={css.scdstepTitle}>3. Start Mentoring</h2>
                       <p>
-                        You are all set. Bookings will arrive, payments will be automatic and
-                        through Skype or another Video Meeting Application you will deliver your
-                        on-line Mentoring. Try A Mentor will provide on-going support of key
-                        resources for you including a Mentee Management System and free Training on
-                        how to improve your Mentoring skills (optional)
+                        You are all set. Bookings will arrive, an e-mail will appear before each
+                        meeting, that will allow you through a single click to begin the meeting /
+                        video conferencing application, and payments to you will be automatic. The
+                        first meeting with a Mentee is a “Compatibility Meeting” and is free of
+                        charge. It should only be 20 minutes max in length to allow you to assess if
+                        you can really help. After that all meetings are charged for and booked in
+                        one or more-hour segments. Try A Mentor will provide on-going support and
+                        resources for you, including a Mentee Management System and optional free
+                        training on how to improve your Mentoring skills.
                       </p>
                     </div>
                   </div>

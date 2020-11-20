@@ -322,7 +322,7 @@ export class BookingTimeFormComponent extends Component {
           const renderAddButton = () => {
             return (
               <InlineTextButton
-               className={css.adddelbtn}
+                className={css.adddelbtn}
                 onClick={e => {
                   console.log('2222 event in click', e);
                   e.preventDefault();
@@ -343,7 +343,7 @@ export class BookingTimeFormComponent extends Component {
                   }
                 }}
               >
-                + Add Meeting
+                <span className={css.createText}>+ Add Meeting</span>
               </InlineTextButton>
             );
           };

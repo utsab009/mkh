@@ -93,14 +93,13 @@
   margin: 10px 0;
 }
 
-.bookingHeading{
-
+.bookingHeading {
   @media (max-width: 767px) {
     padding: 0 20px;
   }
 }
 
-.adddelbtn{
+.adddelbtn {
   margin: 10px 0 20px;
   font-size: 16px;
   text-align: left;
@@ -109,8 +108,12 @@
   }
 }
 
-.pricesec{
+.pricesec {
   @media (max-width: 767px) {
     padding: 0 20px;
   }
+}
+
+.createText {
+  color: #4dd100;
 }

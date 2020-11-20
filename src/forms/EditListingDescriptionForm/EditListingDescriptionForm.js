@@ -275,7 +275,8 @@ class EditListingDescriptionFormComponent extends Component {
 
               <div className={css.customTitle}>
                 {/* State the <span className={css.underLine}>Job Role</span> you can Mentor */}
-                Second Step. Now select the Job Role or Job Grade you can offer Mentoring in
+                Second Step. Now select the Job Role or Government Position Classification you can
+                offer Mentoring in
               </div>
               <div className={css.customSubLable}>
                 {/* (For each Job Role you can Mentor, you will need to return to this section, create a
@@ -284,7 +285,7 @@ class EditListingDescriptionFormComponent extends Component {
               <Select
                 options={this.state.roleData}
                 name="subsectors"
-                placeholder="Now type the Job Role or Job Grade Here"
+                placeholder="Now type the Job Role or Government Position Classification Here"
                 value={this.state.roleData.filter(item => item.value === values.subsectors)}
                 // id="subsectors"
                 onChange={values => {
@@ -294,7 +295,7 @@ class EditListingDescriptionFormComponent extends Component {
                 }}
               />
               <p className={css.smallTextIns}>
-                If the Job Role or Grade are not present,{' '}
+                If the Job Role or Government Position Classification are not present,{' '}
                 <InlineTextButton
                   className={css.btnModSl}
                   onClick={e => {
@@ -308,7 +309,8 @@ class EditListingDescriptionFormComponent extends Component {
               </p>
 
               <div className={css.customLable}>
-                INTERNATIONAL GRADES ARE UTILISED, SO PLEASE PICK YOUR EQUIVALENT OR SIMLAR GRADE
+                INTERNATIONAL GOVERNMENT POSITION CLASSIFICATION ARE UTILISED, SO PLEASE PICK YOUR
+                EQUIVALENT OR SIMLAR GRADE
               </div>
 
               <FieldTextInput
@@ -316,7 +318,7 @@ class EditListingDescriptionFormComponent extends Component {
                 name="experience"
                 className={css.title}
                 type="textarea"
-                label="Third Step. Tell Mentees about your experience of the Role or Grade"
+                label="Third Step. Tell Mentees about your experience of the Role or Government Position Classification"
                 placeholder="How will your experience help? What did you achieve while in the role? Etc."
                 // maxLength={TITLE_MAX_LENGTH_EXPERIENCE}
                 // validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
