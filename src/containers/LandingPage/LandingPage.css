@@ -28,6 +28,7 @@
   height: 67.5vh;
   max-height: 600px;
   padding: 0;
+  position: relative;
 
   @media (--viewportMedium) {
     min-height: 500px;

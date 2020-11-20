@@ -205,11 +205,11 @@
   object-fit: cover;
   top: 0;
 
-  @media (max-width: 1024px) {
+  /* @media (max-width: 1024px) {
     height: 70%;
   }
 
   @media (max-width: 767px) {
     height: 68%;
-  }
+  } */
 }
