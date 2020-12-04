@@ -84,6 +84,7 @@ class SearchFiltersComponent extends Component {
       searchFiltersPanelSelectedCount,
       history,
       intl,
+      onManageDisableScrolling,
     } = this.props;
     console.log('props in searchfilters', this.props);
 
@@ -442,6 +443,103 @@ class SearchFiltersComponent extends Component {
     console.log('urlQueryParams', showRelatedSearchError());
     return (
       <div className={classes}>
+        <p className={css.smallText}>
+          If your Job Role or Government Position Classification is not appearing,
+          <span
+            className={css.btnModSl}
+            onClick={e => {
+              e.preventDefault();
+              this.setState({ isMailSectorModalOpen: true });
+            }}
+          >
+            &nbsp;click here &nbsp;
+          </span>
+          and tell us so we can include it for you.
+        </p>
+        {this.state.isMailSectorModalOpen ? (
+          <Modal
+            id="EditAvailabilityPlan"
+            isOpen={this.state.isMailSectorModalOpen}
+            onClose={() => this.setState({ isMailSectorModalOpen: false })}
+            onManageDisableScrolling={onManageDisableScrolling}
+            // containerClassName={css.modalContainer}
+            className={css.updateModalcol}
+          >
+            <FinalForm
+              // {...restOfprops}
+              onSubmit={test => {
+                console.log('test values: ', test);
+              }}
+              mutators={{
+                ...arrayMutators,
+              }}
+              render={fieldRenderProps => {
+                const { hSubmit, values } = fieldRenderProps;
+
+                const classes = classNames(rootClassName || css.root, className);
+
+                return (
+                  <Form
+                    id={'sendmsg'}
+                    className={`${classes} ${css.updatePnl}`}
+                    onSubmit={values => {
+                      console.log('values: ', values);
+                    }}
+                  >
+                    <div className={css.formg}>
+                      <FieldTextInput
+                        id="emailId"
+                        name="emailId"
+                        type="text"
+                        label={'E-mail Address'}
+                        placeholder={'Enter your E-mail Address'}
+                        // validate={composeValidators(required(descriptionRequiredMessage))}
+                      />
+                    </div>
+                    <div className={css.formg}>
+                      <FieldTextInput
+                        id="msg"
+                        name="msg"
+                        type="textarea"
+                        label={'Message'}
+                        placeholder={'Enter your message here'}
+                        // validate={composeValidators(required(descriptionRequiredMessage))}
+                      />
+                    </div>
+
+                    <div className={css.submitButtonFG}>
+                      <PrimaryButton
+                        type="button"
+                        inProgress={false}
+                        disabled={false}
+                        onClick={e => {
+                          console.log('click values: ', e, values);
+                          Axios.get(
+                            // 'http://localhost:3001/extra/email_send?message=' +
+                            'https://mentorkh.herokuapp.com/extra/email_send?message=' +
+                              values.msg +
+                              '&email=' +
+                              values.emailId
+                          )
+                            .then(response => {
+                              console.log('response in submit', response);
+                            })
+                            .catch(e => {
+                              console.log('e in submit', e);
+                            });
+                          this.setState({ isMailSectorModalOpen: false });
+                        }}
+                      >
+                        Send Mail
+                      </PrimaryButton>
+                    </div>
+                  </Form>
+                );
+              }}
+            />
+          </Modal>
+        ) : null}
+
         <div className={css.filterLabel}>
           <FormattedMessage id="SearchFilters.filterlabel" />
         </div>
