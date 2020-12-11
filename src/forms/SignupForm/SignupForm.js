@@ -47,7 +47,7 @@ export class SignupFormComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { currentTab: 1, termsAccepted: false };
+    this.state = { currentTab: 1, termsAccepted: true };
     this.onToggleTab = this.onToggleTab.bind(this);
     this.acceptTerms = this.acceptTerms.bind(this);
   }
@@ -85,6 +85,7 @@ export class SignupFormComponent extends Component {
             onOpenTermsOfService,
             signupType,
             timeZone,
+            values,
           } = fieldRenderProps;
 
           // email
@@ -168,10 +169,7 @@ export class SignupFormComponent extends Component {
           });
           const lastNameRequired = validators.required(lastNameRequiredMessage);
 
-          const dobRequired = validators.validAge(
-            'Date of Birth is rquired and it should be atleast 18 years',
-            18
-          );
+          const dobRequired = validators.trueValue('You need to be atleast 18 years');
 
           const classes = classNames(rootClassName || css.root, className);
           const submitInProgress = inProgress;
@@ -248,7 +246,7 @@ export class SignupFormComponent extends Component {
                                 </div>
                                 <div className={css.field}>
                                   <FieldTextInput
-                                    type="text"
+                                    type="date"
                                     id={`${name}.startEndDate`}
                                     name={`${name}.startEndDate`}
                                     label={'From / to'}
@@ -462,6 +460,7 @@ export class SignupFormComponent extends Component {
                       placeholder={emailPlaceholder}
                       validate={validators.composeValidators(emailRequired, emailValid)}
                     />
+
                     <div className={css.name}>
                       <FieldTextInput
                         className={css.firstNameRoot}
@@ -484,6 +483,16 @@ export class SignupFormComponent extends Component {
                         validate={lastNameRequired}
                       />
                     </div>
+                    {signupType == 'mentee' ? (
+                      <FieldTextInput
+                        className={css.password}
+                        type="text"
+                        id={formId ? `${formId}.linkedInID` : 'linkedInID'}
+                        name="linkedInID"
+                        label="LinkedIn Address"
+                        placeholder="test.linkedin.com/12345"
+                      />
+                    ) : null}
                     {/*signupType == 'mentor' ?
                       <div className={css.name}>
                         <FieldTextInput
@@ -546,11 +555,16 @@ export class SignupFormComponent extends Component {
                 */}
                 {this.state.currentTab == 1 ? (
                   <FieldTextInput
-                    type="date"
+                    className={css.checkbox_dob}
+                    type="checkbox"
                     id={`dob`}
                     name={`dob`}
-                    label={'Date of Birth'}
+                    label={"I accept that I'm 18 years and above"}
+                    // validate={lastNameRequired}
                     validate={dobRequired}
+                    // validate={() => {
+                    //   return values.dob == true;
+                    // }}
                   />
                 ) : null}
 
@@ -615,13 +629,13 @@ export class SignupFormComponent extends Component {
                       </ExternalLink>{' '}
                       through pressing the accept button below
                     </p>
-                    <Button
+                    {/* <Button
                       type="button"
                       onClick={() => this.acceptTerms()}
                       disabled={this.state.termsAccepted}
                     >
                       Accept
-                    </Button>
+                    </Button> */}
                   </div>
                 ) : null}
               </div>

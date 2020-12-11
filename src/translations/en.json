@@ -894,7 +894,7 @@
   "SignupForm.passwordRequired": "You need to add a password.",
   "SignupForm.passwordTooLong": "The password should be at most {maxLength} characters.",
   "SignupForm.passwordTooShort": "The password should be at least {minLength} characters.",
-  "SignupForm.signUp": "Sign up",
+  "SignupForm.signUp": "Accept & Sign up",
   "SignupForm.termsAndConditionsAcceptText": "By signing up you accept the {termsLink}",
   "SignupForm.termsAndConditionsLinkText": "terms and conditions",
   "SignupForm.workExpHeading": "Work Experience",

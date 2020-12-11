@@ -26,6 +26,17 @@
   display: flex;
   color: #6c757d;
 }
+.checkbox_dob {
+  margin-top: 15px;
+  & label {
+    display: inline-block;
+    width: 80%;
+  }
+  & input {
+    display: inline-block;
+    width: 20%;
+  }
+}
 .workexp {
   display: flex;
   justify-content: space-between;
