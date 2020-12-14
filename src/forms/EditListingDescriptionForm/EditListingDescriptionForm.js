@@ -7,6 +7,7 @@ import arrayMutators from 'final-form-arrays';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
+import CKEditor from 'ckeditor4-react';
 import {
   Form,
   Button,
@@ -313,7 +314,7 @@ class EditListingDescriptionFormComponent extends Component {
                 EQUIVALENT OR SIMLAR GRADE
               </div>
 
-              <FieldTextInput
+              {/* <FieldTextInput
                 id="experience"
                 name="experience"
                 className={css.title}
@@ -323,6 +324,24 @@ class EditListingDescriptionFormComponent extends Component {
                 // maxLength={TITLE_MAX_LENGTH_EXPERIENCE}
                 // validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
                 // autoFocus
+              /> */}
+              <div className={css.customTitle}>
+                Third Step. Tell Mentees about your experience of the Role or Government Position
+                Classification
+                <p className={css.smallTextIns}>
+                  How will your experience help? What did you achieve while in the role? Etc.
+                </p>
+              </div>
+
+              <CKEditor
+                id="experience"
+                name="experience"
+                data={values.experience}
+                // onChange={this.onEditorChange}
+                onChange={e => {
+                  // console.log('data in e', e.editor.getData());
+                  form.change('experience', e.editor.getData());
+                }}
               />
 
               {/* <div className={css.customLable}>

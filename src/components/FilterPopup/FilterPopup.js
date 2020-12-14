@@ -29,6 +29,7 @@ class FilterPopup extends Component {
   handleSubmit(values) {
     const { onSubmit, urlParam } = this.props;
     this.setState({ isOpen: false });
+    console.log({ urlParam });
     onSubmit(urlParam, values);
   }
 

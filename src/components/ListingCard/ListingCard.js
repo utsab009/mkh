@@ -91,6 +91,18 @@ export class ListingCardComponent extends Component {
   }
 
   addToFav = id => {
+    let { history } = this.props;
+    let { pathname, search } = history.location;
+    console.log('101', pathname, search);
+    if (search) {
+      pathname = pathname + search;
+    }
+    console.log('101', pathname, search);
+    if (!this.props.currentUser) {
+      history.push('/login', { from: pathname });
+      return;
+    }
+
     let { profile } = this.props.currentUser.attributes;
     let newFavourites =
       profile.protectedData.favourites &&
@@ -104,6 +116,7 @@ export class ListingCardComponent extends Component {
     });
     // profile.protectedData = {favourites : JSON.stringify(favourites)};
     profile.protectedData.favourites = JSON.stringify(newFavourites);
+    console.log('111 props', this.props.listing);
     const profileToSaved = {
       firstName: profile.firstName.trim(),
       lastName: profile.lastName.trim(),
@@ -114,6 +127,11 @@ export class ListingCardComponent extends Component {
   };
 
   removeFromFav = id => {
+    if (!this.props.currentUser) {
+      this.props.history.push('/login');
+      return;
+    }
+
     let { profile } = this.props.currentUser.attributes;
     let newFavourites =
       profile.protectedData.favourites &&
@@ -184,8 +202,9 @@ export class ListingCardComponent extends Component {
       youtubeLink = null,
       fullName = ensuredAuthor.attributes.profile.displayName,
     } = authorData;
-    console.log('authorData', authorData, this.state);
     const id = currentListing.id.uuid;
+    // console.log('999', id);
+    // console.log('authorData', authorData, this.state, id);
     const { title = '', price, publicData } = currentListing.attributes;
     const slug = createSlug(title);
     const firstImage =
@@ -312,7 +331,7 @@ export class ListingCardComponent extends Component {
           </div>
         </NamedLink>
         <div className={css.afternm}>
-          {currentUser !== null ? (
+          {/* {currentUser !== null ? (
             <div className={css.favSec}>
               {isFavourite.length > 0 ? (
                 <Button onClick={() => this.removeFromFav(id)} className={css.favBtn}>
@@ -324,7 +343,18 @@ export class ListingCardComponent extends Component {
                 </Button>
               )}
             </div>
-          ) : null}
+          ) : null} */}
+          <div className={css.favSec}>
+            {isFavourite.length > 0 ? (
+              <Button onClick={() => this.removeFromFav(id)} className={css.favBtn}>
+                <FontAwesomeIcon icon={solidHeart} />
+              </Button>
+            ) : (
+              <Button onClick={() => this.addToFav(id)} className={css.favBtn}>
+                <FontAwesomeIcon icon={faHeart} />{' '}
+              </Button>
+            )}
+          </div>
           <ExternalLink href={linkedinLink} className={css.socialLink}>
             {/* <a href={linkedinLink} className={css.socialLink}> */}
             {/* Linked-in Link */}

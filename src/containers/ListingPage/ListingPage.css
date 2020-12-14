@@ -663,7 +663,16 @@
     left: 11px;
   }
 }
-.sociallink,
+.sociallink {
+  background: #2a364c;
+  color: #fff !important;
+  padding: 7px 21px;
+  display: flex;
+  margin: 26px 10px;
+  font-size: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
 .qtbtn {
   background: #2a364c;
   color: #fff !important;
@@ -695,6 +704,12 @@
 }
 .modCon {
   min-height: 720px;
+}
+.videoIcon {
+  max-width: 100%;
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
 }
 @media (max-width: 1199px) {
   .mainContent {

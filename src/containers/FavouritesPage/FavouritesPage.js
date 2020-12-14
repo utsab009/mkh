@@ -51,7 +51,7 @@ export class FavouritesPageComponent extends Component {
 
   render() {
     const {
-      currentUser,  
+      currentUser,
       closingListing,
       closingListingError,
       listings,
@@ -68,8 +68,13 @@ export class FavouritesPageComponent extends Component {
       onShowListing,
     } = this.props;
 
-    let favouritesArr = currentUser && currentUser.attributes.profile.protectedData.favourites && Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites)) ? JSON.parse(currentUser.attributes.profile.protectedData.favourites) : [];
-    console.log("favouritesArr",favouritesArr);
+    let favouritesArr =
+      currentUser &&
+      currentUser.attributes.profile.protectedData.favourites &&
+      Array.isArray(JSON.parse(currentUser.attributes.profile.protectedData.favourites))
+        ? JSON.parse(currentUser.attributes.profile.protectedData.favourites)
+        : [];
+    console.log('favouritesArr', favouritesArr);
 
     const hasPaginationInfo = !!pagination && pagination.totalItems != null;
     const listingsAreLoaded = !queryInProgress && hasPaginationInfo;
@@ -131,15 +136,13 @@ export class FavouritesPageComponent extends Component {
     ].join(', ');
 
     const { Money, UUID } = sdkTypes;
-    console.log("favouritesArr",favouritesArr);
-    const newfav = []
-    // for(var i = 0;i<favouritesArr.length;i++)
-    // {
-    //   console.log(onShowListing({id : favouritesArr[i].listing.id}));
+    console.log('favouritesArr', favouritesArr);
+    const newfav = [];
+    // for (var i = 0; i < favouritesArr.length; i++) {
+    //   console.log('favouritesArr : ', onShowListing({ id: favouritesArr[i].id }));
     //   // newfav.push(onShowListing({id : favouritesArr[i].listing.id}));
-
     // }
-    console.log("newfav",newfav);
+    console.log('newfav', newfav);
     // const pageListings = getListingsById(ourState, newfav);
     // console.log("pageListings",pageListings);
     return (
@@ -155,33 +158,38 @@ export class FavouritesPageComponent extends Component {
             <div className={css.listingPanel}>
               {heading}
               <div className={css.listingCards}>
-                {
-                  // pageListings.map(l => {
-                  favouritesArr.map(l => {
-                //   <ManageListingCard
-                //     className={css.listingCard}
-                //     key={l.id}
-                //     listing={l.listing}
-                //     isMenuOpen={!!listingMenuOpen && listingMenuOpen.id.uuid === l.id.uuid}
-                //     actionsInProgressListingId={openingListing || closingListing}
-                //     onToggleMenu={this.onToggleMenu}
-                //     onCloseListing={onCloseListing}
-                //     onOpenListing={onOpenListing}
-                //     hasOpeningError={openingErrorListingId.uuid === l.id.uuid}
-                //     hasClosingError={closingErrorListingId.uuid === l.id.uuid}
-                //     renderSizes={renderSizes}
-                //   />
-                l.listing.attributes.price = new Money(l.listing.attributes.price.amount, l.listing.attributes.price.currency);
-                l.listing.author.id = new UUID(l.listing.author.id.uuid);
-                return(
-                  <ListingCard
-                    className={css.listingCard}
-                    key={l.id}
-                    listing={l.listing}
-                    renderSizes={l.renderSizes}
-                    // setActiveListing={setActiveListing}
-                  />
-                )})}
+                {// pageListings.map(l => {
+                favouritesArr.map(l => {
+                  console.log('121 l', l);
+                  //   <ManageListingCard
+                  //     className={css.listingCard}
+                  //     key={l.id}
+                  //     listing={l.listing}
+                  //     isMenuOpen={!!listingMenuOpen && listingMenuOpen.id.uuid === l.id.uuid}
+                  //     actionsInProgressListingId={openingListing || closingListing}
+                  //     onToggleMenu={this.onToggleMenu}
+                  //     onCloseListing={onCloseListing}
+                  //     onOpenListing={onOpenListing}
+                  //     hasOpeningError={openingErrorListingId.uuid === l.id.uuid}
+                  //     hasClosingError={closingErrorListingId.uuid === l.id.uuid}
+                  //     renderSizes={renderSizes}
+                  //   />
+                  l.listing.attributes.price = new Money(
+                    l.listing.attributes.price.amount,
+                    l.listing.attributes.price.currency
+                  );
+                  l.listing.author.id = new UUID(l.listing.author.id.uuid);
+                  console.log('121 next', l);
+                  return (
+                    <ListingCard
+                      className={css.listingCard}
+                      key={l.id}
+                      listing={l.listing}
+                      renderSizes={l.renderSizes}
+                      // setActiveListing={setActiveListing}
+                    />
+                  );
+                })}
               </div>
               {paginationLinks}
             </div>
@@ -233,11 +241,11 @@ FavouritesPageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-    const { currentUser} = state.user;
-    return {
-      currentUser,
-      ourState : state,
-    };
+  const { currentUser } = state.user;
+  return {
+    currentUser,
+    ourState: state,
+  };
 };
 
 const mapDispatchToProps = dispatch => ({

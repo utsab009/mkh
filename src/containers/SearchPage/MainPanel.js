@@ -39,9 +39,10 @@ class MainPanel extends Component {
       showAsModalMaxWidth,
       primaryFilters,
       secondaryFilters,
+      history,
     } = this.props;
 
-    console.log("props in mainpanel",this.props);
+    console.log('props in mainpanel', this.props);
 
     const isSearchFiltersPanelOpen = !!secondaryFilters && this.state.isSearchFiltersPanelOpen;
 
@@ -74,7 +75,7 @@ class MainPanel extends Component {
     const secondaryFilterParamNames = secondaryFilters
       ? Object.values(secondaryFilters).map(f => f.paramName)
       : [];
-      console.log("url: ",urlQueryParams);
+    console.log('url: ', urlQueryParams);
     return (
       <div className={classes}>
         <SearchFilters
@@ -132,6 +133,7 @@ class MainPanel extends Component {
               pagination={listingsAreLoaded ? pagination : null}
               search={searchParamsForPagination}
               setActiveListing={onActivateListing}
+              history={history}
             />
           </div>
         )}

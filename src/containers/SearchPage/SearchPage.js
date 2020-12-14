@@ -292,6 +292,7 @@ export class SearchPageComponent extends Component {
       searchParams,
       activeListingId,
       onActivateListing,
+      history,
     } = this.props;
     console.log('listings in searchpage', listings);
     // eslint-disable-next-line no-unused-vars
@@ -363,6 +364,7 @@ export class SearchPageComponent extends Component {
             pagination={pagination}
             searchParamsForPagination={parse(location.search)}
             showAsModalMaxWidth={MODAL_BREAKPOINT}
+            history={history}
             primaryFilters={{
               yogaStylesFilter: filters.yogaStylesFilter,
               mentorShiftFilter: filters.mentorShiftFilter,

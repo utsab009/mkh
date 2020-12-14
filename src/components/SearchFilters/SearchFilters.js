@@ -115,9 +115,9 @@ class SearchFiltersComponent extends Component {
       id: 'SearchFilters.levelLabel',
     });
 
-    const subsectorsLabel = intl.formatMessage({
-      id: 'SearchFilters.subsectorsLabel',
-    });
+    // const subsectorsLabel = intl.formatMessage({
+    //   id: 'SearchFilters.subsectorsLabel',
+    // });
 
     const mentorShiftLabel = intl.formatMessage({
       id: 'SearchFilters.mentorShiftLabel',

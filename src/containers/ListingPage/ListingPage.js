@@ -29,6 +29,7 @@ import { richText } from '../../util/richText';
 import { getMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
 import { initializeCardPaymentData } from '../../ducks/stripe.duck.js';
+import videoIcon from '../../assets/play-icon.png';
 import {
   Page,
   Modal,
@@ -613,6 +614,7 @@ export class ListingPageComponent extends Component {
                               className={css.sociallink}
                             >
                               Mentor Video
+                              <img src={videoIcon} className={css.videoIcon} />
                             </a>
                           </div>
                         ) : (
@@ -624,6 +626,7 @@ export class ListingPageComponent extends Component {
                               className={css.sociallink}
                             >
                               Mentor Video
+                              <img src={videoIcon} className={css.videoIcon} />
                             </a>
                           </div>
                         )}
@@ -636,7 +639,12 @@ export class ListingPageComponent extends Component {
                   </div>
 
                   <p className={css.avtardec}>{description}</p>
-                  {experience ? <p className={css.avtardec}>{experience}</p> : null}
+                  {/* {experience ? <p className={css.avtardec}>{experience}</p> : null} */}
+                  {experience && experience != '<p></p>\n' ? (
+                    <div dangerouslySetInnerHTML={{ __html: experience }}></div>
+                  ) : (
+                    <h4></h4>
+                  )}
 
                   {/*<SectionDescriptionMaybe description={description} />
                   <SectionFeaturesMaybe options={sectorsConfig} publicData={publicData} />*/}

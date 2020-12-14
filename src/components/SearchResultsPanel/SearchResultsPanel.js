@@ -6,7 +6,15 @@ import { ListingCard, PaginationLinks } from '../../components';
 import css from './SearchResultsPanel.css';
 
 const SearchResultsPanel = props => {
-  const { className, rootClassName, listings, pagination, search, setActiveListing } = props;
+  const {
+    className,
+    rootClassName,
+    listings,
+    pagination,
+    search,
+    setActiveListing,
+    history,
+  } = props;
   const classes = classNames(rootClassName || css.root, className);
 
   const paginationLinks =
@@ -28,7 +36,7 @@ const SearchResultsPanel = props => {
     `(max-width: 1920px) ${panelLargeWidth / 2}vw`,
     `${panelLargeWidth / 3}vw`,
   ].join(', ');
-  console.log("listings in searchresultspanel",listings );
+  console.log('listings in searchresultspanel', listings);
   return (
     <div className={classes}>
       <div className={css.listingCards}>
@@ -39,6 +47,7 @@ const SearchResultsPanel = props => {
             listing={l}
             renderSizes={cardRenderSizes}
             setActiveListing={setActiveListing}
+            history={history}
           />
         ))}
         {props.children}

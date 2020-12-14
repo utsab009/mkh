@@ -55,7 +55,6 @@ class SearchFiltersPanelComponent extends Component {
   // Apply the filters by redirecting to SearchPage with new filters.
   applyFilters() {
     const { history, urlQueryParams, onClosePanel } = this.props;
-
     history.push(
       createResourceLocatorString(
         'SearchPage',
