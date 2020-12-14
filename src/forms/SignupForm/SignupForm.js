@@ -387,7 +387,7 @@ export class SignupFormComponent extends Component {
                                 </div>
                                 <div className={css.field}>
                                   <FieldTextInput
-                                    type="text"
+                                    type="date"
                                     id={`${name}.startEndDate`}
                                     name={`${name}.startEndDate`}
                                     label={'From / to'}
