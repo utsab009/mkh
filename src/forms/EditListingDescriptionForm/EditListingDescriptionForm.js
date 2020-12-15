@@ -7,7 +7,7 @@ import arrayMutators from 'final-form-arrays';
 import classNames from 'classnames';
 import { propTypes } from '../../util/types';
 import { maxLength, required, composeValidators } from '../../util/validators';
-import CKEditor from 'ckeditor4-react';
+// import CKEditor from 'ckeditor4-react';
 import {
   Form,
   Button,
