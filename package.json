@@ -19,6 +19,7 @@
     "basic-auth": "^2.0.1",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.5.2",
+    "ckeditor4-react": "1.1.1",
     "classnames": "^2.2.6",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.4",
@@ -111,7 +112,8 @@
     "dev-server": "export NODE_ENV=development PORT=4000 REACT_APP_CANONICAL_ROOT_URL=http://localhost:4000&&yarn run build&&nodemon --watch server server/index.js",
     "heroku-postbuild": "yarn run build",
     "timezones": "node scripts/parse-iana-timezones.js",
-    "translate": "node scripts/translations.js"
+    "translate": "node scripts/translations.js",
+    "devserver": " yarn run build && NODE_ENV=development PORT=4001 node server/index.js"
   },
   "browserslist": {
     "production": [
