@@ -113,7 +113,6 @@
     "heroku-postbuild": "yarn run build",
     "timezones": "node scripts/parse-iana-timezones.js",
     "translate": "node scripts/translations.js",
-    "devserver": " yarn run build && NODE_ENV=development PORT=4001 node server/index.js"
   },
   "browserslist": {
     "production": [
