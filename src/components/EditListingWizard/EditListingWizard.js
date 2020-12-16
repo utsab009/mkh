@@ -19,6 +19,7 @@ import { Modal, NamedRedirect, Tabs, StripeConnectAccountStatusBox } from '../..
 import { StripeConnectAccountForm } from '../../forms';
 
 import EditListingWizardTab, {
+  INTRODUCTION,
   AVAILABILITY,
   DESCRIPTION,
   FEATURES,
@@ -45,6 +46,7 @@ const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 // Note 3: in FTW-hourly template we don't use the POLICY tab so it's commented out.
 // If you want to add a free text field to your listings you can enable the POLICY tab
 export let TABS = [
+  INTRODUCTION,
   DESCRIPTION,
   FEATURES,
   PUBLIC,
@@ -97,7 +99,9 @@ class Portal extends React.Component {
 
 const tabLabel = (intl, tab) => {
   let key = null;
-  if (tab === DESCRIPTION) {
+  if (tab === INTRODUCTION) {
+    key = 'EditListingWizard.tabLabelIntroduction';
+  } else if (tab === DESCRIPTION) {
     key = 'EditListingWizard.tabLabelDescription';
   } else if (tab === FEATURES) {
     key = 'EditListingWizard.tabLabelFeatures';
@@ -140,6 +144,8 @@ const tabCompleted = (tab, listing) => {
   const images = listing.images;
 
   switch (tab) {
+    case INTRODUCTION:
+      return true;
     case DESCRIPTION:
       return !!(publicData && title && publicData.subsectors);
     case FEATURES:
@@ -339,6 +345,7 @@ class EditListingWizard extends Component {
 
     if (currentListing.attributes.publicData.isGrade) {
       TABS = [
+        INTRODUCTION,
         DESCRIPTION,
         // FEATURES,
         // PUBLIC,
@@ -351,6 +358,7 @@ class EditListingWizard extends Component {
       ];
     } else {
       TABS = [
+        INTRODUCTION,
         DESCRIPTION,
         FEATURES,
         PUBLIC,

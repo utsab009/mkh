@@ -639,12 +639,12 @@ export class ListingPageComponent extends Component {
                   </div>
 
                   <p className={css.avtardec}>{description}</p>
-                  {experience ? <p className={css.avtardec}>{experience}</p> : null}
-                  {/* {experience && experience != '<p></p>\n' ? (
+                  {/* {experience ? <p className={css.avtardec}>{experience}</p> : null} */}
+                  {experience && experience != '<p></p>\n' ? (
                     <div dangerouslySetInnerHTML={{ __html: experience }}></div>
                   ) : (
                     <h4></h4>
-                  )} */}
+                  )}
 
                   {/*<SectionDescriptionMaybe description={description} />
                   <SectionFeaturesMaybe options={sectorsConfig} publicData={publicData} />*/}

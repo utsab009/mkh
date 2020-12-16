@@ -20,10 +20,12 @@ import {
   EditListingPricingPanel,
   EditListingLanguageYoutubePanel,
   EditListingPublicPanel,
+  EditListingIntroductionPanel,
 } from '../../components';
 
 import css from './EditListingWizard.css';
 
+export const INTRODUCTION = 'introduction';
 export const AVAILABILITY = 'availability';
 export const DESCRIPTION = 'description';
 export const FEATURES = 'features';
@@ -36,6 +38,7 @@ export const LANGUAGE_YOUTUBE = 'language_youtube';
 
 // EditListingWizardTab component supports these tabs
 export const SUPPORTED_TABS = [
+  INTRODUCTION,
   DESCRIPTION,
   FEATURES,
   PUBLIC,
@@ -176,6 +179,20 @@ const EditListingWizardTab = props => {
   };
 
   switch (tab) {
+    case INTRODUCTION: {
+      const submitButtonTranslationKey = isNewListingFlow
+        ? 'EditListingWizard.saveNewDescription'
+        : 'EditListingWizard.saveEditDescription';
+      return (
+        <EditListingIntroductionPanel
+          {...panelProps(DESCRIPTION)}
+          submitButtonText={intl.formatMessage({ id: submitButtonTranslationKey })}
+          onSubmit={values => {
+            onCompleteEditListingWizardTab(tab, values);
+          }}
+        />
+      );
+    }
     case DESCRIPTION: {
       const submitButtonTranslationKey = isNewListingFlow
         ? 'EditListingWizard.saveNewDescription'

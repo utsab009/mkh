@@ -1170,5 +1170,6 @@
   "UserNav.newListing": "Roles I Can Mentor",
   "UserNav.editListing": "Edit Role Profiles",
   "UserNav.profileSettingsPage": "Edit {userType} Profile",
-  "UserNav.contactDetailsPage": "Account settings"
+  "UserNav.contactDetailsPage": "Account settings",
+  "EditListingWizard.tabLabelIntroduction": "Introduction"
 }
