@@ -59,10 +59,10 @@ import moment from 'moment';
 import css from './TransactionPanel.css';
 import { PrimaryButton, SecondaryButton } from '../Button/Button';
 import Modal from '../Modal/Modal';
-const gapi = window.gapi;
-const CLIENT_ID = '1033598433613-tvqsg6e9lg5jacll4jjvait26qgglut5.apps.googleusercontent.com';
-const clientSecret = 'yJZdWmtPRYHHcVeCgJFSulME';
-const API_KEY = 'AIzaSyD80EabvQcj_X4Wx5N6YZ8XYlRRkxJ-8WI';
+var gapi;
+// const gapi = window.gapi;
+const CLIENT_ID = process.env.REACT_APP_GOOGLE_CALENDAR_CLIENT_ID;
+const API_KEY = process.env.REACT_APP_GOOGLE_CALENDAR_API_KEY;
 // Array of API discovery doc URLs for APIs used by the quickstart
 const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
 
@@ -131,7 +131,7 @@ export class TransactionPanelComponent extends Component {
   }
 
   initClient = () => {
-    // const gapi = window.gapi;
+    gapi = window.gapi;
     gapi.load('client:auth2', () => {
       gapi.client
         .init({
@@ -458,6 +458,7 @@ export class TransactionPanelComponent extends Component {
     // const SCOPES = 'https://www.googleapis.com/auth/calendar';
 
     const handleClick = () => {
+      gapi = window.gapi;
       console.log('login', gapi.auth2.getAuthInstance().isSignedIn.get());
       if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
         let request = gapi.client.calendar.events.insert({
