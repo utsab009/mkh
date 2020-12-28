@@ -334,15 +334,18 @@ export class TransactionPanelComponent extends Component {
         };
       } else if (txIsBookingEnded(tx)) {
         return {
+          headingState: HEADING_DELIVERED,
           holdPaymentPeriod: true,
           allowProviderCancel: false,
         };
       } else if (txIsPaymentWaitingTime(tx)) {
         return {
+          headingState: HEADING_DELIVERED,
           holdPaymentPeriod: false,
         };
       } else if (txIsHoldPaymentRequested(tx)) {
         return {
+          headingState: HEADING_DELIVERED,
           holdPaymentRequested: true,
         };
       } else {
