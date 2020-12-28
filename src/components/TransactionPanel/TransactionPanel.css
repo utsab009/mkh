@@ -528,3 +528,12 @@
     margin-top: 0;
   }
 }
+
+.successMessage {
+  margin-top: 15px;
+  color: #689f38;
+  text-align: center;
+  background: #f1f8e9;
+  padding: 10px;
+  font-size: 15px;
+}

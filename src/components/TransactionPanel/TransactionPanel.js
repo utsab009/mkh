@@ -59,6 +59,16 @@ import moment from 'moment';
 import css from './TransactionPanel.css';
 import { PrimaryButton, SecondaryButton } from '../Button/Button';
 import Modal from '../Modal/Modal';
+const gapi = window.gapi;
+const CLIENT_ID = '1033598433613-tvqsg6e9lg5jacll4jjvait26qgglut5.apps.googleusercontent.com';
+const clientSecret = 'yJZdWmtPRYHHcVeCgJFSulME';
+const API_KEY = 'AIzaSyD80EabvQcj_X4Wx5N6YZ8XYlRRkxJ-8WI';
+// Array of API discovery doc URLs for APIs used by the quickstart
+const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
+
+// Authorization scopes required by the API; multiple scopes can be
+// included, separated by spaces.
+const SCOPES = 'https://www.googleapis.com/auth/calendar';
 // Helper function to get display names for different roles
 const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
   const authorDisplayName = <UserDisplayName user={currentProvider} intl={intl} />;
@@ -97,6 +107,8 @@ export class TransactionPanelComponent extends Component {
       showCancelModal: false,
       currentTimePastHourCap: false,
       preauthCancel: false,
+      loggedIn: false,
+      showSuccess: false,
     };
     this.isMobSaf = false;
     this.sendMessageFormName = 'TransactionPanel.SendMessageForm';
@@ -111,7 +123,48 @@ export class TransactionPanelComponent extends Component {
 
   componentDidMount() {
     this.isMobSaf = isMobileSafari();
+    this.initClient();
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log({ prevProps }, { prevState });
+  }
+
+  initClient = () => {
+    // const gapi = window.gapi;
+    gapi.load('client:auth2', () => {
+      gapi.client
+        .init({
+          apiKey: API_KEY,
+          clientId: CLIENT_ID,
+          discoveryDocs: DISCOVERY_DOCS,
+          scope: SCOPES,
+        })
+        .then(() => {
+          // Listen for sign-in state changes.
+          gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus);
+          // Handle the initial sign-in state.
+          this.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+          // authorizeButton.onclick = handleAuthClick;
+          // signoutButton.onclick = handleSignoutClick;
+        })
+        .catch(e => console.error(e));
+    });
+  };
+
+  updateSigninStatus = isSignedIn => {
+    console.log({ isSignedIn });
+    if (isSignedIn) {
+      // listUpcomingEvents();
+      this.setState({
+        loggedIn: true,
+      });
+    } else {
+      this.setState({
+        loggedIn: false,
+      });
+    }
+  };
 
   onOpenReviewModal() {
     this.setState({ isReviewModalOpen: true });
@@ -341,7 +394,9 @@ export class TransactionPanelComponent extends Component {
         declineInProgress={declineInProgress}
         acceptSaleError={acceptSaleError}
         declineSaleError={declineSaleError}
-        onAcceptSale={() => onAcceptSale(currentTransaction.id)}
+        onAcceptSale={() =>
+          onAcceptSale(currentTransaction.id).then(res => console.log('res', res))
+        }
         onDeclineSale={() => onDeclineSale(currentTransaction.id)}
       />
     );
@@ -366,6 +421,111 @@ export class TransactionPanelComponent extends Component {
 
     const classes = classNames(rootClassName || css.root, className);
 
+    // currentTransaction
+    let { displayEnd, displayStart, seats } = currentTransaction.booking.attributes;
+    let { title, availabilityPlan } = currentTransaction.listing.attributes;
+    const event = {
+      summary: title,
+      location: location.address,
+      // description: 'Really great refreshments',
+      start: {
+        dateTime: displayStart,
+        timeZone: availabilityPlan.timezone,
+      },
+      end: {
+        dateTime: displayEnd,
+        timeZone: availabilityPlan.timezone,
+      },
+      // recurrence: ['RRULE:FREQ=DAILY;COUNT=2'],
+      // attendees: [{ email: 'lpage@example.com' }, { email: 'sbrin@example.com' }],
+      // reminders: {
+      //   useDefault: false,
+      //   overrides: [
+      //     { method: 'email', minutes: 24 * 60 },
+      //     { method: 'popup', minutes: 10 },
+      //   ],
+      // },
+    };
+
+    // const CLIENT_ID = '1033598433613-tvqsg6e9lg5jacll4jjvait26qgglut5.apps.googleusercontent.com';
+    // const clientSecret = 'yJZdWmtPRYHHcVeCgJFSulME';
+    // const API_KEY = 'AIzaSyD80EabvQcj_X4Wx5N6YZ8XYlRRkxJ-8WI';
+    // // Array of API discovery doc URLs for APIs used by the quickstart
+    // const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
+
+    // Authorization scopes required by the API; multiple scopes can be
+    // included, separated by spaces.
+    // const SCOPES = 'https://www.googleapis.com/auth/calendar';
+
+    const handleClick = () => {
+      console.log('login', gapi.auth2.getAuthInstance().isSignedIn.get());
+      if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
+        let request = gapi.client.calendar.events.insert({
+          calendarId: 'primary',
+          resource: event,
+        });
+        request.execute(event => {
+          console.log('event', event);
+          console.log('event link', event.htmlLink);
+          this.setState({
+            showSuccess: true,
+          });
+          setTimeout(
+            () =>
+              this.setState({
+                showSuccess: false,
+              }),
+            3000
+          );
+          // window.open(event.htmlLink);
+        });
+      } else {
+        gapi.load('client:auth2', () => {
+          console.log('loaded client');
+
+          // gapi.client.init({
+          //   apiKey: API_KEY,
+          //   clientId: CLIENT_ID,
+          //   discoveryDocs: DISCOVERY_DOCS,
+          //   scope: SCOPES,
+          // });
+
+          gapi.client.load('calendar', 'v3', () => console.log('bam!'));
+
+          gapi.auth2
+            .getAuthInstance()
+            .signIn()
+            .then(() => {
+              let request = gapi.client.calendar.events.insert({
+                calendarId: 'primary',
+                resource: event,
+              });
+
+              request.execute(event => {
+                console.log('event', event);
+                console.log('event link', event.htmlLink);
+                // window.open(event.htmlLink);
+                this.setState({
+                  showSuccess: true,
+                });
+                setTimeout(
+                  () =>
+                    this.setState({
+                      showSuccess: false,
+                    }),
+                  5000
+                );
+              });
+            })
+            .catch(e => console.error(e));
+        });
+      }
+    };
+
+    const handleSignoutClick = event => {
+      gapi.auth2.getAuthInstance().signOut();
+    };
+
     return (
       <div className={classes}>
         <div className={css.container}>
@@ -385,7 +545,6 @@ export class TransactionPanelComponent extends Component {
                 <AvatarLarge user={currentCustomer} className={css.avatarDesktop} />
               </div>
             ) : null} */}
-
             <PanelHeading
               panelHeadingState={stateData.headingState}
               transactionRole={transactionRole}
@@ -396,7 +555,6 @@ export class TransactionPanelComponent extends Component {
               listingTitle={listingTitle}
               listingDeleted={listingDeleted}
             />
-
             <div className={css.bookingDetailsMobile}>
               <AddressLinkMaybe
                 rootClassName={css.addressMobile}
@@ -406,7 +564,6 @@ export class TransactionPanelComponent extends Component {
               />
               <BreakdownMaybe transaction={currentTransaction} transactionRole={transactionRole} />
             </div>
-
             {savePaymentMethodFailed ? (
               <p className={css.genericError}>
                 <FormattedMessage
@@ -442,14 +599,28 @@ export class TransactionPanelComponent extends Component {
             ) : (
               <div className={css.sendingMessageNotAllowed}>{sendingMessageNotAllowed}</div>
             )}
-
             {stateData.showSaleButtons ? (
               <div className={css.mobileActionButtons}>{saleButtons}</div>
             ) : null}
             {/* {isCustomer && stateData.holdPaymentPeriod && stateData.holdPaymentPeriod === true ? ( */}
-
+            {!stateData.showSaleButtons ? (
+              <>
+                <PrimaryButton style={{ marginTop: 15 }} onClick={handleClick}>
+                  {this.state.loggedIn
+                    ? 'Get Event in Google Calender'
+                    : 'Login to google calender to get event notification'}
+                </PrimaryButton>
+                {this.state.loggedIn ? (
+                  <SecondaryButton style={{ marginTop: 15 }} onClick={handleSignoutClick}>
+                    Sign out from Google Calender
+                  </SecondaryButton>
+                ) : null}
+              </>
+            ) : null}
+            {this.state.showSuccess ? (
+              <div className={css.successMessage}>Event added successfully to calendar</div>
+            ) : null}
             {/* // Mobile view // */}
-
             {currentTransaction &&
             currentTransaction.booking &&
             moment(currentTransaction.booking.attributes.start).diff(new Date()) > 0 &&
