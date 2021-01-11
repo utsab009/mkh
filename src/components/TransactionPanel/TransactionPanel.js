@@ -76,7 +76,7 @@ const SCOPES = 'https://www.googleapis.com/auth/calendar';
 
 // const MS_APP_ID = '4611404d-2da2-4148-972e-9a9452db7760';
 const MS_APP_ID = '8f186ab5-fc9b-4699-aac4-b7bb447f7c73';
-const MS_SCOPES = ['user.read', 'calendars.read'];
+const MS_SCOPES = ['user.read', 'calendars.ReadWrite', 'Mail.Send'];
 
 const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
   const authorDisplayName = <UserDisplayName user={currentProvider} intl={intl} />;
@@ -136,11 +136,15 @@ export class TransactionPanelComponent extends Component {
       },
       cache: {
         cacheLocation: 'localStorage',
-        storeAuthStateInCookie: true,
+        storeAuthStateInCookie: false,
       },
     });
 
     // var user = this.userAgentApplication.getAccount();
+    // this.userAgentApplication.handleRedirectCallback((error, response) => {
+    //   // handle redirect response or error
+    //   console.log('************************************* redireact');
+    // });
   }
 
   componentDidMount() {
@@ -254,6 +258,7 @@ export class TransactionPanelComponent extends Component {
       console.log('199 getUserProfile accessToken', accessToken);
       if (accessToken) {
         // TEMPORARY: Display the token in the error flash
+        this.addOutlookEvent(accessToken);
         this.setState({
           msOutlookCalenderLogin: true,
           error: { message: 'Access token:', debug: accessToken },
@@ -272,15 +277,52 @@ export class TransactionPanelComponent extends Component {
     var headers = new Headers();
     var bearer = 'Bearer ' + token;
     headers.append('Authorization', bearer);
+    console.log('199 token in eve', headers);
     var options = {
-      method: 'GET',
-      headers: headers,
+      method: 'POST',
+      headers: {
+        ...headers,
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+      body: JSON.stringify({
+        subject: "Let's go for lunch",
+        body: {
+          contentType: 'HTML',
+          content: 'Does noon work for you?',
+        },
+        start: {
+          dateTime: '2021-01-15T12:00:00',
+          timeZone: 'Pacific Standard Time',
+        },
+        end: {
+          dateTime: '2021-01-15T14:00:00',
+          timeZone: 'Pacific Standard Time',
+        },
+        location: {
+          displayName: "Harry's Bar",
+        },
+        attendees: [
+          {
+            emailAddress: {
+              address: 'samanthab@contoso.onmicrosoft.com',
+              name: 'Samantha Booth',
+            },
+            type: 'required',
+          },
+        ],
+        allowNewTimeProposals: true,
+        transactionId: '7E163156-7762-4BEB-A1C6-729EA81755A7d',
+      }),
     };
-    var graphEndpoint = 'https://graph.microsoft.com/v1.0/me';
-
-    fetch(graphEndpoint, options).then(resp => {
-      //do something with response
-    });
+    var graphEndpoint = 'https://graph.microsoft.com/v1.0/me/events';
+    console.log('199 params', options);
+    fetch(graphEndpoint, options)
+      .then(resp => {
+        //do something with response
+        console.log('199 res', resp);
+      })
+      .catch(e => console.log('199 error: ', e));
   };
 
   initClient = () => {
