@@ -55,7 +55,7 @@ import PanelHeading, {
 } from './PanelHeading';
 
 import moment from 'moment';
-
+import * as msal from '@azure/msal-browser';
 import css from './TransactionPanel.css';
 import { PrimaryButton, SecondaryButton } from '../Button/Button';
 import Modal from '../Modal/Modal';
@@ -119,6 +119,22 @@ export class TransactionPanelComponent extends Component {
     this.onSendMessageFormBlur = this.onSendMessageFormBlur.bind(this);
     this.onMessageSubmit = this.onMessageSubmit.bind(this);
     this.scrollToMessage = this.scrollToMessage.bind(this);
+
+    const msalConfig = {
+      auth: {
+        clientId: '8f186ab5-fc9b-4699-aac4-b7bb447f7c73',
+        authority: 'https://login.microsoftonline.com/common',
+        redirectUri: 'http://localhost:3000',
+        // postLogoutRedirectUri: 'http://localhost:3000',
+        navigateToLoginRequestUrl: true,
+      },
+      cache: {
+        cacheLocation: 'sessionStorage',
+        storeAuthStateInCookie: false,
+      },
+    };
+
+    this.msalInstance = new msal.PublicClientApplication(msalConfig);
   }
 
   componentDidMount() {
@@ -129,6 +145,32 @@ export class TransactionPanelComponent extends Component {
   componentDidUpdate(prevProps, prevState) {
     console.log({ prevProps }, { prevState });
   }
+
+  loginMS = async () => {
+    try {
+      var loginRequest = {
+        scopes: ['user.read', 'mail.send'], // optional Array<string>
+      };
+
+      const loginResponse = await this.msalInstance.loginPopup(loginRequest);
+      console.log('199', loginResponse);
+    } catch (err) {
+      // handle error
+    }
+  };
+  logOutMS = async () => {
+    try {
+      // const currentAccount = this.msalInstance.getAccountByHomeId(homeAccountId);
+      this.msalInstance.logout({
+        // account: currentAccount,
+        postLogoutRedirectUri: 'http://localhost:3000',
+        // authority: 'https://loginmicrosoftonline.com/common',
+        // correlationId: 'insert-id-here',
+      });
+    } catch (err) {
+      // handle error
+    }
+  };
 
   initClient = () => {
     gapi = window.gapi;
@@ -607,6 +649,8 @@ export class TransactionPanelComponent extends Component {
               <div className={css.mobileActionButtons}>{saleButtons}</div>
             ) : null}
             {/* {isCustomer && stateData.holdPaymentPeriod && stateData.holdPaymentPeriod === true ? ( */}
+            <PrimaryButton onClick={this.loginMS}>loginMS</PrimaryButton>
+            <PrimaryButton onClick={this.logOutMS}>loginMS</PrimaryButton>
             {!stateData.showSaleButtons ? (
               <>
                 <PrimaryButton style={{ marginTop: 15 }} onClick={handleClick}>
