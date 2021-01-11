@@ -74,8 +74,6 @@ const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v
 const SCOPES = 'https://www.googleapis.com/auth/calendar';
 // Helper function to get display names for different roles
 
-// const MS_APP_ID = '4611404d-2da2-4148-972e-9a9452db7760';
-const MS_APP_ID = '8f186ab5-fc9b-4699-aac4-b7bb447f7c73';
 const MS_SCOPES = ['user.read', 'calendars.ReadWrite', 'Mail.Send'];
 
 const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
@@ -118,6 +116,7 @@ export class TransactionPanelComponent extends Component {
       googleCalenderLogin: false,
       msOutlookCalenderLogin: false,
       showSuccess: false,
+      accessTokenMS: null,
     };
     this.isMobSaf = false;
     this.sendMessageFormName = 'TransactionPanel.SendMessageForm';
@@ -131,8 +130,8 @@ export class TransactionPanelComponent extends Component {
 
     this.userAgentApplication = new UserAgentApplication({
       auth: {
-        clientId: MS_APP_ID,
-        redirectUri: 'http://localhost:3000/',
+        clientId: process.env.REACT_APP_MS_CALENDAR_CLIENT_ID,
+        redirectUri: process.env.REACT_APP_CANONICAL_ROOT_URL,
       },
       cache: {
         cacheLocation: 'localStorage',
@@ -153,19 +152,21 @@ export class TransactionPanelComponent extends Component {
 
     // If MSAL already has an account, the user
     // is already logged in
-    const accounts = this.userAgentApplication.getAllAccounts();
-    console.log('199', accounts);
-    if (accounts && accounts.length > 0) {
-      // Enhance user object with data from Graph
-      this.getUserProfile();
-    }
+    // const accounts = this.userAgentApplication.getAllAccounts();
+    // console.log('199', accounts);
+    // if (accounts && accounts.length > 0) {
+    //   // Enhance user object with data from Graph
+    //   this.getUserProfile();
+    // }
+    this.getUserProfile();
+    console.log('111', process.env);
   }
 
   componentDidUpdate(prevProps, prevState) {
     console.log({ prevProps }, { prevState });
   }
 
-  login = async () => {
+  login_ms = async () => {
     try {
       // Login via popup
       await this.userAgentApplication.loginPopup({
@@ -174,7 +175,7 @@ export class TransactionPanelComponent extends Component {
       });
 
       // After login, get the user's profile
-      await this.getUserProfile();
+      return await this.getUserProfile();
     } catch (err) {
       console.log('199 login err', err);
       this.setState({
@@ -184,7 +185,7 @@ export class TransactionPanelComponent extends Component {
       });
     }
   };
-  logout = () => {
+  logout_ms = () => {
     this.userAgentApplication.logout();
   };
 
@@ -258,22 +259,79 @@ export class TransactionPanelComponent extends Component {
       console.log('199 getUserProfile accessToken', accessToken);
       if (accessToken) {
         // TEMPORARY: Display the token in the error flash
-        this.addOutlookEvent(accessToken);
+        // this.addOutlookEvent(accessToken);
         this.setState({
           msOutlookCalenderLogin: true,
           error: { message: 'Access token:', debug: accessToken },
+          accessTokenMS: accessToken,
         });
+
+        return accessToken;
       }
     } catch (err) {
       this.setState({
         msOutlookCalenderLogin: false,
         user: {},
         error: this.normalizeError(err),
+        accessTokenMS: null,
       });
     }
   };
 
-  addOutlookEvent = token => {
+  addOutlookEvent = async (currentTransaction, location) => {
+    // let event = {
+    //   subject: "Let's go for lunch",
+    //   body: {
+    //     contentType: 'HTML',
+    //     content: 'Does noon work for you?',
+    //   },
+    //   start: {
+    //     dateTime: '2021-01-15T12:00:00',
+    //     timeZone: 'Pacific Standard Time',
+    //   },
+    //   end: {
+    //     dateTime: '2021-01-15T14:00:00',
+    //     timeZone: 'Pacific Standard Time',
+    //   },
+    //   location: {
+    //     displayName: "Harry's Bar",
+    //   },
+    //   attendees: [
+    //     {
+    //       emailAddress: {
+    //         address: 'samanthab@contoso.onmicrosoft.com',
+    //         name: 'Samantha Booth',
+    //       },
+    //       type: 'required',
+    //     },
+    //   ],
+    //   allowNewTimeProposals: true,
+    //   transactionId: '7E163156-7762-4BEB-A1C6-729EA81755',
+    // }
+    let { displayEnd, displayStart, seats } = currentTransaction.booking.attributes;
+    let { title, availabilityPlan } = currentTransaction.listing.attributes;
+    let event = {
+      subject: title,
+      location: { displayName: location.address },
+      // description: 'Really great refreshments',
+      start: {
+        dateTime: displayStart,
+        timeZone: availabilityPlan.timezone,
+      },
+      end: {
+        dateTime: displayEnd,
+        timeZone: availabilityPlan.timezone,
+      },
+      transactionId: currentTransaction.id.uuid,
+    };
+
+    let token;
+    if (!this.state.accessTokenMS) {
+      token = await this.login_ms();
+    } else {
+      token = this.state.accessTokenMS;
+    }
+    console.log('199 token', token);
     var headers = new Headers();
     var bearer = 'Bearer ' + token;
     headers.append('Authorization', bearer);
@@ -285,35 +343,7 @@ export class TransactionPanelComponent extends Component {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + token,
       },
-      body: JSON.stringify({
-        subject: "Let's go for lunch",
-        body: {
-          contentType: 'HTML',
-          content: 'Does noon work for you?',
-        },
-        start: {
-          dateTime: '2021-01-15T12:00:00',
-          timeZone: 'Pacific Standard Time',
-        },
-        end: {
-          dateTime: '2021-01-15T14:00:00',
-          timeZone: 'Pacific Standard Time',
-        },
-        location: {
-          displayName: "Harry's Bar",
-        },
-        attendees: [
-          {
-            emailAddress: {
-              address: 'samanthab@contoso.onmicrosoft.com',
-              name: 'Samantha Booth',
-            },
-            type: 'required',
-          },
-        ],
-        allowNewTimeProposals: true,
-        transactionId: '7E163156-7762-4BEB-A1C6-729EA81755A7d',
-      }),
+      body: JSON.stringify(event),
     };
     var graphEndpoint = 'https://graph.microsoft.com/v1.0/me/events';
     console.log('199 params', options);
@@ -321,6 +351,16 @@ export class TransactionPanelComponent extends Component {
       .then(resp => {
         //do something with response
         console.log('199 res', resp);
+        this.setState({
+          showSuccess: true,
+        });
+        setTimeout(
+          () =>
+            this.setState({
+              showSuccess: false,
+            }),
+          3000
+        );
       })
       .catch(e => console.log('199 error: ', e));
   };
@@ -634,6 +674,7 @@ export class TransactionPanelComponent extends Component {
         dateTime: displayEnd,
         timeZone: availabilityPlan.timezone,
       },
+      transactionId: currentTransaction.id.uuid,
       // recurrence: ['RRULE:FREQ=DAILY;COUNT=2'],
       // attendees: [{ email: 'lpage@example.com' }, { email: 'sbrin@example.com' }],
       // reminders: {
@@ -805,13 +846,16 @@ export class TransactionPanelComponent extends Component {
 
             {!stateData.showSaleButtons ? (
               <>
-                <PrimaryButton style={{ marginTop: 15 }} onClick={this.login}>
+                <PrimaryButton
+                  style={{ marginTop: 15 }}
+                  onClick={() => this.addOutlookEvent(currentTransaction, location)}
+                >
                   {this.state.msOutlookCalenderLogin
                     ? 'Get Event in Microsoft outlook'
                     : 'Log in to Microsoft outlook to get event notification'}
                 </PrimaryButton>
                 {this.state.msOutlookCalenderLogin ? (
-                  <SecondaryButton style={{ marginTop: 15 }} onClick={this.logout}>
+                  <SecondaryButton style={{ marginTop: 15 }} onClick={this.logout_ms}>
                     Log out from Microsoft outlook
                   </SecondaryButton>
                 ) : null}
