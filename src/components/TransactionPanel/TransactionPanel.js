@@ -62,6 +62,7 @@ import css from './TransactionPanel.css';
 import { PrimaryButton, SecondaryButton } from '../Button/Button';
 import Modal from '../Modal/Modal';
 import { UserAgentApplication } from 'msal';
+import Axios from 'axios';
 var gapi;
 // const gapi = window.gapi;
 const CLIENT_ID = process.env.REACT_APP_GOOGLE_CALENDAR_CLIENT_ID;
@@ -332,22 +333,31 @@ export class TransactionPanelComponent extends Component {
       token = this.state.accessTokenMS;
     }
     console.log('199 token', token);
-    var headers = new Headers();
-    var bearer = 'Bearer ' + token;
-    headers.append('Authorization', bearer);
-    console.log('199 token in eve', headers);
-    var options = {
-      method: 'POST',
-      headers: {
-        ...headers,
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
-      },
-      body: JSON.stringify(event),
-    };
+    // var headers = new Headers();
+    // var bearer = 'Bearer ' + token;
+    // headers.append('Authorization', bearer);
+    // console.log('199 token in eve', headers);
+    // var options = {
+    //   method: 'POST',
+    //   headers: {
+    //     ...headers,
+    //     'Content-Type': 'application/json',
+    //     Authorization: 'Bearer ' + token,
+    //   },
+    //   body: JSON.stringify(event),
+    // };
     var graphEndpoint = 'https://graph.microsoft.com/v1.0/me/events';
-    console.log('199 params', options);
-    fetch(graphEndpoint, options)
+    // console.log('199 params', options);
+    // fetch(graphEndpoint, options)
+    Axios({
+      method: 'post',
+      url: graphEndpoint,
+      data: JSON.stringify(event),
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+    })
       .then(resp => {
         //do something with response
         console.log('199 res', resp);
