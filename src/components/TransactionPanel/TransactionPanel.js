@@ -55,8 +55,6 @@ import PanelHeading, {
 } from './PanelHeading';
 
 import moment from 'moment';
-import 'isomorphic-fetch';
-import { Client } from '@microsoft/microsoft-graph-client';
 
 import css from './TransactionPanel.css';
 import { PrimaryButton, SecondaryButton } from '../Button/Button';

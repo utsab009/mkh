@@ -10,7 +10,6 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
     "@mapbox/polyline": "^1.0.0",
-    "@microsoft/microsoft-graph-client": "^2.2.1",
     "@sentry/browser": "5.7.1",
     "@sentry/node": "5.7.1",
     "array-includes": "^3.0.3",
