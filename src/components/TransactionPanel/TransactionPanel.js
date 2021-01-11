@@ -55,10 +55,13 @@ import PanelHeading, {
 } from './PanelHeading';
 
 import moment from 'moment';
+import 'isomorphic-fetch';
+import { Client } from '@microsoft/microsoft-graph-client';
 
 import css from './TransactionPanel.css';
 import { PrimaryButton, SecondaryButton } from '../Button/Button';
 import Modal from '../Modal/Modal';
+import { UserAgentApplication } from 'msal';
 var gapi;
 // const gapi = window.gapi;
 const CLIENT_ID = process.env.REACT_APP_GOOGLE_CALENDAR_CLIENT_ID;
@@ -70,6 +73,11 @@ const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v
 // included, separated by spaces.
 const SCOPES = 'https://www.googleapis.com/auth/calendar';
 // Helper function to get display names for different roles
+
+// const MS_APP_ID = '4611404d-2da2-4148-972e-9a9452db7760';
+const MS_APP_ID = '8f186ab5-fc9b-4699-aac4-b7bb447f7c73';
+const MS_SCOPES = ['user.read', 'calendars.read'];
+
 const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
   const authorDisplayName = <UserDisplayName user={currentProvider} intl={intl} />;
   const customerDisplayName = <UserDisplayName user={currentCustomer} intl={intl} />;
@@ -107,7 +115,8 @@ export class TransactionPanelComponent extends Component {
       showCancelModal: false,
       currentTimePastHourCap: false,
       preauthCancel: false,
-      loggedIn: false,
+      googleCalenderLogin: false,
+      msOutlookCalenderLogin: false,
       showSuccess: false,
     };
     this.isMobSaf = false;
@@ -119,16 +128,160 @@ export class TransactionPanelComponent extends Component {
     this.onSendMessageFormBlur = this.onSendMessageFormBlur.bind(this);
     this.onMessageSubmit = this.onMessageSubmit.bind(this);
     this.scrollToMessage = this.scrollToMessage.bind(this);
+
+    this.userAgentApplication = new UserAgentApplication({
+      auth: {
+        clientId: MS_APP_ID,
+        redirectUri: 'http://localhost:3000/',
+      },
+      cache: {
+        cacheLocation: 'localStorage',
+        storeAuthStateInCookie: true,
+      },
+    });
+
+    // var user = this.userAgentApplication.getAccount();
   }
 
   componentDidMount() {
     this.isMobSaf = isMobileSafari();
     this.initClient();
+
+    // If MSAL already has an account, the user
+    // is already logged in
+    const accounts = this.userAgentApplication.getAllAccounts();
+    console.log('199', accounts);
+    if (accounts && accounts.length > 0) {
+      // Enhance user object with data from Graph
+      this.getUserProfile();
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
     console.log({ prevProps }, { prevState });
   }
+
+  login = async () => {
+    try {
+      // Login via popup
+      await this.userAgentApplication.loginPopup({
+        scopes: MS_SCOPES,
+        prompt: 'select_account',
+      });
+
+      // After login, get the user's profile
+      await this.getUserProfile();
+    } catch (err) {
+      console.log('199 login err', err);
+      this.setState({
+        msOutlookCalenderLogin: false,
+        user: {},
+        error: this.normalizeError(err),
+      });
+    }
+  };
+  logout = () => {
+    this.userAgentApplication.logout();
+  };
+
+  getAccessToken = async scopes => {
+    try {
+      const accounts = this.userAgentApplication.getAllAccounts();
+      console.log('119 accounts', accounts);
+      if (accounts.length <= 0) throw new Error('login_required');
+      // Get the access token silently
+      // If the cache contains a non-expired token, this function
+      // will just return the cached token. Otherwise, it will
+      // make a request to the Azure OAuth endpoint to get a token
+      var silentResult = await this.userAgentApplication.acquireTokenSilent({
+        scopes: scopes,
+        account: accounts[0],
+      });
+
+      return silentResult.accessToken;
+    } catch (err) {
+      // If a silent request fails, it may be because the user needs
+      // to login or grant consent to one or more of the requested scopes
+      if (this.isInteractionRequired(err)) {
+        var interactiveResult = await this.userAgentApplication.acquireTokenPopup({
+          scopes: scopes,
+        });
+
+        return interactiveResult.accessToken;
+      } else {
+        throw err;
+      }
+    }
+  };
+  setErrorMessage = (message, debug) => {
+    this.setState({
+      error: { message: message, debug: debug },
+    });
+  };
+
+  isInteractionRequired = error => {
+    if (!error.message || error.message.length <= 0) {
+      return false;
+    }
+
+    return (
+      error.message.indexOf('consent_required') > -1 ||
+      error.message.indexOf('interaction_required') > -1 ||
+      error.message.indexOf('login_required') > -1 ||
+      error.message.indexOf('no_account_in_silent_request') > -1
+    );
+  };
+
+  normalizeError = error => {
+    var normalizedError = {};
+    if (typeof error === 'string') {
+      var errParts = error.split('|');
+      normalizedError =
+        errParts.length > 1 ? { message: errParts[1], debug: errParts[0] } : { message: error };
+    } else {
+      normalizedError = {
+        message: error.message,
+        debug: JSON.stringify(error),
+      };
+    }
+    return normalizedError;
+  };
+
+  getUserProfile = async () => {
+    try {
+      var accessToken = await this.getAccessToken(MS_SCOPES);
+
+      console.log('199 getUserProfile accessToken', accessToken);
+      if (accessToken) {
+        // TEMPORARY: Display the token in the error flash
+        this.setState({
+          msOutlookCalenderLogin: true,
+          error: { message: 'Access token:', debug: accessToken },
+        });
+      }
+    } catch (err) {
+      this.setState({
+        msOutlookCalenderLogin: false,
+        user: {},
+        error: this.normalizeError(err),
+      });
+    }
+  };
+
+  addOutlookEvent = token => {
+    var headers = new Headers();
+    var bearer = 'Bearer ' + token;
+    headers.append('Authorization', bearer);
+    var options = {
+      method: 'GET',
+      headers: headers,
+    };
+    var graphEndpoint = 'https://graph.microsoft.com/v1.0/me';
+
+    fetch(graphEndpoint, options).then(resp => {
+      //do something with response
+    });
+  };
 
   initClient = () => {
     gapi = window.gapi;
@@ -157,11 +310,11 @@ export class TransactionPanelComponent extends Component {
     if (isSignedIn) {
       // listUpcomingEvents();
       this.setState({
-        loggedIn: true,
+        googleCalenderLogin: true,
       });
     } else {
       this.setState({
-        loggedIn: false,
+        googleCalenderLogin: false,
       });
     }
   };
@@ -257,7 +410,7 @@ export class TransactionPanelComponent extends Component {
       onHoldRequest,
       cancelByCustomer,
     } = this.props;
-
+    console.log('199 state', this.state);
     const currentTransaction = ensureTransaction(transaction);
     const currentListing = ensureListing(currentTransaction.listing);
     const currentProvider = ensureUser(currentTransaction.provider);
@@ -607,14 +760,25 @@ export class TransactionPanelComponent extends Component {
               <div className={css.mobileActionButtons}>{saleButtons}</div>
             ) : null}
             {/* {isCustomer && stateData.holdPaymentPeriod && stateData.holdPaymentPeriod === true ? ( */}
+
             {!stateData.showSaleButtons ? (
               <>
+                <PrimaryButton style={{ marginTop: 15 }} onClick={this.login}>
+                  {this.state.msOutlookCalenderLogin
+                    ? 'Get Event in Microsoft outlook'
+                    : 'Log in to Microsoft outlook to get event notification'}
+                </PrimaryButton>
+                {this.state.msOutlookCalenderLogin ? (
+                  <SecondaryButton style={{ marginTop: 15 }} onClick={this.logout}>
+                    Log out from Microsoft outlook
+                  </SecondaryButton>
+                ) : null}
                 <PrimaryButton style={{ marginTop: 15 }} onClick={handleClick}>
-                  {this.state.loggedIn
+                  {this.state.googleCalenderLogin
                     ? 'Get Event in Google Calender'
                     : 'Login to google calender to get event notification'}
                 </PrimaryButton>
-                {this.state.loggedIn ? (
+                {this.state.googleCalenderLogin ? (
                   <SecondaryButton style={{ marginTop: 15 }} onClick={handleSignoutClick}>
                     Sign out from Google Calender
                   </SecondaryButton>
