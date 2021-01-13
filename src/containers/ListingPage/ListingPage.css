@@ -711,6 +711,17 @@
   height: 40px;
   margin-left: 10px;
 }
+.internalLink {
+  color: blue;
+  cursor: pointer;
+}
+.internalLink:hover {
+  text-decoration: underline;
+}
+.modalHeader {
+  font-size: 2rem;
+  color: #ffa000;
+}
 @media (max-width: 1199px) {
   .mainContent {
     max-width: none;

@@ -120,6 +120,9 @@ export const EditListingPageComponent = props => {
             id: listingId.uuid,
             slug: listingSlug,
           },
+          state: {
+            newListing: true,
+          },
         };
 
     return <NamedRedirect {...redirectProps} />;

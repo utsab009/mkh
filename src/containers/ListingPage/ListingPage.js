@@ -93,12 +93,36 @@ export class ListingPageComponent extends Component {
       enquiryModalOpen: enquiryModalOpenForListingId === params.id,
       showNoVideoError: false,
       showNoLinkError: false,
+      welcomeModal: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onContactUser = this.onContactUser.bind(this);
     this.onSubmitEnquiry = this.onSubmitEnquiry.bind(this);
   }
+
+  componentDidMount() {
+    if (this.props.location.state && this.props.location.state.newListing) {
+      this.toggleWelcomeModal();
+    }
+  }
+
+  toggleWelcomeModal = cb => {
+    // this.props.onUpdateProfile({
+    //   publicData: {
+    //     newListing: false,
+    //   },
+    // });
+    if (this.state.welcomeModal) {
+      this.props.history.location.state = null;
+    }
+    this.setState(
+      prevState => ({
+        welcomeModal: !prevState.welcomeModal,
+      }),
+      () => cb
+    );
+  };
 
   handleSubmit(values) {
     const {
@@ -446,6 +470,9 @@ export class ListingPageComponent extends Component {
       currentListing.attributes &&
       currentListing.attributes.publicData &&
       currentListing.attributes.publicData.youtubeLink;
+
+    const { subsectors } = publicData || 'yours';
+
     let authorBio =
       ensuredAuthor !== null && ensuredAuthor.attributes.profile.bio
         ? ensuredAuthor.attributes.profile.bio
@@ -547,6 +574,49 @@ export class ListingPageComponent extends Component {
           <LayoutWrapperTopbar>{topbar}</LayoutWrapperTopbar>
           <LayoutWrapperMain>
             <div>
+              {this.state.welcomeModal && (
+                <Modal
+                  id="ListingPage.welcomeModal"
+                  isOpen={this.state.welcomeModal}
+                  onClose={() => this.toggleWelcomeModal()}
+                  onManageDisableScrolling={onManageDisableScrolling}
+                  // className={css.landingModal}
+                  // containerClassName={css.modalContainer}
+                >
+                  <div className={css.modalHeader}>Congratulations</div>
+                  <div className={css.welcomeModal}>
+                    <p>
+                      Mentees who now search for the Job Role of {subsectors} will now find you and
+                      be able to book you. This page is what they will see. If you need to change
+                      any part of it, just go to the Circle in the top right-hand corner of this
+                      screen that has your picture or initials in it. Click{' '}
+                      <span
+                        className={css.internalLink}
+                        onClick={() => {
+                          this.toggleWelcomeModal(this.props.history.push('/listings'));
+                        }}
+                      >
+                        Role Listings
+                      </span>
+                      . Here you will be able to open this Role Listing and edit it as often as you
+                      require.
+                    </p>
+                    <p>
+                      Another option you will see when clicking the circle is{' '}
+                      <span
+                        className={css.internalLink}
+                        onClick={() => {
+                          this.toggleWelcomeModal(this.props.history.push('/profile-settings'));
+                        }}
+                      >
+                        Mentor Profile
+                      </span>
+                      . Here is where you can place your photograph, LinkedIn link (if you have one)
+                      and update your Job Experience and Education.
+                    </p>
+                  </div>
+                </Modal>
+              )}
               <SectionImages
                 title={title}
                 listing={currentListing}
@@ -819,9 +889,11 @@ export class ListingPageComponent extends Component {
                 </div>
 
                 <div className={css.rightSecbooking}>
-                  <button type="button" onClick={this.onContactUser} className={css.qtbtn}>
-                    Would you like to ask me a question
-                  </button>
+                  {!isOwnListing && (
+                    <button type="button" onClick={this.onContactUser} className={css.qtbtn}>
+                      Would you like to ask me a question
+                    </button>
+                  )}
                   <BookingPanel
                     className={`${css.bookingPanel} ${css.modbp}`}
                     listing={currentListing}

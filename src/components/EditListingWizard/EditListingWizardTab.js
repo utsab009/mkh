@@ -78,7 +78,7 @@ const redirectAfterDraftUpdate = (listingId, params, tab, marketplaceTabs, histo
   // Redirect to next tab
   const nextPathParams = pathParamsToNextTab(currentPathParams, tab, marketplaceTabs);
   const to = createResourceLocatorString('EditListingPage', routes, nextPathParams, {});
-  console.log('to', to);
+  console.log('165 to', to);
   history.push(to);
 };
 
@@ -129,7 +129,7 @@ const EditListingWizardTab = props => {
     const imageProperty =
       typeof updatedImages !== 'undefined' ? { images: imageIds(updatedImages) } : {};
     const updateValuesWithImages = { ...otherValues, ...imageProperty };
-
+    console.log('551 isNewListingFlow', isNewListingFlow, isNewURI, isDraftURI);
     if (isNewListingFlow) {
       const onUpsertListingDraft = isNewURI
         ? (tab, updateValues) => onCreateListingDraft(updateValues)
