@@ -286,7 +286,7 @@ class StripePaymentForm extends Component {
       hasHandledCardPayment,
       defaultPaymentMethod,
     } = this.props;
-    const { initialMessage } = values;
+    const { initialMessage, linkedInId } = values;
     const { cardValueValid, paymentMethod } = this.state;
     const billingDetailsKnown = hasHandledCardPayment || defaultPaymentMethod;
     const onetimePaymentNeedsAttention = !billingDetailsKnown && !cardValueValid;
@@ -298,6 +298,7 @@ class StripePaymentForm extends Component {
 
     const params = {
       message: initialMessage ? initialMessage.trim() : null,
+      linkedInId: linkedInId ? linkedInId.trim() : null,
       card: this.card,
       formId,
       formValues: values,
@@ -452,15 +453,18 @@ class StripePaymentForm extends Component {
             <IconSpinner />
           </p>
         ) : null}
-
         {initiateOrderError ? (
           <span className={css.errorMessage}>{initiateOrderError.message}</span>
         ) : null}
         {showInitialMessageInput ? (
           <div>
-            <h3 className={css.messageHeading}>
+            {/* <h3 className={css.messageHeading}>
               <FormattedMessage id="StripePaymentForm.messageHeading" />
-            </h3>
+            </h3> */}
+            <p className={css.messageHeadingSmall}>
+              Help the Mentor decide if they can really help. Tell the Mentor what you hope to
+              achieve from the Mentoring
+            </p>
 
             <FieldTextInput
               type="textarea"
@@ -469,6 +473,15 @@ class StripePaymentForm extends Component {
               label={initialMessageLabel}
               placeholder={messagePlaceholder}
               className={css.message}
+            />
+
+            <FieldTextInput
+              type="textarea"
+              id={`${formId}-linkedIn`}
+              name="linkedInId"
+              label="Would you like the Mentor to see your LinkedIn profile (if you have one) before accepting your booking request? • optional"
+              placeholder="Type your LinkedIn Address here"
+              className={css.linkedInId}
             />
           </div>
         ) : null}

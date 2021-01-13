@@ -54,6 +54,12 @@
     padding-bottom: 4px;
   }
 }
+.messageHeadingSmall {
+  margin-bottom: 30px;
+}
+.linkedInId {
+  margin-top: 15px;
+}
 
 .paymentMethodSelector {
   margin-bottom: 36px;

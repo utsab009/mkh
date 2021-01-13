@@ -28,7 +28,14 @@ class MentorResourcePage extends React.Component {
   state = {
     isMailSectorModalOpen: false,
   };
+
   render() {
+    // return (
+    //   <embed
+    //     src="https://tryamentor.net/category/mentor/"
+    //     style={{ width: '100%', height: '100vh' }}
+    //   ></embed>
+    // );
     return (
       <StaticPage
         className={css.root}
@@ -45,9 +52,11 @@ class MentorResourcePage extends React.Component {
             <TopbarContainer />
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
-            <div className={css.contentContainer}>
-              {/* <NamedLink name="LandingPage">Go to home page</NamedLink> or
-              <ExternalLink href="https://google.com">Go to Google</ExternalLink> */}
+            <embed
+              src="https://tryamentor.net/category/mentor/"
+              style={{ width: '100%', height: '100vh' }}
+            ></embed>
+            {/* <div className={css.contentContainer}>
               {this.state.isMailSectorModalOpen ? (
                 <Modal
                   id="MenteeResourcePage"
@@ -234,14 +243,9 @@ class MentorResourcePage extends React.Component {
                       <p>Stories to come</p>
                     </div>
                   </Tab>
-                  {/* <Tab eventKey="all" title="All">
-                    <div className={css.tabtxt}>
-                      <p>Content Goes here</p>
-                    </div>
-                  </Tab> */}
                 </Tabs>
               </div>
-            </div>
+            </div> */}
           </LayoutWrapperMain>
           <LayoutWrapperFooter>
             <Footer />

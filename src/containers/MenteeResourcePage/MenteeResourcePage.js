@@ -44,9 +44,11 @@ class MenteeResourcePage extends React.Component {
             <TopbarContainer />
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
-            <div className={css.contentContainer}>
-              {/* <NamedLink name="LandingPage">Go to home page</NamedLink> or
-              <ExternalLink href="https://google.com">Go to Google</ExternalLink> */}
+            <embed
+              src="https://tryamentor.net/category/mentee/"
+              style={{ width: '100%', height: '100vh' }}
+            ></embed>
+            {/* <div className={css.contentContainer}>
               {this.state.isMailSectorModalOpen ? (
                 <Modal
                   id="MentorResourcePage"
@@ -227,14 +229,9 @@ class MenteeResourcePage extends React.Component {
                       <p>Content Goes here</p>
                     </div>
                   </Tab>
-                  {/* <Tab eventKey="all" title="All">
-                    <div className={css.tabtxt}>
-                      <p>Content Goes here</p>
-                    </div>
-                  </Tab> */}
                 </Tabs>
               </div>
-            </div>
+            </div> */}
           </LayoutWrapperMain>
           <LayoutWrapperFooter>
             <Footer />

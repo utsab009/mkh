@@ -223,6 +223,7 @@ export class CheckoutPageComponent extends Component {
       pageData,
       speculatedTransaction,
       message,
+      linkedInId,
       paymentIntent,
       selectedPaymentMethod,
       saveAfterOnetimePayment,
@@ -324,7 +325,14 @@ export class CheckoutPageComponent extends Component {
 
     // Step 4: send initial message
     const fnSendMessage = fnParams => {
+      console.log('121 1', { fnParams });
       return onSendMessage({ ...fnParams, message });
+    };
+
+    // Step 4: send initial linkedInId
+    const fnSendlinkedInId = fnParams => {
+      console.log('121 2', { fnParams });
+      return onSendMessage({ id: fnParams.orderId, type: 'transaction', message: linkedInId });
     };
 
     // Step 5: optionally save card as defaultPaymentMethod
@@ -360,6 +368,7 @@ export class CheckoutPageComponent extends Component {
       fnHandleCardPayment,
       fnConfirmPayment,
       fnSendMessage,
+      fnSendlinkedInId,
       fnSavePaymentMethod
     );
 
@@ -404,9 +413,9 @@ export class CheckoutPageComponent extends Component {
       return;
     }
     this.setState({ submitting: true });
-
+    console.log('565 val', values);
     const { history, speculatedTransaction, currentUser, paymentIntent, dispatch } = this.props;
-    const { card, message, paymentMethod, formValues } = values;
+    const { card, message, linkedInId, paymentMethod, formValues } = values;
     const {
       name,
       addressLine1,
@@ -448,6 +457,7 @@ export class CheckoutPageComponent extends Component {
       card,
       billingDetails,
       message,
+      linkedInId,
       paymentIntent,
       selectedPaymentMethod: paymentMethod,
       saveAfterOnetimePayment: !!saveAfterOnetimePayment,
