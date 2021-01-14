@@ -20,7 +20,13 @@ const GroupOfFieldCheckboxes = props => {
           const fieldId = `${id}.${option.key}`;
           return (
             <li key={fieldId} className={css.item}>
-              <FieldCheckbox id={fieldId} name={name} label={option.label} value={option.key} />
+              <FieldCheckbox
+                id={fieldId}
+                name={name}
+                label={option.label}
+                value={option.key}
+                // onChange={e => console.log('155 select2', e.target.value)}
+              />
             </li>
           );
         })}
@@ -103,6 +109,7 @@ class SelectMultipleFilter extends Component {
     const namedInitialValues = { [name]: initialValues };
 
     const handleSubmit = (urlParam, values) => {
+      console.log('155', { urlParam, values });
       const usedValue = values ? values[name] : values;
       onSubmit(urlParam, usedValue);
     };
@@ -118,7 +125,15 @@ class SelectMultipleFilter extends Component {
         id={`${id}.popup`}
         showAsPopup
         contentPlacementOffset={contentPlacementOffset}
-        onSubmit={handleSubmit}
+        onSubmit={(urlParam, values) => {
+          console.log('155 data', urlParam, values);
+          handleSubmit(urlParam, values);
+        }}
+        liveEdit
+        onChange={data => {
+          console.log('155 d', data);
+          handleSubmit(urlParam, data);
+        }}
         initialValues={namedInitialValues}
         urlParam={urlParam}
         keepDirtyOnReinitialize
