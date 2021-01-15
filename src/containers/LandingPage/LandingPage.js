@@ -20,6 +20,7 @@ import {
   Modal,
   NamedLink,
   ExternalLink,
+  Portal,
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
@@ -27,10 +28,12 @@ import facebookImage from '../../assets/yogatimeFacebook-1200x630.jpg';
 import twitterImage from '../../assets/yogatimeTwitter-600x314.jpg';
 import css from './LandingPage.css';
 import { updateProfile } from '../ProfileSettingsPage/ProfileSettingsPage.duck';
+import { sendVerificationEmail } from '../../ducks/user.duck';
 
 export class LandingPageComponent extends Component {
   state = {
     welcomeModal: true,
+    portalShow: false,
   };
 
   toggleWelcomeModal = cb => {
@@ -48,6 +51,19 @@ export class LandingPageComponent extends Component {
     );
   };
 
+  componentDidUpdate(prevProps) {
+    let { currentUser: currentUserOld } = prevProps;
+    let { currentUser } = this.props;
+
+    if (!currentUserOld && currentUser) {
+      if (!currentUser.attributes.emailVerified) {
+        this.setState({
+          portalShow: true,
+        });
+      }
+    }
+  }
+
   render() {
     const {
       history,
@@ -61,8 +77,10 @@ export class LandingPageComponent extends Component {
       isNewUser,
       isMentor,
       currentUser,
+      sendVerificationEmailInProgress,
+      sendVerificationEmailError,
+      onResendVerificationEmail,
     } = this.props;
-
     // Schema for search engines (helps them to understand what this page is about)
     // http://schema.org
     // We are using JSON-LD format
@@ -70,7 +88,10 @@ export class LandingPageComponent extends Component {
     const schemaTitle = intl.formatMessage({ id: 'LandingPage.schemaTitle' }, { siteTitle });
     const schemaDescription = intl.formatMessage({ id: 'LandingPage.schemaDescription' });
     const schemaImage = `${config.canonicalRootURL}${facebookImage}`;
-    console.log('newUser', currentUser);
+    // let { emailVerified } = (currentUser && currentUser.attributes) || {};
+    // console.log('4445 currentUser emailVerified', currentUser, emailVerified);
+    // // if(emailVerified !== undefined && )
+
     return (
       <Page
         className={css.root}
@@ -95,6 +116,15 @@ export class LandingPageComponent extends Component {
             <TopbarContainer parentComponent="homepage" />
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
+            <Portal
+              isOpen={this.state.portalShow}
+              onClose={() => this.setState({ portalShow: false })}
+              onManageDisableScrolling={onManageDisableScrolling}
+              user={currentUser}
+              sendVerificationEmailInProgress={sendVerificationEmailInProgress}
+              sendVerificationEmailError={sendVerificationEmailError}
+              onResendVerificationEmail={onResendVerificationEmail}
+            />
             {isAuthenticated && isNewUser && isMentor ? (
               <Modal
                 id="LandingPage.welcomeModalMenor"
@@ -252,9 +282,17 @@ LandingPageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { currentUserListing, currentUserListingFetched, currentUser } = state.user;
+  const {
+    currentUserListing,
+    currentUserListingFetched,
+    currentUser,
+    sendVerificationEmailInProgress,
+    sendVerificationEmailError,
+  } = state.user;
   const { isAuthenticated } = state.Auth;
   return {
+    sendVerificationEmailInProgress,
+    sendVerificationEmailError,
     scrollingDisabled: isScrollingDisabled(state),
     currentUserListing,
     currentUserListingFetched,
@@ -272,6 +310,7 @@ const mapDispatchToProps = dispatch => ({
   onManageDisableScrolling: (componentId, disableScrolling) =>
     dispatch(manageDisableScrolling(componentId, disableScrolling)),
   onUpdateProfile: data => dispatch(updateProfile(data)),
+  onResendVerificationEmail: () => dispatch(sendVerificationEmail()),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

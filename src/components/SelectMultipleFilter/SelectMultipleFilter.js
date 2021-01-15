@@ -20,13 +20,7 @@ const GroupOfFieldCheckboxes = props => {
           const fieldId = `${id}.${option.key}`;
           return (
             <li key={fieldId} className={css.item}>
-              <FieldCheckbox
-                id={fieldId}
-                name={name}
-                label={option.label}
-                value={option.key}
-                // onChange={e => console.log('155 select2', e.target.value)}
-              />
+              <FieldCheckbox id={fieldId} name={name} label={option.label} value={option.key} />
             </li>
           );
         })}
@@ -131,7 +125,7 @@ class SelectMultipleFilter extends Component {
         }}
         liveEdit
         onChange={data => {
-          console.log('155 d', data);
+          // console.log('155 d', data);
           handleSubmit(urlParam, data);
         }}
         initialValues={namedInitialValues}
