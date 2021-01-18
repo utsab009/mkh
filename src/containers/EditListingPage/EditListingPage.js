@@ -226,15 +226,17 @@ export class EditListingPageComponent extends React.Component {
 
       return (
         <Page title={title} scrollingDisabled={scrollingDisabled}>
-          <Portal
-            isOpen={this.state.portalShow}
-            onClose={() => this.setState({ portalShow: false })}
-            onManageDisableScrolling={onManageDisableScrolling}
-            user={currentUser}
-            sendVerificationEmailInProgress={sendVerificationEmailInProgress}
-            sendVerificationEmailError={sendVerificationEmailError}
-            onResendVerificationEmail={onResendVerificationEmail}
-          />
+          {currentUser && (
+            <Portal
+              isOpen={this.state.portalShow}
+              onClose={() => this.setState({ portalShow: false })}
+              onManageDisableScrolling={onManageDisableScrolling}
+              user={currentUser}
+              sendVerificationEmailInProgress={sendVerificationEmailInProgress}
+              sendVerificationEmailError={sendVerificationEmailError}
+              onResendVerificationEmail={onResendVerificationEmail}
+            />
+          )}
           <TopbarContainer
             className={css.topbar}
             mobileRootClassName={css.mobileTopbar}

@@ -116,15 +116,17 @@ export class LandingPageComponent extends Component {
             <TopbarContainer parentComponent="homepage" />
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
-            <Portal
-              isOpen={this.state.portalShow}
-              onClose={() => this.setState({ portalShow: false })}
-              onManageDisableScrolling={onManageDisableScrolling}
-              user={currentUser}
-              sendVerificationEmailInProgress={sendVerificationEmailInProgress}
-              sendVerificationEmailError={sendVerificationEmailError}
-              onResendVerificationEmail={onResendVerificationEmail}
-            />
+            {currentUser && (
+              <Portal
+                isOpen={this.state.portalShow}
+                onClose={() => this.setState({ portalShow: false })}
+                onManageDisableScrolling={onManageDisableScrolling}
+                user={currentUser}
+                sendVerificationEmailInProgress={sendVerificationEmailInProgress}
+                sendVerificationEmailError={sendVerificationEmailError}
+                onResendVerificationEmail={onResendVerificationEmail}
+              />
+            )}
             {isAuthenticated && isNewUser && isMentor ? (
               <Modal
                 id="LandingPage.welcomeModalMenor"

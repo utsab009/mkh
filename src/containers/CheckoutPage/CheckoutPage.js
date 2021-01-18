@@ -848,15 +848,17 @@ export class CheckoutPageComponent extends Component {
               variants={['landscape-crop', 'landscape-crop2x']}
             />*/}
           </div>
-          <Portal
-            isOpen={this.state.portalShow}
-            onClose={() => this.setState({ portalShow: false })}
-            onManageDisableScrolling={onManageDisableScrolling}
-            user={currentUser}
-            sendVerificationEmailInProgress={sendVerificationEmailInProgress}
-            sendVerificationEmailError={sendVerificationEmailError}
-            onResendVerificationEmail={onResendVerificationEmail}
-          />
+          {currentUser && (
+            <Portal
+              isOpen={this.state.portalShow}
+              onClose={() => this.setState({ portalShow: false })}
+              onManageDisableScrolling={onManageDisableScrolling}
+              user={currentUser}
+              sendVerificationEmailInProgress={sendVerificationEmailInProgress}
+              sendVerificationEmailError={sendVerificationEmailError}
+              onResendVerificationEmail={onResendVerificationEmail}
+            />
+          )}
           <div className={classNames(css.avatarWrapper, css.avatarMobile)}>
             <AvatarMedium user={currentAuthor} disableProfileLink />
           </div>

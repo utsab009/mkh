@@ -14,7 +14,7 @@ import { parse, stringify } from '../../util/urlHelpers';
 import { propTypes } from '../../util/types';
 import { getListingsById } from '../../ducks/marketplaceData.duck';
 import { manageDisableScrolling, isScrollingDisabled } from '../../ducks/UI.duck';
-import { SearchMap, ModalInMobile, Page } from '../../components';
+import { SearchMap, ModalInMobile, Page, Portal } from '../../components';
 import { TopbarContainer } from '../../containers';
 
 import { searchListings, searchMapListings, setActiveListing } from './SearchPage.duck';
@@ -26,6 +26,7 @@ import {
 } from './SearchPage.helpers';
 import MainPanel from './MainPanel';
 import css from './SearchPage.css';
+import { sendVerificationEmail } from '../../ducks/user.duck';
 
 // Pagination page size might need to be dynamic on responsive page layouts
 // Current design has max 3 columns 12 is divisible by 2 and 3
@@ -43,6 +44,7 @@ export class SearchPageComponent extends Component {
       isMobileModalOpen: false,
       subSectorsConfig: [],
       jobroleConfig: [],
+      portalShow: false,
     };
 
     this.searchMapListingsInProgress = false;
@@ -278,6 +280,30 @@ export class SearchPageComponent extends Component {
     this.setState({ isMobileModalOpen: false });
   }
 
+  componentDidMount() {
+    let { emailVerified, email } =
+      (this.props.currentUser && this.props.currentUser.attributes) || {};
+    console.log('4445 componentDidMount search page', this.props.currentUser);
+    if (emailVerified !== undefined && !emailVerified) {
+      this.setState({
+        portalShow: true,
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    let { currentUser: currentUserOld } = prevProps;
+    let { currentUser } = this.props;
+
+    if (!currentUserOld && currentUser) {
+      if (!currentUser.attributes.emailVerified) {
+        this.setState({
+          portalShow: true,
+        });
+      }
+    }
+  }
+
   render() {
     const {
       intl,
@@ -293,6 +319,10 @@ export class SearchPageComponent extends Component {
       activeListingId,
       onActivateListing,
       history,
+      currentUser,
+      sendVerificationEmailInProgress,
+      sendVerificationEmailError,
+      onResendVerificationEmail,
     } = this.props;
     console.log('listings in searchpage', listings);
     // eslint-disable-next-line no-unused-vars
@@ -350,6 +380,17 @@ export class SearchPageComponent extends Component {
           currentSearchParams={urlQueryParams}
         />
         <div className={css.container}>
+          {currentUser && (
+            <Portal
+              isOpen={this.state.portalShow}
+              onClose={() => this.setState({ portalShow: false })}
+              onManageDisableScrolling={onManageDisableScrolling}
+              user={currentUser}
+              sendVerificationEmailInProgress={sendVerificationEmailInProgress}
+              sendVerificationEmailError={sendVerificationEmailError}
+              onResendVerificationEmail={onResendVerificationEmail}
+            />
+          )}
           <MainPanel
             urlQueryParams={validQueryParams}
             listings={listings}
@@ -479,6 +520,7 @@ const mapStateToProps = state => {
     searchMapListingIds,
     activeListingId,
   } = state.SearchPage;
+  const { currentUser, sendVerificationEmailInProgress, sendVerificationEmailError } = state.user;
   console.log('currentPageResultIds', currentPageResultIds);
   const pageListings = getListingsById(state, currentPageResultIds);
   const mapListings = getListingsById(
@@ -495,6 +537,9 @@ const mapStateToProps = state => {
     searchListingsError,
     searchParams,
     activeListingId,
+    currentUser,
+    sendVerificationEmailInProgress,
+    sendVerificationEmailError,
   };
 };
 
@@ -503,6 +548,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(manageDisableScrolling(componentId, disableScrolling)),
   onSearchMapListings: searchParams => dispatch(searchMapListings(searchParams)),
   onActivateListing: listingId => dispatch(setActiveListing(listingId)),
+  onResendVerificationEmail: () => dispatch(sendVerificationEmail()),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the
