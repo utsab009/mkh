@@ -13,6 +13,7 @@ import {
   timeOfDayFromTimeZoneToLocal,
   dateIsAfter,
   findNextBoundary,
+  findNextBoundaryForShortMeeting,
   timestampToDate,
   localizeAndFormatTime,
   monthIdStringInTimeZone,
@@ -31,12 +32,20 @@ import css from './FieldDateAndTimeInput.css';
 
 const MAX_TIME_SLOTS_RANGE = 180;
 const TODAY = new Date();
-
+// const duration = 20;
+// const shortMeeting = !false;
 const endOfRange = (date, timeZone) => {
   return resetToStartOfDay(date, timeZone, MAX_TIME_SLOTS_RANGE - 1);
 };
 
-const getAvailableStartTimes = (intl, timeZone, bookingStart, timeSlotsOnSelectedDate) => {
+const getAvailableStartTimes = (
+  intl,
+  timeZone,
+  bookingStart,
+  timeSlotsOnSelectedDate,
+  duration = 0,
+  shortMeeting = false
+) => {
   if (timeSlotsOnSelectedDate.length === 0 || !timeSlotsOnSelectedDate[0] || !bookingStart) {
     return [];
   }
@@ -45,6 +54,9 @@ const getAvailableStartTimes = (intl, timeZone, bookingStart, timeSlotsOnSelecte
   const allHours = timeSlotsOnSelectedDate.reduce((availableHours, t) => {
     const startDate = t.attributes.start;
     const endDate = t.attributes.end;
+    let modifiedTimeStamp = Date.parse(endDate);
+    let modifiedEndDate =
+      duration != 0 && shortMeeting ? new Date(modifiedTimeStamp - duration * 60000) : endDate;
     const nextDate = resetToStartOfDay(bookingStartDate, timeZone, 1);
 
     // If the start date is after timeslot start, use the start date.
@@ -53,9 +65,16 @@ const getAvailableStartTimes = (intl, timeZone, bookingStart, timeSlotsOnSelecte
 
     // If date next to selected start date is inside timeslot use the next date to get the hours of full day.
     // Otherwise use the end of the timeslot.
-    const endLimit = dateIsAfter(endDate, nextDate) ? nextDate : endDate;
+    // const endLimit = dateIsAfter(endDate, nextDate) ? nextDate : endDate;
+    const endLimit = shortMeeting
+      ? dateIsAfter(modifiedEndDate, nextDate)
+        ? nextDate
+        : modifiedEndDate
+      : dateIsAfter(endDate, nextDate)
+      ? nextDate
+      : endDate;
 
-    const hours = getStartHours(intl, timeZone, startLimit, endLimit);
+    const hours = getStartHours(intl, timeZone, startLimit, endLimit, duration, shortMeeting);
     return availableHours.concat(hours);
   }, []);
   return allHours;
@@ -66,14 +85,27 @@ const getAvailableEndTimes = (
   timeZone,
   bookingStartTime,
   bookingEndDate,
-  selectedTimeSlot
+  selectedTimeSlot,
+  duration = 0,
+  shortMeeting = false
 ) => {
+  console.log('book 123 getAvailableEndTimes', {
+    selectedTimeSlot,
+    bookingEndDate,
+    bookingStartTime,
+    duration,
+    shortMeeting,
+  });
+  const combineTime = bookingStartTime + (duration - 20) * 60000;
   if (!selectedTimeSlot || !selectedTimeSlot.attributes || !bookingEndDate || !bookingStartTime) {
+    console.log('book 123 if', { selectedTimeSlot, bookingEndDate, bookingStartTime });
     return [];
   }
 
   const endDate = selectedTimeSlot.attributes.end;
-  const bookingStartTimeAsDate = timestampToDate(bookingStartTime);
+  const bookingStartTimeAsDate = shortMeeting
+    ? timestampToDate(combineTime)
+    : timestampToDate(bookingStartTime);
 
   const dayAfterBookingEnd = resetToStartOfDay(bookingEndDate, timeZone, 1);
   const dayAfterBookingStart = resetToStartOfDay(bookingStartTimeAsDate, timeZone, 1);
@@ -99,12 +131,22 @@ const getAvailableEndTimes = (
       : dayAfterBookingEnd;
   }
 
-  return getEndHours(intl, timeZone, startLimit, endLimit);
+  return getEndHours(intl, timeZone, startLimit, endLimit, duration, shortMeeting);
 };
 
-const getTimeSlots = (timeSlots, date, timeZone) => {
+const getTimeSlots = (timeSlots, date, timeZone, duration = 0, shortMeeting = false) => {
   return timeSlots && timeSlots[0]
-    ? timeSlots.filter(t => isInRange(date, t.attributes.start, t.attributes.end, 'day', timeZone))
+    ? timeSlots.filter(t =>
+        isInRange(
+          date,
+          t.attributes.start,
+          t.attributes.end,
+          'day',
+          timeZone,
+          duration,
+          shortMeeting
+        )
+      )
     : [];
 };
 
@@ -117,16 +159,25 @@ const getAllTimeValues = (
   startDate,
   selectedStartTime,
   selectedEndDate,
-  values
+  values,
+  duration = 0,
+  shortMeeting = false
 ) => {
   let times = getTimeSlots(timeSlots, startDate, timeZone);
   console.log({ times });
-  let startTimes = selectedStartTime
-    ? []
-    : getAvailableStartTimes(intl, timeZone, startDate, times);
+  let startTimes;
+  if (shortMeeting) {
+    startTimes = selectedStartTime
+      ? getAvailableStartTimes(intl, timeZone, startDate, times, duration, shortMeeting)
+      : getAvailableStartTimes(intl, timeZone, startDate, times, duration, shortMeeting);
+  } else {
+    startTimes = selectedStartTime ? [] : getAvailableStartTimes(intl, timeZone, startDate, times);
+  }
 
   let hasVal =
-    values && values.bookingStartTime && values.bookingStartTime.length > 0 ? true : false;
+    values && values.bookingStartTime && values.bookingStartTime.length > 0 && !shortMeeting
+      ? true
+      : false;
 
   console.log('before start', startTimes, values);
   console.log({ selectedStartTime });
@@ -150,13 +201,31 @@ const getAllTimeValues = (
         return findVal ? false : true;
       });
   }
-  console.log('after start', startTimes, values);
 
-  const startTime = selectedStartTime
-    ? selectedStartTime
-    : startTimes.length > 0 && startTimes[0] && startTimes[0].timestamp
-    ? startTimes[0].timestamp
-    : null;
+  let selectedStartTimeChangeArr =
+    selectedStartTime &&
+    startTimes.length > 0 &&
+    startTimes.filter(item => item.timestamp >= selectedStartTime);
+  let startTime;
+  if (shortMeeting) {
+    startTime =
+      selectedStartTime && selectedStartTimeChangeArr
+        ? selectedStartTimeChangeArr[0].timestamp
+        : startTimes.length > 0 && startTimes[0] && startTimes[0].timestamp
+        ? startTimes[0].timestamp
+        : null;
+  } else {
+    startTime = selectedStartTime
+      ? selectedStartTime
+      : startTimes.length > 0 && startTimes[0] && startTimes[0].timestamp
+      ? startTimes[0].timestamp
+      : null;
+  }
+
+  const timeVal = startTime && startTime + (duration - 20) * 60000;
+  const combineTimeAsDate = timeVal ? timestampToDate(timeVal) : null;
+
+  console.log('after start', startTimes, values);
 
   const startTimeAsDate = startTime ? timestampToDate(startTime) : null;
 
@@ -164,17 +233,44 @@ const getAllTimeValues = (
   // date would be the next day at 00:00 the day in the form is still correct.
   // Because we are only using the date and not the exact time we can remove the
   // 1ms.
-  const endDate = selectedEndDate
-    ? selectedEndDate
-    : startTimeAsDate
-    ? new Date(findNextBoundary(timeZone, startTimeAsDate).getTime() - 1)
-    : null;
+  let endDate;
+  if (shortMeeting) {
+    endDate = selectedEndDate
+      ? selectedEndDate
+      : combineTimeAsDate
+      ? new Date(findNextBoundaryForShortMeeting(timeZone, combineTimeAsDate).getTime() - 1200000)
+      : null;
+  } else {
+    endDate = selectedEndDate
+      ? selectedEndDate
+      : startTimeAsDate
+      ? new Date(findNextBoundary(timeZone, startTimeAsDate).getTime() - 1)
+      : null;
+  }
 
-  const selectedTimeSlot = timeSlots.find(t =>
-    isInRange(startTimeAsDate, t.attributes.start, t.attributes.end)
-  );
+  let selectedTimeSlot;
 
-  const endTimes = getAvailableEndTimes(intl, timeZone, startTime, endDate, selectedTimeSlot);
+  if (shortMeeting) {
+    selectedTimeSlot = timeSlots.find(t =>
+      isInRange(combineTimeAsDate, t.attributes.start, t.attributes.end)
+    );
+  } else {
+    selectedTimeSlot = timeSlots.find(t =>
+      isInRange(startTimeAsDate, t.attributes.start, t.attributes.end)
+    );
+  }
+
+  const endTimes = shortMeeting
+    ? getAvailableEndTimes(
+        intl,
+        timeZone,
+        startTime,
+        endDate,
+        selectedTimeSlot,
+        duration,
+        shortMeeting
+      )
+    : getAvailableEndTimes(intl, timeZone, startTime, endDate, selectedTimeSlot);
   const endTime =
     endTimes.length > 0 && endTimes[0] && endTimes[0].timestamp ? endTimes[0].timestamp : null;
 
@@ -275,7 +371,7 @@ class FieldDateAndTimeInput extends Component {
     this.setState({
       fieldError: null,
     });
-    const { monthlyTimeSlots, timeZone, intl, form, values } = this.props;
+    const { monthlyTimeSlots, timeZone, intl, form, values, duration, shortMeeting } = this.props;
 
     if (!value || !value.date) {
       form.batch(() => {
@@ -298,7 +394,13 @@ class FieldDateAndTimeInput extends Component {
       timeZone,
       values
     );
-    const timeSlotsOnSelectedDate = getTimeSlots(timeSlots, startDate, timeZone);
+    const timeSlotsOnSelectedDate = getTimeSlots(
+      timeSlots,
+      startDate,
+      timeZone,
+      duration,
+      shortMeeting
+    );
 
     const { startTime, endDate, endTime } = getAllTimeValues(
       intl,
@@ -307,7 +409,9 @@ class FieldDateAndTimeInput extends Component {
       startDate,
       null,
       null,
-      values
+      values,
+      duration,
+      shortMeeting
     );
     // console.log('vvvvv', timeSlots, value, timeSlotsOnSelectedDate);
     // console.log('vvvvv2', startTime, endDate, endTime);
@@ -339,27 +443,44 @@ class FieldDateAndTimeInput extends Component {
   };
 
   onBookingStartTimeChange = (value, formId) => {
-    console.log('start time change', value, formId, this.props);
-    const { monthlyTimeSlots, timeZone, intl, form, values } = this.props;
+    console.log('book 123 onchange', value, formId, this.props);
+    const { monthlyTimeSlots, timeZone, intl, form, values, duration, shortMeeting } = this.props;
     const timeSlots = getMonthlyTimeSlots(
       monthlyTimeSlots,
       this.state.currentMonth,
       timeZone,
       values
     );
-    const startDate = values.bookingStartDate[formId].date;
-    const timeSlotsOnSelectedDate = getTimeSlots(timeSlots, startDate, timeZone);
+    const selectedStartDate = values.bookingStartDate[formId].date;
+    const selectedEndDate = values.bookingEndDate[formId].date;
+    const timeSlotsOnSelectedDate = getTimeSlots(
+      timeSlots,
+      selectedStartDate,
+      timeZone,
+      duration,
+      shortMeeting
+    );
 
     const { endDate, endTime } = getAllTimeValues(
       intl,
       timeZone,
       timeSlotsOnSelectedDate,
-      startDate,
+      selectedStartDate,
       value,
-      values
+      selectedEndDate,
+      values,
+      duration,
+      shortMeeting
     );
 
-    console.log('vvvvvssssss', endDate.bookingEndDate[formId].date, endTime);
+    console.log('book 123 onBookingStartTimeChange', {
+      selectedStartDate,
+      selectedEndDate,
+      endDate,
+      endTime,
+      timeSlotsOnSelectedDate,
+    });
+    // console.log('vvvvvssssss', endDate.bookingEndDate[formId].date, endTime);
 
     if (!endDate || !endTime) {
       alert('no end time available');
@@ -372,7 +493,8 @@ class FieldDateAndTimeInput extends Component {
     }
 
     form.batch(() => {
-      form.change(`bookingEndDate.${formId}`, { date: endDate.bookingEndDate[formId].date });
+      form.change(`bookingEndDate.${formId}`, { date: endDate });
+      // form.change(`bookingEndDate.${formId}`, { date: endDate.bookingEndDate[formId].date });
       form.change(`bookingEndTime.${formId}`, endTime);
     });
   };
@@ -440,6 +562,8 @@ class FieldDateAndTimeInput extends Component {
       monthlyTimeSlots,
       timeZone,
       intl,
+      duration,
+      shortMeeting,
     } = this.props;
 
     const classes = classNames(rootClassName || css.root, className);
@@ -455,7 +579,7 @@ class FieldDateAndTimeInput extends Component {
       values.bookingStartTime &&
       values.bookingStartTime.length > 0 &&
       values.bookingStartTime[formId]
-        ? values.bookingStartTime[formId]
+        ? parseInt(values.bookingStartTime[formId])
         : null;
 
     const bookingEndDate =
@@ -477,7 +601,9 @@ class FieldDateAndTimeInput extends Component {
     const timeSlotsOnSelectedDate = getTimeSlots(
       timeSlotsOnSelectedMonth,
       bookingStartDate,
-      timeZone
+      timeZone,
+      duration,
+      shortMeeting
     );
     console.log({ timeSlotsOnSelectedDate });
 
@@ -485,7 +611,9 @@ class FieldDateAndTimeInput extends Component {
       intl,
       timeZone,
       bookingStartDate,
-      timeSlotsOnSelectedDate
+      timeSlotsOnSelectedDate,
+      duration,
+      shortMeeting
     );
 
     const firstAvailableStartTime =
@@ -500,7 +628,9 @@ class FieldDateAndTimeInput extends Component {
       bookingStartDate,
       bookingStartTime || firstAvailableStartTime,
       bookingEndDate || bookingStartDate,
-      values
+      values,
+      duration,
+      shortMeeting
     );
 
     const availableEndTimes = getAvailableEndTimes(
@@ -508,9 +638,11 @@ class FieldDateAndTimeInput extends Component {
       timeZone,
       bookingStartTime || startTime,
       bookingEndDate || endDate,
-      selectedTimeSlot
+      selectedTimeSlot,
+      duration,
+      shortMeeting
     );
-
+    console.log('book 123', { startTime, endDate, selectedTimeSlot, availableEndTimes });
     const isDayBlocked = timeSlotsOnSelectedMonth
       ? day =>
           !timeSlotsOnSelectedMonth.find(timeSlot =>

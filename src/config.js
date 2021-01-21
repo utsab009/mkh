@@ -6,9 +6,9 @@ import { currencyConfiguration } from './currency-config';
 const env = process.env.REACT_APP_ENV;
 const dev = process.env.REACT_APP_ENV === 'development';
 console.log('inside config', process.env);
-const integrationApiClientId = process.env.REACT_APP_SHARETRIBE_INTEGRATION_API_CLIENT_ID;
-const integrationApiSecret = process.env.REACT_APP_SHARETRIBE_INTEGRATION_API_SECRET;
-const integrationApiBaseUrl = process.env.REACT_APP_SHARETRIBE_INTEGRATION_API_BASE_URL;
+const integrationApiClientId = process.env.REACT_APP_FLEX_INTEGRATION_CLIENT_ID;
+const integrationApiSecret = process.env.REACT_APP_FLEX_INTEGRATION_CLIENT_SECRET;
+// const integrationApiBaseUrl = process.env.REACT_APP_SHARETRIBE_INTEGRATION_API_BASE_URL;
 // If you want to change the language, remember to also change the
 // locale data and the messages in the app.js file.
 const locale = 'en';
@@ -233,7 +233,7 @@ const config = {
   custom,
   integrationApiClientId,
   integrationApiSecret,
-  integrationApiBaseUrl,
+  // integrationApiBaseUrl,
 };
 
 export default config;

@@ -27,6 +27,8 @@ import {
   formatMoney,
 } from '../../util/currency';
 const { Money } = sdkTypes;
+const duration = 20;
+const shortMeeting = !false;
 export class BookingTimeFormComponent extends Component {
   constructor(props) {
     super(props);
@@ -371,6 +373,8 @@ export class BookingTimeFormComponent extends Component {
                             timeZone={timeZone}
                             formId={`${item}`}
                             removeSelectedDate={this.removeSelectedDate}
+                            duration={duration}
+                            shortMeeting={shortMeeting}
                           />
                           {/* {this.getEstimate(values, item, { unitType, unitPrice, timeZone })} */}
                           {show && renderAddButton()}
@@ -432,7 +436,7 @@ export class BookingTimeFormComponent extends Component {
                     }
                   })
                 : null}
-              {finalEstimate()}
+              {/* {finalEstimate()} */}
               {this.state.fieldError ? (
                 <p className={css.smallPrint} style={{ color: 'red' }}>
                   {this.state.fieldError}

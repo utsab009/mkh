@@ -644,7 +644,6 @@ const updateListingAverageRating = (listingId, averageRating, ratingCounter) => 
   const integrationSdk = flexIntegrationSdk.createInstance({
     clientId: config.integrationApiClientId,
     clientSecret: config.integrationApiSecret,
-    baseUrl: config.integrationApiBaseUrl,
   });
 
   integrationSdk.listings

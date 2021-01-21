@@ -204,6 +204,7 @@ export class TransactionPanelComponent extends Component {
 
       return silentResult.accessToken;
     } catch (err) {
+      console.log('174 err', err);
       // If a silent request fails, it may be because the user needs
       // to login or grant consent to one or more of the requested scopes
       if (this.isInteractionRequired(err)) {
