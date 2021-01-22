@@ -29,7 +29,10 @@ import { addMarketplaceEntities } from '../../ducks/marketplaceData.duck';
 import { fetchCurrentUserNotifications } from '../../ducks/user.duck';
 const flexIntegrationSdk = require('sharetribe-flex-integration-sdk');
 const { UUID } = sdkTypes;
-
+const integrationSdk = flexIntegrationSdk.createInstance({
+  clientId: config.integrationApiClientId,
+  clientSecret: config.integrationApiSecret,
+});
 const MESSAGES_PAGE_SIZE = 100;
 const CUSTOMER = 'customer';
 
@@ -639,12 +642,8 @@ const IMAGE_VARIANTS = {
 };
 
 const updateListingAverageRating = (listingId, averageRating, ratingCounter) => {
-  console.log('averageRating in xyz2', averageRating);
+  console.log('339 rating updateListingAverageRating params', averageRating, listingId);
   console.log('config in xyz', config);
-  const integrationSdk = flexIntegrationSdk.createInstance({
-    clientId: config.integrationApiClientId,
-    clientSecret: config.integrationApiSecret,
-  });
 
   integrationSdk.listings
     .update({
@@ -663,6 +662,24 @@ const updateListingAverageRating = (listingId, averageRating, ratingCounter) => 
       throw e;
     });
 };
+
+// export const checkIfCustomerHasPreviousBookingWithProvider = providerId => {
+//   console.log('445 in func', providerId);
+//   integrationSdk.transactions
+//     .query({
+//       providerId,
+//     })
+//     .then(res => {
+//       console.log('455 res', res);
+//       // return res;
+//     })
+//     .catch(e => {
+//       console.log('445 in func catch');
+//       // Rethrow so the page can track whether the sending failed, and
+//       // keep the message in the form for a retry.
+//       throw e;
+//     });
+// };
 
 const calculateAverageRating = (sdk, listingId) => {
   sdk.reviews
