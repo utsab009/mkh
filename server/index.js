@@ -55,6 +55,7 @@ const cspReportUrl = '/csp-report';
 const cspEnabled = CSP === 'block' || CSP === 'report';
 const app = express();
 
+const twilio = require('./twilio');
 const errorPage = fs.readFileSync(path.join(buildPath, '500.html'), 'utf-8');
 
 // load sitemap and robots file structure
@@ -88,7 +89,7 @@ if (cspEnabled) {
   const reportOnly = CSP === 'report';
   app.use(csp(cspReportUrl, USING_SSL, reportOnly));
 }
-
+app.use(bodyParser.json());
 // Redirect HTTP to HTTPS if USING_SSL is `true`.
 // This also works behind reverse proxies (load balancers) as they are for example used by Heroku.
 // In such cases, however, the TRUST_PROXY parameter has to be set (see below)
@@ -134,9 +135,22 @@ if (!dev) {
   }
 }
 
-// Server-side routes that do not render the application
+if (dev) {
+  // Server-side routes that do not render the application
+  app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    if ('OPTIONS' == req.method) {
+      res.sendStatus(200);
+    } else {
+      next();
+    }
+  });
+}
 app.use('/api', apiRouter);
 app.use('/extra', email);
+app.use('/twilio', twilio);
 
 const noCacheHeaders = {
   'Cache-control': 'no-cache, no-store, must-revalidate',

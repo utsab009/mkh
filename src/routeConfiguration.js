@@ -29,6 +29,8 @@ import {
   FaqPage,
   MenteeResourcePage,
   MentorResourcePage,
+  MeetingPage,
+  MeetingNewPage,
 } from './containers';
 
 // routeConfiguration needs to initialize containers first
@@ -393,6 +395,20 @@ const routeConfiguration = () => {
       authPage: 'LoginPage',
       component: props => <FavouritesPage {...props} />,
       // loadData: ManageListingsPage.loadData,
+    },
+    {
+      path: '/meeting/:name',
+      name: 'MeetingPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <MeetingPage {...props} />,
+    },
+    {
+      path: '/meeting-new/:name',
+      name: 'MeetingNewPage',
+      auth: true,
+      authPage: 'LoginPage',
+      component: props => <MeetingNewPage {...props} />,
     },
   ];
 };

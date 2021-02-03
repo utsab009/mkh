@@ -30,3 +30,5 @@ export { default as MenteeSignupPage } from './MenteeSignupPage/MenteeSignupPage
 export { default as FaqPage } from './FaqPage/FaqPage';
 export { default as MentorResourcePage } from './MentorResourcePage/MentorResourcePage';
 export { default as MenteeResourcePage } from './MenteeResourcePage/MenteeResourcePage';
+export { default as MeetingPage } from './MeetingPage/MeetingPage';
+export { default as MeetingNewPage } from './MeetingNewPage/MeetingNewPage'
