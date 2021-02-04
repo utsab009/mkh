@@ -14,25 +14,26 @@ export const Steps = {
   deviceSelectionStep: null,
 };
 
-export default function PreJoinScreens() {
+export default function PreJoinScreens(props) {
   // const { user } = useAppState();
+
   const { getAudioAndVideoTracks } = useVideoContext();
-  const { URLRoomName } = useParams();
+  // const { URLRoomName } = useParams();
   const [step, setStep] = useState(Steps.roomNameStep);
 
-  const [name, setName] = useState('test');
+  // const [name, setName] = useState(props && props.displayName);
   // const [name, setName] = useState((user && user.displayName) || '');
-  const [roomName, setRoomName] = useState('test');
-
+  const [roomName, setRoomName] = useState(props && props.roomName);
+  const name = props && props.displayName;
   const [mediaError, setMediaError] = useState('');
-
+  console.log('1234 name>>>', props, name, roomName);
   useEffect(() => {
-    if (URLRoomName) {
-      setRoomName(URLRoomName);
-      // if (user && user.displayName) {
-      setStep(Steps.deviceSelectionStep);
-      // }
-    }
+    // if (URLRoomName) {
+    //   setRoomName(URLRoomName);
+    //   // if (user && user.displayName) {
+    //   setStep(Steps.deviceSelectionStep);
+    //   // }
+    // }
   });
   // , [user, URLRoomName]);
 

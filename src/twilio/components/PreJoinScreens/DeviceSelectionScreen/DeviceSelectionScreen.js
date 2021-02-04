@@ -61,7 +61,6 @@ export default function DeviceSelectionScreen({ name, roomName, setStep }) {
   const { getToken, isFetching } = useAppState();
   const { connect, isAcquiringLocalTracks, isConnecting } = useVideoContext();
   const disableButtons = isFetching || isAcquiringLocalTracks || isConnecting;
-  console.log('143 ', { connect, isAcquiringLocalTracks, isConnecting });
   const handleJoin = () => {
     getToken(name, roomName).then(token => {
       connect(token);

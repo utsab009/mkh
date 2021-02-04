@@ -404,7 +404,7 @@ const routeConfiguration = () => {
       component: props => <MeetingPage {...props} />,
     },
     {
-      path: '/meeting-new/:name',
+      path: '/meeting-new/:id',
       name: 'MeetingNewPage',
       auth: true,
       authPage: 'LoginPage',
