@@ -27,7 +27,11 @@
   margin-bottom: 18px;
   padding: 3px 0 3px 0;
 }
-
+.editPlanButtonContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
 .editPlanButton {
   @apply --marketplaceH5FontStyles;
   margin: 0;

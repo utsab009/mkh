@@ -27,6 +27,7 @@ import {
 import MainPanel from './MainPanel';
 import css from './SearchPage.css';
 import { sendVerificationEmail } from '../../ducks/user.duck';
+import { resetNewBuyer } from '../ListingPage/ListingPage.duck';
 
 // Pagination page size might need to be dynamic on responsive page layouts
 // Current design has max 3 columns 12 is divisible by 2 and 3
@@ -53,6 +54,7 @@ export class SearchPageComponent extends Component {
     this.onMapMoveEnd = debounce(this.onMapMoveEnd.bind(this), SEARCH_WITH_MAP_DEBOUNCE);
     this.onOpenMobileModal = this.onOpenMobileModal.bind(this);
     this.onCloseMobileModal = this.onCloseMobileModal.bind(this);
+    this.props.resetNewBuyerAction();
   }
 
   filters() {
@@ -549,6 +551,7 @@ const mapDispatchToProps = dispatch => ({
   onSearchMapListings: searchParams => dispatch(searchMapListings(searchParams)),
   onActivateListing: listingId => dispatch(setActiveListing(listingId)),
   onResendVerificationEmail: () => dispatch(sendVerificationEmail()),
+  resetNewBuyerAction: () => dispatch(resetNewBuyer()),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

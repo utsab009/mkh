@@ -508,7 +508,8 @@ export class TransactionPanelComponent extends Component {
     const currentCustomer = ensureUser(currentTransaction.customer);
     const isCustomer = transactionRole === 'customer';
     const isProvider = transactionRole === 'provider';
-
+    console.log('774 currentListing', { currentListing, currentTransaction });
+    console.log('774 props', this.props);
     const listingLoaded = !!currentListing.id;
     const listingDeleted = listingLoaded && currentListing.attributes.deleted;
     const iscustomerLoaded = !!currentCustomer.id;
@@ -522,6 +523,7 @@ export class TransactionPanelComponent extends Component {
       if (txIsEnquired(tx)) {
         const transitions = Array.isArray(nextTransitions)
           ? nextTransitions.map(transition => {
+              // console.log(transition)
               return transition.attributes.name;
             })
           : [];
@@ -596,6 +598,7 @@ export class TransactionPanelComponent extends Component {
         return { headingState: 'unknown' };
       }
     };
+
     const stateData = stateDataFn(currentTransaction);
     console.log({ stateData });
     console.log({ currentTransaction });
@@ -610,8 +613,9 @@ export class TransactionPanelComponent extends Component {
       otherUserDisplayNameString,
     } = displayNames(currentUser, currentProvider, currentCustomer, intl);
 
-    const { publicData, geolocation } = currentListing.attributes;
+    const { publicData, geolocation } = currentListing.attributes || {};
     const location = publicData && publicData.location ? publicData.location : {};
+
     const listingTitle = currentListing.attributes.deleted
       ? deletedListingTitle
       : currentListing.attributes.title;
@@ -667,9 +671,11 @@ export class TransactionPanelComponent extends Component {
     );
 
     const classes = classNames(rootClassName || css.root, className);
-
+    console.log('774 currentTransaction', { currentTransaction });
     // currentTransaction
-    let { displayEnd, displayStart, seats } = currentTransaction.booking.attributes;
+    let { displayEnd, displayStart, seats } = currentTransaction.booking
+      ? currentTransaction.booking.attributes
+      : {};
     let { title, availabilityPlan } = currentTransaction.listing.attributes;
     const event = {
       summary: title,
@@ -708,6 +714,10 @@ export class TransactionPanelComponent extends Component {
     const handleClick = () => {
       gapi = window.gapi;
       console.log('login', gapi.auth2.getAuthInstance().isSignedIn.get());
+      if (!displayStart || !displayEnd) {
+        console.error('No start or end time found in event object');
+        return;
+      }
       if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
         let request = gapi.client.calendar.events.insert({
           calendarId: 'primary',
@@ -853,7 +863,7 @@ export class TransactionPanelComponent extends Component {
             ) : null}
             {/* {isCustomer && stateData.holdPaymentPeriod && stateData.holdPaymentPeriod === true ? ( */}
 
-            {!stateData.showSaleButtons ? (
+            {!stateData.showSaleButtons && !stateData.showBookingPanel ? (
               <>
                 <PrimaryButton
                   style={{ marginTop: 15 }}
@@ -899,7 +909,10 @@ export class TransactionPanelComponent extends Component {
                   onClick={() => {
                     const preauthState = stateData.preauthState ? stateData.preauthState : false;
                     const currentTime = new Date();
-                    const bookingTime = currentTransaction.booking.attributes.start;
+                    const bookingTime =
+                      currentTransaction &&
+                      currentTransaction.booking &&
+                      currentTransaction.booking.attributes.start;
                     const bookingRemaining = moment(bookingTime).diff(currentTime);
                     this.setState({
                       showCancelModal: true,
@@ -943,7 +956,10 @@ export class TransactionPanelComponent extends Component {
                           ? stateData.preauthState
                           : false;
                         const currentTime = new Date();
-                        const bookingTime = currentTransaction.booking.attributes.start;
+                        const bookingTime =
+                          currentTransaction &&
+                          currentTransaction.booking &&
+                          currentTransaction.booking.attributes.start;
                         const bookingRemaining = moment(bookingTime).diff(currentTime);
 
                         // console.log('6666 start', bookingTime);
@@ -953,7 +969,10 @@ export class TransactionPanelComponent extends Component {
                         cancelByCustomer({
                           id: currentTransaction.id,
                           preauthCancel: preauthState,
-                          bookingStartTime: currentTransaction.booking.attributes.start,
+                          bookingStartTime:
+                            currentTransaction &&
+                            currentTransaction.booking &&
+                            currentTransaction.booking.attributes.start,
                           isCustomer,
                         });
                         this.setState({ showCancelModal: false });

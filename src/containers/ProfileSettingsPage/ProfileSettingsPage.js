@@ -96,7 +96,7 @@ export class ProfileSettingsPageComponent extends Component {
           workExp: publicData && publicData.workExp,
           education: publicData && publicData.education,
           dob: publicData && publicData.dob,
-          linkedinLink: publicData && publicData.linkedinLink,
+          linkedInID: publicData && publicData.linkedInID,
           // youtubeLink: publicData && publicData.youtubeLink,
           conferenceLink: publicData && publicData.conferenceLink ? publicData.conferenceLink : '',
         }}

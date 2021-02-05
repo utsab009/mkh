@@ -165,7 +165,7 @@ export const truncateToSubUnitPrecision = (inputString, subUnitDivisor, useComma
  */
 export const convertUnitToSubUnit = (value, subUnitDivisor, useComma = false) => {
   const subUnitDivisorAsDecimal = convertDivisorToDecimal(subUnitDivisor);
-  // console.log({ subUnitDivisor });
+  // console.log('3333 convertUnitToSubUnit params ', { subUnitDivisor, value });
 
   if (!(typeof value === 'string' || typeof value === 'number')) {
     throw new TypeError('Value must be either number or string');
@@ -173,13 +173,14 @@ export const convertUnitToSubUnit = (value, subUnitDivisor, useComma = false) =>
 
   const val = typeof value === 'string' ? convertToDecimal(value, useComma) : new Decimal(value);
   const amount = val.times(subUnitDivisorAsDecimal);
-  console.log(
-    '744 currency',
-    amount,
-    subUnitDivisorAsDecimal,
-    subUnitDivisor,
-    !isSafeNumber(amount)
-  );
+  // console.log('3333 amount', amount.toNumber());
+  // console.log(
+  //   '3333 currency',
+  //   amount,
+  //   subUnitDivisorAsDecimal,
+  //   subUnitDivisor,
+  //   !isSafeNumber(amount)
+  // );
   if (!isSafeNumber(amount)) {
     throw new Error(
       `Cannot represent money minor unit value ${amount.toString()} safely as a number`

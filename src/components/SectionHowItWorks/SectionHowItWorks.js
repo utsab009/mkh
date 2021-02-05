@@ -36,6 +36,9 @@ const SectionHowItWorks = props => {
           <p>
             <FormattedMessage id="SectionHowItWorks.part2Text" />
           </p>
+          <p>
+            <FormattedMessage id="SectionHowItWorks.part2TextNext" />
+          </p>
         </div>
 
         <div className={css.step}>

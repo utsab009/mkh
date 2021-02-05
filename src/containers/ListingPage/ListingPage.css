@@ -673,13 +673,19 @@
   align-items: center;
   justify-content: space-between;
 }
+.subHeaderModal {
+  color: #ffa000;
+  font-size: 1.2rem;
+}
 .qtbtn {
   background: #2a364c;
   color: #fff !important;
-  padding: 7px 21px;
+  /* padding: 7px 21px; */
   display: inline-block;
   margin: 26px 10px;
   font-size: 16px;
+  box-shadow: 1px 1px 15px 0px rgb(4 31 54 / 0.4);
+  padding: 15px;
 }
 .socialLinkedInlink {
   display: inline-block;

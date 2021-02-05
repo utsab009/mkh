@@ -145,6 +145,13 @@ const PaymentMethodsPageComponent = props => {
 
   const showForm = cardState === 'replaceCard' || !hasDefaultPaymentMethod;
   const showCardDetails = !!hasDefaultPaymentMethod;
+
+  const isMentor =
+    currentUserLoaded &&
+    protectedData &&
+    protectedData.userType &&
+    protectedData.userType === 'mentor';
+
   return (
     <Page title={title} scrollingDisabled={scrollingDisabled}>
       <LayoutSideNavigation>
@@ -154,9 +161,9 @@ const PaymentMethodsPageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="PaymentMethodsPage" profileUserType={protectedData.userType}/>
+          <UserNav selectedPageName="PaymentMethodsPage" profileUserType={protectedData.userType} />
         </LayoutWrapperTopbar>
-        <LayoutWrapperAccountSettingsSideNav currentTab="PaymentMethodsPage" />
+        <LayoutWrapperAccountSettingsSideNav currentTab="PaymentMethodsPage" isMentor={isMentor} />
         <LayoutWrapperMain>
           <div className={css.content}>
             <h1 className={css.title}>

@@ -58,9 +58,9 @@ const EditListingDescriptionPanel = props => {
     <div className={classes}>
       <h1 className={css.title}>{panelTitle}</h1>
       <div className={css.titleSmall}>
-        THE FIRST STEP IS TO GIVE THIS LISTING A NAME. LIKE WHEN YOU SAVE A FILE ON YOUR COMPUTER SO
-        THAT YOU CAN FIND AND UPDATE IT LATER. THEN, THROUGH STEP TWO, FIND THE PRECISE JOB ROLE OR
-        JOB GRADE YOU WANT TO OFFER MENTORING IN.
+        THE FIRST STEP IS TO GIVE THIS ROLE LISTING A NAME. LIKE WHEN YOU SAVE A FILE ON YOUR
+        COMPUTER SO THAT YOU CAN FIND AND UPDATE IT LATER. THEN, THROUGH STEP TWO, FIND THE PRECISE
+        JOB ROLE OR JOB GRADE YOU WANT TO OFFER MENTORING IN.
       </div>
       <EditListingDescriptionForm
         className={css.form}

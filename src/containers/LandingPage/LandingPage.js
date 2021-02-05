@@ -138,7 +138,7 @@ export class LandingPageComponent extends Component {
               >
                 <div className={css.modalHeader}>
                   {currentUser.attributes.profile.displayName}, it is now time for you to decide
-                  which Job Roles and / or Grades you can offer Mentoring in.
+                  which Job Positions you can offer Mentoring in.
                 </div>
                 <div className={css.welcomeModal}>
                   <p>
@@ -160,8 +160,8 @@ export class LandingPageComponent extends Component {
                     >
                       Roles I can Mentor
                     </span>{' '}
-                    which will be located on the top of each page. Look up and to the right now.
-                    Return to it for each Job or Government Position Classification you can Mentor.
+                    which will be located on the top of each page. Return to it for each Job
+                    Position you can Mentor.
                   </p>
                   <p>
                     Filling this section in is critical as without doing so, Mentees will not find
@@ -219,35 +219,34 @@ export class LandingPageComponent extends Component {
                     <div className={css.scdstep}>
                       <h2 className={css.scdstepTitle}>1. Create a Mentor Account</h2>
                       <p>
-                        Start by clicking “Become A Mentor” at the top right-hand corner of this
-                        page. Enter identity information and your e-mail.
+                        Start by clicking “Become A Mentor”at the top right-hand corner of thispage.
+                        Enter identity information andyour e-mail address and verify it.
                       </p>
                     </div>
 
                     <div className={css.scdstep}>
-                      <h2 className={css.scdstepTitle}>2. Start Building your Mentor Profile</h2>
+                      <h2 className={css.scdstepTitle}>2. Start Building your MentorProfile</h2>
                       <p>
-                        Tell potential Mentees about your work and educational history. Once you
-                        confirm your email you will be given the opportunity to select the specific
-                        Job Roles you can help with. To define this, click “Roles I can Mentor”
-                        which once you are signed up will appear in the top right-hand corner of
-                        each page. Here you will also define when you will be available, how much
-                        you will charge, and so on.
+                        Tell potential Mentees about your workand educational history and then
+                        selectthe specific Job Roles you can help with.The information collected
+                        will allowpotential Mentees know why you canhelp them along with also
+                        telling themwhen you will be available, how muchyou will charge, and so on.
                       </p>
                     </div>
 
                     <div className={css.scdstep}>
                       <h2 className={css.scdstepTitle}>3. Start Mentoring</h2>
                       <p>
-                        You are all set. Bookings will arrive, an e-mail will appear before each
-                        meeting, that will allow you through a single click to begin the meeting /
-                        video conferencing application, and payments to you will be automatic. The
-                        first meeting with a Mentee is a “Compatibility Meeting” and is free of
-                        charge. It should only be 20 minutes max in length to allow you to assess if
-                        you can really help. After that all meetings are charged for and booked in
-                        one or more-hour segments. Try A Mentor will provide on-going support and
-                        resources for you, including a Mentee Management System and optional free
-                        training on how to improve your Mentoring skills.
+                        You are all set. Bookings will arrive, in-built automatic toolswill organise
+                        and remind you about these bookings, theMentoring meetings will be through
+                        our video conferencingapplication, and payments to you will be automatic.
+                        All youneed to focus on is Mentoring. Need help to Mentor? In Try AMentor
+                        you will find an array of free resources includingvideos on how to Mentor.
+                      </p>
+                      <p>
+                        The first meeting is 20 minutes, free of charge, and is aNeeds Assessment.
+                        After that, all meetings are charged forand booked in one or more-hour
+                        segments by Mentees.
                       </p>
                     </div>
                   </div>

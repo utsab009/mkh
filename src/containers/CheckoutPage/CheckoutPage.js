@@ -834,7 +834,12 @@ export class CheckoutPageComponent extends Component {
     // If your marketplace works mostly in one country you can use initial values to select country automatically
     // e.g. {country: 'FI'}
 
-    const initalValuesForStripePayment = { name: userName };
+    const linkedInID =
+      currentUser && currentUser.attributes.profile.publicData
+        ? currentUser.attributes.profile.publicData.linkedInID
+        : null;
+    console.log('145 linkedInID', linkedInID);
+    const initalValuesForStripePayment = { name: userName, linkedInId: linkedInID };
 
     return (
       <Page {...pageProps}>

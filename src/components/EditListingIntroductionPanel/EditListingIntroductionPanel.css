@@ -25,6 +25,11 @@
   font-size: 14px;
   margin-bottom: 25px;
   text-align: -webkit-center;
+  margin-top: 15px;
+}
+.link {
+  color: #2196f3;
+  cursor: pointer;
 }
 .submitButton {
   margin-top: auto;

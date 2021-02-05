@@ -135,6 +135,11 @@ export const StripePayoutPageComponent = props => {
   if (returnedNormallyFromStripe && stripeConnected && !requirementsMissing) {
     return <NamedRedirect name="StripePayoutPage" />;
   }
+  const isMentor =
+    currentUserLoaded &&
+    protectedData &&
+    protectedData.userType &&
+    protectedData.userType === 'mentor';
 
   return (
     <Page title={title} scrollingDisabled={scrollingDisabled}>
@@ -145,14 +150,18 @@ export const StripePayoutPageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="StripePayoutPage" profileUserType={protectedData.userType}/>
+          <UserNav selectedPageName="StripePayoutPage" profileUserType={protectedData.userType} />
         </LayoutWrapperTopbar>
-        <LayoutWrapperAccountSettingsSideNav currentTab="StripePayoutPage" />
+        <LayoutWrapperAccountSettingsSideNav currentTab="StripePayoutPage" isMentor={isMentor} />
         <LayoutWrapperMain>
           <div className={css.content}>
             <h1 className={css.title}>
               <FormattedMessage id="StripePayoutPage.heading" />
+              <h5>
+                <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.paymentMethodsTabSubTitle" />
+              </h5>
             </h1>
+
             {!currentUserLoaded ? (
               <FormattedMessage id="StripePayoutPage.loadingData" />
             ) : (

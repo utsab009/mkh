@@ -35,7 +35,8 @@ const sortSearchByDistance = false;
 //
 // In a way, 'processAlias' defines which transaction process (or processes)
 // this particular web application is able to handle.
-const bookingProcessAlias = 'preauth-unit-time-booking/release-1';
+const bookingProcessAlias = 'preauth-test/release-1';
+// const bookingProcessAlias = 'preauth-unit-time-booking/release-1';
 
 // The transaction line item code for the main unit type in bookings.
 //

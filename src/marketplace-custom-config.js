@@ -510,6 +510,7 @@ export const mentorLanguages = [
   { key: 'bengali', label: 'Bengali' },
   { key: 'french', label: 'French' },
   { key: 'German', label: 'German' },
+  { key: 'Other', label: 'Other' },
 ];
 
 export const profileTypes = [

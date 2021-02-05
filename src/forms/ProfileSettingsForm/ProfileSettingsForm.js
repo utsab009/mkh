@@ -124,6 +124,10 @@ class ProfileSettingsFormComponent extends Component {
             id: 'ProfileSettingsForm.bioPlaceholder',
           });
 
+          const isMentor =
+            user.attributes.profile.protectedData &&
+            user.attributes.profile.protectedData.userType == 'mentor';
+
           const uploadingOverlay =
             uploadInProgress || this.state.uploadDelay ? (
               <div className={css.uploadingImageOverlay}>
@@ -326,27 +330,26 @@ class ProfileSettingsFormComponent extends Component {
                       validate={lastNameRequired}
                     />
                   </div>
-                  {user.attributes.profile.protectedData &&
-                  user.attributes.profile.protectedData.userType == 'mentor' ? (
-                    <FieldTextInput
-                      // className={css.firstName}
-                      type="text"
-                      id={'linkedin'}
-                      name="linkedinLink"
-                      autoComplete="linkedin"
-                      label={'linkedIn Link'}
-                      placeholder="Please enter your linkedIn link"
-                      // validate={firstNameRequired}
-                    />
-                  ) : null}
-                  {user.attributes.profile.protectedData &&
-                  user.attributes.profile.protectedData.userType == 'mentor' ? (
+                  <FieldTextInput
+                    // className={css.firstName}
+                    type="text"
+                    id={'linkedInID'}
+                    name="linkedInID"
+                    autoComplete="linkedInID"
+                    label={'LinkedIn Address (Optional) – Provided to Mentors'}
+                    placeholder="Please enter your linkedIn link"
+                    // validate={firstNameRequired}
+                  />
+                  {isMentor ? (
                     <div className={css.socialMedia}>
-                      <FormattedMessage id="ProfileSettingsForm.linkedinLink" />
+                      <FormattedMessage id="ProfileSettingsForm.mentorLinkedinLink" />
                     </div>
-                  ) : null}
-                  {user.attributes.profile.protectedData &&
-                  user.attributes.profile.protectedData.userType == 'mentor' ? (
+                  ) : (
+                    <div className={css.socialMedia}>
+                      <FormattedMessage id="ProfileSettingsForm.menteeLinkedinLink" />
+                    </div>
+                  )}
+                  {isMentor ? (
                     <FieldTextInput
                       // className={css.lastName}
                       type="text"
@@ -358,21 +361,19 @@ class ProfileSettingsFormComponent extends Component {
                       // validate={lastNameRequired}
                     />
                   ) : null}
-                  {user.attributes.profile.protectedData &&
-                  user.attributes.profile.protectedData.userType == 'mentor' ? (
+                  {isMentor ? (
                     <div className={css.socialMedia}>
                       <FormattedMessage id="ProfileSettingsForm.conferenceLink" />
                     </div>
                   ) : null}
-                  {
-                    <FieldTextInput
+
+                  {/* <FieldTextInput
                       type="date"
                       id={`dob`}
                       name={`dob`}
                       label={'Date of Birth'}
                       validate={dobRequired}
-                    />
-                  }
+                    /> */}
                 </div>
               ) : null}
               {/* {user.attributes.profile.protectedData && user.attributes.profile.protectedData.userType == 'mentor' && this.state.currentTab == 1 ?
