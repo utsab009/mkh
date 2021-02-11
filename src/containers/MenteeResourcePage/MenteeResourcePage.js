@@ -31,12 +31,12 @@ class MenteeResourcePage extends React.Component {
     return (
       <StaticPage
         className={css.root}
-        title="Mentee Resource"
+        title="Mentee Resources"
         schema={{
           '@context': 'http://schema.org',
           '@type': 'MenteeResourcePage',
           description: 'Description of this page',
-          name: 'Mentee Resource',
+          name: 'Mentee Resources',
         }}
       >
         <LayoutSingleColumn>

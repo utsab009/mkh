@@ -346,3 +346,8 @@
   line-height: 18px;
   color: #979797;
 }
+@media (min-width: 768px) {
+  .field {
+    width: 48%;
+  }
+}

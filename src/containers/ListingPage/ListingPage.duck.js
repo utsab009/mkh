@@ -14,7 +14,10 @@ import { fetchCurrentUser, fetchCurrentUserHasOrdersSuccess } from '../../ducks/
 
 const { UUID } = sdkTypes;
 const flexIntegrationSdk = require('sharetribe-flex-integration-sdk');
-
+const integrationSdk = flexIntegrationSdk.createInstance({
+  clientId: config.integrationApiClientId,
+  clientSecret: config.integrationApiSecret,
+});
 // ================ Action types ================ //
 
 export const SET_INITAL_VALUES = 'app/ListingPage/SET_INITIAL_VALUES';
@@ -34,6 +37,11 @@ export const SEND_ENQUIRY_REQUEST = 'app/ListingPage/SEND_ENQUIRY_REQUEST';
 export const SEND_ENQUIRY_SUCCESS = 'app/ListingPage/SEND_ENQUIRY_SUCCESS';
 export const SEND_ENQUIRY_ERROR = 'app/ListingPage/SEND_ENQUIRY_ERROR';
 
+export const FETCH_NEW_BUYER = 'app/ListingPage/FETCH_NEW_BUYER';
+export const SET_NEW_BUYER_SUCCESS = 'app/ListingPage/SET_NEW_BUYER_SUCCESS';
+export const SET_NEW_BUYER_ERROR = 'app/ListingPage/SET_NEW_BUYER_ERROR';
+export const RESET_NEW_BUYER = 'app/ListingPage/RESET_NEW_BUYER';
+
 // ================ Reducer ================ //
 
 const initialState = {
@@ -51,6 +59,9 @@ const initialState = {
   sendEnquiryInProgress: false,
   sendEnquiryError: null,
   enquiryModalOpenForListingId: null,
+  fetchIsFirstTransactionBetweenPartiesInProgress: false,
+  transactionBetweenParties: null,
+  fetchIsFirstTransactionBetweenPartiesError: null,
 };
 
 const listingPageReducer = (state = initialState, action = {}) => {
@@ -114,6 +125,28 @@ const listingPageReducer = (state = initialState, action = {}) => {
     case SEND_ENQUIRY_ERROR:
       return { ...state, sendEnquiryInProgress: false, sendEnquiryError: payload };
 
+    case FETCH_NEW_BUYER:
+      return { ...state, fetchIsFirstTransactionBetweenPartiesInProgress: true };
+    case SET_NEW_BUYER_SUCCESS:
+      return {
+        ...state,
+        fetchIsFirstTransactionBetweenPartiesInProgress: false,
+        transactionBetweenParties: payload,
+      };
+    case SET_NEW_BUYER_ERROR:
+      return {
+        ...state,
+        fetchIsFirstTransactionBetweenPartiesInProgress: false,
+        fetchIsFirstTransactionBetweenPartiesError: payload,
+      };
+    case RESET_NEW_BUYER:
+      return {
+        ...state,
+        fetchIsFirstTransactionBetweenPartiesInProgress: false,
+        fetchIsFirstTransactionBetweenPartiesError: null,
+        transactionBetweenParties: null,
+      };
+
     default:
       return state;
   }
@@ -165,10 +198,15 @@ export const sendEnquiryRequest = () => ({ type: SEND_ENQUIRY_REQUEST });
 export const sendEnquirySuccess = () => ({ type: SEND_ENQUIRY_SUCCESS });
 export const sendEnquiryError = e => ({ type: SEND_ENQUIRY_ERROR, error: true, payload: e });
 
+export const fetchNewBuyer = () => ({ type: FETCH_NEW_BUYER });
+export const fetchNewBuyerSuccess = e => ({ type: SET_NEW_BUYER_SUCCESS, payload: e });
+export const fetchNewBuyerError = e => ({ type: SET_NEW_BUYER_ERROR, error: true, payload: e });
+export const resetNewBuyer = () => ({ type: RESET_NEW_BUYER });
+
 // ================ Thunks ================ //
 
 export const showListing = (listingId, isOwn = false) => (dispatch, getState, sdk) => {
-  console.log("listingId in showlisting",listingId);
+  console.log('listingId in showlisting', listingId);
   dispatch(showListingRequest(listingId));
   dispatch(fetchCurrentUser());
   const params = {
@@ -304,6 +342,26 @@ const fetchMonthlyTimeSlots = (dispatch, listing) => {
   return Promise.all([]);
 };
 
+export const checkIfCustomerHasPreviousBookingWithProvider = (providerId, dispatch) => {
+  console.log('445 in func', providerId);
+  integrationSdk.transactions
+    .query({
+      providerId,
+    })
+    .then(res => {
+      console.log('455 res', res);
+      dispatch(fetchNewBuyerSuccess(res.data.data.length));
+      // return res.data.data.length;
+    })
+    .catch(e => {
+      console.log('445 in func catch');
+      dispatch(fetchNewBuyerError(e));
+      // Rethrow so the page can track whether the sending failed, and
+      // keep the message in the form for a retry.
+      throw e;
+    });
+};
+
 export const loadData = (params, search) => dispatch => {
   const listingId = new UUID(params.id);
 
@@ -316,6 +374,12 @@ export const loadData = (params, search) => dispatch => {
     responses => {
       if (responses[0] && responses[0].data && responses[0].data.data) {
         const listing = responses[0].data.data;
+        console.log({ listing });
+        dispatch(fetchNewBuyer());
+        checkIfCustomerHasPreviousBookingWithProvider(
+          listing.relationships.author.data.id.uuid,
+          dispatch
+        );
 
         // Fetch timeSlots.
         // This can happen parallel to loadData.

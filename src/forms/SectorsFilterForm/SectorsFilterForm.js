@@ -262,19 +262,6 @@ export class SectorsFilterFormComponent extends Component {
 
           return (
             <Form className={classes} onSubmit={handleSubmit}>
-              <p className={css.smallText}>
-                If your Job Role or Government Position Classification is not appearing,
-                <span
-                  className={css.btnModSl}
-                  onClick={e => {
-                    e.preventDefault();
-                    this.setState({ isMailSectorModalOpen: true });
-                  }}
-                >
-                  &nbsp;click here &nbsp;
-                </span>
-                and tell us so we can include it for you.
-              </p>
               {this.state.isMailSectorModalOpen ? (
                 <Modal
                   id="EditAvailabilityPlan"
@@ -368,7 +355,7 @@ export class SectorsFilterFormComponent extends Component {
                   <Select
                     options={this.state.jobRolesConfig}
                     name="subsectors"
-                    placeholder="Type and Select Job or Government Position Classification Here"
+                    placeholder="Type and Select the Job Role Here"
                     value={this.state.jobRolesConfig.filter(
                       item => item.value === values.subsectors
                     )}
@@ -437,12 +424,30 @@ export class SectorsFilterFormComponent extends Component {
                 MENTORING, PLEASE PLACE “GENERALIST (PUBLIC SECTOR)” ABOVE
               </span> */}
               <p className={css.customLable}>
+                PICK A JOB ROLE E.G., ACCOUNTANT, LAWYER, HR MANAGER, OR AGOVERNMENT POSITION
+                CLASSIFICATION OR SIMILAR E.G., POLICE OFFICER,STAFF NURSE, PRINCIPAL OFFICER ETC
+              </p>
+              {/* <p className={css.customLable}>
                 Pick a Job Role e.g. Accountant, Lawyer, HR Manager etc. or Government Position
                 Classification E.g. Police Officer, Staff Nurse, Principle Officer etc.
-              </p>
-              <p className={css.customLable}>
+              </p> */}
+              {/* <p className={css.customLable}>
                 INTERNATIONAL GOVERNMENT POSITION CLASSIFICATION ARE UTILISED, SO PLEASE PICK YOUR
                 EQUIVALENT OR SIMLAR GRADE
+              </p> */}
+
+              <p className={css.smallText}>
+                If your Job Role or Government Position Classification is not appearing,
+                <span
+                  className={css.btnModSl}
+                  onClick={e => {
+                    e.preventDefault();
+                    this.setState({ isMailSectorModalOpen: true });
+                  }}
+                >
+                  &nbsp;click here &nbsp;
+                </span>
+                to tell us so we can include it for you.
               </p>
             </Form>
           );

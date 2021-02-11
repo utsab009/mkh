@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { intlShape, injectIntl, FormattedMessage } from '../../util/reactIntl';
@@ -13,6 +13,7 @@ import { ModalInMobile, Button } from '../../components';
 import { BookingTimeForm } from '../../forms';
 
 import css from './BookingPanel.css';
+import { PrimaryButton, SecondaryButton } from '../Button/Button';
 
 // This defines when ModalInMobile shows content as Modal
 const MODAL_BREAKPOINT = 1023;
@@ -57,6 +58,7 @@ const BookingPanel = props => {
     titleClassName,
     listing,
     isOwnListing,
+    isCurrentUserMentor,
     unitType,
     onSubmit,
     title,
@@ -67,6 +69,8 @@ const BookingPanel = props => {
     history,
     location,
     intl,
+    showShortBooking,
+    shortBookingLoading,
   } = props;
 
   const price = listing.attributes.price;
@@ -78,6 +82,8 @@ const BookingPanel = props => {
   const showClosedListingHelpText = listing.id && isClosed;
   const { formattedPrice, priceTitle } = priceData(price, intl);
   const isBook = !!parse(location.search).book;
+
+  const authorName = listing.author.attributes.profile.publicData.fullName;
 
   const subTitleText = !!subTitle
     ? subTitle
@@ -96,6 +102,27 @@ const BookingPanel = props => {
 
   const classes = classNames(rootClassName || css.root, className);
   const titleClasses = classNames(titleClassName || css.bookingTitle);
+
+  const [shortBookingForm, setShortBookingForm] = useState(null);
+
+  if (shortBookingLoading) {
+    return <div></div>;
+  }
+
+  if (showShortBooking && shortBookingForm === null) {
+    return (
+      <div>
+        <h3>Hi, this is your first booking with {authorName || ''}</h3>
+        <p>You can have a chemistry booking if you wish.</p>
+        <PrimaryButton style={{ marginBottom: 10 }} onClick={() => setShortBookingForm(true)}>
+          Book Chemistry Meeting (20min)
+        </PrimaryButton>
+        <SecondaryButton onClick={() => setShortBookingForm(false)}>
+          Book Normal Meeting (60min)
+        </SecondaryButton>
+      </div>
+    );
+  }
 
   return (
     <div className={classes}>
@@ -124,7 +151,6 @@ const BookingPanel = props => {
             {subTitleText ? <div className={css.bookingHelp}>{subTitleText}</div> : null}
           </div>
         </div>
-
         {showBookingTimeForm ? (
           <BookingTimeForm
             className={css.bookingForm}
@@ -134,12 +160,14 @@ const BookingPanel = props => {
             onSubmit={onSubmit}
             price={price}
             isOwnListing={isOwnListing}
+            isCurrentUserMentor={isCurrentUserMentor}
             listingId={listing.id}
             monthlyTimeSlots={monthlyTimeSlots}
             onFetchTimeSlots={onFetchTimeSlots}
             startDatePlaceholder={intl.formatDate(TODAY, dateFormattingOptions)}
             endDatePlaceholder={intl.formatDate(TODAY, dateFormattingOptions)}
             timeZone={timeZone}
+            shortBookingForm={shortBookingForm}
           />
         ) : null}
       </ModalInMobile>

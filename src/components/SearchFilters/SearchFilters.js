@@ -454,7 +454,7 @@ class SearchFiltersComponent extends Component {
           >
             &nbsp;click here &nbsp;
           </span>
-          and tell us so we can include it for you.
+          to tell us so we can include it for you.
         </p>
         {this.state.isMailSectorModalOpen ? (
           <Modal

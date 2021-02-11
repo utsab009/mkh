@@ -789,7 +789,7 @@ class FieldDateAndTimeInput extends Component {
             </FieldSelect>
           </div>
         </div>
-        {showRemove ? (
+        {showRemove && !shortMeeting ? (
           <InlineTextButton
             // style={{ marginTop: 10, fontSize: 16, marginBottom: 20, textAlign: 'left' }}
             className={css.adddelbtn}

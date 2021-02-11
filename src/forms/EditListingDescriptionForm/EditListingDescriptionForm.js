@@ -276,8 +276,9 @@ class EditListingDescriptionFormComponent extends Component {
 
               <div className={css.customTitle}>
                 {/* State the <span className={css.underLine}>Job Role</span> you can Mentor */}
-                Second Step. Now select the Job Role or Government Position Classification you can
-                offer Mentoring in
+                Second Step. Now type and select the Job Role e.g., Accountant, Lawyer, HR Manager
+                or Government Position Classification e.g., Police Officer, Staff Nurse, Principle
+                Officer etc
               </div>
               <div className={css.customSubLable}>
                 {/* (For each Job Role you can Mentor, you will need to return to this section, create a
@@ -325,13 +326,13 @@ class EditListingDescriptionFormComponent extends Component {
                 // validate={composeValidators(required(titleRequiredMessage), maxLength60Message)}
                 // autoFocus
               /> */}
-              {/* <div className={css.customTitle}>
-                Third Step. Tell Mentees about your experience of the Role or Government Position
-                Classification
+              <div className={css.customTitle}>
+                Third Step. Tell Mentees about your experience of the Job Role or Government
+                Position Classification
                 <p className={css.smallTextIns}>
                   How will your experience help? What did you achieve while in the role? Etc.
                 </p>
-              </div> */}
+              </div>
 
               <CKEditor
                 id="experience"

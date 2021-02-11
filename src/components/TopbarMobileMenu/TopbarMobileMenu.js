@@ -344,7 +344,8 @@ class TopbarMobileMenu extends Component {
           <NamedLink
             className={classNames(css.inbox, currentPageClass('InboxPage'))}
             name="InboxPage"
-            params={{ tab: currentUserHasListings ? 'sales' : 'orders' }}
+            params={{ tab: isMentor ? 'sales' : 'orders' }}
+            // params={{ tab: currentUserHasListings ? 'sales' : 'orders' }}
           >
             <FormattedMessage id="TopbarMobileMenu.inboxLink" />
             {notificationCountBadge}

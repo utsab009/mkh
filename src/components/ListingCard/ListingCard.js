@@ -292,26 +292,32 @@ export class ListingCardComponent extends Component {
                   longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
                   longWordClass: css.longWord,
                 })}
-                {workExp !== null
-                  ? workExp.map((item, index) => {
-                      if (index < 3) {
-                        return <span className={css.crr}>{item.company}</span>;
-                      }
-                    })
-                  : null}
+                <ul className={css.companyList}>
+                  {workExp !== null && workExp.length
+                    ? workExp.map((item, index) => {
+                        if (index < 3) {
+                          return item.company ? <li className={css.crr}>{item.company}</li> : null;
+                        }
+                      })
+                    : null}
+                </ul>
               </div>
             </div>
 
             <div className={css.price}>
               <div className={css.title}>
                 Sample Career Roles:
-                {workExp !== null
-                  ? workExp.map((item, index) => {
-                      if (index < 3) {
-                        return <span className={css.crr}>{item.position}</span>;
-                      }
-                    })
-                  : null}
+                <ul className={css.companyList}>
+                  {workExp !== null
+                    ? workExp.map((item, index) => {
+                        if (index < 3) {
+                          return item.position ? (
+                            <li className={css.crr}>{item.position}</li>
+                          ) : null;
+                        }
+                      })
+                    : null}
+                </ul>
               </div>
               <div className={css.priceValue} title={priceTitle}>
                 {formattedPrice}

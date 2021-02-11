@@ -24,7 +24,7 @@ const scrollToTab = currentTab => {
 };
 
 const LayoutWrapperAccountSettingsSideNavComponent = props => {
-  const { currentTab, viewport } = props;
+  const { currentTab, viewport, isMentor } = props;
 
   let hasScrolledToTab = false;
 
@@ -59,23 +59,27 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
         name: 'PasswordChangePage',
       },
     },
-    {
+  ];
+
+  if (isMentor) {
+    tabs.push({
       text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.paymentsTabTitle" />,
       selected: currentTab === 'StripePayoutPage',
       id: 'StripePayoutPageTab',
       linkProps: {
         name: 'StripePayoutPage',
       },
-    },
-    {
+    });
+  } else {
+    tabs.push({
       text: <FormattedMessage id="LayoutWrapperAccountSettingsSideNav.paymentMethodsTabTitle" />,
       selected: currentTab === 'PaymentMethodsPage',
       id: 'PaymentMethodsPageTab',
       linkProps: {
         name: 'PaymentMethodsPage',
       },
-    },
-  ];
+    });
+  }
 
   return <LayoutWrapperSideNav tabs={tabs} />;
 };

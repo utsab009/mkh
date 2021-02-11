@@ -116,18 +116,18 @@ export class MenteeSignupPageComponent extends Component {
           to: fromState,
         },
       },
-      //   {
-      //     text: (
-      //       <h1 className={css.tab}>
-      //         <FormattedMessage id="MenteeSignupPage.loginLinkText" />
-      //       </h1>
-      //     ),
-      //     selected: isLogin,
-      //     linkProps: {
-      //       name: 'LoginPage',
-      //       to: fromState,
-      //     },
-      //   },
+      {
+        text: (
+          <h1 className={css.tab}>
+            <FormattedMessage id="MenteeSignupPage.loginLinkText" />
+          </h1>
+        ),
+        selected: isLogin,
+        linkProps: {
+          name: 'LoginPage',
+          to: fromState,
+        },
+      },
     ];
 
     const handleSubmitSignup = values => {
@@ -145,9 +145,9 @@ export class MenteeSignupPageComponent extends Component {
     const formContent = (
       <div className={css.content}>
         <LinkTabNavHorizontal className={css.tabs} tabs={tabs} />
-        <NamedLink name="LoginPage" className={css.link}>
+        {/* <NamedLink name="LoginPage" className={css.link}>
           <FormattedMessage id="MenteeSignupPage.login" />
-        </NamedLink>
+        </NamedLink> */}
         {loginOrSignupError}
         {
           /*isLogin ? (
@@ -250,8 +250,13 @@ export class MenteeSignupPageComponent extends Component {
           </LayoutWrapperTopbar>
           <LayoutWrapperMain className={css.layoutWrapperMain}>
             <div className={`${css.root} ${css.autovideo}`}>
-              <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" 
-        className={css.backvid}>
+              <video
+                playsinline="playsinline"
+                autoplay="autoplay"
+                muted="muted"
+                loop="loop"
+                className={css.backvid}
+              >
                 <source src={vidback} type="video/mp4" />
               </video>
               {showEmailVerification ? emailVerificationContent : formContent}

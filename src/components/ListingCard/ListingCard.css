@@ -30,6 +30,11 @@
     box-shadow: var(--boxShadowListingCard);
   }
 }
+.companyList {
+  padding-left: 20px;
+  list-style: disc;
+  margin-top: 10px;
+}
 
 /* Firefox doesn't support image aspect ratio inside flexbox */
 .aspectWrapper {
@@ -154,7 +159,7 @@
 }
 .crr {
   color: #0095b3;
-  display: block;
+  /* display: block; */
   font-size: 16px;
 }
 .nameSig {
@@ -190,7 +195,7 @@
   color: #cd2553;
   min-height: auto !important;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 
   &:hover,
   &:focus {

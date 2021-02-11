@@ -65,16 +65,21 @@ export class AuthenticationPageComponent extends Component {
 
     const user = ensureCurrentUser(currentUser);
     const currentUserLoaded = !!user.id;
-
+    const isMentor =
+      user &&
+      currentUserLoaded &&
+      user.attributes.profile.protectedData &&
+      user.attributes.profile.protectedData.isMentor;
     // We only want to show the email verification dialog in the signup
     // tab if the user isn't being redirected somewhere else
     // (i.e. `from` is present). We must also check the `emailVerified`
     // flag only when the current user is fully loaded.
     const showEmailVerification = !isLogin && currentUserLoaded && !user.attributes.emailVerified;
-
+    // console.log('519 user', { isMentor, user, currentUserLoaded });
     // Already authenticated, redirect away from auth page
-    if (isAuthenticated && from) {
-      return <Redirect to={from} />;
+    if (isAuthenticated && currentUserLoaded && from) {
+      // console.log('519 user in', { isMentor, user, currentUserLoaded });
+      return isMentor ? <NamedRedirect name="LandingPage" /> : <Redirect to={from} />;
     } else if (isAuthenticated && currentUserLoaded && !showEmailVerification) {
       return <NamedRedirect name="LandingPage" />;
     }
@@ -131,7 +136,49 @@ export class AuthenticationPageComponent extends Component {
               to: fromState,
             },
           },
+
+          {
+            text: (
+              <h1 className={css.tab}>
+                <FormattedMessage id="AuthenticationPage.loginLinkText" />
+              </h1>
+            ),
+            selected: isLogin,
+            linkProps: {
+              name: 'LoginPage',
+              to: fromState,
+            },
+          },
         ];
+    // const tabs = isLogin
+    //   ? [
+    //       {
+    //         text: (
+    //           <h1 className={css.tab}>
+    //             <FormattedMessage id="AuthenticationPage.loginLinkText" />
+    //           </h1>
+    //         ),
+    //         selected: isLogin,
+    //         linkProps: {
+    //           name: 'LoginPage',
+    //           to: fromState,
+    //         },
+    //       },
+    //     ]
+    //   : [
+    //       {
+    //         text: (
+    //           <h1 className={css.tab}>
+    //             <FormattedMessage id="AuthenticationPage.signupLinkText" />
+    //           </h1>
+    //         ),
+    //         selected: !isLogin,
+    //         linkProps: {
+    //           name: 'SignupPage',
+    //           to: fromState,
+    //         },
+    //       },
+    //     ];
 
     const handleSubmitSignup = values => {
       console.log('values in handle submit signup', values);
@@ -251,8 +298,13 @@ export class AuthenticationPageComponent extends Component {
           </LayoutWrapperTopbar>
           <LayoutWrapperMain className={css.layoutWrapperMain}>
             <div className={`${css.root} ${css.autovideo}`}>
-              <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop" 
-        className={css.backvid}>
+              <video
+                playsinline="playsinline"
+                autoplay="autoplay"
+                muted="muted"
+                loop="loop"
+                className={css.backvid}
+              >
                 <source src={vidback} type="video/mp4" />
               </video>
               {showEmailVerification ? emailVerificationContent : formContent}

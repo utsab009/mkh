@@ -4,9 +4,11 @@ import { compose } from 'redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { Form as FinalForm } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
+import { FormSpy } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import classNames from 'classnames';
 import * as validators from '../../util/validators';
+import moment from 'moment';
 import {
   Form,
   PrimaryButton,
@@ -50,6 +52,8 @@ export class SignupFormComponent extends Component {
     this.state = { currentTab: 1, termsAccepted: true };
     this.onToggleTab = this.onToggleTab.bind(this);
     this.acceptTerms = this.acceptTerms.bind(this);
+
+    // this.inputRef = React.createRef();
   }
 
   onToggleTab(tab, action) {
@@ -86,6 +90,7 @@ export class SignupFormComponent extends Component {
             signupType,
             timeZone,
             values,
+            form,
           } = fieldRenderProps;
 
           // email
@@ -182,16 +187,21 @@ export class SignupFormComponent extends Component {
             }
           };
           const termsLink = (
-            <span
-              className={css.termsLink}
-              onClick={onOpenTermsOfService}
-              role="button"
-              tabIndex="0"
-              onKeyUp={handleTermsKeyUp}
-            >
+            <ExternalLink target="_blank" href="/terms-of-service" className={css.link}>
               <FormattedMessage id="SignupForm.termsAndConditionsLinkText" />
-            </span>
+            </ExternalLink>
           );
+          // const termsLink = (
+          //   <span
+          //     className={css.termsLink}
+          //     onClick={onOpenTermsOfService}
+          //     role="button"
+          //     tabIndex="0"
+          //     onKeyUp={handleTermsKeyUp}
+          //   >
+          //     <FormattedMessage id="SignupForm.termsAndConditionsLinkText" />
+          //   </span>
+          // );
 
           /////////////////////////////////////////////// workExperienceElement starts /////////////////////////////////////////
           const workExperienceElement = (
@@ -202,7 +212,9 @@ export class SignupFormComponent extends Component {
 
               <FieldArray id={'workExp'} name={'workExp'}>
                 {({ fields }) => {
-                  console.log('fields', fields.length);
+                  console.log('515 fields', fields);
+                  console.log('515 values', values);
+                  const { workExp } = values;
                   if (fields.length === 0) {
                     fields.length = 1;
                     fields.push({ company: null, position: null, duration: null, dates: null });
@@ -230,11 +242,11 @@ export class SignupFormComponent extends Component {
                                     type="text"
                                     id={`${name}.position`}
                                     name={`${name}.position`}
-                                    label={'In the Position and or Grade of'}
+                                    label={'In the Position of'}
                                   />
                                 </div>
                               </div>
-                              <div className={css.workexp}>
+                              {/* <div className={css.workexp}>
                                 <div className={css.field}>
                                   <FieldTextInput
                                     type="text"
@@ -246,10 +258,80 @@ export class SignupFormComponent extends Component {
                                 </div>
                                 <div className={css.field}>
                                   <FieldTextInput
-                                    type="date"
+                                    type="month"
                                     id={`${name}.startEndDate`}
                                     name={`${name}.startEndDate`}
-                                    label={'From / to'}
+                                    label={'From / To'}
+                                  />
+                                </div>
+                              </div> */}
+                              <div className={css.workexp}>
+                                <div className={css.field}>
+                                  <FieldTextInput
+                                    type="month"
+                                    id={`${name}.startDate`}
+                                    name={`${name}.startDate`}
+                                    label={'From'}
+                                    className={css.spaceMargin}
+                                    onChange={val => {
+                                      // console.log('555', val.target.value);
+                                      form.change(`${name}.startDate`, val.target.value);
+                                      form.change(`${name}.endDate`, undefined);
+                                      form.change(`${name}.duration`, undefined);
+                                    }}
+                                    // onMouseEnter={() => {
+                                    //   console.log('focusedv 123', this);
+                                    //   this.setState({
+                                    //     inputDate: true,
+                                    //   });
+                                    // }}
+
+                                    // validate={val => {
+                                    //   console.log('512 start val', val);
+                                    //   let endDate = workExp[index].endDate;
+                                    //   if (!endDate) return undefined;
+                                    //   console.log('512 start', { val, endDate });
+                                    //   if (val > endDate)
+                                    //     return 'Start date can not be greater than end date';
+                                    // }}
+                                  />
+                                </div>
+                                <div className={css.field}>
+                                  <FieldTextInput
+                                    type="month"
+                                    id={`${name}.endDate`}
+                                    name={`${name}.endDate`}
+                                    label={'To'}
+                                    minDate={new Date()}
+                                    onChange={val => {
+                                      // console.log('555', val.target.value);
+                                      let end = val.target.value;
+                                      let start = workExp[index].startDate;
+                                      form.change(`${name}.endDate`, end);
+                                      let diff = moment(end).diff(start, 'months');
+                                      console.log({ diff });
+                                      if (start && end)
+                                        form.change(`${name}.duration`, `${diff} months`);
+                                    }}
+                                    validate={val => {
+                                      console.log('512 end val', val);
+                                      let start = workExp[index].startDate;
+                                      if (!start) return undefined;
+                                      console.log('512 end', { val, start });
+                                      if (start >= val) return 'Minimum duration should be 1 month';
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                              <div className={css.workexp}>
+                                <div className={css.field}>
+                                  <FieldTextInput
+                                    type="text"
+                                    id={`${name}.duration`}
+                                    name={`${name}.duration`}
+                                    label={'Length of Time'}
+                                    className={css.spaceMargin}
+                                    readOnly
                                   />
                                 </div>
                               </div>
@@ -307,7 +389,16 @@ export class SignupFormComponent extends Component {
                           <FormattedMessage id="EditListingAvailabilityPlanForm.addAnother" />
                         </InlineTextButton>
                       )}
-                      <div className={css.inputContainer}>
+                      {this.state.currentTab > 1 &&
+                      this.state.currentTab < 4 &&
+                      signupType == 'mentor' &&
+                      fields.length == 1 ? (
+                        <h6>
+                          It is important to Start with your most recent{' '}
+                          {this.state.currentTab == 2 ? 'Position' : 'Education'} and work backwards{' '}
+                        </h6>
+                      ) : null}
+                      {/* <div className={css.inputContainer}>
                         <FieldTextInput
                           // className={css.lastName}
                           type="text"
@@ -324,7 +415,7 @@ export class SignupFormComponent extends Component {
                         You will meet your Mentee online, so we will need a link to your Skype
                         account. If you do not have one now, skip this for now but place it on your
                         Mentor Profile as soon as you can.
-                      </div>
+                      </div> */}
                     </div>
                   );
                 }}
@@ -349,6 +440,8 @@ export class SignupFormComponent extends Component {
                     fields.push({ course: null, board: null, duration: null, dates: null });
                     fields.remove(1);
                   }
+
+                  const { education } = values;
 
                   return (
                     <div className={css.timePicker}>
@@ -378,6 +471,71 @@ export class SignupFormComponent extends Component {
                               <div className={css.workexp}>
                                 <div className={css.field}>
                                   <FieldTextInput
+                                    type="month"
+                                    id={`${name}.startDate`}
+                                    name={`${name}.startDate`}
+                                    label={'From'}
+                                    className={css.spaceMargin}
+                                    onChange={val => {
+                                      // console.log('555', val.target.value);
+                                      form.change(`${name}.startDate`, val.target.value);
+                                      form.change(`${name}.endDate`, undefined);
+                                      form.change(`${name}.duration`, undefined);
+                                    }}
+                                    validate={val => {
+                                      // console.log('512 start val', val);
+                                      // let endDate = workExp[index].endDate;
+                                      // if (!endDate) return undefined;
+                                      // console.log('512 start', { val, endDate });
+                                      // if (val > endDate)
+                                      //   return 'Start date can not be greater than end date';
+                                      // let today = moment().format('YYYY-MM');
+                                      // console.log({ today });
+                                    }}
+                                  />
+                                </div>
+                                <div className={css.field}>
+                                  <FieldTextInput
+                                    type="month"
+                                    id={`${name}.endDate`}
+                                    name={`${name}.endDate`}
+                                    label={'To'}
+                                    minDate={new Date()}
+                                    onChange={val => {
+                                      // console.log('555', val.target.value);
+                                      let end = val.target.value;
+                                      let start = education[index].startDate;
+                                      form.change(`${name}.endDate`, end);
+                                      let diff = moment(end).diff(start, 'months');
+                                      console.log({ diff });
+                                      if (start && end)
+                                        form.change(`${name}.duration`, `${diff} months`);
+                                    }}
+                                    validate={val => {
+                                      console.log('512 end val', val);
+                                      let start = education[index].startDate;
+                                      if (!start) return undefined;
+                                      console.log('512 end', { val, start });
+                                      if (start >= val) return 'Minimum duration should be 1 month';
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                              <div className={css.workexp}>
+                                <div className={css.field}>
+                                  <FieldTextInput
+                                    type="text"
+                                    id={`${name}.duration`}
+                                    name={`${name}.duration`}
+                                    label={'Length of Time'}
+                                    className={css.spaceMargin}
+                                    readOnly
+                                  />
+                                </div>
+                              </div>
+                              {/* <div className={css.workexp}>
+                                <div className={css.field}>
+                                  <FieldTextInput
                                     type="text"
                                     id={`${name}.duration`}
                                     name={`${name}.duration`}
@@ -387,13 +545,13 @@ export class SignupFormComponent extends Component {
                                 </div>
                                 <div className={css.field}>
                                   <FieldTextInput
-                                    type="date"
+                                    type="month"
                                     id={`${name}.startEndDate`}
                                     name={`${name}.startEndDate`}
-                                    label={'From / to'}
+                                    label={'From / To'}
                                   />
                                 </div>
-                              </div>
+                              </div> */}
                               <button
                                 type="button"
                                 className={css.removeButton}
@@ -448,6 +606,13 @@ export class SignupFormComponent extends Component {
 
           return (
             <Form className={classes} onSubmit={handleSubmit}>
+              <FormSpy
+                onChange={data => {
+                  console.log('155 formspy', data.values);
+                }}
+                subscription={{ values: true, dirty: true }}
+              />
+
               <div>
                 {this.state.currentTab == 1 ? (
                   <div>
@@ -460,7 +625,6 @@ export class SignupFormComponent extends Component {
                       placeholder={emailPlaceholder}
                       validate={validators.composeValidators(emailRequired, emailValid)}
                     />
-
                     <div className={css.name}>
                       <FieldTextInput
                         className={css.firstNameRoot}
@@ -483,16 +647,21 @@ export class SignupFormComponent extends Component {
                         validate={lastNameRequired}
                       />
                     </div>
-                    {signupType == 'mentee' ? (
-                      <FieldTextInput
-                        className={css.password}
-                        type="text"
-                        id={formId ? `${formId}.linkedInID` : 'linkedInID'}
-                        name="linkedInID"
-                        label="LinkedIn Address"
-                        placeholder="test.linkedin.com/12345"
-                      />
-                    ) : null}
+                    <FieldTextInput
+                      className={css.password}
+                      type="text"
+                      id={formId ? `${formId}.linkedInID` : 'linkedInID'}
+                      name="linkedInID"
+                      label={
+                        signupType == 'mentor'
+                          ? 'LinkedIn Address (Optional)'
+                          : 'LinkedIn Address (Optional) - Provided to Mentors'
+                      }
+                      placeholder="test.linkedin.com/12345"
+                    />
+                    <div className={css.fontSmall1}>
+                      Can be provided later. Leave blank if you do not wish to share
+                    </div>
                     {/*signupType == 'mentor' ?
                       <div className={css.name}>
                         <FieldTextInput
@@ -534,10 +703,11 @@ export class SignupFormComponent extends Component {
                 this.state.currentTab < 4 &&
                 signupType == 'mentor' ? (
                   <h6>
-                    It is important to Start with your most recent{' '}
-                    {this.state.currentTab == 2 ? 'Position' : 'Education'} and work backwards{' '}
+                    YOU ARE PROVIDING THIS INFORMATION TO HELP POTENTIAL MENTEES GAIN A PICTURE OF
+                    YOUR CAREER TO DATE.
                   </h6>
                 ) : null}
+
                 {this.state.currentTab == 2 && signupType == 'mentor'
                   ? workExperienceElement
                   : null}
@@ -559,7 +729,7 @@ export class SignupFormComponent extends Component {
                     type="checkbox"
                     id={`dob`}
                     name={`dob`}
-                    label={"I accept that I'm 18 years and above"}
+                    label={'I am over 18 years of age (requirement of using this service)'}
                     // validate={lastNameRequired}
                     validate={dobRequired}
                     // validate={() => {
@@ -570,8 +740,8 @@ export class SignupFormComponent extends Component {
 
                 {(this.state.currentTab == 2 && signupType == 'mentee') ||
                 (signupType !== 'mentee' && this.state.currentTab == 4) ? (
-                  <div>
-                    <h1>Before You Join</h1>
+                  <div className={css.signupInfoText}>
+                    <h2>Before You Join</h2>
                     <p>
                       Our mission is to build a trusted community of Mentors and Mentees who
                       ultimately make the world more effective. It is a community where anyone can
@@ -589,14 +759,14 @@ export class SignupFormComponent extends Component {
                       </ExternalLink>{' '}
                       as these ensure this is achieved.
                     </p>
-                    <h2>Try A Mentor Community Commitment</h2>
+                    <h3>Try A Mentor Community Commitment</h3>
                     <p>
                       We will respect the dignity of everyone we interact with on Try A Mentor,
                       regardless of Race, Religion, National Origin, Ethnicity, Skin Colour,
                       Disability, Sex, Gender Identity, Sexual Orientation, Marriage Status, or Age.
                       This means we will treat all with respect, and without judgement or bias. By
                       signing up to Try A Mentor, you are agreeing to act in this way also. To learn
-                      more, please visit our{' '}
+                      more about your required conduct, please visit our{' '}
                       <ExternalLink
                         target="_blank"
                         href="/community-guidelines"
@@ -605,7 +775,7 @@ export class SignupFormComponent extends Component {
                         Community Guidelines
                       </ExternalLink>
                     </p>
-                    <h2>Try A Mentor Terms of Service</h2>
+                    <h3>Try A Mentor Terms of Service</h3>
                     <p>
                       You are also agreeing to accept Try A Mentor's{' '}
                       <ExternalLink target="_blank" href="/terms-of-service" className={css.link}>
@@ -627,7 +797,7 @@ export class SignupFormComponent extends Component {
                       >
                         Community Guidelines
                       </ExternalLink>{' '}
-                      through pressing the accept button below
+                      through pressing the Accept & Sign-up button below
                     </p>
                     {/* <Button
                       type="button"
@@ -639,7 +809,6 @@ export class SignupFormComponent extends Component {
                   </div>
                 ) : null}
               </div>
-
               <div className={css.bottomWrapper}>
                 <p className={css.bottomWrapperText}>
                   <span className={css.termsText}>

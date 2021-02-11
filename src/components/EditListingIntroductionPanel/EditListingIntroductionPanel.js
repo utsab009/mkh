@@ -5,11 +5,13 @@ import { FormattedMessage } from '../../util/reactIntl';
 import { ensureOwnListing } from '../../util/data';
 import { ListingLink } from '..';
 import { LISTING_STATE_DRAFT } from '../../util/types';
+import { Link } from 'react-router-dom';
 // import { EditListingDescriptionForm } from '../../forms';
 import config from '../../config';
 
 import css from './EditListingIntroductionPanel.css';
 import Button from '../Button/Button';
+import NamedLink from '../NamedLink/NamedLink';
 
 const EditListingIntroductionPanel = props => {
   const {
@@ -25,6 +27,9 @@ const EditListingIntroductionPanel = props => {
     updateInProgress,
     errors,
     onManageDisableScrolling,
+    history,
+    isNewListingFlow,
+    isEditPublished,
   } = props;
 
   const classes = classNames(rootClassName || css.root, className);
@@ -57,22 +62,34 @@ const EditListingIntroductionPanel = props => {
 
   return (
     <div className={classes}>
-      <h1 className={css.title}>How to Create a Great Role Listing</h1>
+      <h1 className={css.title}>How to Create a Great Mentor Listing</h1>
+      {/* <div className={css.titleSmall}>
+        To make things straightforward we have a video that will explain this section fully and is
+        found by clicking this link. You can watch this or read the “how to guide” below or click
+        "skip / next below" and work it out as you go.
+      </div> */}
       <div className={css.titleSmall}>
         To make things straightforward we have a video that will explain this section fully and is
-        found by clicking this link. You can watch this or read the how to guide below or click skip
-        / next below and work it out as you go.
+        found by clicking this{' '}
+        <a className={css.link} href="">
+          link
+        </a>
+        . You can watch this or read the “how to guide” below or work it all out as you go by
+        scrolling down and clicking “Next”.
       </div>
 
       <div className={css.headingMain1}>How To:</div>
       <div className={css.headingMain2}>What is Role listing?</div>
       <p className={css.textContent}>
         You have already signed up as a Mentor by giving your experience and education and verifying
-        your e-mail. This information is a description of you and creates your Mentor Profile. The
-        only thing missing is a photo. What we do not know is the types of Job Roles you want to
-        Mentor, when, and how much will you charge. When this information is collected through the
-        process that follows, a Role Listing is created. What is important to note is that you may
-        need to create more than one Role Listing.
+        your e-mail. This information is a description of you and creates your{' '}
+        <NamedLink className={css.link} name="ProfileSettingsPage">
+          Mentor Profile
+        </NamedLink>
+        . The only thing missing is a photo. What we do not know is the types of Job Roles you want
+        to Mentor, when, and how much will you charge. When this information is collected through
+        the process that follows, a Role Listing is created. What is important to note is that you
+        may need to create more than one Role Listing.
       </p>
       <div className={css.headingMain2}>Why would I need more than one Role Listing?</div>
       <p className={css.textContent}>
@@ -85,6 +102,19 @@ const EditListingIntroductionPanel = props => {
         Administrator they will find them. But they also need to create another Role Listing (do
         this process again) for the HR Manager Role so again if a Mentee searches by the keyword HR
         Manager they will find them also.
+      </p>
+      <p className={css.textContent}>
+        Another reason for having more than one Mentor Listing, is sometimes a Job Position can be
+        at more then one level of Seniority. For example, a HR Manager in one organisation can be a
+        middle level position, but in another, it can be a very senior position. If this is the case
+        for a Job Role you want to mentor, you may want to charge a different rate for HR Managers
+        in a middle management position then those who are at a senior management position.
+      </p>
+      <p className={css.textContent}>
+        So, you would create a Mentor Listing for HR Manager at a middle management level and a
+        separate one for a HR Manager at a senior management level, assuming you have experience in
+        both. The reason for the additional Mentor Listings in this case is so you can charge
+        differently.
       </p>
       <div className={css.headingMain2}>Let us now explore how you create a Role Listing.</div>
       <div className={css.headingMain1}>
@@ -139,8 +169,9 @@ const EditListingIntroductionPanel = props => {
         Mentors who picked a Government Position Classification for example Firefighter. These
         classifications inherently tell you what level of seniority they are at and the sector they
         relate to and as such you will skip Sections Two and Three automatically. For example, if
-        you decide to offer Mentoring to a “Police Commissioner”, you know the sector and seniority
-        by this title.
+        you decide to offer Mentoring to a “Police Commissioner”, a Mentee looking for Mentoring for
+        this Government Position Classification will automatically know the sector and seniority by
+        this title.
       </p>
       <div className={css.headingMain1}>Section Four: Languages / Video Link</div>
       <p className={css.textContent}>
@@ -156,9 +187,13 @@ const EditListingIntroductionPanel = props => {
       </p>
       <p className={css.textContent}>
         Today, so many of us can create a video with ease on our mobile phones, and then create a
-        YouTube channel and post it there. Here is a link to a video explaining just how simple this
-        is. If you decide to create such a video, you can place the link for it in this section, and
-        when Mentees press “Mentor Video” on your page, it will appear.
+        YouTube channel and post it there. Here is a{' '}
+        <a href="" className={css.link}>
+          link
+        </a>{' '}
+        to a video explaining just how simple this is. If you decide to create such a video, you can
+        place the link for it in this section, and when Mentees press “Mentor Video” on your
+        listing, it will appear.
       </p>
 
       <div className={css.headingMain1}>Section Five: Availability</div>
@@ -169,12 +204,12 @@ const EditListingIntroductionPanel = props => {
         attempts to book you, a booking request is created and sent to you. So, if they pick a time
         that you designated for Mentoring but you are now not free, you can decline the request and
         ask them to book a time you know you are available. You can also add exceptions to this
-        schedule. Times that you are not available. For example, you place in your schedule that you
-        will Mentor on Tuesdays from 6pm to 8pm. This year an important holiday occurs on a Tuesday
-        next month and on this day, you will not be able to Mentor, so on that date you create an
-        exception preventing bookings. The other exception is when you want to make yourself
-        available on a day of the week you normally are not. In other words, the system will be as
-        flexible as you need it to be.
+        schedule. Times, that you are not available. For example, you place in your schedule that
+        you will Mentor on Tuesdays from 6pm to 8pm. This year an important holiday occurs on a
+        Tuesday next month and on this day, you will not be able to Mentor, so on that date you
+        create an exception preventing bookings. The other exception is when you want to make
+        yourself available on a day of the week you normally are not. In other words, the system
+        will be as flexible as you need it to be.
       </p>
       <div className={css.headingMain1}>Section Six: Pricing</div>
       <p className={css.textContent}>
@@ -182,30 +217,51 @@ const EditListingIntroductionPanel = props => {
       </p>
       <p className={css.textContent}>
         How much should you charge? Well we would advise you to examine what other Mentors are
-        charging who are offering Mentoring for the Role or similar Roles and consider the Seniority
-        Level. The higher the level, the higher the charge.
+        charging, who are offering Mentoring for the Role or similar Roles and consider the
+        Seniority Level. The higher the level, the higher the charge.
       </p>
       <div className={css.headingMain1}>Publish</div>
       <p className={css.textContent}>
         The Role Profile is now ready to be published and as such you are nearly ready to be
         selected by Mentees. By pressing the Publish button you are transported to Stripe. Stripe is
         an independent financial management system (you can learn more about them through the
-        following link). They will collect your banking information so that payments can be made to
-        you. You are now a Mentor on Try A Mentor. Congratulations. We wish you great success.
+        following{' '}
+        <a href="" className={css.link}>
+          link
+        </a>
+        ). They will collect your banking information so that payments can be made to you and are
+        completely independent of Try A Mentor.
       </p>
-
-      {/* <Button
-        inProgress={updateInProgress}
-        className={css.submitButton}
-        onClick={() => {
-          const updateValues = {
-            publicData: { ...publicData },
-          };
-          onSubmit(updateValues);
-        }}
-      >
-        Next
-      </Button> */}
+      <p className={css.textContent}>
+        Sometimes it can take Stripe a while to verify your information, so we advise that you check
+        back 24 hours later. To do this, click the circle with your initials or photo in it at the
+        top right-hand corner of the Try A Mentor page. When you click it, a drop-down menu will
+        appear, on this click “Account Settings”. You will then see “Contact Details” in big
+        writing. To the left of this is “Mentor Bank Details”. By clicking on this, you will see if
+        Stripe has verified your banking details and if not, you can access Stripe again to see how
+        you can help them further.
+      </p>
+      <p className={css.textContent}>
+        You are now a Mentor on Try A Mentor. Congratulations. We wish you great success.
+      </p>
+      {!isEditPublished && (
+        <Button
+          inProgress={updateInProgress}
+          className={css.submitButton}
+          onClick={() => {
+            if (isNewListingFlow) {
+              history.push('/l/draft/00000000-0000-0000-0000-000000000000/new/description');
+            } else {
+              const updateValues = {
+                publicData: { ...publicData },
+              };
+              onSubmit(updateValues);
+            }
+          }}
+        >
+          Next
+        </Button>
+      )}
     </div>
   );
 };

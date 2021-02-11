@@ -44,6 +44,12 @@ export const ContactDetailsPageComponent = props => {
   const currentEmail = user.attributes.email || '';
   const protectedData = user.attributes.profile.protectedData || {};
   const currentPhoneNumber = protectedData.phoneNumber || '';
+  const isMentor =
+    user &&
+    user.attributes.profile.protectedData &&
+    user.attributes.profile.protectedData.userType &&
+    user.attributes.profile.protectedData.userType === 'mentor';
+  console.log('user123', user);
   const contactInfoForm = user.id ? (
     <ContactDetailsForm
       className={css.form}
@@ -72,9 +78,13 @@ export const ContactDetailsPageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="ContactDetailsPage" listing={currentUserListing} profileUserType={protectedData.userType}/>
+          <UserNav
+            selectedPageName="ContactDetailsPage"
+            listing={currentUserListing}
+            profileUserType={protectedData.userType}
+          />
         </LayoutWrapperTopbar>
-        <LayoutWrapperAccountSettingsSideNav currentTab="ContactDetailsPage" />
+        <LayoutWrapperAccountSettingsSideNav currentTab="ContactDetailsPage" isMentor={isMentor} />
         <LayoutWrapperMain>
           <div className={css.content}>
             <h1 className={css.title}>

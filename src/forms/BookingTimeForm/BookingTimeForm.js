@@ -167,11 +167,12 @@ export class BookingTimeFormComponent extends Component {
   };
 
   estimatedTotalPrice = (unitPrice, unitCount) => {
+    console.log('3333 estimatedTotalPrice params', { unitPrice, unitCount });
     const numericPrice = convertMoneyToNumber(unitPrice);
     const numericTotalPrice = new Decimal(numericPrice).times(unitCount).toNumber();
-    // console.log('11111 numericTotalPrice', numericTotalPrice, numericPrice);
+    console.log('3333 numericTotalPrice', { numericTotalPrice, numericPrice });
     return new Money(
-      convertUnitToSubUnit(numericTotalPrice, unitDivisor(unitPrice.currency)),
+      convertUnitToSubUnit(Math.round(numericTotalPrice), unitDivisor(unitPrice.currency)),
       unitPrice.currency
     );
   };
@@ -213,6 +214,7 @@ export class BookingTimeFormComponent extends Component {
             handleSubmit,
             intl,
             isOwnListing,
+            isCurrentUserMentor,
             listingId,
             submitButtonWrapperClassName,
             unitPrice,
@@ -221,6 +223,7 @@ export class BookingTimeFormComponent extends Component {
             monthlyTimeSlots,
             onFetchTimeSlots,
             timeZone,
+            shortBookingForm,
           } = fieldRenderProps;
           console.log('3333 error', fieldRenderProps.errors);
           console.log('3333 values', fieldRenderProps.values);
@@ -235,7 +238,7 @@ export class BookingTimeFormComponent extends Component {
 
           const startDate = startTime ? timestampToDate(startTime) : null;
           const endDate = endTime ? timestampToDate(endTime) : null;
-
+          console.log('3333 state', this.state);
           const finalEstimate = () => {
             let totalHour = 0,
               perUnitPrice = formatMoney(intl, unitPrice),
@@ -250,14 +253,16 @@ export class BookingTimeFormComponent extends Component {
             ) {
               this.state.bookingFormArray.forEach(item => {
                 if (values.bookingStartTime[item]) {
-                  totalHour += this.getTotalHour(values, item);
+                  let ttl = this.getTotalHour(values, item);
+                  console.log('3333 ttl', ttl);
+                  totalHour += ttl;
                 }
               });
             }
 
             totalPrice = this.estimatedTotalPrice(unitPrice, totalHour);
             const formattedTotalPrice = formatMoney(intl, totalPrice);
-            // console.log('11111 totalPrice', totalPrice);
+            console.log('3333 totalPrice', totalPrice, formattedTotalPrice);
 
             return (
               <div className={css.pricesec}>
@@ -358,7 +363,9 @@ export class BookingTimeFormComponent extends Component {
                       let show = this.state.bookingFormArray.length - 1 == i;
                       return (
                         <div key={item}>
-                          <div className={css.bookingHeading}>Booking - {i + 1}</div>
+                          {!shortBookingForm && (
+                            <div className={css.bookingHeading}>Booking - {i + 1}</div>
+                          )}
                           <FieldDateAndTimeInput
                             {...dateInputProps}
                             className={css.bookingDates}
@@ -373,11 +380,11 @@ export class BookingTimeFormComponent extends Component {
                             timeZone={timeZone}
                             formId={`${item}`}
                             removeSelectedDate={this.removeSelectedDate}
-                            duration={duration}
-                            shortMeeting={shortMeeting}
+                            duration={shortBookingForm ? 20 : 60}
+                            shortMeeting={shortBookingForm}
                           />
                           {/* {this.getEstimate(values, item, { unitType, unitPrice, timeZone })} */}
-                          {show && renderAddButton()}
+                          {show && !shortBookingForm && renderAddButton()}
                         </div>
                       );
                     })
@@ -442,7 +449,7 @@ export class BookingTimeFormComponent extends Component {
                   {this.state.fieldError}
                 </p>
               ) : null}
-              {!isOwnListing && (
+              {!isOwnListing && !isCurrentUserMentor && (
                 <div className={submitButtonClasses}>
                   <PrimaryButton type="submit">
                     <FormattedMessage id="BookingTimeForm.requestToBook" />

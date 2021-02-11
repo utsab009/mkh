@@ -56,6 +56,7 @@ export const EditListingPricingFormComponent = props => (
         })
       );
       const minPrice = new Money(config.listingMinimumPriceSubUnits, config.currency);
+      const maxPrice = new Money(config.listingMaximumPriceSubUnits, config.currency);
       const minPriceRequired = validators.moneySubUnitAmountAtLeast(
         intl.formatMessage(
           {
@@ -67,8 +68,19 @@ export const EditListingPricingFormComponent = props => (
         ),
         config.listingMinimumPriceSubUnits
       );
+      const maxPriceRequired = validators.moneySubUnitAmountAtMax(
+        intl.formatMessage(
+          {
+            id: 'EditListingPricingForm.priceTooHigh',
+          },
+          {
+            maxPrice: formatMoney(intl, maxPrice),
+          }
+        ),
+        config.listingMaximumPriceSubUnits
+      );
       const priceValidators = config.listingMinimumPriceSubUnits
-        ? validators.composeValidators(priceRequired, minPriceRequired)
+        ? validators.composeValidators(priceRequired, minPriceRequired, maxPriceRequired)
         : priceRequired;
 
       const classes = classNames(css.root, className);

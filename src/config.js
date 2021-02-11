@@ -35,7 +35,8 @@ const sortSearchByDistance = false;
 //
 // In a way, 'processAlias' defines which transaction process (or processes)
 // this particular web application is able to handle.
-const bookingProcessAlias = 'preauth-unit-time-booking/release-1';
+const bookingProcessAlias = 'preauth-test/release-1';
+// const bookingProcessAlias = 'preauth-unit-time-booking/release-1';
 
 // The transaction line item code for the main unit type in bookings.
 //
@@ -71,7 +72,8 @@ const currencyConfig = currencyConfiguration(currency);
 
 // Listing minimum price in currency sub units, e.g. cents.
 // 0 means no restriction to the price
-const listingMinimumPriceSubUnits = 0;
+const listingMinimumPriceSubUnits = 100;
+const listingMaximumPriceSubUnits = 100000;
 
 // Sentry DSN (Data Source Name), a client key for authenticating calls to Sentry
 const sentryDsn = process.env.REACT_APP_SENTRY_DSN;
@@ -208,6 +210,7 @@ const config = {
   currency,
   currencyConfig,
   listingMinimumPriceSubUnits,
+  listingMaximumPriceSubUnits,
   stripe: {
     publishableKey: stripePublishableKey,
     supportedCountries: stripeCountryDetails,

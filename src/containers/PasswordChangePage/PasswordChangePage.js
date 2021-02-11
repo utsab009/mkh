@@ -38,7 +38,8 @@ export const PasswordChangePageComponent = props => {
   const user = ensureCurrentUser(currentUser);
   const currentEmail = user.attributes.email || '';
   const protectedData = user.attributes.profile.protectedData || {};
-
+  const isMentor =
+    user && protectedData && protectedData.userType && protectedData.userType === 'mentor';
   const changePasswordForm =
     currentUser && currentUser.id ? (
       <PasswordChangeForm
@@ -63,9 +64,9 @@ export const PasswordChangePageComponent = props => {
             desktopClassName={css.desktopTopbar}
             mobileClassName={css.mobileTopbar}
           />
-          <UserNav selectedPageName="PasswordChangePage" profileUserType={protectedData.userType}/>
+          <UserNav selectedPageName="PasswordChangePage" profileUserType={protectedData.userType} />
         </LayoutWrapperTopbar>
-        <LayoutWrapperAccountSettingsSideNav currentTab="PasswordChangePage" />
+        <LayoutWrapperAccountSettingsSideNav currentTab="PasswordChangePage" isMentor={isMentor} />
         <LayoutWrapperMain>
           <div className={css.content}>
             <h1 className={css.title}>

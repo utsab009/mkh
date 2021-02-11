@@ -482,8 +482,8 @@ export class CheckoutPageComponent extends Component {
       stripe: this.stripe,
       card,
       billingDetails,
-      message,
-      linkedInId,
+      // message,
+      // linkedInId,
       paymentIntent,
       selectedPaymentMethod: paymentMethod,
       saveAfterOnetimePayment: !!saveAfterOnetimePayment,
@@ -495,7 +495,13 @@ export class CheckoutPageComponent extends Component {
     console.log('storeTx in submit', storedTx);
     console.log({ requestPaymentParams });
     for (let i = 0; i < tx.length; i++) {
-      submitVal.push(await this.handlePaymentIntent(requestPaymentParams, i));
+      if (i < 1) {
+        submitVal.push(
+          await this.handlePaymentIntent({ ...requestPaymentParams, message, linkedInId }, i)
+        );
+      } else {
+        submitVal.push(await this.handlePaymentIntent(requestPaymentParams, i));
+      }
     }
 
     console.log({ submitVal });
@@ -834,7 +840,12 @@ export class CheckoutPageComponent extends Component {
     // If your marketplace works mostly in one country you can use initial values to select country automatically
     // e.g. {country: 'FI'}
 
-    const initalValuesForStripePayment = { name: userName };
+    const linkedInID =
+      currentUser && currentUser.attributes.profile.publicData
+        ? currentUser.attributes.profile.publicData.linkedInID
+        : null;
+    console.log('145 linkedInID', linkedInID);
+    const initalValuesForStripePayment = { name: userName, linkedInId: linkedInID };
 
     return (
       <Page {...pageProps}>
