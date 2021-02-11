@@ -11,6 +11,7 @@ import { formatMoney } from '../../util/currency';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import { Button, Form, FieldCurrencyInput } from '../../components';
 import css from './EditListingPricingForm.css';
+import ReactTooltip from 'react-tooltip';
 
 const { Money } = sdkTypes;
 
@@ -88,7 +89,7 @@ export const EditListingPricingFormComponent = props => (
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
       const { updateListingError, showListingsError } = fetchErrors || {};
-
+      const ex = '?';
       return (
         <Form onSubmit={handleSubmit} className={classes}>
           {updateListingError ? (
@@ -101,12 +102,25 @@ export const EditListingPricingFormComponent = props => (
               <FormattedMessage id="EditListingPricingForm.showListingFailed" />
             </p>
           ) : null}
+          <ReactTooltip place="right" type="info" effect="solid" />
+          <div>
+            {pricePerUnitMessage}{' '}
+            <span
+              className={css.tooltipIcon}
+              data-multiline={true}
+              clickable={true}
+              data-class={css.tooltipIcon}
+              data-tip="What price should I charge? <br /> Our best advice is to pick a figure that you feel is fair and enter it. Then look at the price set by other Mentors for this Position or similar ones. Compare the experience of these Mentors to yours and the price they are charging. Set a new price based on this and return to this page through the Mentor Listings section (click on the circle found in the top right corner of each page of Try A Mentor)."
+            >
+              ?
+            </span>
+          </div>
           <FieldCurrencyInput
             id="price"
             name="price"
             className={css.priceInput}
             autoFocus
-            label={pricePerUnitMessage}
+            // label={pricePerUnitMessage}
             placeholder={pricePlaceholderMessage}
             currencyConfig={config.currencyConfig}
             validate={priceValidators}

@@ -22,7 +22,11 @@
   flex-shrink: 0;
   width: 100%;
 }
-
+.tooltipIcon {
+  color: #2196f3;
+  cursor: pointer;
+  padding: 5px;
+}
 .submitButton {
   margin-top: auto;
   margin-bottom: 24px;
