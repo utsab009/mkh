@@ -157,14 +157,14 @@ const EditListingPublicPanel = props => {
   //   <FormattedMessage id="EditListingPublicPanel.createListingTitle" />
   // ); //Default code
 
-  const panelTitle = <FormattedMessage id="EditListingPublicForm.jobRoleLabel" />;
-
   // const yogaStyles = publicData && publicData.yogaStyles;
   const sectors = publicData && publicData.sectors;
   const subsectors = publicData && publicData.subsectors;
   const jobroles = (publicData && publicData.jobroles) || [];
   const initialValues = { sectors, jobroles };
-
+  const panelTitle = (
+    <FormattedMessage id="EditListingPublicForm.jobRoleLabel" values={{ subsectors }} />
+  );
   // const sectorGroupData = config.custom.sectors.filter(
   //   item => item.key !== 'none' && item.key !== 'Public Service'
   // );

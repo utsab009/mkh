@@ -11,11 +11,20 @@ import { ensureCurrentUser } from '../../util/data';
 import { propTypes } from '../../util/types';
 import * as validators from '../../util/validators';
 import { isUploadImageOverLimitError } from '../../util/errors';
-import { Form, Avatar, Button, ImageFromFile, IconSpinner, FieldTextInput, IconClose, InlineTextButton } from '../../components';
-
+import {
+  Form,
+  Avatar,
+  Button,
+  ImageFromFile,
+  IconSpinner,
+  FieldTextInput,
+  IconClose,
+  InlineTextButton,
+} from '../../components';
+import moment from 'moment';
 import css from './ProfileSettingsForm.css';
 
-const EducationFormComponent = props => { 
+const EducationFormComponent = ({ form, values }) => {
   return (
     <div className={classNames(css.weekDay, null)}>
       {/*<div className={css.dayOfWeek}>
@@ -25,56 +34,118 @@ const EducationFormComponent = props => {
 
       <FieldArray id={'education'} name={'education'}>
         {({ fields }) => {
-          console.log("fields", fields.length);
-          if(fields.length === 0)
-          {
+          console.log('fields', fields.length);
+          if (fields.length === 0) {
             fields.pop();
-            fields.push({course:null,board:null,duration:null,dates:null})
+            fields.push({ course: null, board: null, duration: null, dates: null });
             // fields.remove(1);
           }
-
+          const { education } = values;
           return (
             <div className={css.timePicker}>
-               {fields.map((name, index) => {
+              {fields.map((name, index) => {
                 return (
                   <div className={css.fieldWrapper} key={name}>
-                    <div >
+                    <div>
                       <div className={css.nameContainer}>
                         <div className={css.field}>
-                            <FieldTextInput
+                          <FieldTextInput
                             type="text"
                             id={`${name}.course`}
                             name={`${name}.course`}
                             label={'I gained'}
-                            />    
+                          />
                         </div>
                         <div className={css.field}>
-                            <FieldTextInput
+                          <FieldTextInput
                             type="text"
                             id={`${name}.board`}
                             name={`${name}.board`}
                             label={'From which institution'}
-                            />    
+                          />
                         </div>
                       </div>
-                      <div className={css.nameContainer}>
+                      {/* <div className={css.nameContainer}>
                         <div className={css.field}>
-                            <FieldTextInput
+                          <FieldTextInput
                             type="text"
                             id={`${name}.duration`}
                             name={`${name}.duration`}
                             label={'length of Time'}
-                            />    
+                          />
                         </div>
                         <div className={css.field}>
-                            <FieldTextInput
+                          <FieldTextInput
                             type="text"
                             id={`${name}.startEndDate`}
                             name={`${name}.startEndDate`}
                             label={'From / to'}
-                            />    
+                          />
                         </div>
-                       </div> 
+                      </div> */}
+                      <div className={css.nameContainer}>
+                        <div className={css.field}>
+                          <FieldTextInput
+                            type="month"
+                            id={`${name}.startDate`}
+                            name={`${name}.startDate`}
+                            label={'From'}
+                            // placeholder="YYYY-MM"
+                            className={css.spaceMargin}
+                            onChange={val => {
+                              // console.log('555', val.target.value);
+                              form.change(`${name}.startDate`, val.target.value);
+                              form.change(`${name}.endDate`, undefined);
+                              form.change(`${name}.duration`, undefined);
+                            }}
+                            // validate={val => {
+                            //   console.log('512 start val', val);
+                            //   let endDate = workExp[index].endDate;
+                            //   if (!endDate) return undefined;
+                            //   console.log('512 start', { val, endDate });
+                            //   if (val > endDate)
+                            //     return 'Start date can not be greater than end date';
+                            // }}
+                          />
+                        </div>
+                        <div className={css.field}>
+                          <FieldTextInput
+                            type="month"
+                            id={`${name}.endDate`}
+                            name={`${name}.endDate`}
+                            label={'To'}
+                            minDate={new Date()}
+                            onChange={val => {
+                              // console.log('555', val.target.value);
+                              let end = val.target.value;
+                              let start = education[index].startDate;
+                              form.change(`${name}.endDate`, end);
+                              let diff = moment(end).diff(start, 'months');
+                              console.log({ diff });
+                              if (start && end) form.change(`${name}.duration`, `${diff} months`);
+                            }}
+                            validate={val => {
+                              console.log('512 end val', val);
+                              let start = education[index].startDate;
+                              if (!start) return undefined;
+                              console.log('512 end', { val, start });
+                              if (start >= val) return 'Minimum duration should be 1 month';
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div className={css.nameContainer}>
+                        <div className={css.field}>
+                          <FieldTextInput
+                            type="text"
+                            id={`${name}.duration`}
+                            name={`${name}.duration`}
+                            label={'Length of Time'}
+                            className={css.spaceMargin}
+                            readOnly
+                          />
+                        </div>
+                      </div>
                       {/*<span className={css.dashBetweenTimes}>-</span>*/}
                     </div>
                     <button
@@ -94,7 +165,9 @@ const EducationFormComponent = props => {
                 <InlineTextButton
                   type="button"
                   className={css.buttonSetHours}
-                  onClick={() => fields.push({course:null,board:null,duration:null,dates:null})}
+                  onClick={() =>
+                    fields.push({ course: null, board: null, duration: null, dates: null })
+                  }
                 >
                   <FormattedMessage id="EditListingAvailabilityPlanForm.setHours" />
                 </InlineTextButton>
@@ -102,7 +175,9 @@ const EducationFormComponent = props => {
                 <InlineTextButton
                   type="button"
                   className={css.buttonAddNew}
-                  onClick={() => fields.push({course:null,board:null,duration:null,dates:null})}
+                  onClick={() =>
+                    fields.push({ course: null, board: null, duration: null, dates: null })
+                  }
                 >
                   <FormattedMessage id="EditListingAvailabilityPlanForm.addAnother" />
                 </InlineTextButton>
@@ -113,9 +188,7 @@ const EducationFormComponent = props => {
       </FieldArray>
     </div>
   );
-
 };
 
-
-  const EducationForm = EducationFormComponent;
-  export default EducationForm;  
+const EducationForm = EducationFormComponent;
+export default EducationForm;

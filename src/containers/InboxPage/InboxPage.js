@@ -322,7 +322,11 @@ export const InboxPageComponent = props => {
   } = props;
   const { tab } = params;
   const ensuredCurrentUser = ensureCurrentUser(currentUser);
-
+  const isMentor =
+    ensuredCurrentUser &&
+    ensuredCurrentUser.attributes.profile.protectedData &&
+    ensuredCurrentUser.attributes.profile.protectedData.isMentor;
+  console.log('inbox 221 isMentor', isMentor);
   const validTab = tab === 'orders' || tab === 'sales';
   if (!validTab) {
     return <NotFoundPage />;
@@ -393,19 +397,20 @@ export const InboxPageComponent = props => {
         params: { tab: 'sales' },
       },
     },
-    {
-      text: (
-        <span>
-          <FormattedMessage id="InboxPage.ordersTabTitle" />
-        </span>
-      ),
-      selected: isOrders,
-      linkProps: {
-        name: 'InboxPage',
-        params: { tab: 'orders' },
-      },
-    },
+    // {
+    //   text: (
+    //     <span>
+    //       <FormattedMessage id="InboxPage.ordersTabTitle" />
+    //     </span>
+    //   ),
+    //   selected: isOrders,
+    //   linkProps: {
+    //     name: 'InboxPage',
+    //     params: { tab: 'orders' },
+    //   },
+    // },
   ];
+
   const nav = <TabNav rootClassName={css.tabs} tabRootClassName={css.tab} tabs={tabs} />;
 
   return (

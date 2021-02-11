@@ -4,9 +4,11 @@ import { compose } from 'redux';
 import { FormattedMessage, injectIntl, intlShape } from '../../util/reactIntl';
 import { Form as FinalForm } from 'react-final-form';
 import { FieldArray } from 'react-final-form-arrays';
+import { FormSpy } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import classNames from 'classnames';
 import * as validators from '../../util/validators';
+import moment from 'moment';
 import {
   Form,
   PrimaryButton,
@@ -50,6 +52,8 @@ export class SignupFormComponent extends Component {
     this.state = { currentTab: 1, termsAccepted: true };
     this.onToggleTab = this.onToggleTab.bind(this);
     this.acceptTerms = this.acceptTerms.bind(this);
+
+    // this.inputRef = React.createRef();
   }
 
   onToggleTab(tab, action) {
@@ -86,6 +90,7 @@ export class SignupFormComponent extends Component {
             signupType,
             timeZone,
             values,
+            form,
           } = fieldRenderProps;
 
           // email
@@ -207,7 +212,9 @@ export class SignupFormComponent extends Component {
 
               <FieldArray id={'workExp'} name={'workExp'}>
                 {({ fields }) => {
-                  console.log('fields', fields.length);
+                  console.log('515 fields', fields);
+                  console.log('515 values', values);
+                  const { workExp } = values;
                   if (fields.length === 0) {
                     fields.length = 1;
                     fields.push({ company: null, position: null, duration: null, dates: null });
@@ -239,7 +246,7 @@ export class SignupFormComponent extends Component {
                                   />
                                 </div>
                               </div>
-                              <div className={css.workexp}>
+                              {/* <div className={css.workexp}>
                                 <div className={css.field}>
                                   <FieldTextInput
                                     type="text"
@@ -255,6 +262,76 @@ export class SignupFormComponent extends Component {
                                     id={`${name}.startEndDate`}
                                     name={`${name}.startEndDate`}
                                     label={'From / To'}
+                                  />
+                                </div>
+                              </div> */}
+                              <div className={css.workexp}>
+                                <div className={css.field}>
+                                  <FieldTextInput
+                                    type="month"
+                                    id={`${name}.startDate`}
+                                    name={`${name}.startDate`}
+                                    label={'From'}
+                                    className={css.spaceMargin}
+                                    onChange={val => {
+                                      // console.log('555', val.target.value);
+                                      form.change(`${name}.startDate`, val.target.value);
+                                      form.change(`${name}.endDate`, undefined);
+                                      form.change(`${name}.duration`, undefined);
+                                    }}
+                                    // onMouseEnter={() => {
+                                    //   console.log('focusedv 123', this);
+                                    //   this.setState({
+                                    //     inputDate: true,
+                                    //   });
+                                    // }}
+
+                                    // validate={val => {
+                                    //   console.log('512 start val', val);
+                                    //   let endDate = workExp[index].endDate;
+                                    //   if (!endDate) return undefined;
+                                    //   console.log('512 start', { val, endDate });
+                                    //   if (val > endDate)
+                                    //     return 'Start date can not be greater than end date';
+                                    // }}
+                                  />
+                                </div>
+                                <div className={css.field}>
+                                  <FieldTextInput
+                                    type="month"
+                                    id={`${name}.endDate`}
+                                    name={`${name}.endDate`}
+                                    label={'To'}
+                                    minDate={new Date()}
+                                    onChange={val => {
+                                      // console.log('555', val.target.value);
+                                      let end = val.target.value;
+                                      let start = workExp[index].startDate;
+                                      form.change(`${name}.endDate`, end);
+                                      let diff = moment(end).diff(start, 'months');
+                                      console.log({ diff });
+                                      if (start && end)
+                                        form.change(`${name}.duration`, `${diff} months`);
+                                    }}
+                                    validate={val => {
+                                      console.log('512 end val', val);
+                                      let start = workExp[index].startDate;
+                                      if (!start) return undefined;
+                                      console.log('512 end', { val, start });
+                                      if (start >= val) return 'Minimum duration should be 1 month';
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                              <div className={css.workexp}>
+                                <div className={css.field}>
+                                  <FieldTextInput
+                                    type="text"
+                                    id={`${name}.duration`}
+                                    name={`${name}.duration`}
+                                    label={'Length of Time'}
+                                    className={css.spaceMargin}
+                                    readOnly
                                   />
                                 </div>
                               </div>
@@ -364,6 +441,8 @@ export class SignupFormComponent extends Component {
                     fields.remove(1);
                   }
 
+                  const { education } = values;
+
                   return (
                     <div className={css.timePicker}>
                       {fields.map((name, index) => {
@@ -392,6 +471,71 @@ export class SignupFormComponent extends Component {
                               <div className={css.workexp}>
                                 <div className={css.field}>
                                   <FieldTextInput
+                                    type="month"
+                                    id={`${name}.startDate`}
+                                    name={`${name}.startDate`}
+                                    label={'From'}
+                                    className={css.spaceMargin}
+                                    onChange={val => {
+                                      // console.log('555', val.target.value);
+                                      form.change(`${name}.startDate`, val.target.value);
+                                      form.change(`${name}.endDate`, undefined);
+                                      form.change(`${name}.duration`, undefined);
+                                    }}
+                                    validate={val => {
+                                      // console.log('512 start val', val);
+                                      // let endDate = workExp[index].endDate;
+                                      // if (!endDate) return undefined;
+                                      // console.log('512 start', { val, endDate });
+                                      // if (val > endDate)
+                                      //   return 'Start date can not be greater than end date';
+                                      // let today = moment().format('YYYY-MM');
+                                      // console.log({ today });
+                                    }}
+                                  />
+                                </div>
+                                <div className={css.field}>
+                                  <FieldTextInput
+                                    type="month"
+                                    id={`${name}.endDate`}
+                                    name={`${name}.endDate`}
+                                    label={'To'}
+                                    minDate={new Date()}
+                                    onChange={val => {
+                                      // console.log('555', val.target.value);
+                                      let end = val.target.value;
+                                      let start = education[index].startDate;
+                                      form.change(`${name}.endDate`, end);
+                                      let diff = moment(end).diff(start, 'months');
+                                      console.log({ diff });
+                                      if (start && end)
+                                        form.change(`${name}.duration`, `${diff} months`);
+                                    }}
+                                    validate={val => {
+                                      console.log('512 end val', val);
+                                      let start = education[index].startDate;
+                                      if (!start) return undefined;
+                                      console.log('512 end', { val, start });
+                                      if (start >= val) return 'Minimum duration should be 1 month';
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                              <div className={css.workexp}>
+                                <div className={css.field}>
+                                  <FieldTextInput
+                                    type="text"
+                                    id={`${name}.duration`}
+                                    name={`${name}.duration`}
+                                    label={'Length of Time'}
+                                    className={css.spaceMargin}
+                                    readOnly
+                                  />
+                                </div>
+                              </div>
+                              {/* <div className={css.workexp}>
+                                <div className={css.field}>
+                                  <FieldTextInput
                                     type="text"
                                     id={`${name}.duration`}
                                     name={`${name}.duration`}
@@ -407,7 +551,7 @@ export class SignupFormComponent extends Component {
                                     label={'From / To'}
                                   />
                                 </div>
-                              </div>
+                              </div> */}
                               <button
                                 type="button"
                                 className={css.removeButton}
@@ -462,6 +606,13 @@ export class SignupFormComponent extends Component {
 
           return (
             <Form className={classes} onSubmit={handleSubmit}>
+              <FormSpy
+                onChange={data => {
+                  console.log('155 formspy', data.values);
+                }}
+                subscription={{ values: true, dirty: true }}
+              />
+
               <div>
                 {this.state.currentTab == 1 ? (
                   <div>
@@ -501,7 +652,11 @@ export class SignupFormComponent extends Component {
                       type="text"
                       id={formId ? `${formId}.linkedInID` : 'linkedInID'}
                       name="linkedInID"
-                      label="LinkedIn Address (Optional) - Provided to Mentors"
+                      label={
+                        signupType == 'mentor'
+                          ? 'LinkedIn Address (Optional)'
+                          : 'LinkedIn Address (Optional) - Provided to Mentors'
+                      }
                       placeholder="test.linkedin.com/12345"
                     />
                     <div className={css.fontSmall1}>
@@ -654,7 +809,6 @@ export class SignupFormComponent extends Component {
                   </div>
                 ) : null}
               </div>
-
               <div className={css.bottomWrapper}>
                 <p className={css.bottomWrapperText}>
                   <span className={css.termsText}>

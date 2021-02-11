@@ -11,6 +11,7 @@ import config from '../../config';
 
 import css from './EditListingIntroductionPanel.css';
 import Button from '../Button/Button';
+import NamedLink from '../NamedLink/NamedLink';
 
 const EditListingIntroductionPanel = props => {
   const {
@@ -82,9 +83,9 @@ const EditListingIntroductionPanel = props => {
       <p className={css.textContent}>
         You have already signed up as a Mentor by giving your experience and education and verifying
         your e-mail. This information is a description of you and creates your{' '}
-        <a className={css.link} href="">
+        <NamedLink className={css.link} name="ProfileSettingsPage">
           Mentor Profile
-        </a>
+        </NamedLink>
         . The only thing missing is a photo. What we do not know is the types of Job Roles you want
         to Mentor, when, and how much will you charge. When this information is collected through
         the process that follows, a Role Listing is created. What is important to note is that you

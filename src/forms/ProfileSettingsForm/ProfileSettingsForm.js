@@ -349,7 +349,7 @@ class ProfileSettingsFormComponent extends Component {
                       <FormattedMessage id="ProfileSettingsForm.menteeLinkedinLink" />
                     </div>
                   )}
-                  {isMentor ? (
+                  {/* {isMentor ? (
                     <FieldTextInput
                       // className={css.lastName}
                       type="text"
@@ -360,12 +360,12 @@ class ProfileSettingsFormComponent extends Component {
                       placeholder="Please enter your skype address"
                       // validate={lastNameRequired}
                     />
-                  ) : null}
-                  {isMentor ? (
+                  ) : null} */}
+                  {/* {isMentor ? (
                     <div className={css.socialMedia}>
                       <FormattedMessage id="ProfileSettingsForm.conferenceLink" />
                     </div>
-                  ) : null}
+                  ) : null} */}
 
                   {/* <FieldTextInput
                       type="date"
@@ -402,7 +402,7 @@ class ProfileSettingsFormComponent extends Component {
                   <h3 className={css.sectionTitle}>
                     <FormattedMessage id="ProfileSettingsForm.workExpHeading" />
                   </h3>
-                  <WorkExperienceForm workExp={'workExp'} intl={intl} />
+                  <WorkExperienceForm intl={intl} form={form} values={values} />
                 </div>
               ) : null}
               {this.state.currentTab == 3 ? (
@@ -410,7 +410,7 @@ class ProfileSettingsFormComponent extends Component {
                   <h3 className={css.sectionTitle}>
                     <FormattedMessage id="ProfileSettingsForm.educationHeading" />
                   </h3>
-                  <EducationForm workExp={'workExp'} intl={intl} />
+                  <EducationForm intl={intl} form={form} values={values} />
                 </div>
               ) : null}
               {user.attributes.profile.protectedData &&

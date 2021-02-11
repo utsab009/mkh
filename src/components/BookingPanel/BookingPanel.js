@@ -58,6 +58,7 @@ const BookingPanel = props => {
     titleClassName,
     listing,
     isOwnListing,
+    isCurrentUserMentor,
     unitType,
     onSubmit,
     title,
@@ -159,6 +160,7 @@ const BookingPanel = props => {
             onSubmit={onSubmit}
             price={price}
             isOwnListing={isOwnListing}
+            isCurrentUserMentor={isCurrentUserMentor}
             listingId={listing.id}
             monthlyTimeSlots={monthlyTimeSlots}
             onFetchTimeSlots={onFetchTimeSlots}

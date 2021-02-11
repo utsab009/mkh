@@ -214,6 +214,7 @@ export class BookingTimeFormComponent extends Component {
             handleSubmit,
             intl,
             isOwnListing,
+            isCurrentUserMentor,
             listingId,
             submitButtonWrapperClassName,
             unitPrice,
@@ -448,7 +449,7 @@ export class BookingTimeFormComponent extends Component {
                   {this.state.fieldError}
                 </p>
               ) : null}
-              {!isOwnListing && (
+              {!isOwnListing && !isCurrentUserMentor && (
                 <div className={submitButtonClasses}>
                   <PrimaryButton type="submit">
                     <FormattedMessage id="BookingTimeForm.requestToBook" />

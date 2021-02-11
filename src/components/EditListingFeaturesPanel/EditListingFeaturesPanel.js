@@ -164,10 +164,12 @@ const EditListingFeaturesPanel = props => {
   //   <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />
   // ); //Default code
 
-  const panelTitle = <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" />;
-
   // const yogaStyles = publicData && publicData.yogaStyles;
   let sectors = publicData && publicData.sectors;
+  let subsectors = publicData && publicData.subsectors;
+  const panelTitle = (
+    <FormattedMessage id="EditListingFeaturesPanel.createListingTitle" values={{ subsectors }} />
+  );
   // const subsectors = publicData && publicData.subsectors;
   const sectorGroupData = config.custom.sectors.filter(
     item => item.key !== 'none' && item.key !== 'Public Service'

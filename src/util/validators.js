@@ -123,6 +123,10 @@ export const emailFormatValid = message => value => {
 export const moneySubUnitAmountAtLeast = (message, minValue) => value => {
   return value instanceof Money && value.amount >= minValue ? VALID : message;
 };
+export const moneySubUnitAmountAtMax = (message, maxValue) => value => {
+  console.log('amount 1000', { value, maxValue });
+  return value instanceof Money && value.amount <= maxValue ? VALID : message;
+};
 
 const parseNum = str => {
   const num = Number.parseInt(str, 10);

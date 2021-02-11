@@ -267,6 +267,18 @@ export class ListingPageComponent extends Component {
       });
   }
   addToFav = id => {
+    let { history } = this.props;
+    let { pathname, search } = history.location;
+    console.log('101', pathname, search);
+    if (search) {
+      pathname = pathname + search;
+    }
+    console.log('101', pathname, search);
+    if (!this.props.currentUser) {
+      history.push('/login', { from: pathname });
+      return;
+    }
+
     let { profile } = this.props.currentUser.attributes;
     let newFavourites =
       profile.protectedData.favourites &&
@@ -463,6 +475,10 @@ export class ListingPageComponent extends Component {
     const isOwnListing =
       userAndListingAuthorAvailable && currentListing.author.id.uuid === currentUser.id.uuid;
     const showContactUser = authorAvailable && (!currentUser || (currentUser && !isOwnListing));
+    const isMentor =
+      currentUser &&
+      currentUser.attributes.profile.protectedData &&
+      currentUser.attributes.profile.protectedData.isMentor;
 
     const currentAuthor = authorAvailable ? currentListing.author : null;
     const ensuredAuthor = ensureUser(currentAuthor);
@@ -725,7 +741,18 @@ export class ListingPageComponent extends Component {
                         </div>
                       </div>
                       <div className={css.fevVidContainer}>
-                        {currentUser !== null ? (
+                        <div className={css.favSec}>
+                          {isFavourite.length > 0 ? (
+                            <Button onClick={() => this.removeFromFav(id)} className={css.favBtn}>
+                              <FontAwesomeIcon icon={solidHeart} />
+                            </Button>
+                          ) : (
+                            <Button onClick={() => this.addToFav(id)} className={css.favBtn}>
+                              <FontAwesomeIcon icon={faHeart} />{' '}
+                            </Button>
+                          )}
+                        </div>
+                        {/* {currentUser !== null ? (
                           <div className={css.favSec}>
                             {isFavourite.length > 0 ? (
                               <Button onClick={() => this.removeFromFav(id)} className={css.favBtn}>
@@ -737,7 +764,7 @@ export class ListingPageComponent extends Component {
                               </Button>
                             )}
                           </div>
-                        ) : null}
+                        ) : null} */}
                         {!youtubeLink ? (
                           <div
                             onClick={() =>
@@ -956,7 +983,7 @@ export class ListingPageComponent extends Component {
                 </div>
 
                 <div className={css.rightSecbooking}>
-                  {!isOwnListing && (
+                  {!isOwnListing && !isMentor && (
                     <button type="button" onClick={this.onContactUser} className={css.qtbtn}>
                       Would you like to ask me a question ?
                     </button>
@@ -968,6 +995,7 @@ export class ListingPageComponent extends Component {
                         className={`${css.bookingPanel} ${css.modbp}`}
                         listing={currentListing}
                         isOwnListing={isOwnListing}
+                        isCurrentUserMentor={isMentor}
                         unitType={unitType}
                         onSubmit={handleBookingSubmit}
                         title={bookingTitle}
