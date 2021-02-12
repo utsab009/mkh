@@ -287,7 +287,7 @@ class EditListingDescriptionFormComponent extends Component {
               <Select
                 options={this.state.roleData}
                 name="subsectors"
-                placeholder="Now type the Job Role or Government Position Classification Here"
+                placeholder="Now type the Job Grade to Government Position Classification Here"
                 value={this.state.roleData.filter(item => item.value === values.subsectors)}
                 // id="subsectors"
                 onChange={values => {
@@ -297,7 +297,7 @@ class EditListingDescriptionFormComponent extends Component {
                 }}
               />
               <p className={css.smallTextIns}>
-                If the Job Role or Government Position Classification are not present,{' '}
+                If the Job Grade to Government Position Classification are not present,{' '}
                 <InlineTextButton
                   className={css.btnModSl}
                   onClick={e => {

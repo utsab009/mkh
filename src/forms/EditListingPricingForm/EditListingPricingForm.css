@@ -8,6 +8,7 @@
   flex: 1;
   flex-direction: column;
   flex-grow: 1;
+  position: relative;
 
   @media (--viewportMedium) {
     padding-top: 2px;

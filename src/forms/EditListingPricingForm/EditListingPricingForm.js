@@ -102,7 +102,7 @@ export const EditListingPricingFormComponent = props => (
               <FormattedMessage id="EditListingPricingForm.showListingFailed" />
             </p>
           ) : null}
-          <ReactTooltip place="right" type="info" effect="solid" />
+          <ReactTooltip place="bottom" type="info" effect="solid" />
           <div>
             {pricePerUnitMessage}{' '}
             <span
@@ -110,7 +110,7 @@ export const EditListingPricingFormComponent = props => (
               data-multiline={true}
               clickable={true}
               data-class={css.tooltipIcon}
-              data-tip="What price should I charge? <br /> Our best advice is to pick a figure that you feel is fair and enter it. Then look at the price set by other Mentors for this Position or similar ones. Compare the experience of these Mentors to yours and the price they are charging. Set a new price based on this and return to this page through the Mentor Listings section (click on the circle found in the top right corner of each page of Try A Mentor)."
+              data-tip="What price should I charge? <br /> Our best advice is to pick a figure that you feel is fair and enter it. Then look at the price set by <br />other Mentors for this Position or similar ones.  Compare the experience of these Mentors<br /> to yours and the price they are charging.  Set a new price based on this and return to this page through the <br />Mentor Listings section (click on the circle found in the top right corner of each page of Try A Mentor)."
             >
               ?
             </span>
@@ -126,7 +126,7 @@ export const EditListingPricingFormComponent = props => (
             validate={priceValidators}
           />
           <div>
-            <h5>Pick a price from 1€ to any value</h5>
+            <h5>Pick a price from €1 to €1000.</h5>
           </div>
 
           <div className={css.customLable}>

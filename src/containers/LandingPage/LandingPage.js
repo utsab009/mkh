@@ -30,6 +30,8 @@ import css from './LandingPage.css';
 import { updateProfile } from '../ProfileSettingsPage/ProfileSettingsPage.duck';
 import { sendVerificationEmail } from '../../ducks/user.duck';
 
+import ShowMoreText from 'react-show-more-text';
+
 export class LandingPageComponent extends Component {
   state = {
     welcomeModal: true,
@@ -218,36 +220,71 @@ export class LandingPageComponent extends Component {
                   <div className={css.scdsteps}>
                     <div className={css.scdstep}>
                       <h2 className={css.scdstepTitle}>1. Create a Mentor Account</h2>
-                      <p>
-                        Start by clicking “Become A Mentor”at the top right-hand corner of thispage.
-                        Enter identity information andyour e-mail address and verify it.
-                      </p>
+                      <ShowMoreText
+                        /* Default options */
+                        lines={5}
+                        more="Read more"
+                        less="Read less"
+                        className="content-css"
+                        anchorClass="my-anchor-css-class"
+                        onClick={this.executeOnClick}
+                        expanded={false}
+                      >
+                        <p>
+                          Start by clicking “Become A Mentor”at the top right-hand corner of
+                          thispage. Enter identity information andyour e-mail address and verify it.
+                        </p>
+                      </ShowMoreText>
                     </div>
 
                     <div className={css.scdstep}>
                       <h2 className={css.scdstepTitle}>2. Start Building your MentorProfile</h2>
-                      <p>
-                        Tell potential Mentees about your workand educational history and then
-                        selectthe specific Job Roles you can help with.The information collected
-                        will allowpotential Mentees know why you canhelp them along with also
-                        telling themwhen you will be available, how muchyou will charge, and so on.
-                      </p>
+                      <ShowMoreText
+                        /* Default options */
+                        lines={4}
+                        more="Read more"
+                        less="Read less"
+                        className="content-css"
+                        anchorClass="my-anchor-css-class"
+                        onClick={this.executeOnClick}
+                        expanded={false}
+                      >
+                        <p>
+                          Tell potential Mentees about your workand educational history and then
+                          selectthe specific Job Roles you can help with.The information collected
+                          will allowpotential Mentees know why you canhelp them along with also
+                          telling themwhen you will be available, how muchyou will charge, and so
+                          on.
+                        </p>
+                      </ShowMoreText>
                     </div>
 
                     <div className={css.scdstep}>
                       <h2 className={css.scdstepTitle}>3. Start Mentoring</h2>
-                      <p>
-                        You are all set. Bookings will arrive, in-built automatic toolswill organise
-                        and remind you about these bookings, theMentoring meetings will be through
-                        our video conferencingapplication, and payments to you will be automatic.
-                        All youneed to focus on is Mentoring. Need help to Mentor? In Try AMentor
-                        you will find an array of free resources includingvideos on how to Mentor.
-                      </p>
-                      <p>
-                        The first meeting is 20 minutes, free of charge, and is aNeeds Assessment.
-                        After that, all meetings are charged forand booked in one or more-hour
-                        segments by Mentees.
-                      </p>
+                      <ShowMoreText
+                        /* Default options */
+                        lines={4}
+                        more="Read more"
+                        less="Read less"
+                        className="content-css"
+                        anchorClass="my-anchor-css-class"
+                        onClick={this.executeOnClick}
+                        expanded={false}
+                      >
+                        <p>
+                          You are all set. Bookings will arrive, in-built automatic toolswill
+                          organise and remind you about these bookings, theMentoring meetings will
+                          be through our video conferencingapplication, and payments to you will be
+                          automatic. All youneed to focus on is Mentoring. Need help to Mentor? In
+                          Try AMentor you will find an array of free resources includingvideos on
+                          how to Mentor.
+                        </p>
+                        <p>
+                          The first meeting is 20 minutes, free of charge, and is aNeeds Assessment.
+                          After that, all meetings are charged forand booked in one or more-hour
+                          segments by Mentees.
+                        </p>
+                      </ShowMoreText>
                     </div>
                   </div>
                 </div>

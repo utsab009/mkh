@@ -830,3 +830,12 @@
   width: 15px;
   fill: #cacccd
 }
+.content-css {
+    text-align: center;
+    font-size: 18px;
+    line-height: 26px;
+    letter-spacing: 0px;
+}
+.my-anchor-css-class {
+    color: #cc814b;
+}
