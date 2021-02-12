@@ -32,6 +32,9 @@ export const TRANSITION_EXPIRE_PAYMENT = 'transition/expire-payment';
 // When the provider accepts or declines a transaction from the
 // SalePage, it is transitioned with the accept or decline transition.
 export const TRANSITION_ACCEPT = 'transition/accept';
+
+export const TRANSITION_ACCEPT_SHORT_BOOKING = 'transition/accept-short-booking';
+
 export const TRANSITION_DECLINE = 'transition/decline';
 
 // The backend automatically expire the transaction.
@@ -45,6 +48,14 @@ export const TRANSITION_COMPLETE = 'transition/complete';
 
 // Newly added: Wait till the refund period over
 export const TRANSITION_BOOKING_PERIOD_END = 'transition/booking-period-end';
+
+export const TRANSITION_SHORT_BOOKING_PERIOD_END = 'transition/short-booking-period-end';
+
+export const TRANSITION_SHORT_BOOKING_JOIN_USER = 'transition/short-booking-join-user';
+
+export const TRANSITION_REFUND_AFTER_USER_JOINED = 'transition/refund-after-user-joined';
+
+export const TRANSITION_SHORT_BOOKING_COMPLETE = 'transition/short-booking-complete';
 
 // Newly added: Wait till the PAYOUT waiting period over (Ex. 7days from booking end)
 export const TRANSITION_PAYOUT_WAITING_TIME = 'transition/payout-waiting-time';
@@ -127,6 +138,9 @@ const STATE_PAYOUT_WAITING = 'payout-waiting';
 const STATE_HOLD_PAYMENT_REQUEST = 'hold-payment-request';
 const STATE_REVIEWED_BY_CUSTOMER = 'reviewed-by-customer';
 const STATE_REVIEWED_BY_PROVIDER = 'reviewed-by-provider';
+const STATE_ACCEPTED_SHORT_BOOKING = 'accepted-short-booking';
+const STATE_SHORT_BOOKING_ENDED = 'short-booking-ended';
+const STATE_SHORT_BOOKING_USER_JOINED = 'short-booking-user-joined';
 
 /**
  * Description of transaction process
@@ -174,6 +188,7 @@ const stateDescription = {
         [TRANSITION_PREAUTH_CANCEL_REFUND_BY_CUSTOMER]: STATE_DECLINED,
         [TRANSITION_EXPIRE]: STATE_DECLINED,
         [TRANSITION_ACCEPT]: STATE_ACCEPTED,
+        [TRANSITION_ACCEPT_SHORT_BOOKING]: STATE_ACCEPTED_SHORT_BOOKING,
       },
     },
 
@@ -187,13 +202,23 @@ const stateDescription = {
         [TRANSITION_CANCEL_REFUND_BY_PROVIDER]: STATE_CANCELED,
       },
     },
-    // [STATE_BOOKING_ENDED]: {
-    //   on: {
-    //     // [TRANSITION_HOLD_PAYMENT_REQ]: STATE_HOLD_PAYMENT_REQUEST,
-    //     [TRANSITION_COMPLETE]: STATE_DELIVERED,
-    //     // [TRANSITION_PAYOUT_WAITING_TIME]: STATE_PAYOUT_WAITING,
-    //   },
-    // },
+
+    [TRANSITION_ACCEPT_SHORT_BOOKING]: {
+      on: {
+        [TRANSITION_SHORT_BOOKING_PERIOD_END]: STATE_SHORT_BOOKING_ENDED,
+        [TRANSITION_SHORT_BOOKING_JOIN_USER]: STATE_SHORT_BOOKING_USER_JOINED,
+      },
+    },
+    [STATE_SHORT_BOOKING_ENDED]: {
+      on: {
+        [TRANSITION_SHORT_BOOKING_COMPLETE]: STATE_DELIVERED,
+      },
+    },
+    [STATE_SHORT_BOOKING_USER_JOINED]: {
+      on: {
+        [TRANSITION_REFUND_AFTER_USER_JOINED]: STATE_DELIVERED,
+      },
+    },
 
     [STATE_BOOKING_ENDED]: {
       on: {
@@ -365,6 +390,11 @@ export const getReview2Transition = isCustomer =>
 export const isRelevantPastTransition = transition => {
   return [
     TRANSITION_ACCEPT,
+    TRANSITION_ACCEPT_SHORT_BOOKING,
+    TRANSITION_SHORT_BOOKING_PERIOD_END,
+    TRANSITION_SHORT_BOOKING_JOIN_USER,
+    TRANSITION_REFUND_AFTER_USER_JOINED,
+    TRANSITION_SHORT_BOOKING_COMPLETE,
     TRANSITION_CANCEL,
     TRANSITION_COMPLETE,
     TRANSITION_CONFIRM_PAYMENT,

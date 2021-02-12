@@ -224,7 +224,9 @@ export class CheckoutPageComponent extends Component {
             bookingEnd: element.bookingEndTime,
             // quantity: element.quantity,
             protectedData: {
-              link: pageData.listing.author.attributes.profile.publicData.conferenceLink,
+              // link: pageData.listing.author.attributes.profile.publicData.conferenceLink,
+              link: '',
+              shortBooking: (bookingData && bookingData.shortBooking) || false,
             },
             units: element.quantity,
             seats: 1,

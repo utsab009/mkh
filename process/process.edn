@@ -42,17 +42,22 @@
    :actions [{:name :action/stripe-confirm-payment-intent}]
    :from :state/pending-payment
    :to :state/preauthorized}
-  {:name :transition/accept
+  
+  {:name :transition/accept-short-booking
    :actor :actor.role/provider
    :actions
    [{:name :action/accept-booking}]
    :from :state/preauthorized
-   :to :state/accepted}
-  ;  [
-  ;    {:name :action/accept-booking}
-  ;   {:name :action/stripe-capture-payment-intent}]
-  ;  :from :state/preauthorized
-  ;  :to :state/accepted}
+   :to :state/accepted-short-booking}
+  
+  {:name :transition/accept
+   :actor :actor.role/provider
+   :actions
+    [{:name :action/accept-booking}
+     {:name :action/stripe-capture-payment-intent}]
+    :from :state/preauthorized
+    :to :state/accepted}
+    
 
   {:name :transition/decline
    :actor :actor.role/provider
@@ -81,17 +86,31 @@
    :from :state/preauthorized
    :to :state/declined}
 
-  {:name :transition/booking-period-end
+  {:name :transition/short-booking-period-end
    :at {:fn/timepoint [:time/booking-end]}
    :actions [{:name :action/stripe-capture-payment-intent}]
-   :from :state/accepted
-   :to :state/booking-ended}
+   :from :state/accepted-short-booking
+   :to :state/short-booking-ended}
+  
+  {:name :transition/short-booking-join-user
+   :actor :actor.role/customer
+   :actions []
+   :from :state/accepted-short-booking
+   :to :state/short-booking-user-joined}
+  
+  {:name :transition/refund-after-user-joined
+   :at {:fn/timepoint [:time/booking-end]}
+   :actions [{:name :action/decline-booking}
+    {:name :action/calculate-full-refund}
+    {:name :action/stripe-refund-payment}]
+   :from :state/short-booking-user-joined
+   :to :state/delivered}
 
-  ; {:name :transition/booking-period-end
-  ;  :at {:fn/timepoint [:time/booking-end]}
-  ;  :actions []
-  ;  :from :state/accepted
-  ;  :to :state/booking-ended}
+   {:name :transition/booking-period-end
+    :at {:fn/timepoint [:time/booking-end]}
+    :actions []
+    :from :state/accepted
+    :to :state/booking-ended}
 
   {:name :transition/cancel-refund-by-customer
    :actor :actor.role/customer
@@ -127,6 +146,12 @@
    :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["PT10M"]}]}
    :actions [{:name :action/stripe-create-payout}]
    :from :state/booking-ended
+   :to :state/delivered}
+  
+  {:name :transition/short-booking-complete
+   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["PT10M"]}]}
+   :actions [{:name :action/stripe-create-payout}]
+   :from :state/short-booking-ended
    :to :state/delivered}
 
   ;; {:name :transition/payout-waiting-time

@@ -86,7 +86,7 @@ export class BookingTimeFormComponent extends Component {
     console.log(this.props, 'props in submit');
     let { timeZone } = this.props;
     if (e.bookingStartTime && e.bookingStartTime.length == 1) {
-      this.props.onSubmit(e);
+      this.props.onSubmit({ ...e, shortBooking: this.props.shortBookingForm });
       console.log('in if');
     }
     if (e.bookingStartTime && e.bookingStartTime.length > 1) {
@@ -103,7 +103,7 @@ export class BookingTimeFormComponent extends Component {
         return;
       }
       console.log('count in submit', count);
-      this.props.onSubmit(e);
+      this.props.onSubmit({ ...e, shortBooking: false });
     }
   }
 
