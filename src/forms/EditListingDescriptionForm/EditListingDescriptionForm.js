@@ -297,7 +297,7 @@ class EditListingDescriptionFormComponent extends Component {
                 }}
               />
               <p className={css.smallTextIns}>
-                If the Job Grade to Government Position Classification are not present,{' '}
+                If the Job Role or Government Position Classification are not present,{' '}
                 <InlineTextButton
                   className={css.btnModSl}
                   onClick={e => {

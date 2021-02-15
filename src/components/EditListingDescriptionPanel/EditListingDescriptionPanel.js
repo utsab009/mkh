@@ -60,13 +60,13 @@ const EditListingDescriptionPanel = props => {
       <div className={css.titleSmall}>
         THE FIRST STEP IS TO GIVE THIS ROLE LISTING A NAME. LIKE WHEN YOU SAVE A FILE ON YOUR
         COMPUTER SO THAT YOU CAN FIND AND UPDATE IT LATER. THEN, THROUGH STEP TWO, FIND THE PRECISE
-        JOB ROLE OR JOB GRADE YOU WANT TO OFFER MENTORING IN.
+        JOB ROLE OR GOVERNMENT POSITION CLASSIFICATION YOU WANT TO OFFER MENTORING IN.
       </div>
       <EditListingDescriptionForm
         className={css.form}
         initialValues={{
           title,
-          // description,
+          // description,gdfgfhd
           // certificate: publicData.certificate,
           // mentorLanguage: publicData.mentorLanguage,
           // profileType: publicData.profileType,
