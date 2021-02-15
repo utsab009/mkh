@@ -123,6 +123,7 @@ export class ListingCardComponent extends Component {
       bio: profile.bio,
       protectedData: profile.protectedData,
     };
+    console.log({ profileToSaved });
     this.props.onUpdateProfile(profileToSaved);
   };
 
@@ -182,6 +183,10 @@ export class ListingCardComponent extends Component {
     const ensuredAuthor = ensureUser(currentAuthor);
     const { averageRating = 0, ratingCount = 0 } = currentListing.attributes.publicData;
     // console.log("ensuredAuthor",ensuredAuthor);
+    const isMentor =
+      currentUser &&
+      currentUser.attributes.profile.protectedData &&
+      currentUser.attributes.profile.protectedData.isMentor;
     let authorData =
       this.state.authorData !== null &&
       this.state.authorData.data &&
@@ -350,17 +355,19 @@ export class ListingCardComponent extends Component {
               )}
             </div>
           ) : null} */}
-          <div className={css.favSec}>
-            {isFavourite.length > 0 ? (
-              <Button onClick={() => this.removeFromFav(id)} className={css.favBtn}>
-                <FontAwesomeIcon icon={solidHeart} />
-              </Button>
-            ) : (
-              <Button onClick={() => this.addToFav(id)} className={css.favBtn}>
-                <FontAwesomeIcon icon={faHeart} />{' '}
-              </Button>
-            )}
-          </div>
+          {!isMentor && (
+            <div className={css.favSec}>
+              {isFavourite.length > 0 ? (
+                <Button onClick={() => this.removeFromFav(id)} className={css.favBtn}>
+                  <FontAwesomeIcon icon={solidHeart} />
+                </Button>
+              ) : (
+                <Button onClick={() => this.addToFav(id)} className={css.favBtn}>
+                  <FontAwesomeIcon icon={faHeart} />{' '}
+                </Button>
+              )}
+            </div>
+          )}
           <ExternalLink href={linkedinLink} className={css.socialLink}>
             {/* <a href={linkedinLink} className={css.socialLink}> */}
             {/* Linked-in Link */}

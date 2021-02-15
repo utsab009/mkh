@@ -269,11 +269,23 @@ export class ListingPageComponent extends Component {
   addToFav = id => {
     let { history } = this.props;
     let { pathname, search } = history.location;
-    console.log('101', pathname, search);
+    const listingId = new UUID(this.props.params.id);
+    const listing = this.props.getListing(listingId);
+    const panelMediumWidth = 50;
+    const panelLargeWidth = 62.5;
+    const cardRenderSizes = [
+      '(max-width: 767px) 100vw',
+      `(max-width: 1023px) ${panelMediumWidth}vw`,
+      `(max-width: 1920px) ${panelLargeWidth / 2}vw`,
+      `${panelLargeWidth / 3}vw`,
+    ].join(', ');
+    console.log('474 listing', listing);
+    console.log('474 cardRenderSizes', cardRenderSizes);
+    // console.log('101', pathname, search, listing);
     if (search) {
       pathname = pathname + search;
     }
-    console.log('101', pathname, search);
+    // console.log('101', pathname, search);
     if (!this.props.currentUser) {
       history.push('/login', { from: pathname });
       return;
@@ -285,11 +297,15 @@ export class ListingPageComponent extends Component {
       Array.isArray(JSON.parse(profile.protectedData.favourites))
         ? JSON.parse(profile.protectedData.favourites)
         : [];
+
+    console.log('474 newFavourites', newFavourites);
+    // console.log('474 newFavourites parsed', JSON.parse(profile.protectedData.favourites));
     newFavourites.push({
       id: id,
-      listing: this.props.listing,
-      renderSizes: this.props.renderSizes,
+      listing: listing,
+      renderSizes: cardRenderSizes,
     });
+    console.log('474 newFavourites push', newFavourites);
     // profile.protectedData = {favourites : JSON.stringify(favourites)};
     profile.protectedData.favourites = JSON.stringify(newFavourites);
     const profileToSaved = {
@@ -298,6 +314,7 @@ export class ListingPageComponent extends Component {
       bio: profile.bio,
       protectedData: profile.protectedData,
     };
+    console.log({ profileToSaved });
     this.props.onupdateProfile(profileToSaved);
   };
 
@@ -742,15 +759,17 @@ export class ListingPageComponent extends Component {
                       </div>
                       <div className={css.fevVidContainer}>
                         <div className={css.favSec}>
-                          {isFavourite.length > 0 ? (
-                            <Button onClick={() => this.removeFromFav(id)} className={css.favBtn}>
-                              <FontAwesomeIcon icon={solidHeart} />
-                            </Button>
-                          ) : (
-                            <Button onClick={() => this.addToFav(id)} className={css.favBtn}>
-                              <FontAwesomeIcon icon={faHeart} />{' '}
-                            </Button>
-                          )}
+                          {!isMentor ? (
+                            isFavourite.length > 0 ? (
+                              <Button onClick={() => this.removeFromFav(id)} className={css.favBtn}>
+                                <FontAwesomeIcon icon={solidHeart} />
+                              </Button>
+                            ) : (
+                              <Button onClick={() => this.addToFav(id)} className={css.favBtn}>
+                                <FontAwesomeIcon icon={faHeart} />{' '}
+                              </Button>
+                            )
+                          ) : null}
                         </div>
                         {/* {currentUser !== null ? (
                           <div className={css.favSec}>

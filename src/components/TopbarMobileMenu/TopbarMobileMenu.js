@@ -355,14 +355,14 @@ class TopbarMobileMenu extends Component {
           listingFetched={currentUserListingFetched}
           className={css.navigationLink}
         />*/}
-          {
+          {!isMentor && (
             <NamedLink
               className={classNames(css.navigationLink, currentPageClass('FavouritesPage'))}
               name="FavouritesPage"
             >
               <FormattedMessage id="TopbarMobileMenu.favourites" />
             </NamedLink>
-          }
+          )}
           <NamedLink
             className={classNames(css.navigationLink, currentPageClass('ProfileSettingsPage'))}
             name="ProfileSettingsPage"
