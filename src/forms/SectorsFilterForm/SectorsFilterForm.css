@@ -117,11 +117,15 @@
 }
 
 .customLable {
-  font-size: 12px;
+  font-size: 10px;
   margin-bottom: 0px;
   /* text-align: -webkit-center; */
   line-height: 1.6;
-  word-spacing: 10px;
+  word-spacing: 2px;
   color: #1a237e;
   margin-top: 50px;
+  font-weight: 600;
+}
+.customLable span {
+  text-decoration: underline;
 }

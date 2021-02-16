@@ -202,7 +202,7 @@ const EditListingIntroductionPanel = props => {
         picking your time zone and then click the days and then times within those days that you
         will set aside to potentially Mentor. When a Mentee goes through the booking process and
         attempts to book you, a booking request is created and sent to you. So, if they pick a time
-        that you designated for Mentoring but you are now not free, you can decline the request and
+        that you designated for Mentoring, but you are now not free, you can decline the request and
         ask them to book a time you know you are available. You can also add exceptions to this
         schedule. Times, that you are not available. For example, you place in your schedule that
         you will Mentor on Tuesdays from 6pm to 8pm. This year an important holiday occurs on a
@@ -216,7 +216,7 @@ const EditListingIntroductionPanel = props => {
         So, how much will you charge per hour in Euros? Place a figure between €1 and €1000 euro.
       </p>
       <p className={css.textContent}>
-        How much should you charge? Well we would advise you to examine what other Mentors are
+        How much should you charge? Well, we would advise you to examine what other Mentors are
         charging, who are offering Mentoring for the Role or similar Roles and consider the
         Seniority Level. The higher the level, the higher the charge.
       </p>
@@ -226,7 +226,7 @@ const EditListingIntroductionPanel = props => {
         selected by Mentees. By pressing the Publish button you are transported to Stripe. Stripe is
         an independent financial management system (you can learn more about them through the
         following{' '}
-        <a href="" className={css.link}>
+        <a href="https://stripe.com/en-in" target="_blank" className={css.link}>
           link
         </a>
         ). They will collect your banking information so that payments can be made to you and are

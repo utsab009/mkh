@@ -424,8 +424,9 @@ export class SectorsFilterFormComponent extends Component {
                 MENTORING, PLEASE PLACE “GENERALIST (PUBLIC SECTOR)” ABOVE
               </span> */}
               <p className={css.customLable}>
-                PICK A JOB ROLE E.G., ACCOUNTANT, LAWYER, HR MANAGER, OR AGOVERNMENT POSITION
-                CLASSIFICATION OR SIMILAR E.G., POLICE OFFICER,STAFF NURSE, PRINCIPAL OFFICER ETC
+                PICK A JOB ROLE E.G., ACCOUNTANT, LAWYER, HR MANAGER, <span>OR</span> A GOVERNMENT
+                POSITION CLASSIFICATION OR SIMILAR E.G., POLICE OFFICER, STAFF NURSE, PRINCIPAL
+                OFFICER ETC.
               </p>
               {/* <p className={css.customLable}>
                 Pick a Job Role e.g. Accountant, Lawyer, HR Manager etc. or Government Position
