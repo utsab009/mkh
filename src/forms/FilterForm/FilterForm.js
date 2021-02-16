@@ -69,7 +69,14 @@ const FilterFormComponent = props => {
             <div className={classNames(paddingClasses || css.contentWrapper)}>{children}</div>
 
             {liveEdit ? (
-              <FormSpy onChange={handleChange} subscription={{ values: true, dirty: true }} />
+              <FormSpy
+                onChange={data => {
+                  console.log('155 formspy', data);
+                  handleChange(data);
+                  // handleSubmit();
+                }}
+                subscription={{ values: true, dirty: true }}
+              />
             ) : (
               <div className={css.buttonsWrapper}>
                 <button className={css.clearButton} type="button" onClick={onClear}>

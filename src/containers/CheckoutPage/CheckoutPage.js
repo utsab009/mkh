@@ -38,11 +38,12 @@ import {
   NamedLink,
   NamedRedirect,
   Page,
+  Portal,
   ResponsiveImage,
 } from '../../components';
 import SectionAvatar from '../../containers/ListingPage/SectionAvatar';
 import { StripePaymentForm } from '../../forms';
-import { isScrollingDisabled } from '../../ducks/UI.duck';
+import { isScrollingDisabled, manageDisableScrolling } from '../../ducks/UI.duck';
 import { handleCardPayment, retrievePaymentIntent } from '../../ducks/stripe.duck';
 import { savePaymentMethod } from '../../ducks/paymentMethods.duck';
 
@@ -56,6 +57,7 @@ import {
 } from './CheckoutPage.duck';
 import { storeData, storedData, clearData } from './CheckoutPageSessionHelpers';
 import css from './CheckoutPage.css';
+import { sendVerificationEmail } from '../../ducks/user.duck';
 
 const STORAGE_KEY = 'CheckoutPage';
 
@@ -102,6 +104,7 @@ export class CheckoutPageComponent extends Component {
       pageData: {},
       dataLoaded: false,
       submitting: false,
+      portalShow: false,
     };
     this.stripe = null;
 
@@ -114,6 +117,29 @@ export class CheckoutPageComponent extends Component {
   componentDidMount() {
     if (window) {
       this.loadInitialData();
+    }
+    let { emailVerified, email } =
+      (this.props.currentUser && this.props.currentUser.attributes) || {};
+    console.log('4445 componentDidMount', this.props.currentUser);
+    if (emailVerified !== undefined && !emailVerified) {
+      this.setState({
+        portalShow: true,
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log('4445 componentDidUpdate', { prevProps });
+    console.log('4445 componentDidUpdate 2', prevProps.currentUser, this.props.currentUser);
+    let { currentUser: currentUserOld } = prevProps;
+    let { currentUser } = this.props;
+
+    if (!currentUserOld && currentUser) {
+      if (!currentUser.attributes.emailVerified) {
+        this.setState({
+          portalShow: true,
+        });
+      }
     }
   }
 
@@ -456,8 +482,8 @@ export class CheckoutPageComponent extends Component {
       stripe: this.stripe,
       card,
       billingDetails,
-      message,
-      linkedInId,
+      // message,
+      // linkedInId,
       paymentIntent,
       selectedPaymentMethod: paymentMethod,
       saveAfterOnetimePayment: !!saveAfterOnetimePayment,
@@ -469,7 +495,13 @@ export class CheckoutPageComponent extends Component {
     console.log('storeTx in submit', storedTx);
     console.log({ requestPaymentParams });
     for (let i = 0; i < tx.length; i++) {
-      submitVal.push(await this.handlePaymentIntent(requestPaymentParams, i));
+      if (i < 1) {
+        submitVal.push(
+          await this.handlePaymentIntent({ ...requestPaymentParams, message, linkedInId }, i)
+        );
+      } else {
+        submitVal.push(await this.handlePaymentIntent(requestPaymentParams, i));
+      }
     }
 
     console.log({ submitVal });
@@ -542,6 +574,10 @@ export class CheckoutPageComponent extends Component {
       paymentIntent,
       retrievePaymentIntentError,
       stripeCustomerFetched,
+      sendVerificationEmailInProgress,
+      sendVerificationEmailError,
+      onResendVerificationEmail,
+      onManageDisableScrolling,
     } = this.props;
 
     // Since the listing data is already given from the ListingPage
@@ -804,7 +840,12 @@ export class CheckoutPageComponent extends Component {
     // If your marketplace works mostly in one country you can use initial values to select country automatically
     // e.g. {country: 'FI'}
 
-    const initalValuesForStripePayment = { name: userName };
+    const linkedInID =
+      currentUser && currentUser.attributes.profile.publicData
+        ? currentUser.attributes.profile.publicData.linkedInID
+        : null;
+    console.log('145 linkedInID', linkedInID);
+    const initalValuesForStripePayment = { name: userName, linkedInId: linkedInID };
 
     return (
       <Page {...pageProps}>
@@ -818,6 +859,17 @@ export class CheckoutPageComponent extends Component {
               variants={['landscape-crop', 'landscape-crop2x']}
             />*/}
           </div>
+          {currentUser && (
+            <Portal
+              isOpen={this.state.portalShow}
+              onClose={() => this.setState({ portalShow: false })}
+              onManageDisableScrolling={onManageDisableScrolling}
+              user={currentUser}
+              sendVerificationEmailInProgress={sendVerificationEmailInProgress}
+              sendVerificationEmailError={sendVerificationEmailError}
+              onResendVerificationEmail={onResendVerificationEmail}
+            />
+          )}
           <div className={classNames(css.avatarWrapper, css.avatarMobile)}>
             <AvatarMedium user={currentAuthor} disableProfileLink />
           </div>
@@ -980,11 +1032,13 @@ const mapStateToProps = state => {
     initiateOrderError,
     confirmPaymentError,
   } = state.CheckoutPage;
-  const { currentUser } = state.user;
+  const { currentUser, sendVerificationEmailInProgress, sendVerificationEmailError } = state.user;
   const { handleCardPaymentError, paymentIntent, retrievePaymentIntentError } = state.stripe;
   return {
     scrollingDisabled: isScrollingDisabled(state),
     currentUser,
+    sendVerificationEmailInProgress,
+    sendVerificationEmailError,
     stripeCustomerFetched,
     bookingData,
     bookingDates,
@@ -1012,6 +1066,9 @@ const mapDispatchToProps = dispatch => ({
   onSendMessage: params => dispatch(sendMessage(params)),
   onSavePaymentMethod: (stripeCustomer, stripePaymentMethodId) =>
     dispatch(savePaymentMethod(stripeCustomer, stripePaymentMethodId)),
+  onResendVerificationEmail: () => dispatch(sendVerificationEmail()),
+  onManageDisableScrolling: (componentId, disableScrolling) =>
+    dispatch(manageDisableScrolling(componentId, disableScrolling)),
 });
 
 const CheckoutPage = compose(

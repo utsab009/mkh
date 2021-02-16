@@ -156,40 +156,48 @@ export class FavouritesPageComponent extends Component {
             {queryInProgress ? loadingResults : null}
             {queryListingsError ? queryError : null}
             <div className={css.listingPanel}>
-              {heading}
+              {/* {heading} */}
+              <h1 style={{ textAlign: 'center', marginBottom: 25 }}>Favourites</h1>
               <div className={css.listingCards}>
-                {// pageListings.map(l => {
-                favouritesArr.map(l => {
-                  console.log('121 l', l);
-                  //   <ManageListingCard
-                  //     className={css.listingCard}
-                  //     key={l.id}
-                  //     listing={l.listing}
-                  //     isMenuOpen={!!listingMenuOpen && listingMenuOpen.id.uuid === l.id.uuid}
-                  //     actionsInProgressListingId={openingListing || closingListing}
-                  //     onToggleMenu={this.onToggleMenu}
-                  //     onCloseListing={onCloseListing}
-                  //     onOpenListing={onOpenListing}
-                  //     hasOpeningError={openingErrorListingId.uuid === l.id.uuid}
-                  //     hasClosingError={closingErrorListingId.uuid === l.id.uuid}
-                  //     renderSizes={renderSizes}
-                  //   />
-                  l.listing.attributes.price = new Money(
-                    l.listing.attributes.price.amount,
-                    l.listing.attributes.price.currency
-                  );
-                  l.listing.author.id = new UUID(l.listing.author.id.uuid);
-                  console.log('121 next', l);
-                  return (
-                    <ListingCard
-                      className={css.listingCard}
-                      key={l.id}
-                      listing={l.listing}
-                      renderSizes={l.renderSizes}
-                      // setActiveListing={setActiveListing}
-                    />
-                  );
-                })}
+                {Array.isArray(favouritesArr) && favouritesArr.length ? (
+                  favouritesArr.map(l => {
+                    console.log('121 l', l);
+                    //   <ManageListingCard
+                    //     className={css.listingCard}
+                    //     key={l.id}
+                    //     listing={l.listing}
+                    //     isMenuOpen={!!listingMenuOpen && listingMenuOpen.id.uuid === l.id.uuid}
+                    //     actionsInProgressListingId={openingListing || closingListing}
+                    //     onToggleMenu={this.onToggleMenu}
+                    //     onCloseListing={onCloseListing}
+                    //     onOpenListing={onOpenListing}
+                    //     hasOpeningError={openingErrorListingId.uuid === l.id.uuid}
+                    //     hasClosingError={closingErrorListingId.uuid === l.id.uuid}
+                    //     renderSizes={renderSizes}
+                    //   />
+                    console.log('121 next', l);
+                    if (l.listing) {
+                      l.listing.attributes.price = new Money(
+                        l.listing.attributes.price.amount,
+                        l.listing.attributes.price.currency
+                      );
+                      l.listing.author.id = new UUID(l.listing.author.id.uuid);
+                      return (
+                        <ListingCard
+                          className={css.listingCard}
+                          key={l.id}
+                          listing={l.listing}
+                          renderSizes={l.renderSizes}
+                          // setActiveListing={setActiveListing}
+                        />
+                      );
+                    }
+                  })
+                ) : (
+                  <p style={{ textAlign: 'center', marginBottom: 25, width: '100%' }}>
+                    You have not added any listing to your favourites
+                  </p>
+                )}
               </div>
               {paginationLinks}
             </div>

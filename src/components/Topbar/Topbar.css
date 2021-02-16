@@ -349,3 +349,13 @@
     font-size: 12px;
   }
 }
+
+.searchMenu .signupLink {
+  color: #2a364c !important;
+}
+
+.searchMenuHomePage {
+  @media (max-width: 767px) {
+    padding: 0 5px 0 0;
+  }
+}

@@ -7,6 +7,7 @@ import {
   LISTING_PAGE_PARAM_TYPE_DRAFT,
   LISTING_PAGE_PARAM_TYPE_NEW,
   LISTING_PAGE_PARAM_TYPES,
+  LISTING_PAGE_PARAM_TYPE_EDIT,
 } from '../../util/urlHelpers';
 import { ensureListing } from '../../util/data';
 import { createResourceLocatorString } from '../../util/routes';
@@ -72,6 +73,7 @@ const redirectAfterDraftUpdate = (listingId, params, tab, marketplaceTabs, histo
   // Browser's back button should lead to editing current draft instead of creating a new one.
   if (params.type === LISTING_PAGE_PARAM_TYPE_NEW) {
     const draftURI = createResourceLocatorString('EditListingPage', routes, currentPathParams, {});
+    console.log('165 draftURI', draftURI);
     history.replace(draftURI);
   }
 
@@ -114,6 +116,7 @@ const EditListingWizardTab = props => {
   const { type } = params;
   const isNewURI = type === LISTING_PAGE_PARAM_TYPE_NEW;
   const isDraftURI = type === LISTING_PAGE_PARAM_TYPE_DRAFT;
+  const isEditPublished = type === LISTING_PAGE_PARAM_TYPE_EDIT;
   const isNewListingFlow = isNewURI || isDraftURI;
 
   const currentListing = ensureListing(listing);
@@ -190,6 +193,9 @@ const EditListingWizardTab = props => {
           onSubmit={values => {
             onCompleteEditListingWizardTab(tab, values);
           }}
+          history={history}
+          isNewListingFlow={isEditPublished || isDraftURI ? false : true}
+          isEditPublished={isEditPublished}
         />
       );
     }

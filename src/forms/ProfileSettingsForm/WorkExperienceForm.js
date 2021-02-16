@@ -21,11 +21,11 @@ import {
   IconClose,
   InlineTextButton,
 } from '../../components';
-
+import moment from 'moment';
 import css from './ProfileSettingsForm.css';
 
-const WorkExperienceFormComponent = props => {
-  const { workExp } = props;
+const WorkExperienceFormComponent = ({ form, values }) => {
+  // const { workExp } = props;
 
   return (
     <div className={classNames(css.weekDay, null)}>
@@ -34,7 +34,7 @@ const WorkExperienceFormComponent = props => {
         Work Experience
       </div>*/}
 
-      <FieldArray name={workExp}>
+      <FieldArray id={'workExp'} name={'workExp'}>
         {({ fields }) => {
           // console.log("fields in fieldarray",values);
           console.log('fields in fieldarray', fields);
@@ -43,6 +43,7 @@ const WorkExperienceFormComponent = props => {
             fields.push({ company: null, position: null, duration: null, dates: null });
             //   fields.remove(1);
           }
+          const { workExp } = values;
 
           return (
             <div className={css.timePicker}>
@@ -68,7 +69,7 @@ const WorkExperienceFormComponent = props => {
                           />
                         </div>
                       </div>
-                      <div className={css.nameContainer}>
+                      {/* <div className={css.nameContainer}>
                         <div className={css.field}>
                           <FieldTextInput
                             type="text"
@@ -83,6 +84,69 @@ const WorkExperienceFormComponent = props => {
                             id={`${name}.startEndDate`}
                             name={`${name}.startEndDate`}
                             label={'From / to'}
+                          />
+                        </div>
+                      </div> */}
+                      <div className={css.nameContainer}>
+                        <div className={css.field}>
+                          <FieldTextInput
+                            type="month"
+                            id={`${name}.startDate`}
+                            name={`${name}.startDate`}
+                            label={'From'}
+                            // placeholder="YYYY-MM"
+                            className={css.spaceMargin}
+                            onChange={val => {
+                              // console.log('555', val.target.value);
+                              form.change(`${name}.startDate`, val.target.value);
+                              form.change(`${name}.endDate`, undefined);
+                              form.change(`${name}.duration`, undefined);
+                            }}
+                            // validate={val => {
+                            //   console.log('512 start val', val);
+                            //   let endDate = workExp[index].endDate;
+                            //   if (!endDate) return undefined;
+                            //   console.log('512 start', { val, endDate });
+                            //   if (val > endDate)
+                            //     return 'Start date can not be greater than end date';
+                            // }}
+                          />
+                        </div>
+                        <div className={css.field}>
+                          <FieldTextInput
+                            type="month"
+                            id={`${name}.endDate`}
+                            name={`${name}.endDate`}
+                            label={'To'}
+                            minDate={new Date()}
+                            onChange={val => {
+                              // console.log('555', val.target.value);
+                              let end = val.target.value;
+                              let start = workExp[index].startDate;
+                              form.change(`${name}.endDate`, end);
+                              let diff = moment(end).diff(start, 'months');
+                              console.log({ diff });
+                              if (start && end) form.change(`${name}.duration`, `${diff} months`);
+                            }}
+                            validate={val => {
+                              console.log('512 end val', val);
+                              let start = workExp[index].startDate;
+                              if (!start) return undefined;
+                              console.log('512 end', { val, start });
+                              if (start >= val) return 'Minimum duration should be 1 month';
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div className={css.nameContainer}>
+                        <div className={css.field}>
+                          <FieldTextInput
+                            type="text"
+                            id={`${name}.duration`}
+                            name={`${name}.duration`}
+                            label={'Length of Time'}
+                            className={css.spaceMargin}
+                            readOnly
                           />
                         </div>
                       </div>

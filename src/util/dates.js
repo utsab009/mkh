@@ -227,6 +227,14 @@ export const findNextBoundary = (timeZone, currentMomentOrDate) =>
     .startOf('hour')
     .toDate();
 
+export const findNextBoundaryForShortMeeting = (timeZone, currentMomentOrDate) =>
+  moment(currentMomentOrDate)
+    .clone()
+    .tz(timeZone)
+    .add(20, 'minute')
+    .startOf('minute')
+    .toDate();
+
 /**
  * Find sharp hours inside given time window. Returned strings are localized to given time zone.
  *
@@ -257,26 +265,62 @@ export const findNextBoundary = (timeZone, currentMomentOrDate) =>
  *
  * @returns {Array} an array of objects with keys timestamp and timeOfDay.
  */
-export const getSharpHours = (intl, timeZone, startTime, endTime) => {
+export const getSharpHours = (
+  intl,
+  timeZone,
+  startTime,
+  endTime,
+  duration,
+  shortMeeting = false
+) => {
   if (!moment.tz.zone(timeZone)) {
     throw new Error(
       'Time zones are not loaded into moment-timezone. "getSharpHours" function uses time zones.'
     );
   }
-
   // Select a moment before startTime to find next possible sharp hour.
   // I.e. startTime might be a sharp hour.
+  const millisecondRounded = new Date(startTime);
+  const millisecondBeforeStartTimeShortTime = new Date(
+    millisecondRounded.getTime() - duration * 60 * 1000
+  );
   const millisecondBeforeStartTime = new Date(startTime.getTime() - 1);
+
+  console.log('book 123 getSharpHours', {
+    startTime,
+    endTime,
+    millisecondRounded,
+    millisecondBeforeStartTimeShortTime,
+    millisecondBeforeStartTime,
+    short: findNextBoundaryForShortMeeting(timeZone, millisecondBeforeStartTimeShortTime),
+    long: findNextBoundary(timeZone, millisecondBeforeStartTime),
+  });
+
   return findBookingUnitBoundaries({
-    currentBoundary: findNextBoundary(timeZone, millisecondBeforeStartTime),
+    currentBoundary: shortMeeting
+      ? findNextBoundaryForShortMeeting(timeZone, millisecondBeforeStartTimeShortTime)
+      : findNextBoundary(timeZone, millisecondBeforeStartTime),
     startMoment: moment(startTime),
     endMoment: moment(endTime),
-    nextBoundaryFn: findNextBoundary,
+    nextBoundaryFn: shortMeeting ? findNextBoundaryForShortMeeting : findNextBoundary,
     cumulatedResults: [],
     intl,
     timeZone,
   });
 };
+
+// Extra creted function :-
+// export const roundDateTime = date => {
+//   const start = moment(date);
+//   const remainder = 20 - (start.minute() % 20);
+
+//   const dateTime = moment(start)
+//     .add(remainder, 'minutes')
+//     .toDate();
+
+//   // console.log(dateTime);
+//   return dateTime;
+// };
 
 /**
  * Find sharp start hours for bookable time units (hour) inside given time window.
@@ -305,9 +349,16 @@ export const getSharpHours = (intl, timeZone, startTime, endTime) => {
  *
  * @returns {Array} an array of objects with keys timestamp and timeOfDay.
  */
-export const getStartHours = (intl, timeZone, startTime, endTime) => {
-  const hours = getSharpHours(intl, timeZone, startTime, endTime);
-  return hours.length < 2 ? hours : hours.slice(0, -1);
+export const getStartHours = (
+  intl,
+  timeZone,
+  startTime,
+  endTime,
+  duration = 0,
+  shortMeeting = false
+) => {
+  const hours = getSharpHours(intl, timeZone, startTime, endTime, duration, shortMeeting);
+  return shortMeeting && duration !== 0 ? hours : hours.length < 2 ? hours : hours.slice(0, -1);
 };
 
 /**
@@ -337,8 +388,15 @@ export const getStartHours = (intl, timeZone, startTime, endTime) => {
  *
  * @returns {Array} an array of objects with keys timestamp and timeOfDay.
  */
-export const getEndHours = (intl, timeZone, startTime, endTime) => {
-  const hours = getSharpHours(intl, timeZone, startTime, endTime);
+export const getEndHours = (
+  intl,
+  timeZone,
+  startTime,
+  endTime,
+  duration = 0,
+  shortMeeting = false
+) => {
+  const hours = getSharpHours(intl, timeZone, startTime, endTime, duration, shortMeeting);
   return hours.length < 2 ? [] : hours.slice(1);
 };
 
@@ -472,11 +530,21 @@ export const dateIsAfter = (date, compareToDate) => {
  * @returns {boolean} is date in range
  */
 
-export const isInRange = (date, start, end, scope, timeZone) => {
+export const isInRange = (
+  date,
+  start,
+  end,
+  scope,
+  timeZone,
+  duration = 0,
+  shortMeeting = false
+) => {
   // Range usually ends with 00:00, and with day scope,
   // this means that exclusive end is wrongly taken into range.
+  let totalMinutesAvailabe =
+    duration != 0 && shortMeeting ? minutesBetween(start, end) >= duration : true;
   const millisecondBeforeEndTime = new Date(end.getTime() - 1);
-  return timeZone
+  return timeZone && totalMinutesAvailabe
     ? moment(date)
         .tz(timeZone)
         .isBetween(start, millisecondBeforeEndTime, scope, '[]')

@@ -123,6 +123,34 @@ export const sectors = [
     key: 'Trades and Services',
     label: 'Trades and Services',
   },
+  {
+    key: 'Policing',
+    label: 'Policing',
+  },
+  {
+    key: 'Military',
+    label: 'Military',
+  },
+  {
+    key: 'Firefighting',
+    label: 'Firefighting',
+  },
+  {
+    key: 'Civil Service or Federal Civil Service',
+    label: 'Civil Service or Federal Civil Service',
+  },
+  {
+    key: 'Public Service or State Government',
+    label: 'Public Service or State Government',
+  },
+  {
+    key: 'Local Government or Council Sector',
+    label: 'Local Government or Council Sector',
+  },
+  {
+    key: 'Education',
+    label: 'Education',
+  },
   // { key: 'Construction and building services', label: 'Construction and building services' },
   // { key: 'Consumer goods and FMCG', label: 'Consumer goods and FMCG' },
   // { key: 'Engineering', label: 'Engineering' },
@@ -510,6 +538,7 @@ export const mentorLanguages = [
   { key: 'bengali', label: 'Bengali' },
   { key: 'french', label: 'French' },
   { key: 'German', label: 'German' },
+  { key: 'Other', label: 'Other' },
 ];
 
 export const profileTypes = [

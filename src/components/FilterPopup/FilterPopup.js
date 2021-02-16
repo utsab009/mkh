@@ -155,6 +155,8 @@ class FilterPopup extends Component {
                 onSubmit={this.handleSubmit}
                 onCancel={this.handleCancel}
                 onClear={this.handleClear}
+                liveEdit
+                onChange={this.props.onChange}
               >
                 {children}
               </FilterForm>

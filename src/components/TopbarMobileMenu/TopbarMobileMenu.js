@@ -344,7 +344,8 @@ class TopbarMobileMenu extends Component {
           <NamedLink
             className={classNames(css.inbox, currentPageClass('InboxPage'))}
             name="InboxPage"
-            params={{ tab: currentUserHasListings ? 'sales' : 'orders' }}
+            params={{ tab: isMentor ? 'sales' : 'orders' }}
+            // params={{ tab: currentUserHasListings ? 'sales' : 'orders' }}
           >
             <FormattedMessage id="TopbarMobileMenu.inboxLink" />
             {notificationCountBadge}
@@ -354,14 +355,14 @@ class TopbarMobileMenu extends Component {
           listingFetched={currentUserListingFetched}
           className={css.navigationLink}
         />*/}
-          {
+          {!isMentor && (
             <NamedLink
               className={classNames(css.navigationLink, currentPageClass('FavouritesPage'))}
               name="FavouritesPage"
             >
               <FormattedMessage id="TopbarMobileMenu.favourites" />
             </NamedLink>
-          }
+          )}
           <NamedLink
             className={classNames(css.navigationLink, currentPageClass('ProfileSettingsPage'))}
             name="ProfileSettingsPage"

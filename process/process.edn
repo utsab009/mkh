@@ -45,10 +45,14 @@
   {:name :transition/accept
    :actor :actor.role/provider
    :actions
-   [{:name :action/accept-booking}
-    {:name :action/stripe-capture-payment-intent}]
+   [{:name :action/accept-booking}]
    :from :state/preauthorized
    :to :state/accepted}
+  ;  [
+  ;    {:name :action/accept-booking}
+  ;   {:name :action/stripe-capture-payment-intent}]
+  ;  :from :state/preauthorized
+  ;  :to :state/accepted}
 
   {:name :transition/decline
    :actor :actor.role/provider
@@ -79,9 +83,15 @@
 
   {:name :transition/booking-period-end
    :at {:fn/timepoint [:time/booking-end]}
-   :actions []
+   :actions [{:name :action/stripe-capture-payment-intent}]
    :from :state/accepted
    :to :state/booking-ended}
+
+  ; {:name :transition/booking-period-end
+  ;  :at {:fn/timepoint [:time/booking-end]}
+  ;  :actions []
+  ;  :from :state/accepted
+  ;  :to :state/booking-ended}
 
   {:name :transition/cancel-refund-by-customer
    :actor :actor.role/customer
@@ -114,7 +124,7 @@
   ;;  :to :state/hold-payment-request}
 
   {:name :transition/complete
-   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["P14D"]}]}
+   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["PT10M"]}]}
    :actions [{:name :action/stripe-create-payout}]
    :from :state/booking-ended
    :to :state/delivered}
@@ -142,7 +152,7 @@
    :to :state/payout-waiting}
 
   {:name :transition/payout-waiting-time
-   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["P14D"]}]}
+   :at {:fn/plus [{:fn/timepoint [:time/booking-end]} {:fn/period ["PT10M"]}]}
    :actions [{:name :action/stripe-create-payout}]
    :from :state/payout-waiting
    :to :state/delivered}

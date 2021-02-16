@@ -11,6 +11,7 @@ import { formatMoney } from '../../util/currency';
 import { types as sdkTypes } from '../../util/sdkLoader';
 import { Button, Form, FieldCurrencyInput } from '../../components';
 import css from './EditListingPricingForm.css';
+import ReactTooltip from 'react-tooltip';
 
 const { Money } = sdkTypes;
 
@@ -56,6 +57,7 @@ export const EditListingPricingFormComponent = props => (
         })
       );
       const minPrice = new Money(config.listingMinimumPriceSubUnits, config.currency);
+      const maxPrice = new Money(config.listingMaximumPriceSubUnits, config.currency);
       const minPriceRequired = validators.moneySubUnitAmountAtLeast(
         intl.formatMessage(
           {
@@ -67,8 +69,19 @@ export const EditListingPricingFormComponent = props => (
         ),
         config.listingMinimumPriceSubUnits
       );
+      const maxPriceRequired = validators.moneySubUnitAmountAtMax(
+        intl.formatMessage(
+          {
+            id: 'EditListingPricingForm.priceTooHigh',
+          },
+          {
+            maxPrice: formatMoney(intl, maxPrice),
+          }
+        ),
+        config.listingMaximumPriceSubUnits
+      );
       const priceValidators = config.listingMinimumPriceSubUnits
-        ? validators.composeValidators(priceRequired, minPriceRequired)
+        ? validators.composeValidators(priceRequired, minPriceRequired, maxPriceRequired)
         : priceRequired;
 
       const classes = classNames(css.root, className);
@@ -76,7 +89,7 @@ export const EditListingPricingFormComponent = props => (
       const submitInProgress = updateInProgress;
       const submitDisabled = invalid || disabled || submitInProgress;
       const { updateListingError, showListingsError } = fetchErrors || {};
-
+      const ex = '?';
       return (
         <Form onSubmit={handleSubmit} className={classes}>
           {updateListingError ? (
@@ -89,18 +102,31 @@ export const EditListingPricingFormComponent = props => (
               <FormattedMessage id="EditListingPricingForm.showListingFailed" />
             </p>
           ) : null}
+          <ReactTooltip place="bottom" type="info" effect="solid" />
+          <div>
+            {pricePerUnitMessage}{' '}
+            <span
+              className={css.tooltipIcon}
+              data-multiline={true}
+              clickable={true}
+              data-class={css.tooltipIcon}
+              data-tip="What price should I charge? <br /> Our best advice is to pick a figure that you feel is fair and enter it. Then look at the price set by <br />other Mentors for this Position or similar ones.  Compare the experience of these Mentors<br /> to yours and the price they are charging.  Set a new price based on this and return to this page through the <br />Mentor Listings section (click on the circle found in the top right corner of each page of Try A Mentor)."
+            >
+              ?
+            </span>
+          </div>
           <FieldCurrencyInput
             id="price"
             name="price"
             className={css.priceInput}
             autoFocus
-            label={pricePerUnitMessage}
+            // label={pricePerUnitMessage}
             placeholder={pricePlaceholderMessage}
             currencyConfig={config.currencyConfig}
             validate={priceValidators}
           />
           <div>
-            <h5>Pick a price from 1€ to any value</h5>
+            <h5>Pick a price from €1 to €1000.</h5>
           </div>
 
           <div className={css.customLable}>

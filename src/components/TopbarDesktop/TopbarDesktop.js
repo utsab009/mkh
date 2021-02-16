@@ -19,6 +19,7 @@ import {
 import { TopbarSearchForm } from '../../forms';
 
 import css from './TopbarDesktop.css';
+import { useHistory } from 'react-router-dom';
 // import { is } from 'date-fns/locale';
 
 const TopbarDesktop = props => {
@@ -46,6 +47,8 @@ const TopbarDesktop = props => {
       ? currentUser.attributes.profile.protectedData.userType
       : null;
   const userTypeText = userType !== null && userType === 'mentor' ? 'Mentor' : 'Mentee';
+  const history = useHistory();
+  console.log('history 123', history);
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -77,7 +80,8 @@ const TopbarDesktop = props => {
     <NamedLink
       className={inboxLinkVariable}
       name="InboxPage"
-      params={{ tab: currentUserHasListings ? 'sales' : 'orders' }}
+      params={{ tab: isMentor ? 'sales' : 'orders' }}
+      // params={{ tab: currentUserHasListings ? 'sales' : 'orders' }}
     >
       <span className={css.inbox}>
         <FormattedMessage id="TopbarDesktop.inbox" />
@@ -133,7 +137,7 @@ const TopbarDesktop = props => {
               <FormattedMessage id="TopbarDesktop.plannerLink" />
             </NamedLink>
           </MenuItem>
-          <MenuItem key="FavouritesPage">
+          {/* <MenuItem key="FavouritesPage">
             <NamedLink
               className={classNames(css.yourListingsLink, currentPageClass('FavouritesPage'))}
               name="FavouritesPage"
@@ -141,7 +145,7 @@ const TopbarDesktop = props => {
               <span className={css.menuItemBorder} />
               <FormattedMessage id="TopbarDesktop.favourites" />
             </NamedLink>
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem key="ProfileSettingsPage">
             <NamedLink
               className={classNames(
@@ -271,7 +275,11 @@ const TopbarDesktop = props => {
   //modified by SD
   const loginLinkVariable = parentComponent === null ? css.loginLink : css.loginLinkHomePage;
   const loginLink = isAuthenticatedOrJustHydrated ? null : (
-    <NamedLink name="LoginPage" className={loginLinkVariable}>
+    <NamedLink
+      name="LoginPage"
+      className={loginLinkVariable}
+      params={{ ...history.location.state }}
+    >
       <span className={css.login}>
         <FormattedMessage id="TopbarDesktop.login" />
       </span>

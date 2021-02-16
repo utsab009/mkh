@@ -292,6 +292,8 @@ const EditListingAvailabilityPanel = props => {
           <h2 className={css.sectionTitle}>
             <FormattedMessage id="EditListingAvailabilityPanel.defaultScheduleTitle" />
           </h2>
+        </header>
+        <div className={css.editPlanButtonContainer}>
           <InlineTextButton
             className={css.editPlanButton}
             onClick={() => setIsEditPlanModalOpen(true)}
@@ -299,7 +301,7 @@ const EditListingAvailabilityPanel = props => {
             <IconEdit className={css.editPlanIcon} />{' '}
             <FormattedMessage id="EditListingAvailabilityPanel.edit" />
           </InlineTextButton>
-        </header>
+        </div>
         <div className={css.week}>
           {WEEKDAYS.map(w => (
             <Weekday

@@ -123,6 +123,7 @@ export class ListingCardComponent extends Component {
       bio: profile.bio,
       protectedData: profile.protectedData,
     };
+    console.log({ profileToSaved });
     this.props.onUpdateProfile(profileToSaved);
   };
 
@@ -182,6 +183,10 @@ export class ListingCardComponent extends Component {
     const ensuredAuthor = ensureUser(currentAuthor);
     const { averageRating = 0, ratingCount = 0 } = currentListing.attributes.publicData;
     // console.log("ensuredAuthor",ensuredAuthor);
+    const isMentor =
+      currentUser &&
+      currentUser.attributes.profile.protectedData &&
+      currentUser.attributes.profile.protectedData.isMentor;
     let authorData =
       this.state.authorData !== null &&
       this.state.authorData.data &&
@@ -292,26 +297,32 @@ export class ListingCardComponent extends Component {
                   longWordMinLength: MIN_LENGTH_FOR_LONG_WORDS,
                   longWordClass: css.longWord,
                 })}
-                {workExp !== null
-                  ? workExp.map((item, index) => {
-                      if (index < 3) {
-                        return <span className={css.crr}>{item.company}</span>;
-                      }
-                    })
-                  : null}
+                <ul className={css.companyList}>
+                  {workExp !== null && workExp.length
+                    ? workExp.map((item, index) => {
+                        if (index < 3) {
+                          return item.company ? <li className={css.crr}>{item.company}</li> : null;
+                        }
+                      })
+                    : null}
+                </ul>
               </div>
             </div>
 
             <div className={css.price}>
               <div className={css.title}>
                 Sample Career Roles:
-                {workExp !== null
-                  ? workExp.map((item, index) => {
-                      if (index < 3) {
-                        return <span className={css.crr}>{item.position}</span>;
-                      }
-                    })
-                  : null}
+                <ul className={css.companyList}>
+                  {workExp !== null
+                    ? workExp.map((item, index) => {
+                        if (index < 3) {
+                          return item.position ? (
+                            <li className={css.crr}>{item.position}</li>
+                          ) : null;
+                        }
+                      })
+                    : null}
+                </ul>
               </div>
               <div className={css.priceValue} title={priceTitle}>
                 {formattedPrice}
@@ -344,17 +355,19 @@ export class ListingCardComponent extends Component {
               )}
             </div>
           ) : null} */}
-          <div className={css.favSec}>
-            {isFavourite.length > 0 ? (
-              <Button onClick={() => this.removeFromFav(id)} className={css.favBtn}>
-                <FontAwesomeIcon icon={solidHeart} />
-              </Button>
-            ) : (
-              <Button onClick={() => this.addToFav(id)} className={css.favBtn}>
-                <FontAwesomeIcon icon={faHeart} />{' '}
-              </Button>
-            )}
-          </div>
+          {!isMentor && (
+            <div className={css.favSec}>
+              {isFavourite.length > 0 ? (
+                <Button onClick={() => this.removeFromFav(id)} className={css.favBtn}>
+                  <FontAwesomeIcon icon={solidHeart} />
+                </Button>
+              ) : (
+                <Button onClick={() => this.addToFav(id)} className={css.favBtn}>
+                  <FontAwesomeIcon icon={faHeart} />{' '}
+                </Button>
+              )}
+            </div>
+          )}
           <ExternalLink href={linkedinLink} className={css.socialLink}>
             {/* <a href={linkedinLink} className={css.socialLink}> */}
             {/* Linked-in Link */}

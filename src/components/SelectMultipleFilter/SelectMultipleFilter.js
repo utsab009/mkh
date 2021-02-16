@@ -103,6 +103,7 @@ class SelectMultipleFilter extends Component {
     const namedInitialValues = { [name]: initialValues };
 
     const handleSubmit = (urlParam, values) => {
+      console.log('155', { urlParam, values });
       const usedValue = values ? values[name] : values;
       onSubmit(urlParam, usedValue);
     };
@@ -118,7 +119,15 @@ class SelectMultipleFilter extends Component {
         id={`${id}.popup`}
         showAsPopup
         contentPlacementOffset={contentPlacementOffset}
-        onSubmit={handleSubmit}
+        onSubmit={(urlParam, values) => {
+          console.log('155 data', urlParam, values);
+          handleSubmit(urlParam, values);
+        }}
+        liveEdit
+        onChange={data => {
+          // console.log('155 d', data);
+          handleSubmit(urlParam, data);
+        }}
         initialValues={namedInitialValues}
         urlParam={urlParam}
         keepDirtyOnReinitialize

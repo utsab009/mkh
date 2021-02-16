@@ -39,12 +39,12 @@ class MentorResourcePage extends React.Component {
     return (
       <StaticPage
         className={css.root}
-        title="Mentor Resource"
+        title="Mentor Resources"
         schema={{
           '@context': 'http://schema.org',
           '@type': 'MentorResourcePage',
           description: 'Description of this page',
-          name: 'Mentor Resource',
+          name: 'Mentor Resources',
         }}
       >
         <LayoutSingleColumn>

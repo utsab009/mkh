@@ -47,7 +47,13 @@ import {
 import { EnquiryForm } from '../../forms';
 import { TopbarContainer, NotFoundPage } from '../../containers';
 
-import { sendEnquiry, loadData, setInitialValues, fetchTimeSlots } from './ListingPage.duck';
+import {
+  sendEnquiry,
+  loadData,
+  setInitialValues,
+  fetchTimeSlots,
+  resetNewBuyer,
+} from './ListingPage.duck';
 import SectionImages from './SectionImages';
 import SectionAvatar from './SectionAvatar';
 import SectionHeading from './SectionHeading';
@@ -99,12 +105,15 @@ export class ListingPageComponent extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onContactUser = this.onContactUser.bind(this);
     this.onSubmitEnquiry = this.onSubmitEnquiry.bind(this);
+    this.props.resetNewBuyerAction();
   }
 
   componentDidMount() {
     if (this.props.location.state && this.props.location.state.newListing) {
       this.toggleWelcomeModal();
     }
+    console.log('445 in useEff');
+    // window.addEventListener('focus', this.onFocus);
   }
 
   toggleWelcomeModal = cb => {
@@ -258,17 +267,45 @@ export class ListingPageComponent extends Component {
       });
   }
   addToFav = id => {
+    let { history } = this.props;
+    let { pathname, search } = history.location;
+    const listingId = new UUID(this.props.params.id);
+    const listing = this.props.getListing(listingId);
+    const panelMediumWidth = 50;
+    const panelLargeWidth = 62.5;
+    const cardRenderSizes = [
+      '(max-width: 767px) 100vw',
+      `(max-width: 1023px) ${panelMediumWidth}vw`,
+      `(max-width: 1920px) ${panelLargeWidth / 2}vw`,
+      `${panelLargeWidth / 3}vw`,
+    ].join(', ');
+    console.log('474 listing', listing);
+    console.log('474 cardRenderSizes', cardRenderSizes);
+    // console.log('101', pathname, search, listing);
+    if (search) {
+      pathname = pathname + search;
+    }
+    // console.log('101', pathname, search);
+    if (!this.props.currentUser) {
+      history.push('/login', { from: pathname });
+      return;
+    }
+
     let { profile } = this.props.currentUser.attributes;
     let newFavourites =
       profile.protectedData.favourites &&
       Array.isArray(JSON.parse(profile.protectedData.favourites))
         ? JSON.parse(profile.protectedData.favourites)
         : [];
+
+    console.log('474 newFavourites', newFavourites);
+    // console.log('474 newFavourites parsed', JSON.parse(profile.protectedData.favourites));
     newFavourites.push({
       id: id,
-      listing: this.props.listing,
-      renderSizes: this.props.renderSizes,
+      listing: listing,
+      renderSizes: cardRenderSizes,
     });
+    console.log('474 newFavourites push', newFavourites);
     // profile.protectedData = {favourites : JSON.stringify(favourites)};
     profile.protectedData.favourites = JSON.stringify(newFavourites);
     const profileToSaved = {
@@ -277,6 +314,7 @@ export class ListingPageComponent extends Component {
       bio: profile.bio,
       protectedData: profile.protectedData,
     };
+    console.log({ profileToSaved });
     this.props.onupdateProfile(profileToSaved);
   };
 
@@ -322,6 +360,9 @@ export class ListingPageComponent extends Component {
       certificateConfig,
       yogaStylesConfig,
       sectorsConfig,
+      transactionBetweenParties,
+      fetchIsFirstTransactionBetweenPartiesInProgress,
+      fetchIsFirstTransactionBetweenPartiesError,
     } = this.props;
     console.log('in list page props', this.props);
     let ratingSum = 0;
@@ -336,7 +377,7 @@ export class ListingPageComponent extends Component {
       isPendingApprovalVariant || isDraftVariant
         ? ensureOwnListing(getOwnListing(listingId))
         : ensureListing(getListing(listingId));
-
+    console.log({ currentListing });
     const listingSlug = rawParams.slug || createSlug(currentListing.attributes.title || '');
     const params = { slug: listingSlug, ...rawParams };
 
@@ -451,6 +492,10 @@ export class ListingPageComponent extends Component {
     const isOwnListing =
       userAndListingAuthorAvailable && currentListing.author.id.uuid === currentUser.id.uuid;
     const showContactUser = authorAvailable && (!currentUser || (currentUser && !isOwnListing));
+    const isMentor =
+      currentUser &&
+      currentUser.attributes.profile.protectedData &&
+      currentUser.attributes.profile.protectedData.isMentor;
 
     const currentAuthor = authorAvailable ? currentListing.author : null;
     const ensuredAuthor = ensureUser(currentAuthor);
@@ -465,6 +510,10 @@ export class ListingPageComponent extends Component {
       fullName = ensuredAuthor.attributes.profile.displayName,
     } = authorData;
     console.log('currentListing: ', currentListing, authorData);
+    // console.log(
+    //   'currentListing: 123',
+    //   checkIfCustomerHasPreviousBookingWithProvider(currentListing.author.id.uuid)
+    // );
     const youtubeLink =
       currentListing &&
       currentListing.attributes &&
@@ -553,6 +602,16 @@ export class ListingPageComponent extends Component {
         // }
       });
     }
+
+    // transactionBetweenParties,
+    //   fetchIsFirstTransactionBetweenPartiesInProgress,
+    //   fetchIsFirstTransactionBetweenPartiesError
+
+    const showShortBooking =
+      !fetchIsFirstTransactionBetweenPartiesError &&
+      !fetchIsFirstTransactionBetweenPartiesInProgress &&
+      transactionBetweenParties !== null &&
+      transactionBetweenParties < 1;
     return (
       <Page
         title={schemaTitle}
@@ -574,18 +633,32 @@ export class ListingPageComponent extends Component {
           <LayoutWrapperTopbar>{topbar}</LayoutWrapperTopbar>
           <LayoutWrapperMain>
             <div>
-              {this.state.welcomeModal && (
-                <Modal
-                  id="ListingPage.welcomeModal"
-                  isOpen={this.state.welcomeModal}
-                  onClose={() => this.toggleWelcomeModal()}
-                  onManageDisableScrolling={onManageDisableScrolling}
-                  // className={css.landingModal}
-                  // containerClassName={css.modalContainer}
-                >
-                  <div className={css.modalHeader}>Congratulations</div>
-                  <div className={css.welcomeModal}>
-                    <p>
+              <Modal
+                id="ListingPage.welcomeModal"
+                isOpen={this.state.welcomeModal}
+                onClose={() => this.toggleWelcomeModal()}
+                onManageDisableScrolling={onManageDisableScrolling}
+                // className={css.landingModal}
+                // containerClassName={css.modalContainer}
+              >
+                <div className={css.modalHeader}>Congratulations</div>
+                <div className={css.welcomeModal}>
+                  <p>
+                    Mentees who now search for the Job Role of {subsectors} will now find you and
+                    this is the page they will see which you can{' '}
+                    <span
+                      className={css.internalLink}
+                      onClick={() => {
+                        this.toggleWelcomeModal(this.props.history.push('/listings'));
+                      }}
+                    >
+                      update
+                    </span>{' '}
+                    at any time. This said, sometimes Mentees may not be able to book you as Stripe
+                    may not have fully verified your banking details, so we advise that you check
+                    back in 24 hours to ensure all is in order.
+                  </p>
+                  {/* <p>
                       Mentees who now search for the Job Role of {subsectors} will now find you and
                       be able to book you. This page is what they will see. If you need to change
                       any part of it, just go to the Circle in the top right-hand corner of this
@@ -600,8 +673,36 @@ export class ListingPageComponent extends Component {
                       </span>
                       . Here you will be able to open this Role Listing and edit it as often as you
                       require.
-                    </p>
-                    <p>
+                    </p> */}
+                  <p className={css.subHeaderModal}>How?</p>
+                  <p>
+                    Sign-in to Try A Mentor and click the circle with your initials or photo in it
+                    at the top right-hand corner of any Try A Mentor page. When you click it, a
+                    drop-down menu will appear with{' '}
+                    <span
+                      className={css.internalLink}
+                      onClick={() => {
+                        this.toggleWelcomeModal(
+                          this.props.history.push('/account/contact-details')
+                        );
+                      }}
+                    >
+                      Account Settings
+                    </span>
+                    . Click this and then on the left of this page you will find{' '}
+                    <span
+                      className={css.internalLink}
+                      onClick={() => {
+                        this.toggleWelcomeModal(this.props.history.push('/account/payments'));
+                      }}
+                    >
+                      Mentor Bank Details
+                    </span>
+                    . Click this and you will see if Stripe has verified your account. If all is in
+                    order Mentees can book you, if not, you can access Stripe here to see how you
+                    can help them to verify your banking details.
+                  </p>
+                  {/* <p>
                       Another option you will see when clicking the circle is{' '}
                       <span
                         className={css.internalLink}
@@ -613,10 +714,9 @@ export class ListingPageComponent extends Component {
                       </span>
                       . Here is where you can place your photograph, LinkedIn link (if you have one)
                       and update your Job Experience and Education.
-                    </p>
-                  </div>
-                </Modal>
-              )}
+                    </p> */}
+                </div>
+              </Modal>
               <SectionImages
                 title={title}
                 listing={currentListing}
@@ -658,7 +758,20 @@ export class ListingPageComponent extends Component {
                         </div>
                       </div>
                       <div className={css.fevVidContainer}>
-                        {currentUser !== null ? (
+                        <div className={css.favSec}>
+                          {!isMentor ? (
+                            isFavourite.length > 0 ? (
+                              <Button onClick={() => this.removeFromFav(id)} className={css.favBtn}>
+                                <FontAwesomeIcon icon={solidHeart} />
+                              </Button>
+                            ) : (
+                              <Button onClick={() => this.addToFav(id)} className={css.favBtn}>
+                                <FontAwesomeIcon icon={faHeart} />{' '}
+                              </Button>
+                            )
+                          ) : null}
+                        </div>
+                        {/* {currentUser !== null ? (
                           <div className={css.favSec}>
                             {isFavourite.length > 0 ? (
                               <Button onClick={() => this.removeFromFav(id)} className={css.favBtn}>
@@ -670,7 +783,7 @@ export class ListingPageComponent extends Component {
                               </Button>
                             )}
                           </div>
-                        ) : null}
+                        ) : null} */}
                         {!youtubeLink ? (
                           <div
                             onClick={() =>
@@ -889,23 +1002,29 @@ export class ListingPageComponent extends Component {
                 </div>
 
                 <div className={css.rightSecbooking}>
-                  {!isOwnListing && (
+                  {!isOwnListing && !isMentor && (
                     <button type="button" onClick={this.onContactUser} className={css.qtbtn}>
-                      Would you like to ask me a question
+                      Would you like to ask me a question ?
                     </button>
                   )}
-                  <BookingPanel
-                    className={`${css.bookingPanel} ${css.modbp}`}
-                    listing={currentListing}
-                    isOwnListing={isOwnListing}
-                    unitType={unitType}
-                    onSubmit={handleBookingSubmit}
-                    title={bookingTitle}
-                    authorDisplayName={authorDisplayName}
-                    onManageDisableScrolling={onManageDisableScrolling}
-                    monthlyTimeSlots={monthlyTimeSlots}
-                    onFetchTimeSlots={onFetchTimeSlots}
-                  />
+                  {!fetchIsFirstTransactionBetweenPartiesError &&
+                    !fetchIsFirstTransactionBetweenPartiesInProgress &&
+                    transactionBetweenParties !== null && (
+                      <BookingPanel
+                        className={`${css.bookingPanel} ${css.modbp}`}
+                        listing={currentListing}
+                        isOwnListing={isOwnListing}
+                        isCurrentUserMentor={isMentor}
+                        unitType={unitType}
+                        onSubmit={handleBookingSubmit}
+                        title={bookingTitle}
+                        authorDisplayName={authorDisplayName}
+                        onManageDisableScrolling={onManageDisableScrolling}
+                        monthlyTimeSlots={monthlyTimeSlots}
+                        onFetchTimeSlots={onFetchTimeSlots}
+                        showShortBooking={showShortBooking}
+                      />
+                    )}
                 </div>
               </div>
             </div>
@@ -1009,6 +1128,9 @@ const mapStateToProps = state => {
     sendEnquiryInProgress,
     sendEnquiryError,
     enquiryModalOpenForListingId,
+    transactionBetweenParties,
+    fetchIsFirstTransactionBetweenPartiesInProgress,
+    fetchIsFirstTransactionBetweenPartiesError,
   } = state.ListingPage;
   const { currentUser } = state.user;
 
@@ -1037,6 +1159,9 @@ const mapStateToProps = state => {
     monthlyTimeSlots,
     sendEnquiryInProgress,
     sendEnquiryError,
+    transactionBetweenParties,
+    fetchIsFirstTransactionBetweenPartiesInProgress,
+    fetchIsFirstTransactionBetweenPartiesError,
   };
 };
 
@@ -1049,6 +1174,7 @@ const mapDispatchToProps = dispatch => ({
   onFetchTimeSlots: (listingId, start, end, timeZone) =>
     dispatch(fetchTimeSlots(listingId, start, end, timeZone)),
   onupdateProfile: data => dispatch(updateProfile(data)),
+  resetNewBuyerAction: () => dispatch(resetNewBuyer()),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

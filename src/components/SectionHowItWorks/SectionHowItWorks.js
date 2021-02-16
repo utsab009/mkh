@@ -6,7 +6,7 @@ import { propTypes } from '../../util/types';
 import { OwnListingLink } from '../../components';
 
 import css from './SectionHowItWorks.css';
-
+import ShowMoreText from 'react-show-more-text';
 const SectionHowItWorks = props => {
   const { rootClassName, className, currentUserListing, currentUserListingFetched } = props;
 
@@ -24,27 +24,63 @@ const SectionHowItWorks = props => {
           <h2 className={css.stepTitle}>
             <FormattedMessage id="SectionHowItWorks.part1Title" />
           </h2>
-          <p>
+          {/* <p>
             <FormattedMessage id="SectionHowItWorks.part1Text" />
-          </p>
+          </p> */}
+          <ShowMoreText
+            /* Default options */
+            lines={6}
+            more="Read more"
+            less="Read less"
+            className="content-css"
+            anchorClass="my-anchor-css-class"
+            expanded={false}
+          >
+            <p>
+              <FormattedMessage id="SectionHowItWorks.part1Text" />
+            </p>
+          </ShowMoreText>
         </div>
 
         <div className={css.step}>
           <h2 className={css.stepTitle}>
             <FormattedMessage id="SectionHowItWorks.part2Title" />
           </h2>
-          <p>
-            <FormattedMessage id="SectionHowItWorks.part2Text" />
-          </p>
+          <ShowMoreText
+            /* Default options */
+            lines={6}
+            more="Read more"
+            less="Read less"
+            className="content-css"
+            anchorClass="my-anchor-css-class"
+            expanded={false}
+          >
+            <p>
+              <FormattedMessage id="SectionHowItWorks.part2Text" />
+            </p>
+            <p>
+              <FormattedMessage id="SectionHowItWorks.part2TextNext" />
+            </p>
+          </ShowMoreText>
         </div>
 
         <div className={css.step}>
           <h2 className={css.stepTitle}>
             <FormattedMessage id="SectionHowItWorks.part3Title" />
           </h2>
-          <p>
-            <FormattedMessage id="SectionHowItWorks.part3Text" />
-          </p>
+          <ShowMoreText
+            /* Default options */
+            lines={6}
+            more="Read more"
+            less="Read less"
+            className="content-css"
+            anchorClass="my-anchor-css-class"
+            expanded={false}
+          >
+            <p>
+              <FormattedMessage id="SectionHowItWorks.part3Text" />
+            </p>
+          </ShowMoreText>
         </div>
       </div>
       {/* <div className={css.createListingLink}>

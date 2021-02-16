@@ -20,6 +20,7 @@ import {
   Modal,
   NamedLink,
   ExternalLink,
+  Portal,
 } from '../../components';
 import { TopbarContainer } from '../../containers';
 
@@ -27,10 +28,14 @@ import facebookImage from '../../assets/yogatimeFacebook-1200x630.jpg';
 import twitterImage from '../../assets/yogatimeTwitter-600x314.jpg';
 import css from './LandingPage.css';
 import { updateProfile } from '../ProfileSettingsPage/ProfileSettingsPage.duck';
+import { sendVerificationEmail } from '../../ducks/user.duck';
+
+import ShowMoreText from 'react-show-more-text';
 
 export class LandingPageComponent extends Component {
   state = {
     welcomeModal: true,
+    portalShow: false,
   };
 
   toggleWelcomeModal = cb => {
@@ -48,6 +53,19 @@ export class LandingPageComponent extends Component {
     );
   };
 
+  componentDidUpdate(prevProps) {
+    let { currentUser: currentUserOld } = prevProps;
+    let { currentUser } = this.props;
+
+    if (!currentUserOld && currentUser) {
+      if (!currentUser.attributes.emailVerified) {
+        this.setState({
+          portalShow: true,
+        });
+      }
+    }
+  }
+
   render() {
     const {
       history,
@@ -61,8 +79,10 @@ export class LandingPageComponent extends Component {
       isNewUser,
       isMentor,
       currentUser,
+      sendVerificationEmailInProgress,
+      sendVerificationEmailError,
+      onResendVerificationEmail,
     } = this.props;
-
     // Schema for search engines (helps them to understand what this page is about)
     // http://schema.org
     // We are using JSON-LD format
@@ -70,7 +90,10 @@ export class LandingPageComponent extends Component {
     const schemaTitle = intl.formatMessage({ id: 'LandingPage.schemaTitle' }, { siteTitle });
     const schemaDescription = intl.formatMessage({ id: 'LandingPage.schemaDescription' });
     const schemaImage = `${config.canonicalRootURL}${facebookImage}`;
-    console.log('newUser', currentUser);
+    // let { emailVerified } = (currentUser && currentUser.attributes) || {};
+    // console.log('4445 currentUser emailVerified', currentUser, emailVerified);
+    // // if(emailVerified !== undefined && )
+
     return (
       <Page
         className={css.root}
@@ -95,6 +118,17 @@ export class LandingPageComponent extends Component {
             <TopbarContainer parentComponent="homepage" />
           </LayoutWrapperTopbar>
           <LayoutWrapperMain>
+            {currentUser && (
+              <Portal
+                isOpen={this.state.portalShow}
+                onClose={() => this.setState({ portalShow: false })}
+                onManageDisableScrolling={onManageDisableScrolling}
+                user={currentUser}
+                sendVerificationEmailInProgress={sendVerificationEmailInProgress}
+                sendVerificationEmailError={sendVerificationEmailError}
+                onResendVerificationEmail={onResendVerificationEmail}
+              />
+            )}
             {isAuthenticated && isNewUser && isMentor ? (
               <Modal
                 id="LandingPage.welcomeModalMenor"
@@ -106,7 +140,7 @@ export class LandingPageComponent extends Component {
               >
                 <div className={css.modalHeader}>
                   {currentUser.attributes.profile.displayName}, it is now time for you to decide
-                  which Job Roles and / or Grades you can offer Mentoring in.
+                  which Job Positions you can offer Mentoring in.
                 </div>
                 <div className={css.welcomeModal}>
                   <p>
@@ -128,8 +162,8 @@ export class LandingPageComponent extends Component {
                     >
                       Roles I can Mentor
                     </span>{' '}
-                    which will be located on the top of each page. Look up and to the right now.
-                    Return to it for each Job or Government Position Classification you can Mentor.
+                    which will be located on the top of each page. Return to it for each Job
+                    Position you can Mentor.
                   </p>
                   <p>
                     Filling this section in is critical as without doing so, Mentees will not find
@@ -186,37 +220,71 @@ export class LandingPageComponent extends Component {
                   <div className={css.scdsteps}>
                     <div className={css.scdstep}>
                       <h2 className={css.scdstepTitle}>1. Create a Mentor Account</h2>
-                      <p>
-                        Start by clicking “Become A Mentor” at the top right-hand corner of this
-                        page. Enter identity information and your e-mail.
-                      </p>
+                      <ShowMoreText
+                        /* Default options */
+                        lines={5}
+                        more="Read more"
+                        less="Read less"
+                        className="content-css"
+                        anchorClass="my-anchor-css-class"
+                        onClick={this.executeOnClick}
+                        expanded={false}
+                      >
+                        <p>
+                          Start by clicking “Become A Mentor”at the top right-hand corner of
+                          thispage. Enter identity information andyour e-mail address and verify it.
+                        </p>
+                      </ShowMoreText>
                     </div>
 
                     <div className={css.scdstep}>
-                      <h2 className={css.scdstepTitle}>2. Start Building your Mentor Profile</h2>
-                      <p>
-                        Tell potential Mentees about your work and educational history. Once you
-                        confirm your email you will be given the opportunity to select the specific
-                        Job Roles you can help with. To define this, click “Roles I can Mentor”
-                        which once you are signed up will appear in the top right-hand corner of
-                        each page. Here you will also define when you will be available, how much
-                        you will charge, and so on.
-                      </p>
+                      <h2 className={css.scdstepTitle}>2. Start Building your MentorProfile</h2>
+                      <ShowMoreText
+                        /* Default options */
+                        lines={4}
+                        more="Read more"
+                        less="Read less"
+                        className="content-css"
+                        anchorClass="my-anchor-css-class"
+                        onClick={this.executeOnClick}
+                        expanded={false}
+                      >
+                        <p>
+                          Tell potential Mentees about your workand educational history and then
+                          selectthe specific Job Roles you can help with.The information collected
+                          will allowpotential Mentees know why you canhelp them along with also
+                          telling themwhen you will be available, how muchyou will charge, and so
+                          on.
+                        </p>
+                      </ShowMoreText>
                     </div>
 
                     <div className={css.scdstep}>
                       <h2 className={css.scdstepTitle}>3. Start Mentoring</h2>
-                      <p>
-                        You are all set. Bookings will arrive, an e-mail will appear before each
-                        meeting, that will allow you through a single click to begin the meeting /
-                        video conferencing application, and payments to you will be automatic. The
-                        first meeting with a Mentee is a “Compatibility Meeting” and is free of
-                        charge. It should only be 20 minutes max in length to allow you to assess if
-                        you can really help. After that all meetings are charged for and booked in
-                        one or more-hour segments. Try A Mentor will provide on-going support and
-                        resources for you, including a Mentee Management System and optional free
-                        training on how to improve your Mentoring skills.
-                      </p>
+                      <ShowMoreText
+                        /* Default options */
+                        lines={4}
+                        more="Read more"
+                        less="Read less"
+                        className="content-css"
+                        anchorClass="my-anchor-css-class"
+                        onClick={this.executeOnClick}
+                        expanded={false}
+                      >
+                        <p>
+                          You are all set. Bookings will arrive, in-built automatic toolswill
+                          organise and remind you about these bookings, theMentoring meetings will
+                          be through our video conferencingapplication, and payments to you will be
+                          automatic. All youneed to focus on is Mentoring. Need help to Mentor? In
+                          Try AMentor you will find an array of free resources includingvideos on
+                          how to Mentor.
+                        </p>
+                        <p>
+                          The first meeting is 20 minutes, free of charge, and is aNeeds Assessment.
+                          After that, all meetings are charged forand booked in one or more-hour
+                          segments by Mentees.
+                        </p>
+                      </ShowMoreText>
                     </div>
                   </div>
                 </div>
@@ -252,9 +320,17 @@ LandingPageComponent.propTypes = {
 };
 
 const mapStateToProps = state => {
-  const { currentUserListing, currentUserListingFetched, currentUser } = state.user;
+  const {
+    currentUserListing,
+    currentUserListingFetched,
+    currentUser,
+    sendVerificationEmailInProgress,
+    sendVerificationEmailError,
+  } = state.user;
   const { isAuthenticated } = state.Auth;
   return {
+    sendVerificationEmailInProgress,
+    sendVerificationEmailError,
     scrollingDisabled: isScrollingDisabled(state),
     currentUserListing,
     currentUserListingFetched,
@@ -272,6 +348,7 @@ const mapDispatchToProps = dispatch => ({
   onManageDisableScrolling: (componentId, disableScrolling) =>
     dispatch(manageDisableScrolling(componentId, disableScrolling)),
   onUpdateProfile: data => dispatch(updateProfile(data)),
+  onResendVerificationEmail: () => dispatch(sendVerificationEmail()),
 });
 
 // Note: it is important that the withRouter HOC is **outside** the

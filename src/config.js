@@ -6,9 +6,9 @@ import { currencyConfiguration } from './currency-config';
 const env = process.env.REACT_APP_ENV;
 const dev = process.env.REACT_APP_ENV === 'development';
 console.log('inside config', process.env);
-const integrationApiClientId = process.env.REACT_APP_SHARETRIBE_INTEGRATION_API_CLIENT_ID;
-const integrationApiSecret = process.env.REACT_APP_SHARETRIBE_INTEGRATION_API_SECRET;
-const integrationApiBaseUrl = process.env.REACT_APP_SHARETRIBE_INTEGRATION_API_BASE_URL;
+const integrationApiClientId = process.env.REACT_APP_FLEX_INTEGRATION_CLIENT_ID;
+const integrationApiSecret = process.env.REACT_APP_FLEX_INTEGRATION_CLIENT_SECRET;
+// const integrationApiBaseUrl = process.env.REACT_APP_SHARETRIBE_INTEGRATION_API_BASE_URL;
 // If you want to change the language, remember to also change the
 // locale data and the messages in the app.js file.
 const locale = 'en';
@@ -35,7 +35,8 @@ const sortSearchByDistance = false;
 //
 // In a way, 'processAlias' defines which transaction process (or processes)
 // this particular web application is able to handle.
-const bookingProcessAlias = 'preauth-unit-time-booking/release-1';
+const bookingProcessAlias = 'preauth-test/release-1';
+// const bookingProcessAlias = 'preauth-unit-time-booking/release-1';
 
 // The transaction line item code for the main unit type in bookings.
 //
@@ -71,7 +72,8 @@ const currencyConfig = currencyConfiguration(currency);
 
 // Listing minimum price in currency sub units, e.g. cents.
 // 0 means no restriction to the price
-const listingMinimumPriceSubUnits = 0;
+const listingMinimumPriceSubUnits = 100;
+const listingMaximumPriceSubUnits = 100000;
 
 // Sentry DSN (Data Source Name), a client key for authenticating calls to Sentry
 const sentryDsn = process.env.REACT_APP_SENTRY_DSN;
@@ -208,6 +210,7 @@ const config = {
   currency,
   currencyConfig,
   listingMinimumPriceSubUnits,
+  listingMaximumPriceSubUnits,
   stripe: {
     publishableKey: stripePublishableKey,
     supportedCountries: stripeCountryDetails,
@@ -233,7 +236,7 @@ const config = {
   custom,
   integrationApiClientId,
   integrationApiSecret,
-  integrationApiBaseUrl,
+  // integrationApiBaseUrl,
 };
 
 export default config;

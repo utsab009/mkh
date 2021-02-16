@@ -52,7 +52,7 @@ export let TABS = [
   PUBLIC,
   // POLICY,
   LANGUAGE_YOUTUBE,
-  LOCATION,
+  // LOCATION,
   ...availabilityMaybe,
   PRICING,
   // PHOTOS,
@@ -334,9 +334,11 @@ class EditListingWizard extends Component {
     console.log('test: ', currentUser, new UUID(1));
 
     const selectedTab = params.tab;
+    console.log('1112', { params, selectedTab });
     const isNewListingFlow = [LISTING_PAGE_PARAM_TYPE_NEW, LISTING_PAGE_PARAM_TYPE_DRAFT].includes(
       params.type
     );
+    const isCreateNewListingFlow = [LISTING_PAGE_PARAM_TYPE_NEW].includes(params.type);
     const rootClasses = rootClassName || css.root;
     const classes = classNames(rootClasses, className);
     const currentListing = ensureListing(listing);
@@ -351,7 +353,7 @@ class EditListingWizard extends Component {
         // PUBLIC,
         // POLICY,
         LANGUAGE_YOUTUBE,
-        LOCATION,
+        // LOCATION,
         ...availabilityMaybe,
         PRICING,
         // PHOTOS,
@@ -364,7 +366,7 @@ class EditListingWizard extends Component {
         PUBLIC,
         // POLICY,
         LANGUAGE_YOUTUBE,
-        LOCATION,
+        // LOCATION,
         ...availabilityMaybe,
         PRICING,
         // PHOTOS,
@@ -452,7 +454,7 @@ class EditListingWizard extends Component {
           navRootClassName={css.nav}
           tabRootClassName={css.tab}
         >
-          {TABS.map(tab => {
+          {TABS.map((tab, i) => {
             return (
               <EditListingWizardTab
                 {...rest}
@@ -461,7 +463,12 @@ class EditListingWizard extends Component {
                 tabLabel={tabLabel(intl, tab)}
                 tabLinkProps={tabLink(tab)}
                 selected={selectedTab === tab}
-                disabled={isNewListingFlow && !tabsStatus[tab]}
+                // disabled={isNewListingFlow && !tabsStatus[tab]}
+                disabled={
+                  isCreateNewListingFlow && i === 1 && selectedTab !== tab
+                    ? true
+                    : isNewListingFlow && !tabsStatus[tab]
+                }
                 tab={tab}
                 intl={intl}
                 params={params}
