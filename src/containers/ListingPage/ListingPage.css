@@ -827,3 +827,21 @@
     font-size: 30px;
   }
 }
+.experience {
+  margin: 0 0 20px;
+  font-size: 1rem;
+  font-weight: 400;
+}
+.experience code {
+  color: #212529;
+}
+.experience ul {
+  list-style: inherit;
+  margin: 0 0 8px 30px;
+  color: #212529;
+}
+.experience ol {
+  padding: 0 0 0 28px;
+  margin-bottom: 8px;
+  color: #212529;
+}
